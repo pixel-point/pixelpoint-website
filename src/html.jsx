@@ -33,6 +33,7 @@ const HTML = ({
         />
       ))}
       {headComponents}
+      <link rel="stylesheet" href="https://use.typekit.net/xfa4vpe.css" />
     </head>
     <body {...bodyAttributes}>
       {preBodyComponents}
