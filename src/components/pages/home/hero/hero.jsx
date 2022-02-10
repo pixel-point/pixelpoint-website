@@ -22,13 +22,6 @@ const Hero = () => {
 
   const { RiveComponent, rive } = useRive(params);
 
-  useEffect(() => {
-    if (inView && rive && currentAnimState !== 'Fall') {
-      console.log('aaaaa');
-      rive.play('Intro');
-    }
-  }, [inView, rive, currentAnimState]);
-
   const containerRef = useRef();
   const firstSectionRef = useRef();
   const [containerHeight, setContainerHeight] = useState(0);
@@ -41,6 +34,13 @@ const Hero = () => {
     setFirstSectionHeight(firstSectionRect.height);
     setContainerHeight(containerRect.height);
   }, []);
+
+  useEffect(() => {
+    if (inView && rive && currentAnimState !== 'Fall') {
+      console.log('aaaaa');
+      rive.play('Intro');
+    }
+  }, [inView, rive, currentAnimState]);
 
   useEffect(() => {
     // Add event listener to window scroll
