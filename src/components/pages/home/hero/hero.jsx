@@ -1,9 +1,9 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
-// useStateMachineInput,
+import { useRive, useStateMachineInput, Layout, Fit, Alignment } from 'rive-react';
+
 const STATE_MACHINE_NAME = 'State Machine';
-// const INPUT_NAME = 'Progress';
+const INPUT_NAME = 'fall';
 
 const Hero = () => {
   const { ref, inView } = useInView({
@@ -11,7 +11,7 @@ const Hero = () => {
   });
 
   const params = {
-    src: '/rive/home-hero-3.riv',
+    src: '/rive/home-hero-5.riv',
     autoplay: false,
     stateMachines: STATE_MACHINE_NAME,
     layout: new Layout({
@@ -28,6 +28,8 @@ const Hero = () => {
   const [firstSectionHeight, setFirstSectionHeight] = useState(0);
   const [currentAnimState, setCurrentAnimState] = useState('');
 
+  const fallState = useStateMachineInput(rive, STATE_MACHINE_NAME, INPUT_NAME);
+
   useLayoutEffect(() => {
     const containerRect = containerRef.current.getBoundingClientRect();
     const firstSectionRect = firstSectionRef.current.getBoundingClientRect();
@@ -36,28 +38,26 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
-    if (inView && rive && currentAnimState !== 'Fall') {
-      console.log('aaaaa');
-      rive.play('Intro');
+    if (inView && rive && currentAnimState !== 'fall') {
+      rive.play('State Machine');
     }
   }, [inView, rive, currentAnimState]);
 
   useEffect(() => {
     // Add event listener to window scroll
     const handleScroll = () => {
-      if (currentAnimState !== 'Fall' && rive && window.scrollY > firstSectionHeight - 600) {
+      if (currentAnimState !== 'fall' && rive && window.scrollY > firstSectionHeight - 600) {
         console.log('bbb');
         window.rive = rive;
-        setCurrentAnimState('Fall');
-        rive.stop('Intro');
-        rive.play('Fall');
+        setCurrentAnimState('fall');
+        fallState.fire();
       }
     };
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [containerHeight, rive, currentAnimState, firstSectionHeight]);
+  }, [containerHeight, rive, currentAnimState, firstSectionHeight, fallState]);
 
   return (
     <section className="default bg-black" ref={ref}>
@@ -82,7 +82,7 @@ const Hero = () => {
           </div>
           <div>
             <div
-              className="absolute top-0 h-[2300px] w-[592px]"
+              className="absolute top-0 h-[3000px] w-[592px]"
               style={{ transform: `translateY(${-500 - 480 / 2 + firstSectionHeight / 2}px)` }}
             >
               <RiveComponent />
