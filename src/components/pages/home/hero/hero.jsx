@@ -11,7 +11,7 @@ const Hero = () => {
   });
 
   const params = {
-    src: '/rive/home-hero-5.riv',
+    src: '/rive/home-hero-7.riv',
     autoplay: false,
     stateMachines: STATE_MACHINE_NAME,
     layout: new Layout({
@@ -82,8 +82,12 @@ const Hero = () => {
           </div>
           <div>
             <div
-              className="absolute top-0 h-[3000px] w-[592px]"
-              style={{ transform: `translateY(${-500 - 480 / 2 + firstSectionHeight / 2}px)` }}
+              className="absolute top-0 h-[3000px] w-[1100px]"
+              style={{
+                transform: `translateY(${
+                  -215 - 480 / 2 + firstSectionHeight / 2
+                }px) translateX(-254px)`,
+              }}
             >
               <RiveComponent />
             </div>
