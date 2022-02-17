@@ -1,20 +1,19 @@
 import React from 'react';
 
-// Components
 import Content from 'components/pages/case-study/content';
 import Keynotes from 'components/pages/case-study/keynotes';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
-// Assets
-import authorPhoto from 'images/case-studies/flagsmith/author-photo.jpg';
-import BlogPlatformIcon from 'images/case-studies/flagsmith/blog-platform.inline.svg';
-import BrandAwarenessIcon from 'images/case-studies/flagsmith/brand-awareness.inline.svg';
-import BrandIdentityIcon from 'images/case-studies/flagsmith/brand-identity.inline.svg';
-import ConstructorIcon from 'images/case-studies/flagsmith/constructor.inline.svg';
-import GithubStarsIcon from 'images/case-studies/flagsmith/github-stars.inline.svg';
-import logo from 'images/case-studies/flagsmith/logo.svg';
-import RevenueGrowthIcon from 'images/case-studies/flagsmith/revenue-growth.inline.svg';
+
+import authorPhoto from './images/author-photo.jpg';
+import BlogPlatformIcon from './images/blog-platform.inline.svg';
+import BrandAwarenessIcon from './images/brand-awareness.inline.svg';
+import BrandIdentityIcon from './images/brand-identity.inline.svg';
+import ConstructorIcon from './images/constructor.inline.svg';
+import GithubStarsIcon from './images/github-stars.inline.svg';
+import logo from './images/logo.svg';
+import RevenueGrowthIcon from './images/revenue-growth.inline.svg';
 
 const content = {
   logo,
