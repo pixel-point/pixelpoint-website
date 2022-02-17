@@ -1,41 +1,6 @@
-/* TODO: Add global styles: font-size, color, and other if needed */
 @layer base {
   body {
-    @apply min-w-[320px] font-sans text-base antialiased;
+    @apply min-w-[320px] font-sans text-lg font-light leading-normal text-black antialiased;
     -webkit-tap-highlight-color: transparent;
-  }
-}
-
-section.default {
-  @apply mb-48;
-}
-
-h2 strong,
-h3 strong {
-  @apply font-normal text-primary;
-}
-
-section h2 {
-  @apply text-6xl;
-}
-
-section h3 {
-  @apply mb-16 text-4xl;
-}
-
-section h4 {
-  @apply mb-3 text-2xl;
-}
-
-.link {
-  @apply font-semibold;
-  &.link-secondary {
-    @apply text-secondary;
-    &.link-group {
-      @apply group-hover:text-primary;
-    }
-  }
-  &.link-primary {
-    @apply text-primary;
   }
 }

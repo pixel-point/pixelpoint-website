@@ -1,6 +1,6 @@
 import React from 'react';
 
-const data = [
+const items = [
   {
     title: 'Research',
     description:
@@ -34,17 +34,20 @@ const data = [
 ];
 
 const Workflow = () => (
-  <section className="workflow default">
+  <section className="safe-paddings mt-52">
     <div className="container">
-      <h3>
-        Let's break down the <strong>Magic Behind</strong>
-        <br /> the result and reveal the whole process:
-      </h3>
-      <ul className="grid list-decimal grid-cols-3 gap-x-8 gap-y-16 marker:text-2xl marker:text-primary">
-        {data.map(({ title, description }, index) => (
-          <li key={index} className="ml-7">
-            <h4>{title}</h4>
-            <p className="text-lg font-light">{description}</p>
+      <h2 className="max-w-[700px] text-4xl font-normal leading-snug">
+        Let's break down the <span className="text-red">Magic Behind</span> the&nbsp;result and
+        reveal the whole process:
+      </h2>
+      <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
+        {items.map(({ title, description }, index) => (
+          <li className="flex items-start" key={index}>
+            <span className="text-2xl font-semibold text-red">{index + 1}.</span>
+            <div className="ml-2.5">
+              <h3 className="text-2xl font-normal leading-snug">{title}</h3>
+              <p className="mt-3">{description}</p>
+            </div>
           </li>
         ))}
       </ul>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const data = [
+const items = [
   {
     title: 'Professional team',
     description:
@@ -17,19 +17,21 @@ const data = [
       'We align our expectations long before we sign the contract. Thanks to a strong tech base we gained working with k8s, Docker, Cloud Native technologies, we are able to truly get the purpose of your product and how it works from the first call.',
   },
 ];
-const SeeDifference = () => (
-  <section className="see-the-difference default">
+
+const Advantages = () => (
+  <section className="safe-paddings mt-52">
     <div className="container">
-      <h3>
-        It doesn’t have to be like that.
-        <br />
-        Work with Pixel Point to see the difference:
-      </h3>
-      <ul className="grid list-decimal grid-cols-3 gap-8 marker:text-2xl marker:text-primary">
-        {data.map(({ title, description }, index) => (
-          <li key={index} className="ml-7">
-            <h4>{title}</h4>
-            <p className="text-lg font-light">{description}</p>
+      <h2 className="max-w-[740px] text-4xl font-normal leading-snug">
+        It doesn’t have to be like that. Work&nbsp;with&nbsp;Pixel Point to see the difference:
+      </h2>
+      <ul className="grid-gap-x mt-16 grid grid-cols-3">
+        {items.map(({ title, description }, index) => (
+          <li className="flex items-start" key={index}>
+            <span className="text-2xl font-semibold text-red">{index + 1}.</span>
+            <div className="ml-2.5">
+              <h3 className="text-2xl font-normal leading-snug">{title}</h3>
+              <p className="mt-3">{description}</p>
+            </div>
           </li>
         ))}
       </ul>
@@ -37,4 +39,4 @@ const SeeDifference = () => (
   </section>
 );
 
-export default SeeDifference;
+export default Advantages;

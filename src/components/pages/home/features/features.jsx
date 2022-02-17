@@ -1,51 +1,52 @@
 import React from 'react';
 
-import contentSvg from 'images/home/features/content.svg';
-import illustrationsSvg from 'images/home/features/illustrations.svg';
-import integrationsSvg from 'images/home/features/integrations.svg';
-import pixelPerfectSvg from 'images/home/features/pixel-perfect.svg';
-import releaseSvg from 'images/home/features/release.svg';
-import seoSvg from 'images/home/features/seo.svg';
+import ContentIcon from './images/content.inline.svg';
+import IllustrationsIcon from './images/illustrations.inline.svg';
+import IntegrationsIcon from './images/integrations.inline.svg';
+import PixelPerfectIcon from './images/pixel-perfect.inline.svg';
+import ReleaseIcon from './images/release.inline.svg';
+import SeoIcon from './images/seo.inline.svg';
 
-const data = [
+const items = [
   {
-    title: 'Astonishingly looking pixel-perfect UI',
-    icon: pixelPerfectSvg,
+    icon: PixelPerfectIcon,
+    description: 'Astonishingly looking</br> pixel-perfect UI',
   },
   {
-    title: 'Dazzling illustrations and animations',
-    icon: illustrationsSvg,
+    icon: IllustrationsIcon,
+    description: 'Dazzling illustrations</br> and animations',
   },
   {
-    title: 'Obvious and clear way to operate on your content',
-    icon: contentSvg,
+    icon: ContentIcon,
+    description: 'Obvious and clear way to</br> operate on your content',
   },
   {
-    title: 'Robust release management flow',
-    icon: releaseSvg,
+    icon: ReleaseIcon,
+    description: 'Robust release</br> management flow',
   },
   {
-    title: 'Integrations, 3rd parties and analytics set up',
-    icon: integrationsSvg,
+    icon: IntegrationsIcon,
+    description: 'Integrations, 3rd parties</br> and analytics set up',
   },
   {
-    title: 'High-performing, SEO & a11y friendly',
-    icon: seoSvg,
+    icon: SeoIcon,
+    description: 'High-performing,</br> SEO & a11y friendly',
   },
 ];
 const Features = () => (
-  <section className="features default">
+  <section className="safe-paddings mt-52">
     <div className="container">
-      <h3>
-        Here is what we have to offer for the next
-        <br />
-        ideal marketing website of yours
-      </h3>
-      <ul className="grid grid-cols-3 gap-8">
-        {data.map(({ title, icon }, index) => (
+      <h2 className="max-w-[700px] text-4xl font-normal leading-snug">
+        Here is what we have to offer for the next ideal&nbsp;marketing website of yours
+      </h2>
+      <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
+        {items.map(({ icon: Icon, description }, index) => (
           <li key={index}>
-            <img className="mb-3" src={icon} alt={title} loading="lazy" width="80" height="62" />
-            <p className="max-w-[200px] font-light">{title}</p>
+            <Icon className="w-20" aria-hidden />
+            <p
+              className="mt-3 font-normal leading-snug"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
           </li>
         ))}
       </ul>

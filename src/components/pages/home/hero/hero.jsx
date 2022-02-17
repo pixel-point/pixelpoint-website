@@ -6,7 +6,7 @@ const STATE_MACHINE_NAME = 'State Machine';
 const INPUT_NAME = 'fall';
 
 const Hero = () => {
-  const { ref, inView } = useInView({
+  const [wrapperRef, isWrapperInView] = useInView({
     threshold: 0,
   });
 
@@ -38,10 +38,10 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
-    if (inView && rive && currentAnimState !== 'fall') {
+    if (isWrapperInView && rive && currentAnimState !== 'fall') {
       rive.play('State Machine');
     }
-  }, [inView, rive, currentAnimState]);
+  }, [isWrapperInView, rive, currentAnimState]);
 
   useEffect(() => {
     // Add event listener to window scroll
@@ -60,37 +60,33 @@ const Hero = () => {
   }, [containerHeight, rive, currentAnimState, firstSectionHeight, fallState]);
 
   return (
-    <section className="default bg-black" ref={ref}>
-      <div ref={containerRef} className="container relative text-white">
-        <div className="grid grid-cols-2 gap-x-8">
-          <div>
-            <div className="flex h-screen items-center" ref={firstSectionRef}>
-              <div className="max-w-xl">
-                <h2>Marketing website is a complex thing to build on your own</h2>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <div className="max-w-xl">
-                <h2>You either ask your team of specialists from adjacent fields</h2>
-              </div>
-            </div>
-            <div className="flex items-center pt-[700px] pb-[360px]">
-              <div className="max-w-xl">
-                <h2>Or go wild cherry-picking & managing freelancers</h2>
-              </div>
-            </div>
+    <section className="safe-paddings bg-black text-white" ref={wrapperRef}>
+      <div className="container grid-gap-x relative grid grid-cols-2" ref={containerRef}>
+        <div className="relative z-10 text-6xl font-normal leading-snug">
+          <div className="flex h-screen items-center" ref={firstSectionRef}>
+            <h2 className="max-w-[592px]">
+              Marketing website is a complex thing to build on your own
+            </h2>
           </div>
-          <div>
-            <div
-              className="absolute top-0 h-[3000px] w-[1100px]"
-              style={{
-                transform: `translateY(${
-                  -215 - 480 / 2 + firstSectionHeight / 2
-                }px) translateX(-254px)`,
-              }}
-            >
-              <RiveComponent />
-            </div>
+          <div className="flex h-screen items-center">
+            <h2 className="max-w-[592px]">
+              You either ask your team of specialists from adjacent fields
+            </h2>
+          </div>
+          <div className="flex h-screen items-center">
+            <h2 className="max-w-[592px]">Or go wild cherry-picking & managing freelancers</h2>
+          </div>
+        </div>
+        <div>
+          <div
+            className="absolute top-0 h-[3000px] w-[1100px]"
+            style={{
+              transform: `translateY(${
+                -215 - 480 / 2 + firstSectionHeight / 2
+              }px) translateX(-254px)`,
+            }}
+          >
+            <RiveComponent />
           </div>
         </div>
       </div>
