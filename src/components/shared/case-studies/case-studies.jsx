@@ -1,10 +1,10 @@
 import React from 'react';
 
 import Link from 'components/shared/link';
+import GithubLogo from 'images/github.inline.svg';
 
 import droneLogo from './images/drone.svg';
 import flagsmithLogo from './images/flagsmith.svg';
-import GithubLogo from './images/github.inline.svg';
 import k6Logo from './images/k6.svg';
 
 const items = [
@@ -38,7 +38,7 @@ const CaseStudies = () => (
             <Link className="group" to="/">
               <div className="relative flex aspect-[384/200] items-center justify-center rounded-2xl bg-black">
                 <div className="absolute top-3 left-3 flex items-center">
-                  <GithubLogo className="h-7" />
+                  <GithubLogo className="h-7 text-white" />
                   <span className="ml-2 text-xs font-semibold text-white">{stars}</span>
                 </div>
                 <img src={logo} loading="lazy" alt={title} />
