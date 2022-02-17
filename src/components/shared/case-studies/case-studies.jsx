@@ -23,6 +23,21 @@ const items = [
     title: 'k6 — Load testing for engineering teams',
     stars: '32,934',
   },
+  {
+    logo: flagsmithLogo,
+    title: 'Flagsmith — Open source feature flag & remote config service',
+    stars: '32,934',
+  },
+  {
+    logo: droneLogo,
+    title: 'Drone — Automate software testing and delivery',
+    stars: '32,934',
+  },
+  {
+    logo: k6Logo,
+    title: 'k6 — Load testing for engineering teams',
+    stars: '32,934',
+  },
 ];
 
 const CaseStudies = () => (
@@ -32,7 +47,7 @@ const CaseStudies = () => (
         We provide design & development services for popular{' '}
         <span className="text-red">Open Source</span> projects:
       </h2>
-      <ul className="grid-gap-x mt-16 grid grid-cols-3">
+      <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
         {items.map(({ logo, title, stars }, index) => (
           <li key={index}>
             <Link className="group" to="/">
