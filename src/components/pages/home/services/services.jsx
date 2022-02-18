@@ -11,12 +11,12 @@ const Services = () => (
         </h2>
       </div>
       <div className="flex h-screen max-w-[520px] flex-col justify-center">
-        <h2 className="text-6xl font-normal leading-snug">Web-design</h2>
+        <h2 className="text-6xl font-normal leading-snug">Web design</h2>
         <p className="mt-5">
-          Our approach is rather inclusive: web-design to us is not only effective, efficient and
-          visually pleasing displays, but also motion design with its live animations, as well as
-          graphic design with its entertaining illustrations, exciting social media covers and, of
-          course, high-quality branded items.
+          Our approach is rather inclusive: web design to us is not only effective, efficient and
+          visually pleasing screens, but motion design with its live animations, as well as graphic
+          design with entertaining illustrations, exciting social media covers and, of course,
+          high-quality branded items.
         </p>
         <Link className="mt-5" to="/" size="sm" theme="arrow-red">
           Read more
@@ -27,7 +27,7 @@ const Services = () => (
         <p className="mt-5">
           Clean codebase, flexible content management, robust release flow and custom integrations
           will please the business while website performance, accessibility and mobile devices
-          adaptation will make and outstanding experience for your customers.
+          adaptation will ensure an outstanding experience for your customers.
         </p>
         <Link className="mt-5" to="/" size="sm" theme="arrow-red">
           Read more
