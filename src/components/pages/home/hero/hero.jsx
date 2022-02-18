@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import { useRive, useStateMachineInput, Layout, Fit, Alignment } from 'rive-react';
 
 const STATE_MACHINE_NAME = 'State Machine';
-const INPUT_NAME = 'fall';
+const INPUT_NAME = 'Fall Trigger';
 
 const Hero = () => {
   const [wrapperRef, isWrapperInView] = useInView({
@@ -11,7 +11,7 @@ const Hero = () => {
   });
 
   const params = {
-    src: '/rive/home-hero-7.riv',
+    src: '/rive/home-hero-9.riv',
     autoplay: false,
     stateMachines: STATE_MACHINE_NAME,
     layout: new Layout({
@@ -60,7 +60,7 @@ const Hero = () => {
   }, [containerHeight, rive, currentAnimState, firstSectionHeight, fallState]);
 
   return (
-    <section className="safe-paddings bg-black text-white" ref={wrapperRef}>
+    <section className="safe-paddings overflow-hidden bg-black text-white" ref={wrapperRef}>
       <div className="container grid-gap-x relative grid grid-cols-2" ref={containerRef}>
         <div className="relative z-10 text-6xl font-normal leading-snug">
           <div className="flex h-screen items-center" ref={firstSectionRef}>
@@ -68,12 +68,12 @@ const Hero = () => {
               Marketing website is a complex thing to build on your own
             </h2>
           </div>
-          <div className="flex h-screen items-center">
+          <div className="flex items-center pt-[100px]">
             <h2 className="max-w-[592px]">
               You either ask your team of specialists from adjacent fields
             </h2>
           </div>
-          <div className="flex h-screen items-center">
+          <div className="flex items-center pt-[700px] pb-[360px]">
             <h2 className="max-w-[592px]">Or go wild cherry-picking & managing freelancers</h2>
           </div>
         </div>
@@ -82,7 +82,7 @@ const Hero = () => {
             className="absolute top-0 h-[3000px] w-[1100px]"
             style={{
               transform: `translateY(${
-                -215 - 480 / 2 + firstSectionHeight / 2
+                -505 - 480 / 2 + firstSectionHeight / 2
               }px) translateX(-254px)`,
             }}
           >
