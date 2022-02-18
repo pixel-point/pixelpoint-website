@@ -12,31 +12,37 @@ const items = [
     logo: flagsmithLogo,
     title: 'Flagsmith — Open source feature flag & remote config service',
     stars: '32,934',
+    to: '/case-studies/flagsmith',
   },
   {
     logo: droneLogo,
     title: 'Drone — Automate software testing and delivery',
     stars: '32,934',
+    to: '/case-studies/drone',
   },
   {
     logo: k6Logo,
     title: 'k6 — Load testing for engineering teams',
     stars: '32,934',
+    to: '/case-studies/k6',
   },
   {
     logo: flagsmithLogo,
     title: 'Flagsmith — Open source feature flag & remote config service',
     stars: '32,934',
+    to: '/case-studies/flagsmith',
   },
   {
     logo: droneLogo,
     title: 'Drone — Automate software testing and delivery',
     stars: '32,934',
+    to: '/case-studies/drone',
   },
   {
     logo: k6Logo,
     title: 'k6 — Load testing for engineering teams',
     stars: '32,934',
+    to: '/case-studies/k6',
   },
 ];
 
@@ -45,12 +51,12 @@ const CaseStudies = () => (
     <div className="container">
       <h2 className="max-w-[800px] text-4xl font-normal leading-snug">
         We provide design & development services for popular{' '}
-        <span className="text-red">Open Source</span> projects:
+        <span className="text-red">Open-Source</span> projects:
       </h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
-        {items.map(({ logo, title, stars }, index) => (
+        {items.map(({ logo, title, stars, to }, index) => (
           <li key={index}>
-            <Link className="group" to="/">
+            <Link className="group" to={to}>
               <div className="relative flex aspect-[384/200] items-center justify-center rounded-2xl bg-black">
                 <div className="absolute top-3 left-3 flex items-center">
                   <GithubLogo className="h-7 text-white" />

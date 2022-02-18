@@ -9,7 +9,7 @@ const Keynotes = ({ items }) => (
       <h2 className="text-4xl font-normal leading-snug">Design and Development Keynotes</h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
         {items.map(({ icon: Icon, description }, index) => (
-          <li className="max-w-[200px]" key={index}>
+          <li className="max-w-[275px]" key={index}>
             <Icon className="h-16" aria-hidden />
             <p className="mt-2.5 font-normal leading-snug">{description}</p>
           </li>
