@@ -14,7 +14,7 @@ const items = [
   {
     title: 'On the same page with you',
     description:
-      'We align our expectations long before we sign the contract. Thanks to a strong tech base we gained working with k8s, Docker, Cloud Native technologies, we are able to truly get the purpose of your product and how it works from the first call.',
+      'Our team gained a strong technical background working in Open Source, DevOps, and SaaS fields. It helps us naturally translate the technological complexity of your project to visually appealing and clear graphics.',
   },
 ];
 
