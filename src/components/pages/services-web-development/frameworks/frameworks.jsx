@@ -19,10 +19,11 @@ const Frameworks = () => (
       </div>
       <div className="col-start-7 col-end-13">
         <div
-          className="relative flex aspect-[592/224] items-center justify-between rounded-3xl pl-10 pr-6"
+          className="relative flex aspect-[592/224] items-center justify-between rounded-2xl pl-10 pr-6"
           style={{ background: 'linear-gradient(261.85deg, #773399 19.08%, #402060 81.57%)' }}
         >
-          <GatsbyLogo className="relative z-10 h-14" />
+          <GatsbyLogo className="relative z-10 h-14" aria-hidden />
+          <span className="sr-only">Gatsby</span>
           <p className="relative z-10 max-w-[256px]">
             Best for building SEO friendly, High Performing marketing websites
           </p>
@@ -35,12 +36,14 @@ const Frameworks = () => (
           />
         </div>
         <div className="mt-8 flex space-x-8">
-          <div className="flex aspect-[280/224] w-1/2 flex-col items-start justify-between rounded-3xl bg-gray-9 px-6 pt-4 pb-5">
-            <RemixLogo className="h-14" />
+          <div className="flex aspect-[280/224] w-1/2 flex-col items-start justify-between rounded-2xl bg-gray-9 px-6 pt-4 pb-5">
+            <RemixLogo className="h-14" aria-hidden />
+            <span className="sr-only">Remix</span>
             <p className="text-base">For full-stack dynamic applications</p>
           </div>
-          <div className="flex aspect-[280/224] w-1/2 flex-col items-start justify-between rounded-3xl bg-gray-9 px-6 pt-4 pb-5">
-            <NextjsLogo className="h-14" />
+          <div className="flex aspect-[280/224] w-1/2 flex-col items-start justify-between rounded-2xl bg-gray-9 px-6 pt-4 pb-5">
+            <NextjsLogo className="h-14" aria-hidden />
+            <span className="sr-only">Next.js</span>
             <p className="text-base">For enterprise-grade dynamic web applications</p>
           </div>
         </div>
