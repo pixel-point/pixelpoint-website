@@ -12,6 +12,8 @@ const Hero = () => (
         src="./images/illustration.jpg"
         alt=""
         loading="eager"
+        formats={['jpg']}
+        quality={100}
         aria-hidden
       />
     </div>

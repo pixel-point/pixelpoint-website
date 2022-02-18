@@ -1,9 +1,7 @@
 @layer components {
   .code-highlight {
-    @apply font-light;
-
     .linenumber {
-      @apply mr-2.5 !min-w-[18px] !pr-0 font-normal text-gray-7;
+      @apply mr-2.5 !min-w-[18px] !pr-0 text-gray-7;
     }
 
     .tag {

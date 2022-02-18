@@ -2,13 +2,6 @@
 @layer base {
   @font-face {
     font-family: 'IBM Plex Mono';
-    src: url('/fonts/ibm-plex-mono/ibm-plex-mono-light.woff2') format('woff2');
-    font-weight: 300;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'IBM Plex Mono';
     src: url('/fonts/ibm-plex-mono/ibm-plex-mono-regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
