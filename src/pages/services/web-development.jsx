@@ -1,5 +1,6 @@
 import React from 'react';
 
+import CodeQuality from 'components/pages/services-web-development/code-quality';
 import Frameworks from 'components/pages/services-web-development/frameworks';
 import Hero from 'components/pages/services-web-development/hero';
 import Lighthouse from 'components/pages/services-web-development/lighthouse';
@@ -19,6 +20,7 @@ const ServicesWebDevelopmentPage = () => (
   <Layout>
     <Hero />
     <Frameworks />
+    <CodeQuality />
     <ThirdPartiesAndIntegrations />
     <Lighthouse />
     <Blog />

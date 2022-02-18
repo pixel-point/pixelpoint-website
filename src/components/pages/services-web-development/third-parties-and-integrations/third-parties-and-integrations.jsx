@@ -67,7 +67,7 @@ const ThirdPartiesAndIntegrations = () => (
           <WordPressLogo className="h-14" aria-hidden />
           <span className="sr-only">WordPress</span>
           <StaticImage
-            class="mt-8"
+            className="mt-8"
             src="./images/wordpress-illustration.png"
             alt=""
             loading="lazy"
@@ -78,12 +78,13 @@ const ThirdPartiesAndIntegrations = () => (
           </p>
         </div>
         <div className="grid-gap grid grid-cols-2">
-          {headlessCmsItems.map(({ logo: Logo, name, description, background }) => (
+          {headlessCmsItems.map(({ logo: Logo, name, description, background }, index) => (
             <div
               className={clsx(
                 'flex flex-col items-start justify-between rounded-2xl px-6 pb-5 pt-4',
                 background
               )}
+              key={index}
             >
               <Logo className="h-14" aria-hidden />
               <span className="sr-only">{name}</span>
@@ -103,8 +104,11 @@ const ThirdPartiesAndIntegrations = () => (
         Deploy to the fastest and most reliable hosting platforms
       </h3>
       <ul className="grid-gap-x mt-10 grid grid-cols-4">
-        {hostingPlatformsItems.map(({ logo: Logo, name }) => (
-          <li className="flex aspect-[280/180] items-center justify-center rounded-2xl bg-gray-2">
+        {hostingPlatformsItems.map(({ logo: Logo, name }, index) => (
+          <li
+            className="flex aspect-[280/180] items-center justify-center rounded-2xl bg-gray-2"
+            key={index}
+          >
             <Logo className="h-20" aria-hidden />
             <span className="sr-only">{name}</span>
           </li>

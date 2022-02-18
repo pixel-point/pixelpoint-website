@@ -28,8 +28,8 @@ const Lighthouse = () => (
         competitors
       </h2>
       <ul className="mt-16 flex justify-center space-x-44">
-        {items.map(({ name, value }) => (
-          <li>
+        {items.map(({ name, value }, index) => (
+          <li key={index}>
             <div className="relative h-36 w-36">
               <div
                 className="h-36 w-36 rounded-full border-[6px] border-green border-opacity-20"
