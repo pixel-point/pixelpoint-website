@@ -7,6 +7,13 @@ import ThirdPartiesAndIntegrations from 'components/pages/services-web-developme
 import Blog from 'components/shared/blog';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
+import ServicesCTA from 'components/shared/services-cta';
+
+const servicesCTA = {
+  title: 'Still in doubts? Check out what we have to offer on',
+  linkText: 'Design services',
+  linkUrl: '/services/web-design',
+};
 
 const ServicesWebDevelopmentPage = () => (
   <Layout>
@@ -15,6 +22,7 @@ const ServicesWebDevelopmentPage = () => (
     <ThirdPartiesAndIntegrations />
     <Lighthouse />
     <Blog />
+    <ServicesCTA {...servicesCTA} />
     <CTA />
   </Layout>
 );
