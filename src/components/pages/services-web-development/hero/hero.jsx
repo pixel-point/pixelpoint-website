@@ -9,10 +9,9 @@ const Hero = () => (
       </h1>
       <StaticImage
         className="mt-16"
-        src="./images/illustration.png"
+        src="./images/illustration.jpg"
         alt=""
         loading="eager"
-        formats={['png']}
         aria-hidden
       />
     </div>
