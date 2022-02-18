@@ -6,7 +6,7 @@ import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 
-import authorPhotoDrone from './images/author-photo-drone.jpeg';
+import authorPhotoDrone from './images/author-photo-drone.jpg';
 import BlogPlatformIcon from './images/blog-platform.inline.svg';
 import BrandAwarenessIcon from './images/brand-awareness.inline.svg';
 import BrandIdentityIcon from './images/brand-identity.inline.svg';
