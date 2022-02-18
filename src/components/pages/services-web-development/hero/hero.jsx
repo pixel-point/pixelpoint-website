@@ -12,6 +12,7 @@ const Hero = () => (
         src="./images/illustration.png"
         alt=""
         loading="eager"
+        formats={['png']}
         aria-hidden
       />
     </div>
