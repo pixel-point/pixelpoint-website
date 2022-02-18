@@ -17,6 +17,7 @@ module.exports = {
     },
     fontFamily: {
       sans: ['usual', ...defaultTheme.fontFamily.sans],
+      mono: ['IBM Plex Mono', ...defaultTheme.fontFamily.mono],
     },
     fontSize: {
       // Commented sizes are not being used yet
