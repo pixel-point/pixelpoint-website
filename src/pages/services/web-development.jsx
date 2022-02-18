@@ -4,6 +4,7 @@ import CodeQuality from 'components/pages/services-web-development/code-quality'
 import Frameworks from 'components/pages/services-web-development/frameworks';
 import Hero from 'components/pages/services-web-development/hero';
 import Lighthouse from 'components/pages/services-web-development/lighthouse';
+import Tailwindcss from 'components/pages/services-web-development/tailwindcss';
 import ThirdPartiesAndIntegrations from 'components/pages/services-web-development/third-parties-and-integrations';
 import Blog from 'components/shared/blog';
 import CTA from 'components/shared/cta';
@@ -20,6 +21,7 @@ const ServicesWebDevelopmentPage = () => (
   <Layout>
     <Hero />
     <Frameworks />
+    <Tailwindcss />
     <CodeQuality />
     <ThirdPartiesAndIntegrations />
     <Lighthouse />

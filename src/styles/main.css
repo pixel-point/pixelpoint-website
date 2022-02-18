@@ -8,6 +8,7 @@
 @import './grid-gap.css';
 
 /* Components */
+@import './code-highlight.css';
 @import './container.css';
 
 /* Utilities */

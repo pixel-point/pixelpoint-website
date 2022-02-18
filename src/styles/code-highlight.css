@@ -1,0 +1,24 @@
+@layer components {
+  .code-highlight {
+    .linenumber {
+      @apply !min-w-[26px] !pr-2.5 font-normal text-gray-7;
+    }
+
+    .tag {
+      @apply text-red;
+    }
+
+    .attr-name,
+    .punctuation {
+      @apply text-gray-5;
+    }
+
+    .attr-value:not(.attr-equals) {
+      @apply text-[#9bdeff];
+    }
+
+    .plain-text {
+      @apply text-white;
+    }
+  }
+}

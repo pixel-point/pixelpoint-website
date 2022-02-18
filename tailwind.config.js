@@ -22,7 +22,7 @@ module.exports = {
       // Commented sizes are not being used yet
       // Before starting to use them, please make sure to check if values are correct!
       xs: ['12px'],
-      // sm: ['14px'],
+      sm: ['14px'],
       base: ['16px'],
       lg: ['18px'],
       xl: ['20px'],
