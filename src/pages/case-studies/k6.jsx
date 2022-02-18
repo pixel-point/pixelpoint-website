@@ -35,17 +35,17 @@ const content = {
         they were ready to hit it big on the competitive market.
       </p>
       <p>
-        We took off with a visual direction that resembled a combination between an ambitious
-        startup and a solid enterprise - a bright, violet-accented color palette around well-known
-        content organisational patterns and marketing pages sprinkled with mascot-based entertaining
-        animations and illustrations. We developed all necessary marketing page along with
+        We took off with a visual direction that resembled a combination of an ambitious startup and
+        a solid enterprise - a bright, violet-accented color palette around well-known content
+        organisational patterns and marketing pages sprinkled with mascot-based entertaining
+        animations and illustrations. We developed all the necessary marketing pages along with
         feature-rich blog and documentation portals using MDX, as guys wanted to be in full control
-        and felt completely comfortable in the absence of CMS GUI. We have also been making sure
-        they possess every marketing asset they need, be it for post covers, swag design or an
+        and felt completely comfortable editing their content without GUI. We have also been making
+        sure they possess every marketing asset they need, be it for post covers, swag design or an
         internet ad.
       </p>
       <p>
-        We have kept helping them to run the platform and marketing campaigns to this day,
+        We have been helping them to run the platform and marketing campaigns to this day,
         successfully carrying out our partnership through years.
       </p>
     </>

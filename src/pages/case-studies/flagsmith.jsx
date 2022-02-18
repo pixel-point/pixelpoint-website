@@ -37,7 +37,7 @@ const content = {
       <p>
         We began with picking a distinctive color palette and a font that played nicely around the
         company message, then restructured content representation in a visually pleasing way. Devs
-        chose a time-tested pair of GatsbyJS + Headless WP, which made possible to create custom
+        chose a time-tested pair of GatsbyJS + Headless WP, which made it possible to create custom
         marketing pages on a whim with the library of reusable components. It took us just under 2
         months to complete the whole platform!
       </p>

@@ -32,23 +32,23 @@ const content = {
     <>
       <p>
         We discovered Drone CI back in 2018, during experiments with CI/CD pipelines for our
-        projects. It was a highly customisable and perfectly scalable solution, way ahead of the
+        projects. It was a highly customizable and perfectly scalable solution, way ahead of the
         competition, but as it often happens with great tools created by seasoned devs, its
-        interface wasn&apos;t particularly user friendly. We reached out to its author, Brad
-        Rydzewski, and were given a carte blanche to act straight away.
+        interface wasn&apos;t particularly user-friendly. We reached out to its author, Brad
+        Rydzewski, and were given carte blanche to act straight away.
       </p>
       <p>
         We went through the product back and forth, wrapping functionalities into thoughtful UI and
         robust UX patterns, solving problems its sole maintainer had been finding himself
         short-handed to work on, and soon enough Drone v1.0 was available to the community. As a
         cherry on top, we supplied Drone with a beautiful landing page, which, paired with refined
-        product, immediately brought mature look to the company. Eventually all this led to Drone
+        product, immediately brought a mature look to the company. Eventually, all this led to Drone
         acquisition by Harness Inc.
       </p>
       <p>
-        We continued working together later on: first we took part in developing Harness CI/CD
+        We continued working together later on: first, we took part in developing Harness CI/CD
         proprietary solutions, then got back working on Drone v2.0 redesign once more, introducing
-        long-awaited features to the community. This version is available to public now.
+        long-awaited features to the community. This version is available to the public now.
       </p>
     </>
   ),
