@@ -55,13 +55,10 @@ const ThirdPartiesAndIntegrations = () => (
   <section className="safe-paddings mt-52">
     <div className="container">
       <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug">
-        <span className="text-red">Best-in-class</span> third parties and integrations at your
-        disposal
+        Choosing <span className="text-red">best-in-class</span> third parties integrations
       </h2>
 
-      <h3 className="mt-20 text-4xl leading-snug">
-        Flexible content management based on Headless CMS
-      </h3>
+      <h3 className="mt-20 text-4xl leading-snug">Flexible content management solutions</h3>
       <div className="grid-gap-x mt-10 grid grid-cols-2">
         <div className="rounded-2xl bg-gray-9 p-8">
           <WordPressLogo className="h-14" aria-hidden />
@@ -101,7 +98,7 @@ const ThirdPartiesAndIntegrations = () => (
       </div>
 
       <h3 className="mt-20 text-4xl leading-snug">
-        Deploy to the fastest and most reliable hosting platforms
+        The fastest and most reliable hosting platforms
       </h3>
       <ul className="grid-gap-x mt-10 grid grid-cols-4">
         {hostingPlatformsItems.map(({ logo: Logo, name }, index) => (
