@@ -23,12 +23,12 @@ const links = [
 // eslint-disable-next-line no-unused-vars
 const Header = ({ isMobileMenuOpen, onBurgerClick }) => (
   <header className="safe-paddings absolute top-0 left-0 right-0 z-10 w-full">
-    <div className="container flex h-[88px] items-center justify-between">
+    <div className="container flex h-[88px] items-center justify-between lg:h-20">
       <Link to="/">
         <span className="sr-only">Pixel Point</span>
         <Logo className="h-9" aria-hidden />
       </Link>
-      <nav className="flex items-center space-x-6">
+      <nav className="flex items-center space-x-6 md:hidden">
         <ul className="flex items-center space-x-10 border-r border-r-gray-8 pr-6">
           {links.map(({ text, to }, index) => (
             <li key={index}>

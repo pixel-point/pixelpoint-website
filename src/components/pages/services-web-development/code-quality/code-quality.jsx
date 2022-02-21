@@ -10,18 +10,18 @@ const illustrationItems = [
 ];
 
 const CodeQuality = () => (
-  <section className="safe-paddings bg-black py-80 lg:py-64">
-    <div className="container grid-gap-x grid grid-cols-12 items-center">
+  <section className="safe-paddings bg-black py-80 lg:py-64 md:pt-52">
+    <div className="container grid-gap-x grid grid-cols-12 items-center md:block">
       <div className="col-span-6 text-white">
-        <h2 className="max-w-[520px] text-6xl font-normal leading-snug lg:text-5xl">
+        <h2 className="max-w-[520px] text-6xl font-normal leading-snug lg:text-5xl md:max-w-none md:text-4xl">
           Developed with industry best practices
         </h2>
-        <p className="mt-5 max-w-[520px]">
+        <p className="mt-5 max-w-[520px] md:mt-4 md:max-w-none">
           A lean and maintainable code base as a guaranteed part of Pixel Point front-end
           development services.
         </p>
       </div>
-      <div className="relative col-span-6 flex items-center justify-center">
+      <div className="relative col-span-6 flex items-center justify-center md:mt-8">
         <ul className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-y-8 lg:space-y-6">
           {illustrationItems.map((items, index) => (
             <li className="flex justify-center space-x-8 lg:space-x-6" key={index}>

@@ -52,17 +52,17 @@ const hostingPlatformsItems = [
 ];
 
 const ThirdPartiesAndIntegrations = () => (
-  <section className="safe-paddings mt-52 lg:mt-44">
+  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36">
     <div className="container">
-      <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug lg:max-w-[700px] lg:text-5xl">
+      <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug lg:max-w-[700px] lg:text-5xl md:max-w-[600px] md:text-4xl">
         <span className="text-red">Best-in-class</span> third parties and integrations at your
         disposal
       </h2>
 
-      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl">
+      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 md:text-2xl">
         Flexible content management based on Headless CMS
       </h3>
-      <div className="grid-gap-x mt-10 grid grid-cols-2 lg:mt-8">
+      <div className="grid-gap-x mt-10 grid grid-cols-2 lg:mt-8 md:mt-6 md:block md:space-y-4">
         <div className="rounded-2xl bg-gray-9 p-8 pb-6 lg:p-6 lg:pb-5">
           <WordPressLogo className="h-14 lg:h-12" aria-hidden />
           <span className="sr-only">WordPress</span>
@@ -81,7 +81,7 @@ const ThirdPartiesAndIntegrations = () => (
           {headlessCmsItems.map(({ logo: Logo, name, description, background }, index) => (
             <div
               className={clsx(
-                'flex flex-col items-start justify-between rounded-2xl px-6 pb-5 pt-4 lg:p-4 lg:pt-3',
+                'flex min-h-[166px] flex-col items-start justify-between rounded-2xl px-6 pb-5 pt-4 lg:p-4 lg:pt-3',
                 background
               )}
               key={index}
@@ -100,16 +100,16 @@ const ThirdPartiesAndIntegrations = () => (
         </div>
       </div>
 
-      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl">
+      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 md:text-2xl">
         Deploy to the fastest and most reliable hosting platforms
       </h3>
-      <ul className="grid-gap-x mt-10 grid grid-cols-4 lg:mt-8">
+      <ul className="grid-gap-x mt-10 grid grid-cols-4 lg:mt-8 md:mt-6">
         {hostingPlatformsItems.map(({ logo: Logo, name }, index) => (
           <li
             className="flex aspect-[280/180] items-center justify-center rounded-2xl bg-gray-2"
             key={index}
           >
-            <Logo className="h-20 lg:h-16" aria-hidden />
+            <Logo className="h-20 lg:h-16 md:h-12" aria-hidden />
             <span className="sr-only">{name}</span>
           </li>
         ))}

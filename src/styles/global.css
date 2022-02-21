@@ -1,6 +1,6 @@
 @layer base {
   body {
-    @apply min-w-[320px] font-sans text-lg font-light leading-normal text-black antialiased;
+    @apply min-w-[320px] font-sans text-lg font-light leading-normal text-black antialiased md:text-base;
     -webkit-tap-highlight-color: transparent;
   }
 }

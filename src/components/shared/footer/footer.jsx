@@ -27,8 +27,8 @@ const links = [
 
 const Footer = () => (
   <footer className="safe-paddings bg-black">
-    <div className="container flex justify-between pt-10 pb-14">
-      <div className="flex flex-col items-start justify-between">
+    <div className="container flex justify-between pt-10 pb-14 md:flex-col md:py-8">
+      <div className="flex flex-col items-start justify-between md:order-last md:mt-10 md:flex-row md:items-center">
         <Link to="/">
           <span className="sr-only">Pixel Point</span>
           <Logo className="h-9" aria-hidden />
@@ -37,9 +37,9 @@ const Footer = () => (
           info@pixelpoint.io
         </Link>
       </div>
-      <nav className="flex space-x-20 pt-2.5 lg:space-x-16">
+      <nav className="flex space-x-20 pt-2.5 lg:space-x-16 md:justify-between md:space-x-0 md:pt-0">
         {links.map((links, index) => (
-          <ul className="space-y-8" key={index}>
+          <ul className="space-y-8 md:space-y-6" key={index}>
             {links.map(({ to, text }, index) => (
               <li className="text-[0px]" key={index}>
                 <Link to={to} size="sm" theme="white">
