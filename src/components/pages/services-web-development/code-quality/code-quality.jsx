@@ -14,7 +14,7 @@ const CodeQuality = () => (
     <div className="container grid-gap-x grid grid-cols-12 items-center">
       <div className="col-span-6 text-white">
         <h2 className="max-w-[520px] text-6xl font-normal leading-snug">
-          Ensuring code quality matches industry standards
+          Developed with industry best practices
         </h2>
         <p className="mt-5 max-w-[520px]">
           A lean and maintainable code base as a guaranteed part of Pixel Point front-end

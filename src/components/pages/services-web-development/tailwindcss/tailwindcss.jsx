@@ -62,27 +62,6 @@ const Tailwindcss = () => (
         >
           {illustrationCode}
         </SyntaxHighlighter>
-        {/* <pre className="mt-8 rounded-2xl bg-gray-9 p-3">
-          <code className="scrollbar-hidden block overflow-scroll text-sm">
-            {illustrationCode.split('\n').map((codeLine, index) => {
-              const lineNumber = index + 1;
-
-              const stringRegex = /(".*")/g;
-              const stringMatch = codeLine.match(stringRegex)?.[0];
-              const newCodeLine = stringMatch ? codeLine : codeLine;
-
-              return (
-                <span className="flex" key={index}>
-                  <span className="font-normal text-gray-7">
-                    {lineNumber <= 9 && ' '}
-                    {index + 1}
-                  </span>
-                  <span className="ml-2.5 text-gray-5">{newCodeLine}</span>
-                </span>
-              );
-            })}
-          </code>
-        </pre> */}
       </div>
     </div>
   </section>

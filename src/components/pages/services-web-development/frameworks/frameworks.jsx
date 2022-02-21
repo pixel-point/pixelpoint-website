@@ -25,7 +25,7 @@ const Frameworks = () => (
           <GatsbyLogo className="relative z-10 h-14" aria-hidden />
           <span className="sr-only">Gatsby</span>
           <p className="relative z-10 max-w-[256px]">
-            Best for building SEO friendly, High Performing marketing websites
+            Best for building SEO-friendly, high-performing marketing websites
           </p>
           <img
             className="absolute top-0 right-0 bottom-0 left-0"
