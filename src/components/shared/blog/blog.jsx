@@ -26,7 +26,7 @@ const items = [
 const Blog = () => (
   <section className="safe-paddings mt-52">
     <div className="container">
-      <h2 className="text-6xl font-normal leading-snug">
+      <h2 className="text-center text-6xl font-normal leading-snug">
         Blog.{' '}
         <Link className="text-red" to="/">
           Explore team experience

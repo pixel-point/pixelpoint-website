@@ -17,19 +17,20 @@ module.exports = {
     },
     fontFamily: {
       sans: ['usual', ...defaultTheme.fontFamily.sans],
+      mono: ['IBM Plex Mono', ...defaultTheme.fontFamily.mono],
     },
     fontSize: {
       // Commented sizes are not being used yet
       // Before starting to use them, please make sure to check if values are correct!
       xs: ['12px'],
-      // sm: ['14px'],
+      sm: ['14px'],
       base: ['16px'],
       lg: ['18px'],
       xl: ['20px'],
       '2xl': ['24px'],
       // '3xl': ['30px'],
       '4xl': ['36px'],
-      // '5xl': ['48px'],
+      '5xl': ['48px'],
       '6xl': ['56px'],
       // '7xl': ['72px'],
       // '8xl': ['96px'],
