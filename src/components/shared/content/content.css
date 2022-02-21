@@ -1,0 +1,102 @@
+@layer components {
+  .prose {
+    @apply max-w-none text-black;
+
+    a:not(.gatsby-resp-image-link) {
+      @apply relative font-normal text-red no-underline after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200 hover:after:bg-opacity-100;
+    }
+
+    ul,
+    ol {
+      @apply list-none pl-6;
+
+      > li {
+        @apply relative pl-0;
+
+        &::before {
+          @apply absolute top-4 -translate-y-1/2;
+        }
+
+        ol {
+          @apply sm:pl-4;
+        }
+      }
+    }
+
+    ul {
+      @apply sm:pl-4;
+
+      > li {
+        &::before {
+          @apply -left-6 h-2 w-2 rounded-full bg-red content-[''] sm:top-3 sm:-left-4 sm:h-1.5 sm:w-1.5;
+        }
+      }
+    }
+
+    ol {
+      counter-reset: custom-counter;
+      @apply sm:pl-0;
+
+      > li {
+        counter-increment: custom-counter;
+
+        &::before {
+          @apply -left-2 -translate-x-full font-normal text-red sm:static;
+          content: counter(custom-counter) '. ' !important;
+        }
+      }
+    }
+
+    /* TODO: Delete if still not needed after moving all posts */
+    /* .table-wrapper {
+      @apply sm:overflow-x-auto;
+    }
+
+    table {
+      @apply w-full border-hidden sm:min-w-[500px];
+
+      th {
+        @apply border border-gray-4 p-3.5 sm:px-2;
+      }
+
+      td {
+        @apply border border-gray-4 p-3.5 sm:px-2;
+      }
+    } */
+
+    pre {
+      @apply code-block p-4;
+
+      code {
+        @apply !font-mono text-[1em] !text-white;
+      }
+    }
+
+    :not(pre) > code {
+      @apply !rounded-sm !px-1.5 !py-0.5 !font-mono !font-normal !text-black;
+
+      &::before,
+      &::after {
+        @apply hidden;
+      }
+    }
+
+    /* TODO: Delete if still not needed after moving all posts */
+    /* iframe,
+    video {
+      @apply mx-auto rounded-md;
+    } */
+
+    /* TODO: Delete if still not needed after moving all posts */
+    /* blockquote {
+      @apply border-red font-light not-italic;
+
+      p {
+        &::before,
+        &::after {
+          @apply hidden;
+        }
+      }
+    } */
+  }
+}

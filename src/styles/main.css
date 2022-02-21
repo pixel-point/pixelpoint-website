@@ -8,8 +8,9 @@
 @import './grid-gap.css';
 
 /* Components */
-@import './code-highlight.css';
+@import './code-block.css';
 @import './container.css';
+@import '../components/shared/content/content.css';
 
 /* Utilities */
 @import './remove-autocomplete-styles.css';

@@ -89,7 +89,9 @@ module.exports = {
               disableBgImageOnAlpha: true,
             },
           },
-          'gatsby-remark-responsive-iframe',
+          'gatsby-remark-prismjs',
+          // TODO: Delete if still not needed after moving all posts, don't forget to uninstall this package
+          // 'gatsby-remark-responsive-iframe',
         ],
       },
     },

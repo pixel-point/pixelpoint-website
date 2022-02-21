@@ -55,7 +55,7 @@ const Tailwindcss = () => (
           </div>
         </div>
         <SyntaxHighlighter
-          className="code-highlight scrollbar-hidden mt-8 overflow-scroll rounded-2xl bg-gray-9 p-3 text-sm"
+          className="code-block mt-8 p-3 text-sm"
           language="jsx"
           useInlineStyles={false}
           showLineNumbers

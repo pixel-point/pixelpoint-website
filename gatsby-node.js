@@ -1,6 +1,7 @@
 const path = require('path');
 
 const { BLOG_BASE_PATH, BLOG_POSTS_PER_PAGE } = require('./src/constants/blog');
+const getBlogPostPath = require('./src/utils/get-blog-post-path');
 
 // We have this variable in order to decide whether to render draft posts or not
 // We are rendering ALL posts, including draft ones in development mode
@@ -49,6 +50,47 @@ async function createBlogPages({ graphql, actions }) {
   });
 }
 
+async function createBlogPosts({ graphql, actions }) {
+  const result = await graphql(`
+    {
+      allMdx(filter: { fileAbsolutePath: { regex: "/posts/" } }) {
+        nodes {
+          id
+          slug
+          fields {
+            draft
+          }
+          frontmatter {
+            title
+            description
+          }
+        }
+      }
+    }
+  `);
+
+  if (result.errors) throw new Error(result.errors);
+
+  result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
+    // Do not create a post in production if it's draft
+    if (process.env.NODE_ENV === 'production' && fields.draft) return;
+
+    // Required fields validation
+    if (!frontmatter.title) {
+      throw new Error(`Post with ID "${id}" does not have field "title"!`);
+    }
+    if (!frontmatter.description) {
+      throw new Error(`Post "${frontmatter.title}" does not have field "description"!`);
+    }
+
+    actions.createPage({
+      path: getBlogPostPath(slug),
+      component: path.resolve('./src/templates/blog-post.jsx'),
+      context: { id },
+    });
+  });
+}
+
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions;
 
@@ -63,4 +105,5 @@ exports.onCreateNode = ({ node, actions }) => {
 
 exports.createPages = async (options) => {
   await createBlogPages(options);
+  await createBlogPosts(options);
 };
