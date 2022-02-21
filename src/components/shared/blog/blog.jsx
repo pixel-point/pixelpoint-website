@@ -24,16 +24,16 @@ const items = [
 ];
 
 const Blog = () => (
-  <section className="safe-paddings mt-52">
+  <section className="safe-paddings mt-52 lg:mt-44">
     <div className="container">
-      <h2 className="text-center text-6xl font-normal leading-snug">
+      <h2 className="text-center text-6xl font-normal leading-snug lg:text-5xl">
         Blog.{' '}
         <Link className="text-red" to="/">
           Explore team experience
           <Arrow className="ml-4 inline-block h-7" aria-hidden />
         </Link>
       </h2>
-      <ul className="grid-gap-x mt-16 grid grid-cols-2">
+      <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-12">
         {items.map(({ cover, title, description, to }, index) => (
           <li key={index}>
             <Link to={to}>

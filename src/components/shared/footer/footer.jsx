@@ -37,7 +37,7 @@ const Footer = () => (
           info@pixelpoint.io
         </Link>
       </div>
-      <nav className="flex space-x-20 pt-2.5">
+      <nav className="flex space-x-20 pt-2.5 lg:space-x-16">
         {links.map((links, index) => (
           <ul className="space-y-8" key={index}>
             {links.map(({ to, text }, index) => (

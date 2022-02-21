@@ -6,9 +6,9 @@ import Arrow from 'images/arrow.inline.svg';
 import illustration from './images/illustration.svg';
 
 const CTA = () => (
-  <section className="safe-paddings mt-52 bg-black py-32">
-    <div className="container flex items-center justify-between">
-      <div className="text-6xl font-normal leading-snug">
+  <section className="safe-paddings mt-52 bg-black py-32 lg:mt-44 lg:py-28">
+    <div className="container grid-gap-x grid grid-cols-2 items-center">
+      <div className="text-6xl font-normal leading-snug lg:text-5xl">
         <h2 className="text-white">Let's have a chat</h2>
         <Link className="text-red" to="mailto:info@pixelpoint.io">
           Schedule a call
