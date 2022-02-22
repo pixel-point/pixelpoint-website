@@ -40,7 +40,7 @@ const Blog = () => (
         {items.map(({ cover, title, description, to }, index) => (
           <li key={index}>
             <Link to={to}>
-              <img className="rounded-2xl" src={cover} alt={title} />
+              <img className="w-full rounded-2xl" src={cover} alt={title} />
             </Link>
             <h3 className="mt-5 text-2xl font-normal leading-snug md:mt-4 md:text-xl sm:mt-3 sm:text-lg">
               {title}

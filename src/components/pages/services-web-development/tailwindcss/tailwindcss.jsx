@@ -35,7 +35,7 @@ const Tailwindcss = () => (
         <div className="flex overflow-hidden rounded-2xl sm:block">
           <StaticImage
             className="w-52 shrink-0 lg:w-44 md:w-52 sm:h-40 sm:w-full"
-            imgClassName="sm:object-top"
+            imgClassName="sm:object-top rounded-l-2xl sm:rounded-bl-none sm:rounded-t-2xl"
             src="./images/illustration-photo.jpg"
             loading="lazy"
             alt=""

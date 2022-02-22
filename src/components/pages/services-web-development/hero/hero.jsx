@@ -7,17 +7,15 @@ const Hero = () => (
       <h1 className="mx-auto max-w-[700px] text-center text-6xl font-normal leading-snug lg:max-w-[600px] lg:text-5xl md:max-w-[450px] md:text-4xl sm:text-3xl xs:text-2xl">
         Bring the power of <span className="text-red">JAMStack</span> to your project
       </h1>
-      <div className="mt-16 lg:mt-12 md:mt-10 sm:mt-8 sm:flex sm:justify-center sm:text-center">
-        <StaticImage
-          className="sm:min-w-[450px] sm:max-w-[450px] xs:min-w-[400px] xs:max-w-[400px]"
-          src="./images/illustration.jpg"
-          alt=""
-          loading="eager"
-          formats={['jpg']}
-          quality={100}
-          aria-hidden
-        />
-      </div>
+      <StaticImage
+        className="mt-16 lg:mt-12 md:mt-10 sm:mt-8"
+        src="./images/illustration.jpg"
+        alt=""
+        loading="eager"
+        formats={['jpg']}
+        quality={100}
+        aria-hidden
+      />
     </div>
   </section>
 );
