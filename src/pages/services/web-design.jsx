@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Benefits from 'components/pages/services-web-design/benefits';
 import Hero from 'components/pages/services-web-design/hero';
 import InHouseTeam from 'components/pages/services-web-design/in-house-team';
 import Blog from 'components/shared/blog';
@@ -18,6 +19,7 @@ const ServicesWebDevelopmentPage = () => (
   <Layout>
     <Hero />
     <InHouseTeam />
+    <Benefits />
     <CaseStudies />
     <Blog />
     <ServicesCTA {...servicesCTA} />
