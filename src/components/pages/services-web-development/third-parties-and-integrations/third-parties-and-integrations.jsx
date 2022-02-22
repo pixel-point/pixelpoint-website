@@ -55,7 +55,7 @@ const ThirdPartiesAndIntegrations = () => (
   <section className="safe-paddings mt-52">
     <div className="container">
       <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug">
-        Choosing <span className="text-red">best-in-class</span> third parties integrations
+        Choosing <span className="text-red">best-in-class</span> third-party integrations
       </h2>
 
       <h3 className="mt-20 text-4xl leading-snug">Flexible content management solutions</h3>
