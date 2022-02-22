@@ -9,7 +9,7 @@ const GuideAndEngage = () => (
         <span className="text-red">Guide and engage</span> your customers with sleek, on-point
         animations
       </h2>
-      <img className="mt-20 rounded-2xl" src={illustration} alt="" aria-hidden />
+      <img className="mt-20 rounded-2xl" src={illustration} alt="" loading="lazy" aria-hidden />
     </div>
   </section>
 );

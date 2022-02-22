@@ -10,7 +10,7 @@ const Hero = () => (
       </h1>
     </div>
 
-    <img className="mx-auto mt-10" src={illustration} alt="" aria-hidden />
+    <img className="mx-auto mt-10" src={illustration} alt="" loading="eager" aria-hidden />
   </section>
 );
 

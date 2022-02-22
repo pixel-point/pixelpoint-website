@@ -13,6 +13,7 @@ const WillTweet = () => (
         imgClassName="rounded-2xl"
         src="../will-tweet/images/illustration.jpg"
         alt=""
+        loading="lazy"
         aria-hidden
       />
     </div>

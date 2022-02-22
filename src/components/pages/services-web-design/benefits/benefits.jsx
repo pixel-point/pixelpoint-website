@@ -9,7 +9,7 @@ const items = [
   {
     title: 'Always in a context',
     description:
-      'Every designer knows what your project is about, aware your vision, customers and how you want to be perceived. This excludes the possibility for having incohesive and seemingly detached elements in UI.',
+      'Every designer knows what your project is about, is aware of your vision, customers and how you want to be perceived. This excludes the possibility for having incohesive and seemingly detached elements in UI.',
   },
   {
     title: 'Synergy',

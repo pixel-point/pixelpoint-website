@@ -48,7 +48,7 @@ module.exports = {
       gray: {
         1: '#fafafa',
         2: '#f5f5f5',
-        3: '', // Don't this color have in design :)
+        3: '#ebebeb',
         4: '#e6e6e6',
         5: '#cccccc',
         6: '#999999',

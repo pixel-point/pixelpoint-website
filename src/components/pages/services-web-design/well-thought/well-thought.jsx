@@ -12,6 +12,7 @@ const WellThought = () => (
         imgClassName="rounded-2xl"
         src="../well-thought/images/illustration.jpg"
         alt=""
+        loading="lazy"
         aria-hidden
       />
     </div>
