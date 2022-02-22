@@ -3,6 +3,7 @@ import React from 'react';
 import Benefits from 'components/pages/services-web-design/benefits';
 import Hero from 'components/pages/services-web-design/hero';
 import InHouseTeam from 'components/pages/services-web-design/in-house-team';
+import WillTweet from 'components/pages/services-web-design/will-tweet';
 import Blog from 'components/shared/blog';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
@@ -20,6 +21,7 @@ const ServicesWebDevelopmentPage = () => (
     <Hero />
     <InHouseTeam />
     <Benefits />
+    <WillTweet />
     <CaseStudies />
     <Blog />
     <ServicesCTA {...servicesCTA} />
