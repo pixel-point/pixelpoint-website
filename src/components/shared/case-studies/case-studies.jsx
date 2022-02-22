@@ -62,7 +62,10 @@ const CaseStudies = () => (
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
         {items.map(({ logo, name, title, stars, to }, index) => (
           <li key={index}>
-            <div className="relative flex aspect-[384/200] items-center justify-center rounded-2xl bg-black">
+            <Link
+              className="relative flex aspect-[384/200] items-center justify-center rounded-2xl bg-black"
+              to={to}
+            >
               <img src={logo} loading="lazy" alt={`${name}'s logo`} />
               <div className="absolute top-3 left-3 flex items-center">
                 <GithubLogo className="h-7 text-white" />
@@ -70,7 +73,7 @@ const CaseStudies = () => (
                   {stars} <span className="sr-only">stars on Github</span>
                 </span>
               </div>
-            </div>
+            </Link>
             <h3 className="mt-4 font-normal leading-snug">{title}</h3>
             <Link className="mt-4" to={to} size="sm" theme="arrow-red">
               {name} case study
