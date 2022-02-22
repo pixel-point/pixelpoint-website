@@ -19,7 +19,7 @@ const HomePage = () => (
     <Services />
     <CaseStudies />
     <Blog />
-    <CTA />
+    <CTA withTopMargin />
   </Layout>
 );
 

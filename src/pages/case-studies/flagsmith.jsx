@@ -100,7 +100,7 @@ const CaseStudiesFlagsmithPage = () => (
     <Content {...content} />
     <Keynotes {...keynotes} />
     <CaseStudies />
-    <CTA />
+    <CTA withTopMargin />
   </Layout>
 );
 
