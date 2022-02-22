@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Hero from 'components/pages/services-web-design/hero';
+import InHouseTeam from 'components/pages/services-web-design/in-house-team';
 import Blog from 'components/shared/blog';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
@@ -16,6 +17,7 @@ const servicesCTA = {
 const ServicesWebDevelopmentPage = () => (
   <Layout>
     <Hero />
+    <InHouseTeam />
     <CaseStudies />
     <Blog />
     <ServicesCTA {...servicesCTA} />
