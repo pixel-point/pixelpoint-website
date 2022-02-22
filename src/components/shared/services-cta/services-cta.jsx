@@ -6,8 +6,8 @@ import Arrow from 'images/arrow.inline.svg';
 
 const ServicesCTA = ({ title, linkText, linkUrl }) => (
   <section className="safe-paddings mt-52 bg-gray-2 py-40 lg:mt-44 lg:py-32 md:mt-36 md:py-24 sm:mt-28 sm:py-16">
-    <div className="container text-center text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-2xl xs:text-xl">
-      <h2 className="mx-auto max-w-[800px] lg:max-w-[700px] md:max-w-[500px] sm:max-w-[350px] xs:max-w-[250px]">
+    <div className="container text-center text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
+      <h2 className="mx-auto max-w-[800px] lg:max-w-[700px] md:max-w-[500px] sm:max-w-[382px] xs:max-w-[300px]">
         {title}
       </h2>
       <Link className="text-red" to={linkUrl}>
