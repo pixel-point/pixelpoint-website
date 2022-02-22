@@ -1,17 +1,16 @@
 import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 
-const WillTweet = () => (
+const WellThought = () => (
   <section className="safe-paddings mt-52">
     <div className="container">
-      <h2 className="mx-auto max-w-[950px] text-center text-6xl font-normal leading-snug">
-        Get an enticing company marketing website people{' '}
-        <span className="text-red">Will tweet</span> about
+      <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug">
+        Ensure user comfort with a <span className="text-red">Well-thought</span> product design
       </h2>
       <StaticImage
         className="mt-20 rounded-2xl"
         imgClassName="rounded-2xl"
-        src="../will-tweet/images/illustration.jpg"
+        src="../well-thought/images/illustration.jpg"
         alt=""
         aria-hidden
       />
@@ -19,4 +18,4 @@ const WillTweet = () => (
   </section>
 );
 
-export default WillTweet;
+export default WellThought;
