@@ -24,24 +24,29 @@ const items = [
 ];
 
 const Blog = () => (
-  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36">
+  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36  sm:mt-28">
     <div className="container">
-      <h2 className="text-center text-6xl font-normal leading-snug lg:text-5xl md:text-4xl">
+      <h2 className="text-center text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
         Blog.{' '}
         <Link className="text-red" to="/">
           Explore team experience
-          <Arrow className="ml-4 inline-block h-7 lg:ml-3 lg:h-6 md:ml-2 md:h-5" aria-hidden />
+          <Arrow
+            className="ml-4 inline-block h-7 lg:ml-3 lg:h-6 md:ml-2 md:h-5 sm:ml-1.5 sm:h-4 xs:ml-1 xs:h-3"
+            aria-hidden
+          />
         </Link>
       </h2>
-      <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-12 md:mt-10">
+      <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-12 md:mt-10 sm:mt-8 sm:block sm:space-y-4">
         {items.map(({ cover, title, description, to }, index) => (
           <li key={index}>
             <Link to={to}>
               <img className="rounded-2xl" src={cover} alt={title} />
             </Link>
-            <h3 className="mt-5 text-2xl font-normal leading-snug md:mt-4 md:text-xl">{title}</h3>
-            <p className="mt-2.5 text-base md:mt-2 md:text-sm">{description}</p>
-            <Link className="mt-4 md:mt-3" to="/" size="sm" theme="arrow-red">
+            <h3 className="mt-5 text-2xl font-normal leading-snug md:mt-4 md:text-xl sm:mt-3 sm:text-lg">
+              {title}
+            </h3>
+            <p className="mt-2.5 text-base md:mt-2 md:text-sm sm:mt-1.5">{description}</p>
+            <Link className="mt-4 md:mt-3 sm:mt-2" to="/" size="sm" theme="arrow-red">
               Read article
             </Link>
           </li>

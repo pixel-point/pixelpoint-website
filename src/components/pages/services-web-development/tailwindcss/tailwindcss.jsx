@@ -21,25 +21,26 @@ const illustrationCode = `<article className="flex overflow-hidden rounded-2xl">
 </article>`;
 
 const Tailwindcss = () => (
-  <section className="safe-paddings bg-black pt-80 lg:pt-64 md:pt-52">
+  <section className="safe-paddings bg-black pt-80 lg:pt-64 md:pt-52 sm:pt-32">
     <div className="container grid-gap-x grid grid-cols-12 items-center md:block">
       <div className="col-span-6 text-white">
-        <h2 className="max-w-[520px] text-6xl font-normal leading-snug lg:text-5xl md:max-w-none md:text-4xl">
+        <h2 className="max-w-[520px] text-6xl font-normal leading-snug lg:text-5xl md:max-w-none md:text-4xl sm:text-3xl xs:text-2xl">
           Pixel-perfect interface styled with <span className="text-red">TailwindCSS</span>
         </h2>
-        <p className="mt-5 max-w-[420px] md:mt-4 md:max-w-none">
+        <p className="mt-5 max-w-[420px] md:mt-4 md:max-w-none sm:mt-3">
           Scalable, adaptive and highly customizable styling solution with a tiny CSS bundle size.
         </p>
       </div>
-      <div className="col-span-6 md:mt-8" aria-hidden>
-        <div className="flex overflow-hidden rounded-2xl">
+      <div className="col-span-6 md:mt-8 sm:mt-6" aria-hidden>
+        <div className="flex overflow-hidden rounded-2xl sm:block">
           <StaticImage
-            className="w-52 shrink-0 lg:w-44 md:w-52"
+            className="w-52 shrink-0 lg:w-44 md:w-52 sm:h-40 sm:w-full"
+            imgClassName="sm:object-top"
             src="./images/illustration-photo.jpg"
             loading="lazy"
             alt=""
           />
-          <div className="bg-white px-7 py-5 lg:px-4 md:px-7">
+          <div className="bg-white px-7 py-5 lg:px-4 md:px-7 sm:p-4">
             <div className="max-w-[240px] text-xl font-semibold leading-snug lg:max-w-[210px] lg:text-lg md:max-w-[240px] md:text-xl">
               Welcome to Conference in London
             </div>
@@ -55,10 +56,18 @@ const Tailwindcss = () => (
           </div>
         </div>
         <SyntaxHighlighter
-          className="code-highlight scrollbar-hidden mt-8 overflow-scroll rounded-2xl bg-gray-9 p-3 text-sm lg:p-2 lg:text-xs md:p-3 md:text-sm"
+          className="code-highlight scrollbar-hidden mt-8 overflow-scroll rounded-2xl bg-gray-9 p-3 text-sm lg:p-2 lg:text-xs md:p-3 md:text-sm sm:hidden"
           language="jsx"
           useInlineStyles={false}
           showLineNumbers
+        >
+          {illustrationCode}
+        </SyntaxHighlighter>
+
+        <SyntaxHighlighter
+          className="code-highlight scrollbar-hidden mt-6 hidden overflow-scroll rounded-2xl bg-gray-9 p-2 text-xs sm:block"
+          language="jsx"
+          useInlineStyles={false}
         >
           {illustrationCode}
         </SyntaxHighlighter>
