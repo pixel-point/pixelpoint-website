@@ -99,7 +99,7 @@ const CaseStudiesK6Page = () => (
     <Content {...content} />
     <Keynotes {...keynotes} />
     <CaseStudies />
-    <CTA />
+    <CTA withTopMargin />
   </Layout>
 );
 
