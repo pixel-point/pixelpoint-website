@@ -28,8 +28,8 @@ const Header = ({ isMobileMenuOpen, onBurgerClick }) => (
         <span className="sr-only">Pixel Point</span>
         <Logo className="h-9 sm:h-8" aria-hidden />
       </Link>
-      <nav className="flex items-center space-x-6 md:hidden">
-        <ul className="flex items-center space-x-10 border-r border-r-gray-8 pr-6">
+      <nav className="flex items-center md:hidden">
+        <ul className="flex items-center space-x-10">
           {links.map(({ text, to }, index) => (
             <li key={index}>
               <Link to={to} size="sm" theme="white">
@@ -37,10 +37,13 @@ const Header = ({ isMobileMenuOpen, onBurgerClick }) => (
               </Link>
             </li>
           ))}
+
+          <li className="!ml-6 border-l border-l-gray-8 pl-6">
+            <Link to="mailto:info@pixelpoint.io" size="sm" theme="underline-red">
+              info@pixelpoint.io
+            </Link>
+          </li>
         </ul>
-        <Link to="mailto:info@pixelpoint.io" size="sm" theme="underline-red">
-          info@pixelpoint.io
-        </Link>
       </nav>
     </div>
   </header>

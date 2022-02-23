@@ -3,8 +3,7 @@ import React, { Fragment } from 'react';
 
 import Link from 'components/shared/link';
 import GithubLogo from 'images/github.inline.svg';
-
-import QuoteIcon from './images/quote.inline.svg';
+import QuoteIcon from 'images/quote.inline.svg';
 
 const Content = ({
   logo,
@@ -39,7 +38,11 @@ const Content = ({
             <p>{quote.text}</p>
           </blockquote>
           <figcaption className="mt-5 flex items-center">
-            <img className="w-12 rounded-full" src={quote.authorPhoto} alt={quote.authorName} />
+            <img
+              className="w-12 shrink-0 rounded-full"
+              src={quote.authorPhoto}
+              alt={quote.authorName}
+            />
             <span className="ml-4 text-base font-normal">
               {quote.authorName} — {quote.authorPosition}
             </span>
