@@ -3,8 +3,7 @@ import React, { Fragment } from 'react';
 
 import Link from 'components/shared/link';
 import GithubLogo from 'images/github.inline.svg';
-
-import QuoteIcon from './images/quote.inline.svg';
+import QuoteIcon from 'images/quote.inline.svg';
 
 const Content = ({
   logo,

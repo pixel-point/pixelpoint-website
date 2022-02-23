@@ -21,6 +21,13 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'posts',
+        path: `${__dirname}/src/posts`,
+      },
+    },
     'gatsby-plugin-image',
     'gatsby-transformer-sharp',
     {
@@ -63,6 +70,28 @@ module.exports = {
               ],
             },
           },
+        ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        extensions: ['.mdx', '.md'],
+        gatsbyRemarkPlugins: [
+          'gatsby-remark-copy-linked-files',
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 800,
+              quality: 85,
+              withWebp: true,
+              backgroundColor: 'white',
+              disableBgImageOnAlpha: true,
+            },
+          },
+          'gatsby-remark-prismjs',
+          // TODO: Delete if still not needed after moving all posts, don't forget to uninstall this package
+          // 'gatsby-remark-responsive-iframe',
         ],
       },
     },
