@@ -1,14 +1,16 @@
 import React from 'react';
 
+import CaseStudies from 'components/pages/case-studies/case-studies';
 import Hero from 'components/pages/case-studies/hero';
-import CaseStudies from 'components/shared/case-studies';
+import SharedCaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 
 const CaseStudiesPage = () => (
   <Layout>
     <Hero />
-    <CaseStudies title="All case studies" />
+    <CaseStudies />
+    <SharedCaseStudies title="All case studies" />
     <CTA withTopMargin />
   </Layout>
 );
