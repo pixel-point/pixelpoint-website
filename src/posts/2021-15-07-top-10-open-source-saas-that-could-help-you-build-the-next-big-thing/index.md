@@ -1,6 +1,6 @@
 ---
 title: 'Top 10 open-source SaaS that could help you build the next big thing '
-description: 'I'm super happy that investors and big companies are finally happy to support Open Source projects. It was hard to imagine 10 years ago that there will be plenty of SaaS built based on open-source model.'
+description: "I'm super happy that investors and big companies are finally happy to support Open Source projects. It was hard to imagine 10 years ago that there will be plenty of SaaS built based on open-source model."
 ---
 
 ## Top 10 open-source SaaS that could help you build the next big thing
@@ -9,7 +9,7 @@ description: 'I'm super happy that investors and big companies are finally happy
 
 I'm super happy that investors and big companies are finally happy to support Open Source projects. It was hard to imagine 10 years ago that there will be plenty of SaaS built based on open-source model.
 
-Here is the list of my favourites that could help you build amazing modern architecture covering different aspects of product development and architecture.
+Here is the list of my favorites that could help you build amazing modern architecture covering different aspects of product development and architecture.
 
 ### [Hasura](https://github.com/hasura/graphql-engine)
 
