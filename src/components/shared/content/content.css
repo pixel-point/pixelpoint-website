@@ -6,6 +6,21 @@
       @apply relative font-normal text-red no-underline after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200 hover:after:bg-opacity-100;
     }
 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    blockquote {
+      @apply text-inherit;
+    }
+
+    strong {
+      @apply font-normal;
+    }
+
     ul,
     ol {
       @apply list-none pl-6;
@@ -47,22 +62,9 @@
       }
     }
 
-    /* TODO: Delete if still not needed after moving all posts */
-    /* .table-wrapper {
-      @apply sm:overflow-x-auto;
+    .gatsby-resp-image-wrapper + em {
+      @apply mt-[1em] block text-center text-[0.8888889em] not-italic;
     }
-
-    table {
-      @apply w-full border-hidden sm:min-w-[500px];
-
-      th {
-        @apply border border-gray-4 p-3.5 sm:px-2;
-      }
-
-      td {
-        @apply border border-gray-4 p-3.5 sm:px-2;
-      }
-    } */
 
     pre {
       @apply code-block p-4;
@@ -81,14 +83,7 @@
       }
     }
 
-    /* TODO: Delete if still not needed after moving all posts */
-    /* iframe,
-    video {
-      @apply mx-auto rounded-md;
-    } */
-
-    /* TODO: Delete if still not needed after moving all posts */
-    /* blockquote {
+    blockquote {
       @apply border-red font-light not-italic;
 
       p {
@@ -97,6 +92,6 @@
           @apply hidden;
         }
       }
-    } */
+    }
   }
 }
