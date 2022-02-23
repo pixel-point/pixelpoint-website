@@ -17,7 +17,7 @@ const BlogTemplate = ({
     <Hero />
     <PostsList items={nodes} />
     <CaseStudies />
-    <CTA />
+    <CTA withTopMargin />
   </Layout>
 );
 

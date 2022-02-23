@@ -17,7 +17,7 @@ const BlogPostTemplate = ({
       <Hero {...frontmatter} slug={slug} />
       <Content className="mt-20" content={body} />
     </article>
-    <CTA />
+    <CTA withTopMargin />
   </Layout>
 );
 
