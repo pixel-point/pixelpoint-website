@@ -13,7 +13,7 @@ module.exports = {
       lg: { max: '1279px' },
       md: { max: '1023px' },
       sm: { max: '767px' },
-      xs: { max: '359px' },
+      xs: { max: '413px' },
     },
     fontFamily: {
       sans: ['usual', ...defaultTheme.fontFamily.sans],
@@ -28,7 +28,7 @@ module.exports = {
       lg: ['18px'],
       xl: ['20px'],
       '2xl': ['24px'],
-      // '3xl': ['30px'],
+      '3xl': ['30px'],
       '4xl': ['36px'],
       '5xl': ['48px'],
       '6xl': ['56px'],

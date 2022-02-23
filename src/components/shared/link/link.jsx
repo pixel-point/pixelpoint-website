@@ -8,7 +8,7 @@ import Arrow from 'images/arrow.inline.svg';
 const styles = {
   base: 'inline-flex leading-none transition-colors duration-200',
   size: {
-    sm: 'text-base',
+    sm: 'text-base sm:text-sm',
   },
   theme: {
     white: 'text-white font-normal hover:text-red',
