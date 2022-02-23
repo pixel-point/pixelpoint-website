@@ -10,37 +10,43 @@ import k6Logo from './images/k6.svg';
 const items = [
   {
     logo: flagsmithLogo,
-    title: 'Flagsmith — open-source feature flag & remote config service',
+    name: 'Flagsmith',
+    title: 'Feature flag & remote config service',
     stars: '32,934',
     to: '/case-studies/flagsmith',
   },
   {
     logo: droneLogo,
-    title: 'Drone — self-service continuous integration platform',
+    name: 'Drone',
+    title: 'Self-service continuous integration platform',
     stars: '32,934',
     to: '/case-studies/drone',
   },
   {
     logo: k6Logo,
-    title: 'k6 — open-source load testing tool and cloud service',
+    name: 'k6',
+    title: 'Load testing tool and cloud service',
     stars: '32,934',
     to: '/case-studies/k6',
   },
   {
     logo: flagsmithLogo,
-    title: 'Flagsmith — open-source feature flag & remote config service',
+    name: 'Flagsmith',
+    title: 'Feature flag & remote config service',
     stars: '32,934',
     to: '/case-studies/flagsmith',
   },
   {
     logo: droneLogo,
-    title: 'Drone — self-service continuous integration platform',
+    name: 'Drone',
+    title: 'Self-service continuous integration platform',
     stars: '32,934',
     to: '/case-studies/drone',
   },
   {
     logo: k6Logo,
-    title: 'k6 — open-source load testing tool and cloud service',
+    name: 'k6',
+    title: 'Load testing tool and cloud service',
     stars: '32,934',
     to: '/case-studies/k6',
   },
@@ -54,19 +60,23 @@ const CaseStudies = () => (
         <span className="text-red">Open-Source</span> projects:
       </h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
-        {items.map(({ logo, title, stars, to }, index) => (
-          <li key={index}>
-            <Link className="group" to={to}>
-              <div className="relative flex aspect-[384/200] items-center justify-center rounded-2xl bg-black">
-                <div className="absolute top-3 left-3 flex items-center">
-                  <GithubLogo className="h-7 text-white" />
-                  <span className="ml-2 text-xs font-semibold text-white">{stars}</span>
-                </div>
-                <img src={logo} loading="lazy" alt={title} />
+        {items.map(({ logo, name, title, stars, to }, index) => (
+          <li className="flex flex-col" key={index}>
+            <Link
+              className="relative flex aspect-[384/200] items-center justify-center rounded-2xl bg-black"
+              to={to}
+            >
+              <img src={logo} loading="lazy" alt={`${name}'s logo`} />
+              <div className="absolute top-3 left-3 flex items-center">
+                <GithubLogo className="h-7 text-white" />
+                <span className="ml-2 text-xs font-semibold text-white">
+                  {stars} <span className="sr-only">stars on Github</span>
+                </span>
               </div>
-              <h3 className="mt-4 font-normal leading-snug transition-colors duration-200 group-hover:text-red">
-                {title}
-              </h3>
+            </Link>
+            <h3 className="my-4 font-normal leading-snug">{title}</h3>
+            <Link className="mt-auto self-start" to={to} size="sm" theme="arrow-red">
+              {name} case study
             </Link>
           </li>
         ))}
