@@ -61,7 +61,7 @@ const CaseStudies = () => (
       </h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
         {items.map(({ logo, name, title, stars, to }, index) => (
-          <li key={index}>
+          <li className="flex flex-col" key={index}>
             <Link
               className="relative flex aspect-[384/200] items-center justify-center rounded-2xl bg-black"
               to={to}
@@ -74,8 +74,8 @@ const CaseStudies = () => (
                 </span>
               </div>
             </Link>
-            <h3 className="mt-4 font-normal leading-snug">{title}</h3>
-            <Link className="mt-4" to={to} size="sm" theme="arrow-red">
+            <h3 className="my-4 font-normal leading-snug">{title}</h3>
+            <Link className="mt-auto self-start" to={to} size="sm" theme="arrow-red">
               {name} case study
             </Link>
           </li>
