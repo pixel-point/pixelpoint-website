@@ -11,7 +11,7 @@ const Hero = () => {
   });
 
   const params = {
-    src: '/rive/home-hero-9.riv',
+    src: '/rive/home-hero.riv',
     autoplay: false,
     stateMachines: STATE_MACHINE_NAME,
     layout: new Layout({
