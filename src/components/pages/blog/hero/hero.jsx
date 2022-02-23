@@ -26,9 +26,12 @@ const Hero = () => (
           </blockquote>
           <figcaption className="mt-5 flex items-center space-x-4">
             <StaticImage
-              className="w-12 rounded-full"
+              className="rounded-full"
               imgClassName="rounded-full"
               src="./images/photo.jpg"
+              layout="fixed"
+              height={48}
+              width={48}
               alt="Alex Barashkov's photo"
             />
             <span className="text-base font-normal">Alex Barashkov — CEO at Pixel Point</span>
