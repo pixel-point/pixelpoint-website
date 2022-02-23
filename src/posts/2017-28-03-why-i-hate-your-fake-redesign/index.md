@@ -1,9 +1,9 @@
 ---
-title: 'Why I hate your fake redesign'
+title: 'Why I HATE your FAKE redesign'
 description: 'I’m tired of seeing new and frankly stupid redesigns of Facebook, Skype, and Twitter pop up on my newsfeed. Why not make something useful…'
 ---
 
-## Why I hate your fake redesign
+## Why I HATE your FAKE redesign
 
 I’m tired of seeing new and frankly stupid redesigns of Facebook, Skype, and Twitter pop up on my newsfeed. Why not make something useful? Stop supporting these redesigns with likes, re-posts, and articles at Muzli, Medium, Designer News, etc. You’re aiding and abetting this brainless work. These designers may start to think that they are true professionals, and that they know more about how popular services should look than their creators.
 
