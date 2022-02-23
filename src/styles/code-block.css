@@ -3,7 +3,7 @@
     @apply scrollbar-hidden overflow-scroll rounded-2xl bg-gray-9 text-white;
 
     .linenumber {
-      @apply mr-2.5 !min-w-[18px] !pr-0 text-gray-7;
+      @apply mr-2.5 !min-w-[18px] !pr-0 text-gray-7 lg:mr-2 lg:min-w-[15px] md:mr-2.5 md:min-w-[18px];
     }
 
     .tag,

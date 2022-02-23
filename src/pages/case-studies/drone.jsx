@@ -98,7 +98,7 @@ const CaseStudiesDronePage = () => (
     <Content {...content} />
     <Keynotes {...keynotes} />
     <CaseStudies />
-    <CTA />
+    <CTA withTopMargin />
   </Layout>
 );
 
