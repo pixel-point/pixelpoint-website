@@ -51,10 +51,8 @@ The reality is that browsers have their internal cache policies and could decide
 
 ![ ](cache4.jpeg)
 _Requests flow with Last-Modified — 1st load_
-
-![ ](cache5.png)
+![ ](cache5.jpeg)
 _Requests flow with Last-Modified — 2nd load (Perfect Scenario)_
-
 ![ ](cache6.jpeg)
 _Requests flow with Last-Modified — 2nd load (Common case)_
 
