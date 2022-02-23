@@ -11,7 +11,7 @@ import logoZenith from './images/logo-zenith.svg';
 const items = [
   {
     logo: logoBrowserless,
-    title: 'Browserless',
+    name: 'Browserless',
     description: 'A full-fledged marketing platform worthy of unmatched OS load testing tool',
     to: '/case-studies/browserless',
     quote: {
@@ -25,14 +25,14 @@ const items = [
         className="rounded-2xl"
         imgClassName="rounded-2xl"
         src="./images/cover-browserless.jpg"
-        alt=""
-        aria-hidden
+        alt="Browserless website"
+        loading="lazy"
       />
     ),
   },
   {
     logo: logoRevenuecat,
-    title: 'Revenuecat',
+    name: 'Revenuecat',
     description: 'A full-fledged marketing platform worthy of unmatched OS load testing tool',
     to: '/case-studies/revenuecat',
     quote: {
@@ -46,14 +46,14 @@ const items = [
         className="rounded-2xl"
         imgClassName="rounded-2xl"
         src="./images/cover-revenuecat.jpg"
-        alt=""
-        aria-hidden
+        alt="Revenuecat website"
+        loading="lazy"
       />
     ),
   },
   {
     logo: logoZenith,
-    title: 'Zenith',
+    name: 'Zenith',
     description: 'A full-fledged marketing platform worthy of unmatched OS load testing tool',
     to: '/case-studies/zenith',
     quote: {
@@ -67,8 +67,8 @@ const items = [
         className="rounded-2xl"
         imgClassName="rounded-2xl"
         src="./images/cover-zenith.jpg"
-        alt=""
-        aria-hidden
+        alt="Zenith website"
+        loading="lazy"
       />
     ),
   },
@@ -77,11 +77,11 @@ const items = [
 const CaseStudies = () => (
   <section className="safe-paddings mt-32">
     <div className="container space-y-40">
-      {items.map(({ logo, title, description, to, quote, cover }) => (
-        <article className="grid-gap-x grid grid-cols-2">
+      {items.map(({ logo, name, description, to, quote, cover }, index) => (
+        <article className="grid-gap-x grid grid-cols-2" key={index}>
           <div>
-            <h1 className="sr-only">{title}</h1>
-            <img src={logo} alt={`${title}'s logo`} />
+            <h1 className="sr-only">{`${name} case study`}</h1>
+            <img src={logo} alt={`${name} logo`} loading="lazy" />
             <p className="mt-4 font-normal leading-snug">{description}</p>
             <figure className="mt-5 border-t border-t-gray-4 pt-5">
               <blockquote>
@@ -92,6 +92,7 @@ const CaseStudies = () => (
                   className="w-10 shrink-0 rounded-full"
                   src={quote.authorPhoto}
                   alt={quote.authorName}
+                  loading="lazy"
                 />
                 <span className="ml-3.5 text-base font-normal">
                   {quote.authorName} — {quote.authorPosition}
@@ -99,10 +100,12 @@ const CaseStudies = () => (
               </figcaption>
             </figure>
             <Link className="mt-8" to={to} size="sm" theme="arrow-red">
-              {title} case study
+              {name} case study
             </Link>
           </div>
-          <Link to={to}>{cover}</Link>
+          <Link to={to} aria-label={`${name} case study`}>
+            {cover}
+          </Link>
         </article>
       ))}
     </div>

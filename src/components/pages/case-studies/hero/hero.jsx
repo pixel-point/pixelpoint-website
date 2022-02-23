@@ -9,7 +9,7 @@ const Hero = () => (
       <p className="mt-2.5 font-normal leading-snug">
         A full-fledged marketing platform worthy of unmatched OS load testing tool
       </p>
-      <img className="mt-16" src={illustration} alt="" aria-hidden />
+      <img className="mt-16" src={illustration} alt="" loading="eager" aria-hidden />
     </div>
   </section>
 );
