@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Link from 'components/shared/link';
@@ -52,13 +53,10 @@ const items = [
   },
 ];
 
-const CaseStudies = () => (
+const CaseStudies = ({ title }) => (
   <section className="safe-paddings mt-52">
     <div className="container">
-      <h2 className="max-w-[800px] text-4xl font-normal leading-snug">
-        We provide design & development services for popular{' '}
-        <span className="text-red">Open-Source</span> projects:
-      </h2>
+      <h2 className="max-w-[800px] text-4xl font-normal leading-snug">{title}</h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
         {items.map(({ logo, name, title, stars, to }, index) => (
           <li className="flex flex-col" key={index}>
@@ -84,5 +82,18 @@ const CaseStudies = () => (
     </div>
   </section>
 );
+
+CaseStudies.propTypes = {
+  title: PropTypes.node,
+};
+
+CaseStudies.defaultProps = {
+  title: (
+    <>
+      We provide design & development services for popular{' '}
+      <span className="text-red">Open-Source</span> projects:
+    </>
+  ),
+};
 
 export default CaseStudies;
