@@ -1,3 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { MDXProvider } from '@mdx-js/react';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
+import { MDXRenderer } from 'gatsby-plugin-mdx';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 
@@ -9,7 +13,7 @@ const Content = ({
   logo,
   title,
   description,
-  url,
+  websiteUrl,
   githubUrl,
   githubStars,
   quote,
@@ -24,7 +28,7 @@ const Content = ({
         <p className="mt-2.5 font-normal leading-snug">{description}</p>
         <Link
           className="mt-7 rounded-full border border-red py-3 px-5"
-          to={url}
+          to={websiteUrl}
           size="sm"
           theme="arrow-red"
           target="_blank"
@@ -38,9 +42,9 @@ const Content = ({
             <p>{quote.text}</p>
           </blockquote>
           <figcaption className="mt-5 flex items-center">
-            <img
+            <GatsbyImage
               className="w-12 shrink-0 rounded-full"
-              src={quote.authorPhoto}
+              image={getImage(quote.authorPhoto)}
               alt={quote.authorName}
             />
             <span className="ml-4 text-base font-normal">
@@ -49,7 +53,11 @@ const Content = ({
           </figcaption>
         </figure>
         <h2 className="mt-12 text-2xl font-normal leading-snug">About the project</h2>
-        <div className="mt-2.5 space-y-5">{text}</div>
+        <div className="mt-2.5 space-y-5">
+          <MDXProvider>
+            <MDXRenderer>{text}</MDXRenderer>
+          </MDXProvider>
+        </div>
       </div>
       <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7">
         <img src={logo} alt={title} loading="eager" />
@@ -84,14 +92,18 @@ Content.propTypes = {
   logo: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  websiteUrl: PropTypes.string.isRequired,
   githubUrl: PropTypes.string.isRequired,
   githubStars: PropTypes.string.isRequired,
   quote: PropTypes.exact({
     text: PropTypes.string.isRequired,
-    authorPhoto: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired,
     authorPosition: PropTypes.string.isRequired,
+    authorPhoto: PropTypes.exact({
+      childImageSharp: PropTypes.exact({
+        gatsbyImageData: PropTypes.object.isRequired,
+      }).isRequired,
+    }).isRequired,
   }).isRequired,
   text: PropTypes.node.isRequired,
   services: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,

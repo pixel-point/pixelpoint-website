@@ -1,6 +1,7 @@
 const path = require('path');
 
 const { BLOG_BASE_PATH } = require('./src/constants/blog');
+const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
 const getBlogPostPath = require('./src/utils/get-blog-post-path');
 
 // We have this variable in order to decide whether to render draft posts or not
@@ -63,6 +64,47 @@ async function createBlogPosts({ graphql, actions }) {
   });
 }
 
+async function createCaseStudies({ graphql, actions }) {
+  const result = await graphql(`
+    {
+      allMdx(filter: { fileAbsolutePath: { regex: "/case-studies/" } }) {
+        nodes {
+          id
+          slug
+          fields {
+            draft
+          }
+          frontmatter {
+            title
+            description
+          }
+        }
+      }
+    }
+  `);
+
+  if (result.errors) throw new Error(result.errors);
+
+  result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
+    // Do not create a post in production if it's draft
+    if (process.env.NODE_ENV === 'production' && fields.draft) return;
+
+    // Required fields validation
+    if (!frontmatter.title) {
+      throw new Error(`Case Study with ID "${id}" does not have field "title"!`);
+    }
+    if (!frontmatter.description) {
+      throw new Error(`Case Study "${frontmatter.title}" does not have field "description"!`);
+    }
+
+    actions.createPage({
+      path: `${CASE_STUDIES_BASE_PATH}/${slug}`,
+      component: path.resolve('./src/templates/case-study.jsx'),
+      context: { id },
+    });
+  });
+}
+
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions;
 
@@ -78,4 +120,5 @@ exports.onCreateNode = ({ node, actions }) => {
 exports.createPages = async (options) => {
   await createBlogPage(options);
   await createBlogPosts(options);
+  await createCaseStudies(options);
 };

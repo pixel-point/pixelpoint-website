@@ -32,7 +32,7 @@ const items = [
   },
   {
     logo: logoRevenuecat,
-    name: 'Revenuecat',
+    name: 'RevenueCat',
     description: 'A full-fledged marketing platform worthy of unmatched OS load testing tool',
     to: '/case-studies/revenuecat',
     quote: {
@@ -46,7 +46,7 @@ const items = [
         className="rounded-2xl"
         imgClassName="rounded-2xl"
         src="./images/cover-revenuecat.jpg"
-        alt="Revenuecat website"
+        alt="RevenueCat website"
         loading="lazy"
       />
     ),

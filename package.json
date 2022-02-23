@@ -58,7 +58,6 @@
     "gatsby-remark-copy-linked-files": "^5.7.0",
     "gatsby-remark-images": "^6.7.0",
     "gatsby-remark-prismjs": "^6.7.0",
-    "gatsby-remark-responsive-iframe": "^5.7.0",
     "gatsby-source-filesystem": "^4.6.0",
     "gatsby-transformer-sharp": "^4.6.0",
     "husky": "^7.0.4",
