@@ -10,37 +10,37 @@ import k6Logo from './images/k6.svg';
 const items = [
   {
     logo: flagsmithLogo,
-    title: 'Flagsmith — Open source feature flag & remote config service',
+    title: 'Flagsmith — open-source feature flag & remote config service',
     stars: '32,934',
     to: '/case-studies/flagsmith',
   },
   {
     logo: droneLogo,
-    title: 'Drone — Automate software testing and delivery',
+    title: 'Drone — self-service continuous integration platform',
     stars: '32,934',
     to: '/case-studies/drone',
   },
   {
     logo: k6Logo,
-    title: 'k6 — Load testing for engineering teams',
+    title: 'k6 — open-source load testing tool and cloud service',
     stars: '32,934',
     to: '/case-studies/k6',
   },
   {
     logo: flagsmithLogo,
-    title: 'Flagsmith — Open source feature flag & remote config service',
+    title: 'Flagsmith — open-source feature flag & remote config service',
     stars: '32,934',
     to: '/case-studies/flagsmith',
   },
   {
     logo: droneLogo,
-    title: 'Drone — Automate software testing and delivery',
+    title: 'Drone — self-service continuous integration platform',
     stars: '32,934',
     to: '/case-studies/drone',
   },
   {
     logo: k6Logo,
-    title: 'k6 — Load testing for engineering teams',
+    title: 'k6 — open-source load testing tool and cloud service',
     stars: '32,934',
     to: '/case-studies/k6',
   },
