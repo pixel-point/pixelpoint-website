@@ -5,23 +5,16 @@ import Logo from 'images/logo.inline.svg';
 
 const links = [
   [
-    { text: 'Branding', to: '/' },
-    { text: 'Website Design', to: '/' },
-    { text: 'Motion Design', to: '/' },
+    { text: 'Web design', to: '/services/web-design' },
+    { text: 'Front-end development', to: '/services/web-development' },
   ],
   [
-    { text: 'Frontend Development', to: '/' },
-    { text: 'Graphic Design', to: '/' },
-    { text: 'Product Design', to: '/' },
+    { text: 'Case studies', to: '/case-studies' },
+    { text: 'Blog', to: '/blog' },
   ],
   [
-    { text: 'Case Studies ', to: '/' },
-    { text: 'Blog', to: '/' },
-    { text: 'About Us', to: '/' },
-  ],
-  [
-    { text: 'Github', to: '/' },
-    { text: 'Twitter', to: '/' },
+    { text: 'Github', to: 'https://github.com/pixel-point' },
+    { text: 'Twitter', to: 'https://twitter.com/alex_barashkov' },
   ],
 ];
 

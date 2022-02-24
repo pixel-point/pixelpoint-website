@@ -41,7 +41,7 @@ const Services = () => {
             graphic design with entertaining illustrations, exciting social media covers and, of
             course, high-quality branded items.
           </p>
-          <Link className="mt-5" to="/" size="sm" theme="arrow-red">
+          <Link className="mt-5" to="/services/web-design" size="sm" theme="arrow-red">
             Read more
           </Link>
         </div>
@@ -52,7 +52,7 @@ const Services = () => {
             will please the business while website performance, accessibility and mobile devices
             adaptation will ensure an outstanding experience for your customers.
           </p>
-          <Link className="mt-5" to="/" size="sm" theme="arrow-red">
+          <Link className="mt-5" to="/services/web-development" size="sm" theme="arrow-red">
             Read more
           </Link>
         </div>

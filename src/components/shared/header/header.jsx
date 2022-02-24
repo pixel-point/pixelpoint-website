@@ -19,7 +19,7 @@ const links = [
         description:
           'Our approach is rather inclusive: web-design to us is not only effective, efficient and visually pleasing displays.',
         linkText: 'Read more',
-        to: '/services-web-design',
+        to: '/services/web-design',
       },
       {
         icon: ServicesWebDevelopmentIcon,
@@ -27,17 +27,17 @@ const links = [
         description:
           'Our approach is rather inclusive: web-design to us is not only effective, efficient and visually pleasing displays.',
         linkText: 'Read more',
-        to: '/services-web-development',
+        to: '/services/web-development',
       },
     ],
   },
   {
     text: 'Case studies',
-    to: '/',
+    to: '/case-studies',
   },
   {
     text: 'Blog',
-    to: '/',
+    to: '/blog',
   },
 ];
 
