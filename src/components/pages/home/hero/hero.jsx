@@ -6,9 +6,7 @@ const STATE_MACHINE_NAME = 'State Machine';
 const INPUT_NAME = 'Fall Trigger';
 
 const Hero = () => {
-  const [wrapperRef, isWrapperInView] = useInView({
-    threshold: 0,
-  });
+  const [wrapperRef, isWrapperInView] = useInView();
 
   const params = {
     src: '/rive/home-hero.riv',
@@ -47,7 +45,6 @@ const Hero = () => {
     // Add event listener to window scroll
     const handleScroll = () => {
       if (currentAnimState !== 'fall' && rive && window.scrollY > firstSectionHeight - 600) {
-        console.log('bbb');
         window.rive = rive;
         setCurrentAnimState('fall');
         fallState.fire();

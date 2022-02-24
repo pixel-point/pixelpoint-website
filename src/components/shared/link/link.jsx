@@ -36,6 +36,14 @@ const Link = ({ className: additionalClassName, size, theme, to, children, ...pr
       children
     );
 
+  if (!to) {
+    return (
+      <span className={className} {...props}>
+        {content}
+      </span>
+    );
+  }
+
   if (to.startsWith('/')) {
     return (
       <GatsbyLink className={className} to={to} {...props}>

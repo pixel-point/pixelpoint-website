@@ -16,7 +16,7 @@ const Services = () => {
 
   const { RiveComponent, rive } = useRive(params);
   const [wrapperRef, isWrapperInView] = useInView({
-    threshold: 0.5,
+    threshold: 0.3,
   });
 
   useEffect(() => {
@@ -24,8 +24,9 @@ const Services = () => {
       rive.play();
     }
   }, [isWrapperInView, rive]);
+
   return (
-    <section className="safe-paddings mt-52 bg-black text-white" ref={wrapperRef}>
+    <section className="safe-paddings mt-52 overflow-hidden bg-black text-white" ref={wrapperRef}>
       <div className="container relative">
         <div className="flex max-w-[592px] items-center pt-[300px]">
           <h2 className="text-6xl font-normal leading-snug">
