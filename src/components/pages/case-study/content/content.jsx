@@ -61,15 +61,17 @@ const Content = ({
       </div>
       <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7">
         <img src={logo} alt={title} loading="eager" />
-        <Link
-          className="mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4"
-          to={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <GithubLogo className="h-7 text-white" aria-hidden />
-          <span className="ml-2 text-xs font-semibold text-white">{githubStars}</span>
-        </Link>
+        {githubUrl && githubStars && (
+          <Link
+            className="mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4"
+            to={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GithubLogo className="h-7 text-white" aria-hidden />
+            <span className="ml-2 text-xs font-semibold text-white">{githubStars}</span>
+          </Link>
+        )}
         {[
           { title: 'Provided services', items: services },
           { title: 'Technology stack', items: stack },
@@ -93,8 +95,8 @@ Content.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   websiteUrl: PropTypes.string.isRequired,
-  githubUrl: PropTypes.string.isRequired,
-  githubStars: PropTypes.string.isRequired,
+  githubUrl: PropTypes.string,
+  githubStars: PropTypes.string,
   quote: PropTypes.exact({
     text: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired,
@@ -108,6 +110,11 @@ Content.propTypes = {
   text: PropTypes.node.isRequired,
   services: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   stack: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+};
+
+Content.defaultProps = {
+  githubUrl: null,
+  githubStars: null,
 };
 
 export default Content;

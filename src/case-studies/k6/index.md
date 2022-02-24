@@ -34,6 +34,8 @@ keynotes:
   - Median user visit time increased tenfold
   - Github Stars increase from 4k to 15.5k
   - k6 got acquired by Grafana Labs
+isOpenSource: true
+position: 6
 ---
 
 We met with the guys during their rebranding from Loadimpact to k6, and they clearly showed they were ready to hit it big on the competitive market.

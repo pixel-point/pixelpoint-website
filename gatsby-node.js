@@ -1,5 +1,7 @@
 const path = require('path');
 
+const get = require('lodash.get');
+
 const { BLOG_BASE_PATH } = require('./src/constants/blog');
 const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
 const getBlogPostPath = require('./src/utils/get-blog-post-path');
@@ -10,6 +12,25 @@ const getBlogPostPath = require('./src/utils/get-blog-post-path');
 // We have an array structure here in order to use it in the filter using the "in" operator
 const DRAFT_FILTER = process.env.NODE_ENV === 'production' ? [false] : [true, false];
 
+const POST_REQUIRED_FIELDS = ['title', 'description'];
+
+const CASE_STUDY_REQUIRED_FIELDS = [
+  'logo',
+  'title',
+  'description',
+  'websiteUrl',
+  'quote.text',
+  'quote.authorName',
+  'quote.authorPosition',
+  'quote.authorPhoto',
+  'services',
+  'stack',
+  'keynotes',
+  'position',
+];
+const FEATURED_CASE_STUDY_REQUIRED_FIELDS = ['cover'];
+const OPEN_SOURCE_CASE_STUDY_REQUIRED_FIELDS = ['githubUrl', 'githubStars'];
+
 async function createBlogPage({ actions }) {
   const { createPage } = actions;
 
@@ -18,7 +39,6 @@ async function createBlogPage({ actions }) {
     component: path.resolve('./src/templates/blog.jsx'),
     context: {
       draftFilter: DRAFT_FILTER,
-      canonicalUrl: `${process.env.GATSBY_DEFAULT_SITE_URL}${BLOG_BASE_PATH}`,
     },
   });
 }
@@ -31,7 +51,7 @@ async function createBlogPosts({ graphql, actions }) {
           id
           slug
           fields {
-            draft
+            isDraft
           }
           frontmatter {
             title
@@ -46,21 +66,32 @@ async function createBlogPosts({ graphql, actions }) {
 
   result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
     // Do not create a post in production if it's draft
-    if (process.env.NODE_ENV === 'production' && fields.draft) return;
+    if (process.env.NODE_ENV === 'production' && fields.isDraft) return;
 
     // Required fields validation
-    if (!frontmatter.title) {
-      throw new Error(`Post with ID "${id}" does not have field "title"!`);
-    }
-    if (!frontmatter.description) {
-      throw new Error(`Post "${frontmatter.title}" does not have field "description"!`);
-    }
+    POST_REQUIRED_FIELDS.forEach((fieldName) => {
+      if (!get(frontmatter, fieldName)) {
+        throw new Error(`Post "${slug}" does not have field "${fieldName}"!`);
+      }
+    });
 
     actions.createPage({
       path: getBlogPostPath(slug),
       component: path.resolve('./src/templates/blog-post.jsx'),
       context: { id },
     });
+  });
+}
+
+async function createCaseStudiesPage({ actions }) {
+  const { createPage } = actions;
+
+  createPage({
+    path: CASE_STUDIES_BASE_PATH,
+    component: path.resolve('./src/templates/case-studies.jsx'),
+    context: {
+      draftFilter: DRAFT_FILTER,
+    },
   });
 }
 
@@ -72,11 +103,34 @@ async function createCaseStudies({ graphql, actions }) {
           id
           slug
           fields {
-            draft
+            isDraft
           }
           frontmatter {
+            logo {
+              publicURL
+            }
             title
             description
+            websiteUrl
+            githubUrl
+            githubStars
+            quote {
+              text
+              authorName
+              authorPosition
+              authorPhoto {
+                publicURL
+              }
+            }
+            services
+            stack
+            keynotes
+            position
+            cover {
+              publicURL
+            }
+            isFeatured
+            isOpenSource
           }
         }
       }
@@ -87,14 +141,29 @@ async function createCaseStudies({ graphql, actions }) {
 
   result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
     // Do not create a post in production if it's draft
-    if (process.env.NODE_ENV === 'production' && fields.draft) return;
+    if (process.env.NODE_ENV === 'production' && fields.isDraft) return;
 
     // Required fields validation
-    if (!frontmatter.title) {
-      throw new Error(`Case Study with ID "${id}" does not have field "title"!`);
+    CASE_STUDY_REQUIRED_FIELDS.forEach((fieldName) => {
+      if (!get(frontmatter, fieldName)) {
+        throw new Error(`Case Study "${slug}" does not have field "${fieldName}"!`);
+      }
+    });
+
+    if (frontmatter.isFeatured) {
+      FEATURED_CASE_STUDY_REQUIRED_FIELDS.forEach((fieldName) => {
+        if (!get(frontmatter, fieldName)) {
+          throw new Error(`Case Study "${slug}" does not have field "${fieldName}"!`);
+        }
+      });
     }
-    if (!frontmatter.description) {
-      throw new Error(`Case Study "${frontmatter.title}" does not have field "description"!`);
+
+    if (frontmatter.isOpenSource) {
+      OPEN_SOURCE_CASE_STUDY_REQUIRED_FIELDS.forEach((fieldName) => {
+        if (!get(frontmatter, fieldName)) {
+          throw new Error(`Case Study "${slug}" does not have field "${fieldName}"!`);
+        }
+      });
     }
 
     actions.createPage({
@@ -111,8 +180,20 @@ exports.onCreateNode = ({ node, actions }) => {
   if (node.frontmatter) {
     createNodeField({
       node,
-      name: 'draft',
-      value: node.frontmatter.draft || false,
+      name: 'isDraft',
+      value: node.frontmatter.isDraft || false,
+    });
+
+    createNodeField({
+      node,
+      name: 'isFeatured',
+      value: node.frontmatter.isFeatured || false,
+    });
+
+    createNodeField({
+      node,
+      name: 'isOpenSource',
+      value: node.frontmatter.isOpenSource || false,
     });
   }
 };
@@ -120,5 +201,6 @@ exports.onCreateNode = ({ node, actions }) => {
 exports.createPages = async (options) => {
   await createBlogPage(options);
   await createBlogPosts(options);
+  await createCaseStudiesPage(options);
   await createCaseStudies(options);
 };
