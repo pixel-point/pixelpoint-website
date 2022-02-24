@@ -15,7 +15,7 @@ const illustrationCode = `<article className="flex overflow-hidden rounded-2xl s
     <p className="mt-2 text-sm font-normal text-gray-7 lg:text-xs md:text-sm">Kube Forwarder app as an alternative for native built-in Kubernetes port forwarding.</p>
     <button className="mt-4 flex items-center justify-between border-t border-t-gray-4 pt-5 lg:mt-3.5 lg:pt-4 md:mt-4 md:pt-5">
       <span className="flex h-11 items-center justify-center rounded-lg bg-black px-7 text-sm font-semibold text-white lg:h-10 lg:px-5 lg:text-xs md:h-11 md:px-7 md:text-sm">Read more</span>
-      <IllustrationHeartIcon className="h-11 lg:h-10 md:h-11" />
+      <HeartIcon className="h-11 lg:h-10 md:h-11" />
     </button>
   </div>
 </article>`;
