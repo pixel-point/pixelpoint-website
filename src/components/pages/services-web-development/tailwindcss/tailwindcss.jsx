@@ -12,9 +12,9 @@ const illustrationCode = `<article className="flex overflow-hidden rounded-2xl">
   <StaticImage className="h-56 w-52 shrink-0" imgClassName="rounded-l-2xl object-center" src="./illustration.jpg" loading="lazy" alt="" />
   <div className="bg-white px-7 py-5">
     <h1 className="max-w-[240px] text-xl font-semibold leading-snug">Welcome to Conference in London</h1>
-    <p className="mt-2 text-sm font-normal text-gray-7">Kube Forwarder app as an alternative for native built-in Kubernetes port forwarding.</p>
+    <p className="mt-2 text-sm font-normal text-gray-7">The home of global innovators, disruptors, and tech leaders. Registration is open!</p>
     <div className="mt-4 flex items-center justify-between border-t border-t-gray-4 pt-5">
-      <button className="flex h-11 items-center justify-center rounded-lg bg-black px-7 text-sm font-semibold text-white">Read more</button>
+      <button className="flex h-11 items-center justify-center rounded-lg bg-black px-7 text-sm font-semibold text-white">Join now</button>
       <HeartIcon className="h-11" />`;
 
 const Tailwindcss = () => (
@@ -42,11 +42,11 @@ const Tailwindcss = () => (
               Welcome to Conference in London
             </div>
             <div className="mt-2 text-sm font-normal text-gray-7 lg:text-xs md:text-sm">
-              Kube Forwarder app as an alternative for native built-in Kubernetes port forwarding.
+              The home of global innovators, disruptors, and tech leaders. Registration is open!
             </div>
             <div className="mt-4 flex items-center justify-between border-t border-t-gray-4 pt-5 lg:mt-3.5 lg:pt-4 md:mt-4 md:pt-5">
               <span className="flex h-11 cursor-pointer items-center justify-center rounded-lg bg-black px-7 text-sm font-semibold text-white lg:h-10 lg:px-5 lg:text-xs md:h-11 md:px-7 md:text-sm">
-                Read more
+                Join now
               </span>
               <IllustrationHeartIcon className="h-11 cursor-pointer lg:h-10 md:h-11" />
             </div>
