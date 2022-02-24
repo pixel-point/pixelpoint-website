@@ -9,7 +9,7 @@ SyntaxHighlighter.registerLanguage('jsx', jsx);
 
 // If you are replacing the code, don't forget to fix the code and remove cursor-pointer classes
 const illustrationCode = `<article className="flex overflow-hidden rounded-2xl sm:block">
-  <StaticImage className="h-56 w-52 shrink-0 lg:h-48 lg:w-44 md:h-56 md:w-52 sm:w-full" imgClassName="object-center sm:object-[50%_40%] rounded-l-2xl sm:rounded-bl-none sm:rounded-t-2xl" src="./illustration.jpg" loading="lazy" alt="" />
+  <StaticImage className="h-56 w-52 shrink-0 lg:h-48 lg:w-44 md:h-56 md:w-52 sm:w-full" imgClassName="rounded-l-2xl object-center sm:rounded-t-2xl sm:rounded-bl-none sm:object-[50%_40%]" src="./illustration.jpg" loading="lazy" alt="" />
   <div className="bg-white px-7 py-5 lg:px-4 md:px-7 sm:p-4">
     <h1 className="max-w-[240px] text-xl font-semibold leading-snug lg:max-w-[210px] lg:text-lg md:max-w-[240px] md:text-xl">Welcome to Conference in London</h1>
     <p className="mt-2 text-sm font-normal text-gray-7 lg:text-xs md:text-sm">Kube Forwarder app as an alternative for native built-in Kubernetes port forwarding.</p>
@@ -35,7 +35,7 @@ const Tailwindcss = () => (
         <div className="flex overflow-hidden rounded-2xl sm:block">
           <StaticImage
             className="h-56 w-52 shrink-0 lg:h-48 lg:w-44 md:h-56 md:w-52 sm:w-full"
-            imgClassName="object-center sm:object-[50%_40%] rounded-l-2xl sm:rounded-bl-none sm:rounded-t-2xl"
+            imgClassName="rounded-l-2xl object-center sm:rounded-t-2xl sm:rounded-bl-none sm:object-[50%_40%]"
             src="./images/illustration-photo.jpg"
             loading="lazy"
             alt=""
