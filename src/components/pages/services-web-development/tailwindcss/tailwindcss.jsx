@@ -8,15 +8,15 @@ import IllustrationHeartIcon from './images/illustration-heart.inline.svg';
 SyntaxHighlighter.registerLanguage('jsx', jsx);
 
 // If you are replacing the code, don't forget to fix the code and remove cursor-pointer classes
-const illustrationCode = `<article className="flex overflow-hidden rounded-2xl">
-  <StaticImage className="w-52 shrink-0" src="./photo.jpg" loading="lazy" alt="" />
-  <div className="bg-white px-7 py-5">
-    <h1 className="max-w-[240px] text-xl font-semibold leading-snug">Welcome to Conference in London</h1>
-    <p className="mt-2 text-sm font-normal text-gray-7">Kube Forwarder app as an alternative for native built-in Kubernetes port forwarding.</p>
-    <div className="mt-4 flex items-center justify-between border-t border-t-gray-4 pt-5">
-      <button className="flex h-11 items-center justify-center rounded-lg bg-black px-7 text-sm font-semibold text-white">Read more</button>
-      <HeartIcon className="h-11" />
-    </div>
+const illustrationCode = `<article className="flex overflow-hidden rounded-2xl sm:block">
+  <StaticImage className="h-56 w-52 shrink-0 lg:h-48 lg:w-44 md:h-56 md:w-52 sm:w-full" imgClassName="object-center sm:object-[50%_40%] rounded-l-2xl sm:rounded-bl-none sm:rounded-t-2xl" src="./illustration.jpg" loading="lazy" alt="" />
+  <div className="bg-white px-7 py-5 lg:px-4 md:px-7 sm:p-4">
+    <h1 className="max-w-[240px] text-xl font-semibold leading-snug lg:max-w-[210px] lg:text-lg md:max-w-[240px] md:text-xl">Welcome to Conference in London</h1>
+    <p className="mt-2 text-sm font-normal text-gray-7 lg:text-xs md:text-sm">Kube Forwarder app as an alternative for native built-in Kubernetes port forwarding.</p>
+    <button className="mt-4 flex items-center justify-between border-t border-t-gray-4 pt-5 lg:mt-3.5 lg:pt-4 md:mt-4 md:pt-5">
+      <span className="flex h-11 items-center justify-center rounded-lg bg-black px-7 text-sm font-semibold text-white lg:h-10 lg:px-5 lg:text-xs md:h-11 md:px-7 md:text-sm">Read more</span>
+      <IllustrationHeartIcon className="h-11 lg:h-10 md:h-11" />
+    </button>
   </div>
 </article>`;
 
@@ -34,8 +34,8 @@ const Tailwindcss = () => (
       <div className="col-span-6 md:mt-8 sm:mt-6" aria-hidden>
         <div className="flex overflow-hidden rounded-2xl sm:block">
           <StaticImage
-            className="w-52 shrink-0 lg:w-44 md:w-52 sm:h-40 sm:w-full"
-            imgClassName="sm:object-top rounded-l-2xl sm:rounded-bl-none sm:rounded-t-2xl"
+            className="h-56 w-52 shrink-0 lg:h-48 lg:w-44 md:h-56 md:w-52 sm:w-full"
+            imgClassName="object-center sm:object-[50%_40%] rounded-l-2xl sm:rounded-bl-none sm:rounded-t-2xl"
             src="./images/illustration-photo.jpg"
             loading="lazy"
             alt=""
@@ -63,7 +63,6 @@ const Tailwindcss = () => (
         >
           {illustrationCode}
         </SyntaxHighlighter>
-
         <SyntaxHighlighter
           className="code-block mt-6 hidden p-2 text-[13px] sm:block xs:text-xs"
           language="jsx"
