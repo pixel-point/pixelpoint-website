@@ -4,7 +4,7 @@ title: Zenith
 description: Serverless OS alternative to AWS Aurora Postgres
 websiteUrl: https://zenith.tech
 githubUrl: https://github.com/zenithdb/zenith
-githubStars: '187'
+githubStars: <1k
 quote:
   text: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
   authorName: Stas Kelvich
