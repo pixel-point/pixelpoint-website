@@ -27,7 +27,7 @@ const links = [
 
 const Footer = () => (
   <footer className="safe-paddings bg-black">
-    <div className="container flex justify-between pt-10 pb-14 md:flex-col md:py-8 sm:block sm:py-6">
+    <div className="container-lg flex justify-between pt-10 pb-14 md:flex-col md:py-8 sm:block sm:py-6">
       <div className="flex flex-col items-start justify-between md:order-last md:mt-10 md:flex-row md:items-center sm:mt-0">
         <Link to="/">
           <span className="sr-only">Pixel Point</span>
