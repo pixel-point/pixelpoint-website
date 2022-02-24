@@ -52,13 +52,13 @@ const hostingPlatformsItems = [
 ];
 
 const ThirdPartiesAndIntegrations = () => (
-  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-28">
+  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
     <div className="container">
       <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug lg:max-w-[700px] lg:text-5xl md:max-w-[600px] md:text-4xl sm:max-w-none sm:text-3xl xs:text-2xl">
         Choosing <span className="text-red">best-in-class</span> third-party integrations
       </h2>
 
-      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 md:text-2xl sm:mt-10 sm:text-xl">
+      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 md:text-2xl sm:text-xl">
         Flexible content management solutions
       </h3>
       <div className="grid-gap-x mt-10 grid grid-cols-2 lg:mt-8 md:mt-6 md:block md:space-y-4 sm:mt-4">
@@ -87,7 +87,7 @@ const ThirdPartiesAndIntegrations = () => (
             >
               <Logo className="h-14 lg:h-12" aria-hidden />
               <span className="sr-only">{name}</span>
-              <p className="text-base text-white lg:text-sm">{description}</p>
+              <p className="text-base text-white lg:text-sm sm:text-base">{description}</p>
             </div>
           ))}
           <p className="flex flex-col items-center justify-center rounded-2xl bg-gray-2 text-center md:min-h-[166px]">
@@ -99,7 +99,7 @@ const ThirdPartiesAndIntegrations = () => (
         </div>
       </div>
 
-      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 md:text-2xl sm:mt-10 sm:text-xl">
+      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 md:text-2xl sm:text-xl">
         The fastest and most reliable hosting platforms
       </h3>
       <ul className="grid-gap-x mt-10 grid grid-cols-4 lg:mt-8 md:mt-6 sm:mt-4 sm:block sm:space-y-4">
@@ -108,7 +108,7 @@ const ThirdPartiesAndIntegrations = () => (
             className="flex aspect-[280/180] items-center justify-center rounded-2xl bg-gray-2 sm:aspect-auto sm:min-h-[166px]"
             key={index}
           >
-            <Logo className="h-20 lg:h-16 md:h-12 sm:h-16" aria-hidden />
+            <Logo className="h-20 lg:h-16 md:h-12 sm:h-18" aria-hidden />
             <span className="sr-only">{name}</span>
           </li>
         ))}

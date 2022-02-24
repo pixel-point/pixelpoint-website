@@ -26,7 +26,7 @@ const CTA = ({ withTopMargin }) => (
         </Link>
       </div>
       <img
-        className="sm:mx-auto sm:mt-8 sm:max-w-[288px]"
+        className="sm:mx-auto sm:mt-8 sm:max-w-[382px] xs:max-w-full"
         src={illustration}
         alt=""
         loading="lazy"

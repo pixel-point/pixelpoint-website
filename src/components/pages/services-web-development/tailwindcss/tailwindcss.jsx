@@ -21,7 +21,7 @@ const illustrationCode = `<article className="flex overflow-hidden rounded-2xl">
 </article>`;
 
 const Tailwindcss = () => (
-  <section className="safe-paddings bg-black pt-80 lg:pt-64 md:pt-52 sm:pt-32">
+  <section className="safe-paddings bg-black pt-80 lg:pt-64 md:pt-52 sm:pt-24">
     <div className="container grid-gap-x grid grid-cols-12 items-center md:block">
       <div className="col-span-6 text-white">
         <h2 className="max-w-[520px] text-6xl font-normal leading-snug lg:text-5xl md:max-w-none md:text-4xl sm:text-3xl xs:text-2xl">
@@ -56,7 +56,7 @@ const Tailwindcss = () => (
           </div>
         </div>
         <SyntaxHighlighter
-          className="code-block mt-8 p-3 text-sm lg:p-2 lg:text-xs md:p-3 md:text-sm sm:hidden"
+          className="code-block mt-8 p-3 text-sm lg:p-2 lg:text-[13px] md:p-3 md:text-sm sm:hidden"
           language="jsx"
           useInlineStyles={false}
           showLineNumbers
@@ -65,7 +65,7 @@ const Tailwindcss = () => (
         </SyntaxHighlighter>
 
         <SyntaxHighlighter
-          className="code-block mt-6 hidden p-2 text-xs sm:block"
+          className="code-block mt-6 hidden p-2 text-[13px] sm:block xs:text-xs"
           language="jsx"
           useInlineStyles={false}
         >
