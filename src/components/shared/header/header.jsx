@@ -17,7 +17,7 @@ const links = [
         icon: ServicesWebDesignIcon,
         text: 'Web design',
         description:
-          'Our approach is rather inclusive: web-design to us is not only effective, efficient and visually pleasing displays.',
+          'Get a stunning-looking website made by in-house team of motion, graphic, and web designers.',
         linkText: 'Read more',
         to: '/services/web-design',
       },
@@ -25,7 +25,7 @@ const links = [
         icon: ServicesWebDevelopmentIcon,
         text: 'Front-end development',
         description:
-          'Our approach is rather inclusive: web-design to us is not only effective, efficient and visually pleasing displays.',
+          'Have a JAMStack powered web platform built with React, 3rd parties & integrations at your disposal',
         linkText: 'Read more',
         to: '/services/web-development',
       },
