@@ -1,0 +1,19 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_1395_91794" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="56" height="56">
+<rect width="56" height="56" rx="8" fill="black"/>
+</mask>
+<g mask="url(#mask0_1395_91794)">
+<rect width="56" height="56" rx="8" fill="black"/>
+<rect x="18" y="7.5" width="34" height="4" rx="2" fill="#D9D9A6"/>
+<rect x="18" y="17.5" width="30" height="4" rx="2" fill="#666666"/>
+<rect x="18" y="27.5" width="22" height="4" rx="2" fill="#9BDEFF"/>
+<rect x="31" y="37.5" width="21" height="4" rx="2" fill="#666666"/>
+<rect x="18" y="37.5" width="10" height="4" rx="2" fill="#C7826B"/>
+<path d="M0 8C0 3.58172 3.58172 0 8 0H14V48H0V8Z" fill="#333333"/>
+<circle cx="7" cy="9.5" r="2.5" fill="#CCCCCC"/>
+<circle cx="7" cy="19.5" r="2.5" fill="#666666"/>
+<circle cx="7" cy="29.5" r="2.5" fill="#666666"/>
+<circle cx="7" cy="39.5" r="2.5" fill="#666666"/>
+<path d="M0 48H56C56 52.4183 52.4183 56 48 56H8C3.58172 56 0 52.4183 0 48Z" fill="#2B4BEE"/>
+</g>
+</svg>

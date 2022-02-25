@@ -53,7 +53,7 @@ const Content = ({
           </figcaption>
         </figure>
         <h2 className="mt-12 text-2xl font-normal leading-snug">About the project</h2>
-        <div className="mt-2.5 space-y-5">
+        <div className="with-link-red mt-2.5 space-y-5">
           <MDXProvider>
             <MDXRenderer>{text}</MDXRenderer>
           </MDXProvider>
