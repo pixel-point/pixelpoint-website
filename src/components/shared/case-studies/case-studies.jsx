@@ -55,9 +55,10 @@ const CaseStudies = ({ title, itemsType }) => {
             <article className="flex flex-col" key={index}>
               <h1 className="sr-only">{`${title} case study`}</h1>
               <Link
-                className="relative flex aspect-[384/200] items-center justify-center rounded-2xl bg-black"
+                className="relative flex aspect-[384/200] items-center justify-center rounded-2xl"
                 to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
                 aria-label={`${title} case study`}
+                style={{ background: 'linear-gradient(254.82deg, #333333 0%, #000000 100%)' }}
               >
                 <img src={logo.publicURL} loading="lazy" alt={`${title} logo`} />
                 <div className="absolute top-3 left-3 flex items-center">
