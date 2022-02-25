@@ -5,12 +5,11 @@ require('dotenv').config();
 module.exports = {
   flags: { DEV_SSR: process.env.GATSBY_DEV_SSR || false },
   siteMetadata: {
-    siteTitle: 'Pixel Point Gatsby Tailwind Starter',
-    siteDescription: 'Site Description',
+    siteTitle: 'Pixel Point - Web Design and Development',
+    siteDescription: 'Design and development of JAMStack-based marketing websites',
     siteImage: '/images/social-preview.jpg',
     siteLanguage: 'en',
     siteUrl: process.env.GATSBY_DEFAULT_SITE_URL || 'http://localhost:8000',
-    authorName: 'Pixel Point',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
@@ -26,6 +25,13 @@ module.exports = {
       options: {
         name: 'posts',
         path: `${__dirname}/src/posts`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'case-studies',
+        path: `${__dirname}/src/case-studies`,
       },
     },
     'gatsby-plugin-image',
@@ -90,8 +96,6 @@ module.exports = {
             },
           },
           'gatsby-remark-prismjs',
-          // TODO: Delete if still not needed after moving all posts, don't forget to uninstall this package
-          // 'gatsby-remark-responsive-iframe',
         ],
       },
     },

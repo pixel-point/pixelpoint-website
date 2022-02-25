@@ -5,29 +5,22 @@ import Logo from 'images/logo.inline.svg';
 
 const links = [
   [
-    { text: 'Branding', to: '/' },
-    { text: 'Website Design', to: '/' },
-    { text: 'Motion Design', to: '/' },
+    { text: 'Web design', to: '/services/web-design' },
+    { text: 'Front-end development', to: '/services/web-development' },
   ],
   [
-    { text: 'Frontend Development', to: '/' },
-    { text: 'Graphic Design', to: '/' },
-    { text: 'Product Design', to: '/' },
+    { text: 'Case studies', to: '/case-studies' },
+    { text: 'Blog', to: '/blog' },
   ],
   [
-    { text: 'Case Studies ', to: '/' },
-    { text: 'Blog', to: '/' },
-    { text: 'About Us', to: '/' },
-  ],
-  [
-    { text: 'Github', to: '/' },
-    { text: 'Twitter', to: '/' },
+    { text: 'Github', to: 'https://github.com/pixel-point' },
+    { text: 'Twitter', to: 'https://twitter.com/alex_barashkov' },
   ],
 ];
 
 const Footer = () => (
   <footer className="safe-paddings bg-black">
-    <div className="container flex justify-between pt-10 pb-14 md:flex-col md:py-8 sm:block sm:py-6">
+    <div className="container-lg flex justify-between pt-10 pb-14 md:flex-col md:py-8 sm:block sm:py-6">
       <div className="flex flex-col items-start justify-between md:order-last md:mt-10 md:flex-row md:items-center sm:mt-0">
         <Link to="/">
           <span className="sr-only">Pixel Point</span>

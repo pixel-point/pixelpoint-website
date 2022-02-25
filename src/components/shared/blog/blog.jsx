@@ -28,7 +28,7 @@ const Blog = () => (
     <div className="container">
       <h2 className="text-center text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
         Blog.{' '}
-        <Link className="text-red" to="/">
+        <Link className="text-red" to="/blog">
           Explore team experience
           <Arrow
             className="ml-4 inline-block h-7 lg:ml-3 lg:h-6 md:ml-2 md:h-5 sm:ml-1.5 sm:h-4 xs:ml-1 xs:h-3"

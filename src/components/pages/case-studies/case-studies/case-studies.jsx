@@ -1,96 +1,27 @@
-import { StaticImage } from 'gatsby-plugin-image';
+import { getImage, GatsbyImage } from 'gatsby-plugin-image';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Link from 'components/shared/link';
+import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
 
-import authorPhoto from './images/author-photo.jpg';
-import logoBrowserless from './images/logo-browserless.svg';
-import logoRevenuecat from './images/logo-revenuecat.svg';
-import logoZenith from './images/logo-zenith.svg';
-
-const items = [
-  {
-    logo: logoBrowserless,
-    name: 'Browserless',
-    description: 'A full-fledged marketing platform worthy of unmatched OS load testing tool',
-    to: '/case-studies/browserless',
-    quote: {
-      text: `It's been an absolute pleasure working with Alex and the team at PixelPoint on both our website and our GitHub presence. We constantly receive complements on the quality of the design and illustration, and it has made a significant impact on our business as a whole. 10/10 would install Figma again`,
-      authorPhoto,
-      authorName: 'Ben Rometsch',
-      authorPosition: 'CEO of Flagsmith',
-    },
-    cover: (
-      <StaticImage
-        className="rounded-2xl"
-        imgClassName="rounded-2xl"
-        src="./images/cover-browserless.jpg"
-        alt="Browserless website"
-        loading="lazy"
-      />
-    ),
-  },
-  {
-    logo: logoRevenuecat,
-    name: 'Revenuecat',
-    description: 'A full-fledged marketing platform worthy of unmatched OS load testing tool',
-    to: '/case-studies/revenuecat',
-    quote: {
-      text: `It's been an absolute pleasure working with Alex and the team at PixelPoint on both our website and our GitHub presence. We constantly receive complements on the quality`,
-      authorPhoto,
-      authorName: 'Ben Rometsch',
-      authorPosition: 'CEO of Flagsmith',
-    },
-    cover: (
-      <StaticImage
-        className="rounded-2xl"
-        imgClassName="rounded-2xl"
-        src="./images/cover-revenuecat.jpg"
-        alt="Revenuecat website"
-        loading="lazy"
-      />
-    ),
-  },
-  {
-    logo: logoZenith,
-    name: 'Zenith',
-    description: 'A full-fledged marketing platform worthy of unmatched OS load testing tool',
-    to: '/case-studies/zenith',
-    quote: {
-      text: `It's been an absolute pleasure working with Alex and the team at PixelPoint on both our website and our GitHub presence. We constantly receive complements on the quality of the design and illustration, and it has made a significant impact on our business as a whole. 10/10 would install Figma again`,
-      authorPhoto,
-      authorName: 'Ben Rometsch',
-      authorPosition: 'CEO of Flagsmith',
-    },
-    cover: (
-      <StaticImage
-        className="rounded-2xl"
-        imgClassName="rounded-2xl"
-        src="./images/cover-zenith.jpg"
-        alt="Zenith website"
-        loading="lazy"
-      />
-    ),
-  },
-];
-
-const CaseStudies = () => (
+const CaseStudies = ({ items }) => (
   <section className="safe-paddings mt-32">
     <div className="container space-y-40">
-      {items.map(({ logo, name, description, to, quote, cover }, index) => (
+      {items.map(({ slug, frontmatter: { logo, title, description, quote, cover } }, index) => (
         <article className="grid-gap-x grid grid-cols-2" key={index}>
           <div>
-            <h1 className="sr-only">{`${name} case study`}</h1>
-            <img src={logo} alt={`${name} logo`} loading="lazy" />
+            <h1 className="sr-only">{`${title} case study`}</h1>
+            <img className="invert" src={logo.publicURL} alt={`${title} logo`} loading="lazy" />
             <p className="mt-4 font-normal leading-snug">{description}</p>
             <figure className="mt-5 border-t border-t-gray-4 pt-5">
               <blockquote>
                 <p>{quote.text}</p>
               </blockquote>
               <figcaption className="mt-3 flex items-center">
-                <img
+                <GatsbyImage
                   className="w-10 shrink-0 rounded-full"
-                  src={quote.authorPhoto}
+                  image={getImage(quote.authorPhoto)}
                   alt={quote.authorName}
                   loading="lazy"
                 />
@@ -99,17 +30,58 @@ const CaseStudies = () => (
                 </span>
               </figcaption>
             </figure>
-            <Link className="mt-8" to={to} size="sm" theme="arrow-red">
-              {name} case study
+            <Link
+              className="mt-8"
+              to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
+              size="sm"
+              theme="arrow-red"
+            >
+              {title} case study
             </Link>
           </div>
-          <Link to={to} aria-label={`${name} case study`}>
-            {cover}
+          <Link to={`${CASE_STUDIES_BASE_PATH}/${slug}`} aria-label={`${title} case study`}>
+            <GatsbyImage
+              className="rounded-2xl"
+              imgClassName="rounded-2xl"
+              image={getImage(cover)}
+              alt={`${title} website`}
+              loading="lazy"
+            />
           </Link>
         </article>
       ))}
     </div>
   </section>
 );
+
+CaseStudies.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.exact({
+      slug: PropTypes.string.isRequired,
+      frontmatter: PropTypes.exact({
+        logo: PropTypes.exact({
+          publicURL: PropTypes.string.isRequired,
+        }).isRequired,
+        title: PropTypes.string.isRequired,
+        description: PropTypes.string.isRequired,
+        quote: PropTypes.exact({
+          text: PropTypes.string.isRequired,
+          authorName: PropTypes.string.isRequired,
+          authorPosition: PropTypes.string.isRequired,
+          authorPhoto: PropTypes.exact({
+            childImageSharp: PropTypes.exact({
+              gatsbyImageData: PropTypes.object.isRequired,
+            }).isRequired,
+          }).isRequired,
+        }).isRequired,
+        cover: PropTypes.exact({
+          childImageSharp: PropTypes.exact({
+            gatsbyImageData: PropTypes.object.isRequired,
+          }).isRequired,
+        }).isRequired,
+      }).isRequired,
+    }).isRequired
+  ).isRequired,
+};
 
 export default CaseStudies;

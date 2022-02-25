@@ -16,7 +16,7 @@ const Services = () => {
 
   const { RiveComponent, rive } = useRive(params);
   const [wrapperRef, isWrapperInView] = useInView({
-    threshold: 0.5,
+    threshold: 0.3,
   });
 
   useEffect(() => {
@@ -24,8 +24,9 @@ const Services = () => {
       rive.play();
     }
   }, [isWrapperInView, rive]);
+
   return (
-    <section className="safe-paddings mt-52 bg-black text-white" ref={wrapperRef}>
+    <section className="safe-paddings mt-52 overflow-hidden bg-black text-white" ref={wrapperRef}>
       <div className="container relative">
         <div className="flex max-w-[592px] items-center pt-[300px]">
           <h2 className="text-6xl font-normal leading-snug">
@@ -40,18 +41,18 @@ const Services = () => {
             graphic design with entertaining illustrations, exciting social media covers and, of
             course, high-quality branded items.
           </p>
-          <Link className="mt-5" to="/" size="sm" theme="arrow-red">
+          <Link className="mt-5" to="/services/web-design" size="sm" theme="arrow-red">
             Read more
           </Link>
         </div>
         <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px]">
-          <h2 className="text-6xl font-normal leading-snug">Front-end development</h2>
+          <h2 className="text-6xl font-normal leading-snug">Web development</h2>
           <p className="mt-5">
             Clean codebase, flexible content management, robust release flow and custom integrations
             will please the business while website performance, accessibility and mobile devices
             adaptation will ensure an outstanding experience for your customers.
           </p>
-          <Link className="mt-5" to="/" size="sm" theme="arrow-red">
+          <Link className="mt-5" to="/services/web-development" size="sm" theme="arrow-red">
             Read more
           </Link>
         </div>
