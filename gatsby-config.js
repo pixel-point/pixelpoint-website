@@ -5,9 +5,8 @@ require('dotenv').config();
 module.exports = {
   flags: { DEV_SSR: process.env.GATSBY_DEV_SSR || false },
   siteMetadata: {
-    siteTitle: 'Pixel Point – Design and Development',
-    siteDescription:
-      'Get web design, development with Pixel Point for a fair price and great quality.',
+    siteTitle: 'Pixel Point - Web Design and Development',
+    siteDescription: 'Design and development of JAMStack-based marketing websites',
     siteImage: '/images/social-preview.jpg',
     siteLanguage: 'en',
     siteUrl: process.env.GATSBY_DEFAULT_SITE_URL || 'http://localhost:8000',

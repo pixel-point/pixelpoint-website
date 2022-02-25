@@ -46,7 +46,7 @@ const Services = () => {
           </Link>
         </div>
         <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px]">
-          <h2 className="text-6xl font-normal leading-snug">Front-end development</h2>
+          <h2 className="text-6xl font-normal leading-snug">Web development</h2>
           <p className="mt-5">
             Clean codebase, flexible content management, robust release flow and custom integrations
             will please the business while website performance, accessibility and mobile devices

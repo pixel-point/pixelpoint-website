@@ -23,7 +23,7 @@ const links = [
       },
       {
         icon: ServicesWebDevelopmentIcon,
-        text: 'Front-end development',
+        text: 'Web development',
         description:
           'Have a JAMStack powered web platform built with React, 3rd parties & integrations at your disposal',
         linkText: 'Read more',

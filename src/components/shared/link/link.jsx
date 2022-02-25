@@ -13,7 +13,7 @@ const styles = {
   theme: {
     white: 'text-white font-normal hover:text-red',
     'underline-red':
-      'relative font-normal text-red after:absolute after:-bottom-1 after:left-0 after:w-full after:h-px after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200 hover:after:bg-opacity-100',
+      'relative font-normal text-red after:absolute after:-bottom-1 after:translate-y-full after:left-0 after:w-full after:h-0.5 after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200 hover:after:bg-opacity-100',
     'arrow-red': 'items-center font-semibold text-red',
   },
 };
