@@ -3,7 +3,7 @@
     @apply max-w-none text-black;
 
     a:not(.gatsby-resp-image-link) {
-      @apply relative font-normal text-red no-underline after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200 hover:after:bg-opacity-100;
+      @apply relative font-normal text-red no-underline;
     }
 
     h1,

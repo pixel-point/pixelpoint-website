@@ -1,0 +1,7 @@
+@layer components {
+  .with-link-red {
+    a {
+      @apply relative font-normal text-red no-underline;
+    }
+  }
+}
