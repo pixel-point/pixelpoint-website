@@ -28,6 +28,13 @@ module.exports = {
         path: `${__dirname}/src/posts`,
       },
     },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'case-studies',
+        path: `${__dirname}/src/case-studies`,
+      },
+    },
     'gatsby-plugin-image',
     'gatsby-transformer-sharp',
     {
@@ -90,8 +97,6 @@ module.exports = {
             },
           },
           'gatsby-remark-prismjs',
-          // TODO: Delete if still not needed after moving all posts, don't forget to uninstall this package
-          // 'gatsby-remark-responsive-iframe',
         ],
       },
     },
