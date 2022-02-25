@@ -36,7 +36,7 @@ const Blog = () => (
           />
         </Link>
       </h2>
-      <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-12 md:mt-10 sm:mt-8 sm:block sm:space-y-6">
+      <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-12 md:mt-10 sm:mt-8 sm:block sm:space-y-8">
         {items.map(({ cover, title, description, to }, index) => (
           <li key={index}>
             <Link to={to}>
