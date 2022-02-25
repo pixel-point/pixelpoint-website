@@ -57,6 +57,9 @@ module.exports = {
         9: '#1a1a1a',
       },
     }),
+    extend: {
+      spacing: { 18: '4.5rem' },
+    },
   },
   plugins: [require('tailwindcss-safe-area'), require('@tailwindcss/typography')],
 };

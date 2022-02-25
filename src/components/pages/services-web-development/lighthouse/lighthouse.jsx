@@ -22,7 +22,7 @@ const items = [
 ];
 
 const Lighthouse = () => (
-  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-28">
+  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
     <div className="container">
       <h2 className="mx-auto max-w-[1008px] text-center text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
         Always in the upper <span className="text-red">Lighthouse</span> threshold to outperform

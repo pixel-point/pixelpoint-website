@@ -9,19 +9,16 @@ SyntaxHighlighter.registerLanguage('jsx', jsx);
 
 // If you are replacing the code, don't forget to fix the code and remove cursor-pointer classes
 const illustrationCode = `<article className="flex overflow-hidden rounded-2xl">
-  <StaticImage className="w-52 shrink-0" src="./photo.jpg" loading="lazy" alt="" />
+  <StaticImage className="h-56 w-52 shrink-0" imgClassName="rounded-l-2xl object-center" src="./illustration.jpg" loading="lazy" alt="" />
   <div className="bg-white px-7 py-5">
     <h1 className="max-w-[240px] text-xl font-semibold leading-snug">Welcome to Conference in London</h1>
-    <p className="mt-2 text-sm font-normal text-gray-7">Kube Forwarder app as an alternative for native built-in Kubernetes port forwarding.</p>
+    <p className="mt-2 text-sm font-normal text-gray-7">The home of global innovators, disruptors, and tech leaders. Registration is open!</p>
     <div className="mt-4 flex items-center justify-between border-t border-t-gray-4 pt-5">
-      <button className="flex h-11 items-center justify-center rounded-lg bg-black px-7 text-sm font-semibold text-white">Read more</button>
-      <HeartIcon className="h-11" />
-    </div>
-  </div>
-</article>`;
+      <button className="flex h-11 items-center justify-center rounded-lg bg-black px-7 text-sm font-semibold text-white">Join now</button>
+      <HeartIcon className="h-11" />`;
 
 const Tailwindcss = () => (
-  <section className="safe-paddings bg-black pt-80 lg:pt-64 md:pt-52 sm:pt-32">
+  <section className="safe-paddings bg-black pt-80 lg:pt-64 md:pt-52 sm:pt-24">
     <div className="container grid-gap-x grid grid-cols-12 items-center md:block">
       <div className="col-span-6 text-white">
         <h2 className="max-w-[520px] text-6xl font-normal leading-snug lg:text-5xl md:max-w-none md:text-4xl sm:text-3xl xs:text-2xl">
@@ -34,8 +31,8 @@ const Tailwindcss = () => (
       <div className="col-span-6 md:mt-8 sm:mt-6" aria-hidden>
         <div className="flex overflow-hidden rounded-2xl sm:block">
           <StaticImage
-            className="w-52 shrink-0 lg:w-44 md:w-52 sm:h-40 sm:w-full"
-            imgClassName="sm:object-top rounded-l-2xl sm:rounded-bl-none sm:rounded-t-2xl"
+            className="h-56 w-52 shrink-0 lg:h-48 lg:w-44 md:h-56 md:w-52 sm:w-full"
+            imgClassName="rounded-l-2xl object-center sm:rounded-t-2xl sm:rounded-bl-none sm:object-[50%_40%]"
             src="./images/illustration-photo.jpg"
             loading="lazy"
             alt=""
@@ -45,27 +42,26 @@ const Tailwindcss = () => (
               Welcome to Conference in London
             </div>
             <div className="mt-2 text-sm font-normal text-gray-7 lg:text-xs md:text-sm">
-              Kube Forwarder app as an alternative for native built-in Kubernetes port forwarding.
+              The home of global innovators, disruptors, and tech leaders. Registration is open!
             </div>
             <div className="mt-4 flex items-center justify-between border-t border-t-gray-4 pt-5 lg:mt-3.5 lg:pt-4 md:mt-4 md:pt-5">
               <span className="flex h-11 cursor-pointer items-center justify-center rounded-lg bg-black px-7 text-sm font-semibold text-white lg:h-10 lg:px-5 lg:text-xs md:h-11 md:px-7 md:text-sm">
-                Read more
+                Join now
               </span>
               <IllustrationHeartIcon className="h-11 cursor-pointer lg:h-10 md:h-11" />
             </div>
           </div>
         </div>
         <SyntaxHighlighter
-          className="code-block mt-8 p-3 text-sm lg:p-2 lg:text-xs md:p-3 md:text-sm sm:hidden"
+          className="code-block mt-8 p-3 text-sm lg:p-2 lg:text-[13px] md:p-3 md:text-sm sm:hidden"
           language="jsx"
           useInlineStyles={false}
           showLineNumbers
         >
           {illustrationCode}
         </SyntaxHighlighter>
-
         <SyntaxHighlighter
-          className="code-block mt-6 hidden p-2 text-xs sm:block"
+          className="code-block mt-6 hidden p-2 text-[13px] sm:block xs:text-xs"
           language="jsx"
           useInlineStyles={false}
         >
