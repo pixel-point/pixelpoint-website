@@ -90,7 +90,10 @@ const ThirdPartiesAndIntegrations = () => (
               <p className="text-base text-white lg:text-sm sm:text-base">{description}</p>
             </div>
           ))}
-          <p className="flex flex-col items-center justify-center rounded-2xl bg-gray-2 text-center md:min-h-[166px]">
+          <p
+            className="flex flex-col items-center justify-center rounded-2xl text-center md:min-h-[166px]"
+            style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
+          >
             <span className="text-2xl font-semibold leading-snug lg:text-xl">OR</span>
             <span className="mt-2.5 max-w-[130px] font-normal leading-snug lg:mt-2 lg:text-base">
               any other CMS of your choice
@@ -105,7 +108,8 @@ const ThirdPartiesAndIntegrations = () => (
       <ul className="grid-gap-x mt-10 grid grid-cols-4 lg:mt-8 md:mt-6 sm:mt-4 sm:block sm:space-y-4">
         {hostingPlatformsItems.map(({ logo: Logo, name }, index) => (
           <li
-            className="flex aspect-[280/180] items-center justify-center rounded-2xl bg-gray-2 sm:aspect-auto sm:min-h-[166px]"
+            className="flex aspect-[280/180] items-center justify-center rounded-2xl sm:aspect-auto sm:min-h-[166px]"
+            style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
             key={index}
           >
             <Logo className="h-20 lg:h-16 md:h-12 sm:h-18" aria-hidden />

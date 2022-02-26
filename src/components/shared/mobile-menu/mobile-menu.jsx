@@ -1,80 +1,99 @@
-import { motion, useAnimation } from 'framer-motion';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
 
 import Link from 'components/shared/link';
+import useClickOutside from 'hooks/use-click-outside';
 
-const ANIMATION_DURATION = 0.2;
+import ServicesWebDesignIcon from './images/services-web-design.inline.svg';
+import ServicesWebDevelopmentIcon from './images/services-web-development.inline.svg';
 
-const variants = {
-  from: {
-    opacity: 0,
-    translateY: 30,
-    transition: {
-      duration: ANIMATION_DURATION,
-    },
-    transitionEnd: {
-      zIndex: -1,
-    },
-  },
-  to: {
-    zIndex: 999,
-    opacity: 1,
-    translateY: 0,
-    transition: {
-      duration: ANIMATION_DURATION,
-    },
-  },
-};
-
-// TODO: Add links
 const links = [
   {
-    text: '',
-    to: '',
+    text: 'Services',
+    items: [
+      {
+        icon: ServicesWebDesignIcon,
+        text: 'Web design',
+        to: '/services/web-design',
+      },
+      {
+        icon: ServicesWebDevelopmentIcon,
+        text: 'Web development',
+        to: '/services/web-development',
+      },
+    ],
+  },
+  {
+    text: 'Case studies',
+    to: '/case-studies',
+  },
+  {
+    text: 'Blog',
+    to: '/blog',
   },
 ];
 
-const MobileMenu = ({ isOpen }) => {
-  const controls = useAnimation();
+const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
+  const ref = useRef(null);
 
-  useEffect(() => {
-    if (isOpen) {
-      controls.start('to');
-    } else {
-      controls.start('from');
-    }
-  }, [isOpen, controls]);
+  useClickOutside([ref, headerRef], onOutsideClick);
 
   return (
-    <motion.nav
-      // TODO: Add "top" value equal to the header's height so mobile menu would be positioned right after the header, e.g. "top-20"
-      //       Check out this screenshot for better understanding — https://user-images.githubusercontent.com/20713191/144218387-afd19e0c-c33d-4c8f-8cfe-b6e6214d236c.png
-      // TODO: Add background color, e.g. "bg-white"
-      className="absolute right-8 left-8 z-[-1] hidden rounded-md px-8 pt-4 pb-7 lg:block md:right-4 md:left-4"
-      initial="from"
-      animate={controls}
-      variants={variants}
-      // TODO: Replace the color to the one from the color palette
-      style={{ boxShadow: '0px 10px 20px rgba(26, 26, 26, 0.4)' }}
+    <nav
+      className={clsx(
+        'invisible absolute left-1/2 top-1.5 z-40 hidden w-full max-w-[724px] -translate-x-1/2 rounded-xl border border-gray-3 bg-white px-6 pt-24 pb-5 opacity-0 transition-[opacity,visibility] duration-200 md:block sm:right-1.5 sm:left-1.5 sm:w-auto sm:max-w-none sm:translate-x-0 sm:pt-20',
+        isOpen && '!visible !opacity-100'
+      )}
+      style={{ boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)' }}
+      ref={ref}
     >
-      <ul className="flex flex-col text-center">
-        {links.map(({ text, to }, index) => (
-          <li key={index}>
-            {/* TODO: Add needed props so the link would have styles */}
-            <Link className="block py-4" to={to}>
+      <ul>
+        {links.map(({ text, to, items }, index) => (
+          <li className={clsx('border-b border-b-gray-3', items?.length > 0 && 'pb-5')} key={index}>
+            <Link
+              className={clsx('block text-lg font-normal leading-none', !items && 'py-5')}
+              to={to}
+            >
               {text}
             </Link>
+
+            {items?.length > 0 && (
+              <ul className="mt-5 space-y-5">
+                {items.map(({ icon: Icon, text, to }, index) => (
+                  <li key={index}>
+                    <Link className="flex items-center space-x-3.5" to={to}>
+                      <Icon className="h-12 shrink-0" />
+                      <span className="text-lg font-semibold">{text}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
         ))}
+
+        <li>
+          <Link className="!flex py-5 text-lg" to="mailto:info@pixelpoint.io" theme="arrow-red">
+            Schedule a call
+          </Link>
+        </li>
       </ul>
-      {/* TODO: Add a button if needed */}
-    </motion.nav>
+    </nav>
   );
 };
 
 MobileMenu.propTypes = {
   isOpen: PropTypes.bool,
+  // Typing was taken from here — https://stackoverflow.com/a/51127130
+  headerRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({
+      // SSR workaround
+      current: PropTypes.instanceOf(typeof Element === 'undefined' ? () => {} : Element),
+    }),
+  ]).isRequired,
+  onOutsideClick: PropTypes.func.isRequired,
 };
 
 MobileMenu.defaultProps = {
