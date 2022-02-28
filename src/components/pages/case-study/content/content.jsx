@@ -27,7 +27,7 @@ const Content = ({
         <h1 className="text-6xl font-normal leading-snug">{title}</h1>
         <p className="mt-2.5 font-normal leading-snug">{description}</p>
         <Link
-          className="mt-7 rounded-full border border-red py-3 px-5"
+          className="mt-7 rounded-full border border-red py-3 px-5 transition-colors duration-200 hover:border-blue"
           to={websiteUrl}
           size="base"
           theme="arrow-red"

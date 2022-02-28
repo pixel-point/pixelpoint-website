@@ -74,7 +74,12 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
         ))}
 
         <li>
-          <Link className="!flex py-5 text-lg" to="mailto:info@pixelpoint.io" theme="arrow-red">
+          <Link
+            className="!flex py-5 text-lg"
+            to="mailto:info@pixelpoint.io"
+            size="base"
+            theme="arrow-red"
+          >
             Schedule a call
           </Link>
         </li>
