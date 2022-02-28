@@ -46,7 +46,7 @@ const Blog = () => (
               {title}
             </h3>
             <p className="mt-2.5 text-base md:mt-2 md:text-sm sm:mt-1.5">{description}</p>
-            <Link className="mt-4 md:mt-3 md:text-sm sm:mt-2" to="/" size="sm" theme="arrow-red">
+            <Link className="mt-4 md:mt-3 md:text-sm sm:mt-2" to="/" size="base" theme="arrow-red">
               Read article
             </Link>
           </li>

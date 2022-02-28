@@ -75,7 +75,7 @@ const CaseStudies = ({ title, itemsType }) => {
               <Link
                 className="mt-auto self-start"
                 to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
-                size="sm"
+                size="base"
                 theme="arrow-red"
               >
                 {title} case study

@@ -29,7 +29,7 @@ const Content = ({
         <Link
           className="mt-7 rounded-full border border-red py-3 px-5"
           to={websiteUrl}
-          size="sm"
+          size="base"
           theme="arrow-red"
           target="_blank"
           rel="noopener noreferrer"
