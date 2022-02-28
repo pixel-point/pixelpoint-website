@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Link from 'components/shared/link';
-import Arrow from 'images/arrow.inline.svg';
 
 import gettingStartedWithOpenSourceDroneCi from './images/getting-started-with-open-source-drone-ci-cover.svg';
 import measuringGatsbyProjectsBuildTime from './images/measuring-gatsby-projects-build-time-cover.svg';
@@ -28,12 +27,8 @@ const Blog = () => (
     <div className="container">
       <h2 className="text-center text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
         Blog.{' '}
-        <Link className="text-red" to="/blog">
+        <Link size="6xl" theme="arrow-red" to="/blog">
           Explore team experience
-          <Arrow
-            className="ml-4 inline-block h-7 lg:ml-3 lg:h-6 md:ml-2 md:h-5 sm:ml-1.5 sm:h-4 xs:ml-1 xs:h-3"
-            aria-hidden
-          />
         </Link>
       </h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-12 md:mt-10 sm:mt-8 sm:block sm:space-y-8">

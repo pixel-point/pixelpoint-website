@@ -3,26 +3,41 @@ import { Link as GatsbyLink } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Arrow from 'images/arrow.inline.svg';
+import Arrow6xl from './images/arrow-6xl.inline.svg';
+import ArrowBase from './images/arrow-base.inline.svg';
 
 const styles = {
   base: 'inline-flex leading-none transition-colors duration-200',
   size: {
-    base: 'text-base sm:text-sm',
+    '6xl': {
+      wrapper:
+        '!inline-block text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl',
+      icon: 'ml-4 h-7 lg:ml-3 !inline-block lg:h-6 md:ml-2 md:h-5 sm:ml-1.5 sm:h-4 xs:ml-1 xs:h-3',
+    },
+    base: {
+      wrapper: 'text-base sm:text-sm',
+      icon: 'ml-1.5 h-2.5 sm:ml-1 sm:h-2',
+    },
   },
   theme: {
-    white: 'text-white font-normal hover:text-red',
-    'underline-red':
-      'relative font-normal text-red after:absolute after:-bottom-1 after:translate-y-full after:left-0 after:w-full after:h-0.5 after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200 hover:after:bg-opacity-100',
-    'arrow-red': 'items-center font-semibold text-red',
+    white: {
+      wrapper: 'text-white font-normal hover:text-red',
+    },
+    'underline-red': {
+      wrapper:
+        'relative font-normal text-red after:absolute after:-bottom-1 after:translate-y-full after:left-0 after:w-full after:h-0.5 after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200 hover:after:bg-opacity-100',
+    },
+    'arrow-red': {
+      wrapper: 'items-center font-semibold text-red hover:text-blue',
+    },
   },
 };
 
 const Link = ({ className: additionalClassName, size, theme, to, children, ...props }) => {
   const className = clsx(
     (size || theme) && styles.base,
-    styles.size[size],
-    styles.theme[theme],
+    styles.size[size]?.wrapper,
+    styles.theme[theme]?.wrapper,
     additionalClassName
   );
 
@@ -30,7 +45,12 @@ const Link = ({ className: additionalClassName, size, theme, to, children, ...pr
     theme === 'arrow-red' ? (
       <>
         <span>{children}</span>
-        <Arrow className="ml-1.5 h-2.5" />
+        {size === 'base' && (
+          <ArrowBase className={clsx(styles.size[size]?.icon, styles.theme[theme]?.icon)} />
+        )}
+        {size === '6xl' && (
+          <Arrow6xl className={clsx(styles.size[size]?.icon, styles.theme[theme]?.icon)} />
+        )}
       </>
     ) : (
       children
