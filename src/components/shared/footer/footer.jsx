@@ -26,7 +26,12 @@ const Footer = () => (
           <span className="sr-only">Pixel Point</span>
           <Logo className="h-9 sm:h-8" aria-hidden />
         </Link>
-        <Link className="sm:hidden" to="mailto:info@pixelpoint.io" size="sm" theme="underline-red">
+        <Link
+          className="sm:hidden"
+          to="mailto:info@pixelpoint.io"
+          size="base"
+          theme="underline-red"
+        >
           info@pixelpoint.io
         </Link>
       </div>
@@ -35,7 +40,7 @@ const Footer = () => (
           <ul className="space-y-8 md:space-y-6 sm:space-y-5" key={index}>
             {links.map(({ to, text }, index) => (
               <li className="text-[0px]" key={index}>
-                <Link to={to} size="sm" theme="white">
+                <Link to={to} size="base" theme="white">
                   {text}
                 </Link>
               </li>
@@ -46,7 +51,7 @@ const Footer = () => (
       <Link
         className="hidden sm:mt-6 sm:inline-flex"
         to="mailto:info@pixelpoint.io"
-        size="sm"
+        size="base"
         theme="underline-red"
       >
         info@pixelpoint.io

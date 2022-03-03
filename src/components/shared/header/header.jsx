@@ -64,7 +64,7 @@ const Header = forwardRef(({ isMobileMenuOpen, onBurgerClick }, ref) => (
               )}
               key={index}
             >
-              <Link className="group-hover:text-red" to={to} size="sm" theme="white">
+              <Link className="group-hover:text-red" to={to} size="base" theme="white">
                 {text}
               </Link>
 
@@ -86,7 +86,7 @@ const Header = forwardRef(({ isMobileMenuOpen, onBurgerClick }, ref) => (
                           <div>
                             <span className="text-2xl font-normal leading-snug">{text}</span>
                             <p className="mt-2.5 text-base">{description}</p>
-                            <Link className="mt-4" size="sm" theme="arrow-red">
+                            <Link className="mt-4" size="base" theme="arrow-red">
                               {linkText}
                             </Link>
                           </div>
@@ -100,7 +100,7 @@ const Header = forwardRef(({ isMobileMenuOpen, onBurgerClick }, ref) => (
           ))}
 
           <li className="!ml-6 border-l border-l-gray-8 pl-6">
-            <Link to="mailto:info@pixelpoint.io" size="sm" theme="underline-red">
+            <Link to="mailto:info@pixelpoint.io" size="base" theme="underline-red">
               info@pixelpoint.io
             </Link>
           </li>

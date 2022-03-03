@@ -33,7 +33,7 @@ const CaseStudies = ({ items }) => (
             <Link
               className="mt-8"
               to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
-              size="sm"
+              size="base"
               theme="arrow-red"
             >
               {title} case study

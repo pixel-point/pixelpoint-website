@@ -3,7 +3,7 @@
     @apply max-w-none text-black;
 
     a:not(.gatsby-resp-image-link) {
-      @apply relative font-normal text-red no-underline;
+      @apply relative font-normal text-red no-underline transition-colors duration-200 hover:text-blue;
     }
 
     h1,
