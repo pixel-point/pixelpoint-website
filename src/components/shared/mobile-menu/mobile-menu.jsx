@@ -24,14 +24,14 @@ const links = [
       },
     ],
   },
-  {
-    text: 'Case studies',
-    to: '/case-studies',
-  },
-  {
-    text: 'Blog',
-    to: '/blog',
-  },
+  // {
+  //   text: 'Case studies',
+  //   to: '/case-studies',
+  // },
+  // {
+  //   text: 'Blog',
+  //   to: '/blog',
+  // },
 ];
 
 const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {

@@ -93,7 +93,7 @@ const CaseStudies = ({ title, itemsType }) => {
               </article>
             )
           )}
-          {itemsType === 'open-source' && (
+          {/* {itemsType === 'open-source' && (
             <Link
               className="relative flex aspect-[384/200] items-center justify-center rounded-2xl"
               to={CASE_STUDIES_BASE_PATH}
@@ -103,7 +103,7 @@ const CaseStudies = ({ title, itemsType }) => {
                 All case studies
               </Link>
             </Link>
-          )}
+          )} */}
         </div>
       </div>
     </section>

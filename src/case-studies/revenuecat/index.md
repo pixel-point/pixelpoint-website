@@ -27,6 +27,7 @@ keynotes:
   - Developed front-end part of the product
 cover: cover.jpg
 isFeatured: true
+isDraft: true
 position: 2
 ---
 
