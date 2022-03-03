@@ -18,7 +18,7 @@ const CTA = ({ withTopMargin }) => (
         <h2 className="text-6xl font-normal leading-snug text-white lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
           Need assistance?
         </h2>
-        <Link size="6xl" theme="arrow-red" to="mailto:info@pixelpoint.io">
+        <Link size="6xl" theme="arrow-red" to="https://calendly.com/pixel-point/30min">
           Schedule a call
         </Link>
       </div>

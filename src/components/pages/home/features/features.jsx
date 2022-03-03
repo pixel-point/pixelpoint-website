@@ -34,17 +34,17 @@ const items = [
   },
 ];
 const Features = () => (
-  <section className="safe-paddings mt-52">
+  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
     <div className="container">
-      <h2 className="max-w-[700px] text-4xl font-normal leading-snug">
+      <h2 className="max-w-[700px] text-4xl font-normal leading-snug lg:max-w-[560px] lg:text-3xl md:max-w-[440px] md:text-2xl sm:max-w-[370px] sm:text-xl">
         Here is what we have to offer for the next ideal&nbsp;marketing website of yours
       </h2>
-      <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
+      <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:gap-y-10 sm:mt-8 sm:block sm:space-y-8">
         {items.map(({ icon: Icon, description }, index) => (
           <li key={index}>
             <Icon className="w-20" aria-hidden />
             <p
-              className="mt-3 font-normal leading-snug"
+              className="sm:hide-br mt-3 font-normal leading-snug md:mt-2.5"
               dangerouslySetInnerHTML={{ __html: description }}
             />
           </li>

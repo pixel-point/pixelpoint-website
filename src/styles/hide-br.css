@@ -1,0 +1,7 @@
+@layer utilities {
+  .hide-br {
+    br {
+      display: none;
+    }
+  }
+}
