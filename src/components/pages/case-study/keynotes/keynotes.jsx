@@ -14,7 +14,7 @@ const icons = [Icon1, Icon2, Icon3, Icon4, Icon5, Icon6];
 const Keynotes = ({ items }) => (
   <section className="safe-paddings bg-black pt-32 text-white">
     <div className="container">
-      <h2 className="text-4xl font-normal leading-snug">Design and Development Keynotes</h2>
+      <h2 className="text-4xl font-normal leading-snug">Key Results and Outcomes</h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
         {items.map((item, index) => {
           const Icon = icons[index];
