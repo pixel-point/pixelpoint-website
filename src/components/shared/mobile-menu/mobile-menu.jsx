@@ -24,14 +24,14 @@ const links = [
       },
     ],
   },
-  {
-    text: 'Case studies',
-    to: '/case-studies',
-  },
-  {
-    text: 'Blog',
-    to: '/blog',
-  },
+  // {
+  //   text: 'Case studies',
+  //   to: '/case-studies',
+  // },
+  // {
+  //   text: 'Blog',
+  //   to: '/blog',
+  // },
 ];
 
 const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
@@ -75,9 +75,9 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
 
         <li>
           <Link
-            className="!flex py-5 text-lg"
-            to="mailto:info@pixelpoint.io"
-            size="base"
+            className="!flex py-5 !text-lg"
+            to="https://calendly.com/pixel-point/30min"
+            size="2xl"
             theme="arrow-red"
           >
             Schedule a call
