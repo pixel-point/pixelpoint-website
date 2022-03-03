@@ -13,6 +13,7 @@
 @import '../components/shared/content/content.css';
 
 /* Utilities */
+@import './hide-br.css';
 @import './remove-autocomplete-styles.css';
 @import './safe-paddings.css';
 @import './scrollbar-hidden.css';
