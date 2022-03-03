@@ -27,7 +27,7 @@ const Advantages = () => (
       <ul className="grid-gap-x mt-16 grid grid-cols-3">
         {items.map(({ title, description }, index) => (
           <li className="flex items-start" key={index}>
-            <span className="text-2xl font-semibold text-red">{index + 1}.</span>
+            <span className="text-2xl font-semibold leading-snug text-red">{index + 1}.</span>
             <div className="ml-2.5">
               <h3 className="text-2xl font-normal leading-snug">{title}</h3>
               <p className="mt-3">{description}</p>

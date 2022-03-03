@@ -47,10 +47,12 @@ const CaseStudies = ({ title, itemsType }) => {
     });
 
   return (
-    <section className="safe-paddings mt-52">
+    <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
       <div className="container">
-        <h2 className="max-w-[800px] text-4xl font-normal leading-snug">{title}</h2>
-        <div className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
+        <h2 className="max-w-[800px] text-4xl font-normal leading-snug lg:max-w-[650px] lg:text-3xl md:max-w-[500px] md:text-2xl sm:text-xl">
+          {title}
+        </h2>
+        <div className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:block sm:space-y-8">
           {items.map(({ slug, frontmatter: { logo, title, description, githubStars } }, index) => (
             <article className="flex flex-col" key={index}>
               <h1 className="sr-only">{`${title} case study`}</h1>
@@ -60,7 +62,12 @@ const CaseStudies = ({ title, itemsType }) => {
                 aria-label={`${title} case study`}
                 style={{ background: 'linear-gradient(254.82deg, #333333 0%, #000000 100%)' }}
               >
-                <img src={logo.publicURL} loading="lazy" alt={`${title} logo`} />
+                <img
+                  className="lg:scale-[0.8] md:scale-100 xs:scale-[0.8]"
+                  src={logo.publicURL}
+                  loading="lazy"
+                  alt={`${title} logo`}
+                />
                 <div className="absolute top-3 left-3 flex items-center">
                   <GithubLogo className="h-7 text-white" />
                   <p
@@ -71,7 +78,7 @@ const CaseStudies = ({ title, itemsType }) => {
                   </p>
                 </div>
               </Link>
-              <p className="my-4 font-normal leading-snug">{description}</p>
+              <p className="my-4 font-normal leading-snug md:my-3">{description}</p>
               <Link
                 className="mt-auto self-start"
                 to={`${CASE_STUDIES_BASE_PATH}/${slug}`}

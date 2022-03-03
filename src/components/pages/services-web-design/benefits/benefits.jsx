@@ -19,18 +19,20 @@ const items = [
 ];
 
 const Benefits = () => (
-  <section className="safe-paddings bg-black py-52 text-white">
+  <section className="safe-paddings bg-black py-52 text-white lg:py-44 md:py-36 sm:py-20">
     <div className="container">
-      <h2 className="text-4xl font-normal leading-snug">
+      <h2 className="text-4xl font-normal leading-snug lg:text-3xl md:text-2xl sm:text-xl">
         Unlock design process with benefits you wouldn’t want to lose:
       </h2>
-      <ul className="grid-gap-x mt-16 grid grid-cols-3">
+      <ul className="grid-gap-x mt-16 grid grid-cols-3 lg:mt-12 md:mt-10 md:block md:space-y-6 sm:mt-8">
         {items.map(({ title, description }, index) => (
           <li className="flex items-start" key={index}>
-            <span className="text-2xl font-semibold text-red">{index + 1}.</span>
-            <div className="ml-2.5">
-              <h3 className="text-2xl font-normal leading-snug">{title}</h3>
-              <p className="mt-3">{description}</p>
+            <span className="text-2xl font-semibold leading-snug text-red lg:text-xl sm:text-lg">
+              {index + 1}.
+            </span>
+            <div className="ml-2.5 lg:ml-2 sm:ml-1.5">
+              <h3 className="text-2xl font-normal leading-snug lg:text-xl sm:text-lg">{title}</h3>
+              <p className="mt-3 lg:mt-2.5 lg:text-base sm:mt-2">{description}</p>
             </div>
           </li>
         ))}

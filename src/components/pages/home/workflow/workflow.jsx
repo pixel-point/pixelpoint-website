@@ -37,13 +37,13 @@ const Workflow = () => (
   <section className="safe-paddings mt-52">
     <div className="container">
       <h2 className="max-w-[700px] text-4xl font-normal leading-snug">
-        Let's break down the <span className="text-red">magic</span> behind the&nbsp;result and
+        Let's break down the <span className="text-red">Magic</span> behind the&nbsp;result and
         reveal the whole process:
       </h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16">
         {items.map(({ title, description }, index) => (
           <li className="flex items-start" key={index}>
-            <span className="text-2xl font-semibold text-red">{index + 1}.</span>
+            <span className="text-2xl font-semibold leading-snug text-red">{index + 1}.</span>
             <div className="ml-2.5">
               <h3 className="text-2xl font-normal leading-snug">{title}</h3>
               <p className="mt-3">{description}</p>
