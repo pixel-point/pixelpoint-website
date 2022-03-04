@@ -21,13 +21,15 @@ const Content = ({
   services,
   stack,
 }) => (
-  <article className="safe-paddings bg-black pt-44 text-white">
-    <div className="container grid-gap-x grid grid-cols-12 items-start">
+  <article className="safe-paddings bg-black pt-40 text-white lg:pt-32 md:pt-28 sm:pt-20">
+    <div className="container grid-gap-x grid grid-cols-12 items-start md:block">
       <div className="col-span-8">
-        <h1 className="text-6xl font-normal leading-snug">{title}</h1>
-        <p className="mt-2.5 font-normal leading-snug">{description}</p>
+        <h1 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
+          {title}
+        </h1>
+        <p className="mt-3 font-normal leading-snug md:mt-2.5">{description}</p>
         <Link
-          className="mt-7 rounded-full border border-red py-3 px-5 transition-colors duration-200 hover:border-blue"
+          className="mt-7 rounded-full border border-red py-3 px-5 transition-colors duration-200 hover:border-blue md:mt-5 sm:mt-4"
           to={websiteUrl}
           size="base"
           theme="arrow-red"
@@ -36,30 +38,70 @@ const Content = ({
         >
           Visit {title}
         </Link>
-        <figure className="mt-12">
-          <QuoteIcon className="h-7" aria-hidden />
-          <blockquote className="mt-4 text-2xl">
+        <figure className="mt-12 lg:mt-10 md:mt-8 sm:mt-6">
+          <QuoteIcon className="h-7 lg:h-6 sm:h-5" aria-hidden />
+          <blockquote className="mt-4 text-2xl lg:mt-3 lg:text-xl sm:mt-2.5 sm:text-lg">
             <p>{quote.text}</p>
           </blockquote>
-          <figcaption className="mt-5 flex items-center">
+          <figcaption className="mt-5 flex items-center lg:mt-4 md:mt-3.5">
             <GatsbyImage
               className="w-12 shrink-0 rounded-full"
+              imgClassName="rounded-full"
               image={getImage(quote.authorPhoto)}
               alt={quote.authorName}
             />
-            <span className="ml-4 text-base font-normal">
+            <span className="ml-4 text-base font-normal lg:ml-3 md:ml-2.5">
               {quote.authorName} — {quote.authorPosition}
             </span>
           </figcaption>
         </figure>
-        <h2 className="mt-12 text-2xl font-normal leading-snug">About the project</h2>
-        <div className="with-link-red mt-2.5 space-y-5">
+        <div className="mt-8 hidden rounded-2xl border border-gray-8 p-5 md:block sm:mt-6 xs:p-4">
+          <div className="flex items-center justify-between xs:block">
+            <img src={logo} alt={title} loading="eager" />
+            {githubUrl && githubStars && (
+              <Link
+                className="inline-flex items-center rounded-full border border-white p-2 pr-4 xs:mt-4"
+                to={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <GithubLogo className="h-7 text-white" aria-hidden />
+                <span className="ml-2 text-xs font-semibold text-white">{githubStars}</span>
+              </Link>
+            )}
+          </div>
+          <div className="mt-6 flex md:mt-5 md:space-x-4 sm:mt-4 sm:block sm:space-x-0 sm:space-y-4">
+            {[
+              { title: 'Provided services', items: services },
+              { title: 'Technology stack', items: stack },
+            ].map(({ title, items }, index) => (
+              // <Fragment key={index}>
+              //   <p className="mt-4 text-base font-normal leading-snug sm:text-sm">
+              //     <span className="font-semibold text-red">{title}:</span> {items.join(', ')}
+              //   </p>
+              // </Fragment>
+
+              <div className="flex-1" key={index}>
+                <h4 className="text-base font-semibold leading-snug text-red">{title}</h4>
+                <ul className="mt-2.5 space-y-2.5 text-base font-normal leading-snug">
+                  {items.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+        <h2 className="mt-12 text-2xl font-normal leading-snug lg:mt-10 lg:text-xl md:mt-8 sm:mt-6 sm:text-lg">
+          About the project
+        </h2>
+        <div className="with-link-red mt-2.5 space-y-5 md:space-y-4">
           <MDXProvider>
             <MDXRenderer>{text}</MDXRenderer>
           </MDXProvider>
         </div>
       </div>
-      <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7">
+      <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7 lg:col-start-9 md:hidden">
         <img src={logo} alt={title} loading="eager" />
         {githubUrl && githubStars && (
           <Link
