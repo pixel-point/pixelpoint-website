@@ -31,7 +31,6 @@ const CASE_STUDY_REQUIRED_FIELDS = [
 const FEATURED_CASE_STUDY_REQUIRED_FIELDS = ['cover'];
 const OPEN_SOURCE_CASE_STUDY_REQUIRED_FIELDS = ['githubUrl', 'githubStars'];
 
-// eslint-disable-next-line no-unused-vars
 async function createBlogPage({ actions }) {
   const { createPage } = actions;
 
@@ -44,7 +43,6 @@ async function createBlogPage({ actions }) {
   });
 }
 
-// eslint-disable-next-line no-unused-vars
 async function createBlogPosts({ graphql, actions }) {
   const result = await graphql(`
     {
@@ -85,7 +83,6 @@ async function createBlogPosts({ graphql, actions }) {
   });
 }
 
-// eslint-disable-next-line no-unused-vars
 async function createCaseStudiesPage({ actions }) {
   const { createPage } = actions;
 
@@ -202,8 +199,10 @@ exports.onCreateNode = ({ node, actions }) => {
 };
 
 exports.createPages = async (options) => {
-  // await createBlogPage(options);
-  // await createBlogPosts(options);
-  // await createCaseStudiesPage(options);
+  if (process.env.NODE_ENV !== 'production') {
+    await createBlogPage(options);
+    await createBlogPosts(options);
+    await createCaseStudiesPage(options);
+  }
   await createCaseStudies(options);
 };
