@@ -75,12 +75,6 @@ const Content = ({
               { title: 'Provided services', items: services },
               { title: 'Technology stack', items: stack },
             ].map(({ title, items }, index) => (
-              // <Fragment key={index}>
-              //   <p className="mt-4 text-base font-normal leading-snug sm:text-sm">
-              //     <span className="font-semibold text-red">{title}:</span> {items.join(', ')}
-              //   </p>
-              // </Fragment>
-
               <div className="flex-1" key={index}>
                 <h4 className="text-base font-semibold leading-snug text-red">{title}</h4>
                 <ul className="mt-2.5 space-y-2.5 text-base font-normal leading-snug">
