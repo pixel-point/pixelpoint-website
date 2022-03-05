@@ -8,6 +8,6 @@
   }
 
   .container-sm {
-    @apply mx-auto max-w-[800px];
+    @apply mx-auto max-w-[800px] md:max-w-[704px] sm:max-w-none sm:px-4;
   }
 }

@@ -43,11 +43,11 @@ const Workflow = () => (
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:grid-cols-2 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:block sm:space-y-8">
         {items.map(({ title, description }, index) => (
           <li className="flex items-start" key={index}>
-            <span className="text-2xl font-semibold leading-snug text-red md:text-xl">
+            <span className="text-2xl font-semibold leading-snug text-red md:text-xl sm:text-lg">
               {index + 1}.
             </span>
             <div className="ml-2.5 lg:ml-2 md:ml-1.5">
-              <h3 className="text-2xl font-normal leading-snug md:text-xl">{title}</h3>
+              <h3 className="text-2xl font-normal leading-snug md:text-xl sm:text-lg">{title}</h3>
               <p className="mt-3 md:mt-2.5">{description}</p>
             </div>
           </li>
