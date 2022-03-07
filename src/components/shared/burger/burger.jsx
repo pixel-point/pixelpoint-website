@@ -5,9 +5,15 @@ import React from 'react';
 
 const ANIMATION_DURATION = 0.2;
 
-const Burger = ({ className: additionalClassName, isToggled, onClick }) => (
+const Burger = ({ className, theme, isToggled, onClick }) => (
   <motion.button
-    className={clsx('relative h-5 w-7 text-white', isToggled && 'text-black', additionalClassName)}
+    className={clsx(
+      'relative h-5 w-7',
+      theme === 'white' && 'text-white',
+      theme === 'black' && 'text-black',
+      isToggled && 'text-black',
+      className
+    )}
     type="button"
     animate={isToggled ? 'toggled' : 'initial'}
     onClick={onClick}
@@ -90,6 +96,7 @@ const Burger = ({ className: additionalClassName, isToggled, onClick }) => (
 
 Burger.propTypes = {
   className: PropTypes.string,
+  theme: PropTypes.oneOf(['white', 'black']).isRequired,
   isToggled: PropTypes.bool,
   onClick: PropTypes.func,
 };

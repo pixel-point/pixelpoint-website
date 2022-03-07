@@ -3,9 +3,9 @@ import React from 'react';
 
 import Link from 'components/shared/link';
 import QuoteIcon from 'images/quote.inline.svg';
+import TwitterIcon from 'images/twitter.inline.svg';
 
 import illustration from './images/illustration.svg';
-import TwitterIcon from './images/twitter.inline.svg';
 
 const Hero = () => (
   <section className="safe-paddings overflow-hidden bg-black pt-40 pb-32 text-white lg:pt-32 lg:pb-28 md:pt-28 md:pb-24 sm:pt-20 sm:pb-16">
@@ -29,11 +29,12 @@ const Hero = () => (
               <StaticImage
                 className="w-12 shrink-0 rounded-full"
                 imgClassName="rounded-full"
-                src="./images/photo.jpg"
+                src="../../../../images/alex-barashkov.jpg"
                 layout="fixed"
                 height={48}
                 width={48}
-                alt="Alex Barashkov's photo"
+                alt="Alex Barashkov"
+                loading="eager"
               />
               <span className="text-base font-normal">Alex Barashkov — CEO at Pixel Point</span>
             </div>

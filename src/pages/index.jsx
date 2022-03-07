@@ -11,7 +11,7 @@ import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 
 const HomePage = () => (
-  <Layout>
+  <Layout headerTheme="white">
     <Hero />
     <Advantages />
     <Features />

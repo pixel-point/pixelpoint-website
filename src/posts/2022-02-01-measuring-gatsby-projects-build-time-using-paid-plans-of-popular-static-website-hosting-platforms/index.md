@@ -1,11 +1,8 @@
 ---
 title: 'Measuring Gatsby projects build time using paid plans of popular static website hosting platforms'
-description: 'Jamstack is showing rapid growth these days. We get more and more tools and frameworks for it almost every month, bringing a new life for the concept of static sites generation...'
+description: 'Jamstack is showing rapid growth these days. We get more and more tools and frameworks for it almost every month, bringing a new life for the concept of static sites generation.'
+cover: cover.jpg
 ---
-
-## Measuring Gatsby projects build time using paid plans of popular static website hosting platforms
-
-![Measuring Gatsby projects build time using paid plans of popular static website hosting platforms](ogimage.webp)
 
 Jamstack is showing rapid growth these days. We get more and more tools and frameworks for it almost every month, bringing a new life for the concept of static sites generation.
 
@@ -15,7 +12,7 @@ Having a statically generated site comes with one significant drawback - build t
 
 So I decided to run tests across the most popular platforms using paid plans.
 
-### Table Of Contents
+## Table Of Contents
 
 - [Platforms](#platforms)
 - [Test cases](#test-cases)
@@ -23,7 +20,7 @@ So I decided to run tests across the most popular platforms using paid plans.
 - [Headless WordPress website](#headless-wordpress-website)
 - [Winners](#winners)
 
-### Platforms
+## Platforms
 
 **Netlify**
 Pro plan - $20/month per member.
@@ -43,13 +40,13 @@ First 1000 minutes free, then 0.01$ per build minute.
 **Self-hosted**
 $50/month, a self-hosted server running Drone CI with the following specs: AMD Ryzen 5 3600 Hexa-Core "Matisse" (Zen2), 64 RAM, 512GB Raid NVME SSD. Unlimited seats. Deployment to Netlify using netlify-cli.
 
-### Test cases
+## Test cases
 
 I started by testing clean cache build-time performance. Although you usually have a cache that works well and reduces the build time, there are still some cases when you have to clean it up manually, or Gatsby will clean it for you on changes in gatsby-node.js, gatsby-config.js, or package.json files.
 
 I made five runs for each test and then wrote down the average. I also used a stopwatch to ensure that there is no significant difference between the actual notification about completion and the number in UI. The goal of the stopwatch was not to measure it accurately but to figure out whether platforms show us the truth and don’t deduct from a build time some stages such as environment initialization or publication.
 
-### Markdown-based website
+## Markdown-based website
 
 **Clean cache build time**
 First in the test was a markdown-based website. The results were quite surprising. Gatsby Cloud did the job within two min., which is eight times faster than Netlify - 16. The results for Gatsby Cloud are quite similar to what I see running builds locally on Apple M1 chips, which is insane. I’m sure they do some nice magic behind the scenes, at least parallel image optimization.
@@ -61,6 +58,7 @@ The self-hosted solution was relatively fast and very close in terms of the buil
 ![ ](time1.png)
 
 The funny thing here is that Gatsby Cloud could complete the whole build in the amount of time it took Cloudflare to initialise the environment.
+
 ![ ](time2.png)
 
 **Deploy Preview build time**
@@ -89,7 +87,7 @@ Vercel(1:08) and Selfhosted(1:06) finished very close, but Gatsby Cloud was fast
 
 Cloudflare Pages and Netlify, AWS Netlify however, have room for improvement for sure.
 
-### Headless WordPress website
+## Headless WordPress website
 
 Then I jumped testing Gatsby v4 connected with the WordPress website. The site has two languages, a batch of common WP plugins, and around 1000 pages in total. This is where things get challenging.
 
@@ -108,7 +106,7 @@ Vercel did not show any difference from Deploy Preview. For Gatsby Cloud, howeve
 
 ![ ](time8.png)
 
-#### Bonus
+## Bonus
 
 It won’t be complete without showing you one more thing. All tests above were made, making changes in one jsx file and one blog post. But here is what Gatsby Cloud can do if you make a content change(from CMS like WP/Contentful/Prismic etc), which happens the most.
 
@@ -120,7 +118,7 @@ It took just 20 seconds from making a change in a CMS to seeing it live in produ
 
 **Note**: This result only could be achieved if you change a post or page. If you change shared data such as Menus, it will have to rebuild each page so that it will take around 50 seconds in the end.
 
-### Winners
+## Winners
 
 Gatsby Cloud won the race showing the best in class performance build time. I’m sure it uses the most powerful cars compared to other platforms and does some background magic. Vercel showed up still as a strong competitor. It did not show great results in cold runs, but cache changes everything. Talking with our clients, we mentioned that nobody cares when builds take less than 10 minutes, but after passing that threshold, you start to receive questions about how to make it faster. So considering this, I definitely could recommend both Gatsby and Vercel solutions.
 

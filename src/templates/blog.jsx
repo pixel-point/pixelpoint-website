@@ -13,7 +13,7 @@ const BlogTemplate = ({
     allMdx: { nodes },
   },
 }) => (
-  <Layout>
+  <Layout headerTheme="white">
     <Hero />
     <PostsList items={nodes} />
     <CaseStudies />

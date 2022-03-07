@@ -27,6 +27,9 @@ const styles = {
     white: {
       wrapper: 'text-white font-normal hover:text-red',
     },
+    black: {
+      wrapper: 'text-black font-normal hover:text-red',
+    },
     'underline-red': {
       wrapper:
         'relative font-normal text-red after:absolute after:-bottom-1 after:translate-y-full after:left-0 after:w-full after:h-0.5 after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200 hover:after:bg-opacity-100',

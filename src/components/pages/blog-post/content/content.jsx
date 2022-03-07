@@ -6,15 +6,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const Content = ({ className, content }) => (
-  <div className="safe-paddings">
-    <div className="container-sm">
-      <div className={clsx('prose prose-lg sm:prose-base', className)}>
+  <article className="safe-paddings">
+    <div className="container-xs">
+      <div className={clsx('prose prose-lg md:prose-base', className)}>
         <MDXProvider>
           <MDXRenderer>{content}</MDXRenderer>
         </MDXProvider>
       </div>
     </div>
-  </div>
+  </article>
 );
 
 Content.propTypes = {

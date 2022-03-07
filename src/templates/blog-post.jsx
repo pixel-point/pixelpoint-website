@@ -2,8 +2,9 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
+import Author from 'components/pages/blog-post/author';
+import Content from 'components/pages/blog-post/content';
 import Hero from 'components/pages/blog-post/hero';
-import Content from 'components/shared/content';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 
@@ -12,11 +13,10 @@ const BlogPostTemplate = ({
     mdx: { slug, body, frontmatter },
   },
 }) => (
-  <Layout>
-    <article>
-      <Hero {...frontmatter} slug={slug} />
-      <Content className="mt-20" content={body} />
-    </article>
+  <Layout headerTheme="black">
+    <Hero {...frontmatter} slug={slug} />
+    <Content content={body} />
+    <Author />
     <CTA withTopMargin />
   </Layout>
 );
@@ -29,6 +29,11 @@ export const query = graphql`
       frontmatter {
         title
         description
+        cover {
+          childImageSharp {
+            gatsbyImageData(width: 800)
+          }
+        }
       }
     }
   }

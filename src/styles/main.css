@@ -10,7 +10,7 @@
 /* Components */
 @import './code-block.css';
 @import './container.css';
-@import '../components/shared/content/content.css';
+@import '../components/pages/blog-post/content/content.css';
 
 /* Utilities */
 @import './hide-br.css';
