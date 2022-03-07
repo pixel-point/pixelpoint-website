@@ -10,7 +10,7 @@ import Layout from 'components/shared/layout';
 
 const CaseStudyTemplate = ({
   data: {
-    mdx: { body, frontmatter },
+    mdx: { body, slug, frontmatter },
   },
 }) => {
   const content = {
@@ -29,7 +29,7 @@ const CaseStudyTemplate = ({
   return (
     <Layout headerTheme="white">
       <Content {...content} />
-      <Keynotes items={frontmatter.keynotes} />
+      <Keynotes items={frontmatter.keynotes} iconsName={slug.slice(0, -1)} />
       <CaseStudies />
       <CTA withTopMargin />
     </Layout>
@@ -40,6 +40,7 @@ export const query = graphql`
   query ($id: String!) {
     mdx(id: { eq: $id }) {
       body
+      slug
       frontmatter {
         logo {
           publicURL

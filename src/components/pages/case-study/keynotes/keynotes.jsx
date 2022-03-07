@@ -1,28 +1,76 @@
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Icon1 from './images/icon-1.inline.svg';
-import Icon2 from './images/icon-2.inline.svg';
-import Icon3 from './images/icon-3.inline.svg';
-import Icon4 from './images/icon-4.inline.svg';
-import Icon5 from './images/icon-5.inline.svg';
-import Icon6 from './images/icon-6.inline.svg';
+import BrowserlessIcon1 from './images/browserless-icon-1.inline.svg';
+import BrowserlessIcon2 from './images/browserless-icon-2.inline.svg';
+import BrowserlessIcon3 from './images/browserless-icon-3.inline.svg';
+import CiliumIcon1 from './images/cilium-icon-1.inline.svg';
+import CiliumIcon2 from './images/cilium-icon-2.inline.svg';
+import CiliumIcon3 from './images/cilium-icon-3.inline.svg';
+import DroneIcon1 from './images/drone-icon-1.inline.svg';
+import DroneIcon2 from './images/drone-icon-2.inline.svg';
+import DroneIcon3 from './images/drone-icon-3.inline.svg';
+import DroneIcon4 from './images/drone-icon-4.inline.svg';
+import DroneIcon5 from './images/drone-icon-5.inline.svg';
+import DroneIcon6 from './images/drone-icon-6.inline.svg';
+import FlagsmithIcon1 from './images/flagsmith-icon-1.inline.svg';
+import FlagsmithIcon2 from './images/flagsmith-icon-2.inline.svg';
+import FlagsmithIcon3 from './images/flagsmith-icon-3.inline.svg';
+import FlagsmithIcon4 from './images/flagsmith-icon-4.inline.svg';
+import FlagsmithIcon5 from './images/flagsmith-icon-5.inline.svg';
+import FlagsmithIcon6 from './images/flagsmith-icon-6.inline.svg';
 import illustration from './images/illustration.svg';
+import K6Icon1 from './images/k6-icon-1.inline.svg';
+import K6Icon2 from './images/k6-icon-2.inline.svg';
+import K6Icon3 from './images/k6-icon-3.inline.svg';
+import K6Icon4 from './images/k6-icon-4.inline.svg';
+import K6Icon5 from './images/k6-icon-5.inline.svg';
+import K6Icon6 from './images/k6-icon-6.inline.svg';
+import ZenithIcon1 from './images/zenith-icon-1.inline.svg';
+import ZenithIcon2 from './images/zenith-icon-2.inline.svg';
+import ZenithIcon3 from './images/zenith-icon-3.inline.svg';
 
-const icons = [Icon1, Icon2, Icon3, Icon4, Icon5, Icon6];
+const icons = {
+  browserless: [BrowserlessIcon1, BrowserlessIcon2, BrowserlessIcon3],
+  cilium: [CiliumIcon1, CiliumIcon2, CiliumIcon3],
+  drone: [DroneIcon1, DroneIcon2, DroneIcon3, DroneIcon4, DroneIcon5, DroneIcon6],
+  flagsmith: [
+    FlagsmithIcon1,
+    FlagsmithIcon2,
+    FlagsmithIcon3,
+    FlagsmithIcon4,
+    FlagsmithIcon5,
+    FlagsmithIcon6,
+  ],
+  k6: [K6Icon1, K6Icon2, K6Icon3, K6Icon4, K6Icon5, K6Icon6],
+  zenith: [ZenithIcon1, ZenithIcon2, ZenithIcon3],
+};
 
-const Keynotes = ({ items }) => (
+const Keynotes = ({ items, iconsName }) => (
   <section className="safe-paddings bg-black pt-32 text-white lg:pt-28 md:pt-24 sm:pt-16">
     <div className="container">
       <h2 className="text-4xl font-normal leading-snug lg:text-3xl md:text-2xl sm:text-xl">
         Key Results and Outcomes
       </h2>
-      <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:block sm:space-y-8">
+      <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:flex sm:flex-col sm:gap-y-0 sm:gap-x-0 sm:space-y-8">
         {items.map((item, index) => {
-          const Icon = icons[index];
+          const Icon = icons[iconsName]?.[index];
 
           return (
-            <li className="max-w-[275px] sm:max-w-none" key={index}>
+            <li
+              className={clsx(
+                'max-w-[275px] sm:max-w-none',
+                index === 0 && 'md:order-1',
+                index === 1 && 'md:order-2',
+                index === 2 && 'md:order-3',
+                index === 3 && 'md:order-6',
+                index === 4 && 'md:order-4',
+                index === 5 && 'md:order-5'
+              )}
+              key={index}
+            >
+              {/* <li className="max-w-[275px] sm:max-w-none" key={index}> */}
               <Icon className="h-16 md:h-14" aria-hidden />
               <p className="mt-3 font-normal leading-snug md:mt-2.5">{item}</p>
             </li>
@@ -42,6 +90,7 @@ const Keynotes = ({ items }) => (
 
 Keynotes.propTypes = {
   items: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  iconsName: PropTypes.oneOf(Object.keys(icons)).isRequired,
 };
 
 export default Keynotes;
