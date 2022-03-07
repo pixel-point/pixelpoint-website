@@ -49,6 +49,7 @@ const Content = ({
               imgClassName="rounded-full"
               image={getImage(quote.authorPhoto)}
               alt={quote.authorName}
+              loading="lazy"
             />
             <span className="ml-4 text-base font-normal lg:ml-3 md:ml-2.5">
               {quote.authorName} — {quote.authorPosition}

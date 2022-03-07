@@ -41,7 +41,7 @@ const links = [
   // },
 ];
 
-const Header = forwardRef(({ isMobileMenuOpen, onBurgerClick }, ref) => (
+const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
   <header className="safe-paddings absolute top-0 left-0 right-0 z-50 w-full" ref={ref}>
     <div className="container-lg flex h-[88px] items-center justify-between lg:h-20 sm:h-16">
       <Link to="/">
@@ -49,7 +49,8 @@ const Header = forwardRef(({ isMobileMenuOpen, onBurgerClick }, ref) => (
         <Logo
           className={clsx(
             'h-9 transition-all duration-200 sm:h-8',
-            isMobileMenuOpen && 'md:invert'
+            isMobileMenuOpen && 'md:invert',
+            theme === 'black' && 'invert'
           )}
           aria-hidden
         />
@@ -60,11 +61,13 @@ const Header = forwardRef(({ isMobileMenuOpen, onBurgerClick }, ref) => (
             <li
               className={clsx(
                 items?.length > 0 &&
-                  'group relative cursor-pointer pr-2.5 after:absolute after:top-2 after:right-0 after:h-0 after:w-0 after:border-[3px] after:border-b-0 after:border-t-white after:transition-colors after:duration-200 after:hover:border-t-red'
+                  'group relative cursor-pointer pr-2.5 after:absolute after:top-2 after:right-0 after:h-0 after:w-0 after:border-[3px] after:border-b-0 after:transition-colors after:duration-200 after:hover:border-t-red',
+                items?.length > 0 && theme === 'white' && 'after:border-black after:border-t-white',
+                items?.length > 0 && theme === 'black' && 'after:border-white after:border-t-black'
               )}
               key={index}
             >
-              <Link className="group-hover:text-red" to={to} size="base" theme="white">
+              <Link className="group-hover:text-red" to={to} size="base" theme={theme}>
                 {text}
               </Link>
 
@@ -100,20 +103,32 @@ const Header = forwardRef(({ isMobileMenuOpen, onBurgerClick }, ref) => (
             </li>
           ))}
 
-          <li className="!ml-6 border-l border-l-gray-8 pl-6">
+          <li
+            className={clsx(
+              '!ml-6 border-l pl-6',
+              theme === 'white' && 'border-l-gray-8',
+              theme === 'black' && 'border-l-gray-4'
+            )}
+          >
             <Link to="mailto:info@pixelpoint.io" size="base" theme="underline-red">
               info@pixelpoint.io
             </Link>
           </li>
         </ul>
 
-        <Burger className="hidden md:block" isToggled={isMobileMenuOpen} onClick={onBurgerClick} />
+        <Burger
+          className="hidden md:block"
+          theme={theme}
+          isToggled={isMobileMenuOpen}
+          onClick={onBurgerClick}
+        />
       </nav>
     </div>
   </header>
 ));
 
 Header.propTypes = {
+  theme: PropTypes.oneOf(['white', 'black']).isRequired,
   isMobileMenuOpen: PropTypes.bool,
   onBurgerClick: PropTypes.func.isRequired,
 };

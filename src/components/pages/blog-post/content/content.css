@@ -14,11 +14,7 @@
     h6,
     strong,
     blockquote {
-      @apply text-inherit;
-    }
-
-    strong {
-      @apply font-normal;
+      @apply font-normal text-inherit;
     }
 
     ul,
@@ -92,6 +88,10 @@
           @apply hidden;
         }
       }
+    }
+
+    img {
+      @apply rounded-2xl lg:rounded-xl md:rounded-lg sm:rounded-md xs:rounded;
     }
   }
 }

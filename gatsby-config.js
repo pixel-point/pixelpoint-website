@@ -91,6 +91,7 @@ module.exports = {
               maxWidth: 800,
               quality: 85,
               withWebp: true,
+              linkImagesToOriginal: false,
               backgroundColor: 'white',
               disableBgImageOnAlpha: true,
             },

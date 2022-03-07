@@ -13,7 +13,7 @@ const CaseStudiesPage = ({
     allMdx: { nodes },
   },
 }) => (
-  <Layout>
+  <Layout headerTheme="white">
     <Hero />
     <CaseStudies items={nodes} />
     <SharedCaseStudies title="All case studies" itemsType="not-featured" />

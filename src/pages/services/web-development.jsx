@@ -19,7 +19,7 @@ const servicesCTA = {
 };
 
 const ServicesWebDevelopmentPage = () => (
-  <Layout>
+  <Layout headerTheme="white">
     <Hero />
     <Frameworks />
     <Tailwindcss />

@@ -27,7 +27,7 @@ const CaseStudyTemplate = ({
   };
 
   return (
-    <Layout>
+    <Layout headerTheme="white">
       <Content {...content} />
       <Keynotes items={frontmatter.keynotes} />
       <CaseStudies />

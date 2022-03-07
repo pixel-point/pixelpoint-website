@@ -6,7 +6,7 @@ import Header from 'components/shared/header';
 import MobileMenu from 'components/shared/mobile-menu';
 import SEO from 'components/shared/seo';
 
-const Layout = ({ children }) => {
+const Layout = ({ headerTheme, children }) => {
   const headerRef = useRef(null);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,6 +24,7 @@ const Layout = ({ children }) => {
       <SEO />
       <div className="flex min-h-screen flex-col">
         <Header
+          theme={headerTheme}
           isMobileMenuOpen={isMobileMenuOpen}
           ref={headerRef}
           onBurgerClick={handleHeaderBurgerClick}
@@ -41,6 +42,7 @@ const Layout = ({ children }) => {
 };
 
 Layout.propTypes = {
+  headerTheme: PropTypes.oneOf(['black', 'white']).isRequired,
   children: PropTypes.node.isRequired,
 };
 
