@@ -17,7 +17,13 @@ const Hero = () => {
   });
 
   useEffect(() => {
-    if (isWrapperInView && rive) rive.play();
+    if (isWrapperInView && rive) {
+      rive.play();
+
+      rive.on('stop', () => {
+        rive.play('loop');
+      });
+    }
   }, [isWrapperInView, rive]);
 
   return (
@@ -31,9 +37,8 @@ const Hero = () => {
         </h1>
         <ImagePlaceholder
           className="mt-16 lg:mt-12 md:mt-10 sm:mt-8"
-          width={1096}
-          // width={1216}
-          height={480}
+          width={1200}
+          height={700}
           aria-hidden
         >
           <RiveComponent />
