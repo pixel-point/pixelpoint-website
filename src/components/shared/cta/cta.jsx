@@ -37,7 +37,7 @@ const CTA = ({ withTopMargin }) => {
             Need assistance?
           </h2>
           <Link size="6xl" theme="arrow-red" to="https://calendly.com/pixel-point/30min">
-            Schedule a call
+            Book a call
           </Link>
         </div>
         <ImagePlaceholder className="sm:mt-2 sm:w-full" width={592} height={560}>

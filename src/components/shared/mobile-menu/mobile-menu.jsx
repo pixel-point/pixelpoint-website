@@ -80,7 +80,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
             size="2xl"
             theme="arrow-red"
           >
-            Schedule a call
+            Book a call
           </Link>
         </li>
       </ul>
