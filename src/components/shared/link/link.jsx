@@ -25,26 +25,46 @@ const styles = {
   },
   theme: {
     white: {
-      wrapper: 'text-white font-normal hover:text-red',
+      wrapper: {
+        base: 'text-white font-normal',
+        hover: 'hover:text-red',
+      },
     },
     black: {
-      wrapper: 'text-black font-normal hover:text-red',
+      wrapper: {
+        base: 'text-black font-normal',
+        hover: 'hover:text-red',
+      },
     },
     'underline-red': {
-      wrapper:
-        'relative font-normal text-red after:absolute after:-bottom-1 after:translate-y-full after:left-0 after:w-full after:h-0.5 after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200 hover:after:bg-opacity-100',
+      wrapper: {
+        base: 'relative font-normal text-red after:absolute after:-bottom-1 after:translate-y-full after:left-0 after:w-full after:h-0.5 after:bg-red after:bg-opacity-40 after:transition-colors after:duration-200',
+        hover: 'hover:after:bg-opacity-100',
+      },
     },
     'arrow-red': {
-      wrapper: 'items-center font-semibold text-red hover:text-blue',
+      wrapper: {
+        base: 'items-center font-semibold text-red',
+        hover: 'hover:text-blue',
+      },
     },
   },
 };
 
-const Link = ({ className: additionalClassName, size, theme, to, children, ...props }) => {
+const Link = ({
+  className: additionalClassName,
+  size,
+  theme,
+  to,
+  withoutHover,
+  children,
+  ...props
+}) => {
   const className = clsx(
     (size || theme) && styles.base,
     styles.size[size]?.wrapper,
-    styles.theme[theme]?.wrapper,
+    styles.theme[theme]?.wrapper?.base,
+    !withoutHover && styles.theme[theme]?.wrapper?.hover,
     additionalClassName
   );
 
@@ -91,6 +111,7 @@ Link.propTypes = {
   to: PropTypes.string,
   size: PropTypes.oneOf(Object.keys(styles.size)),
   theme: PropTypes.oneOf(Object.keys(styles.theme)),
+  withoutHover: PropTypes.boolean,
   children: PropTypes.node.isRequired,
 };
 
@@ -99,6 +120,7 @@ Link.defaultProps = {
   to: null,
   size: null,
   theme: null,
+  withoutHover: false,
 };
 
 export default Link;

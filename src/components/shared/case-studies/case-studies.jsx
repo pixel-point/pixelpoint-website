@@ -17,22 +17,20 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
     }),
   });
 
-  const handleCardLinkMouseEnter = () => {
-    if (rive && !rive.isPlaying) {
-      rive.reset();
-      rive.play();
-    }
+  const handleMouseEnter = () => {
+    if (rive && !rive.isPlaying) rive.play(['Animations']);
   };
 
   return (
-    <article className="flex flex-col">
+    <Link
+      className="flex flex-col"
+      to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
+      onMouseEnter={handleMouseEnter}
+    >
       <h1 className="sr-only">{`${title} case study`}</h1>
-      <Link
+      <div
         className="relative flex aspect-[384/200] items-center justify-center overflow-hidden rounded-2xl"
-        to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
-        aria-label={`${title} case study`}
         style={{ background: 'linear-gradient(254.82deg, #333333 0%, #000000 100%)' }}
-        onMouseEnter={handleCardLinkMouseEnter}
       >
         <img
           className="relative z-10 lg:scale-[0.8] md:scale-100 xs:scale-[0.8]"
@@ -50,17 +48,12 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
           </p>
         </div>
         <RiveComponent className="absolute top-0 left-0 right-0 bottom-0" />
-      </Link>
+      </div>
       <p className="my-4 font-normal leading-snug md:my-3">{description}</p>
-      <Link
-        className="mt-auto self-start"
-        to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
-        size="base"
-        theme="arrow-red"
-      >
+      <Link className="mt-auto self-start" size="base" theme="arrow-red" withoutHover>
         {title} case study
       </Link>
-    </article>
+    </Link>
   );
 };
 

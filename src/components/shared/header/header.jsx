@@ -90,7 +90,7 @@ const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
                           <div>
                             <span className="text-2xl font-normal leading-snug">{text}</span>
                             <p className="mt-2.5 text-base">{description}</p>
-                            <Link className="mt-4" size="base" theme="arrow-red">
+                            <Link className="mt-4" size="base" theme="arrow-red" withoutHover>
                               {linkText}
                             </Link>
                           </div>
