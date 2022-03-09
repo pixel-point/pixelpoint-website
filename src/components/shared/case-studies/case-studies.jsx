@@ -119,17 +119,6 @@ const CaseStudies = ({ title, itemsType }) => {
           {itemsToRender.map(({ slug, frontmatter }, index) => (
             <Card {...frontmatter} slug={slug} key={index} />
           ))}
-          {/* {itemsType === 'open-source' && (
-            <Link
-              className="relative flex aspect-[384/200] items-center justify-center rounded-2xl"
-              to={CASE_STUDIES_BASE_PATH}
-              style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
-            >
-              <Link size="2xl" theme="arrow-red">
-                All case studies
-              </Link>
-            </Link>
-          )} */}
         </div>
       </div>
     </section>

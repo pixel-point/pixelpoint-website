@@ -77,7 +77,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
           <Link
             className="!flex py-5 !text-lg"
             to="https://calendly.com/pixel-point/30min"
-            size="2xl"
+            size="lg-only"
             theme="arrow-red"
           >
             Book a call
