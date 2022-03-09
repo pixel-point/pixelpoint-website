@@ -6,12 +6,15 @@ import React from 'react';
 
 // import ImagePlaceholder from 'components/shared/image-placeholder';
 
+// const STATE_MACHINE_NAME = 'State Machine';
+
 const Hero = () => (
   // const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, threshold: 0.5 });
 
   // const { RiveComponent, rive } = useRive({
   //   src: '/animations/pages/services-web-development/hero.riv',
   //   autoplay: false,
+  //   stateMachines: STATE_MACHINE_NAME,
   //   layout: new Layout({
   //     fit: Fit.FitWidth,
   //     alignment: Alignment.Center,
@@ -19,13 +22,7 @@ const Hero = () => (
   // });
 
   // useEffect(() => {
-  //   if (isWrapperInView && rive) {
-  //     rive.play();
-
-  //     rive.on('stop', () => {
-  //       rive.play('loop');
-  //     });
-  //   }
+  //   if (isWrapperInView && rive) rive.play();
   // }, [isWrapperInView, rive]);
 
   <section
@@ -48,7 +45,7 @@ const Hero = () => (
       {/* <ImagePlaceholder
           className="mt-16 lg:mt-12 md:mt-10 sm:mt-8"
           width={1200}
-          height={700}
+          height={600}
           aria-hidden
         >
           <RiveComponent />

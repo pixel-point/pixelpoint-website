@@ -18,7 +18,7 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
   });
 
   const handleCardLinkMouseEnter = () => {
-    if (rive) {
+    if (rive && !rive.isPlaying) {
       rive.reset();
       rive.play();
     }

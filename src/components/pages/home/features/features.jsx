@@ -106,26 +106,11 @@ const Features = () => {
       iconAnimation6
     ) {
       iconAnimation1.play();
-
-      iconAnimation1.on('stop', () => {
-        iconAnimation2.play();
-      });
-
-      iconAnimation2.on('stop', () => {
-        iconAnimation3.play();
-      });
-
-      iconAnimation3.on('stop', () => {
-        iconAnimation4.play();
-      });
-
-      iconAnimation4.on('stop', () => {
-        iconAnimation5.play();
-      });
-
-      iconAnimation5.on('stop', () => {
-        iconAnimation6.play();
-      });
+      iconAnimation1.on('stop', () => iconAnimation2.play());
+      iconAnimation2.on('stop', () => iconAnimation3.play());
+      iconAnimation3.on('stop', () => iconAnimation4.play());
+      iconAnimation4.on('stop', () => iconAnimation5.play());
+      iconAnimation5.on('stop', () => iconAnimation6.play());
     }
 
     return () => icons.forEach(({ animation }) => animation && animation.unsubscribeAll());
