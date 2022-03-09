@@ -85,12 +85,17 @@ const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
                         className={clsx(index !== 0 && 'mt-7 border-t border-t-gray-4 pt-7')}
                         key={index}
                       >
-                        <Link className="flex space-x-5" to={to}>
+                        <Link className="menu-link-wrapper flex space-x-5" to={to}>
                           <Icon className="h-14 shrink-0" />
                           <div>
                             <span className="text-2xl font-normal leading-snug">{text}</span>
                             <p className="mt-2.5 text-base">{description}</p>
-                            <Link className="mt-4" size="base" theme="arrow-red" withoutHover>
+                            <Link
+                              className="menu-link mt-4"
+                              size="base"
+                              theme="arrow-red"
+                              withoutHover
+                            >
                               {linkText}
                             </Link>
                           </div>
