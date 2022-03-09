@@ -13,7 +13,7 @@ const Hero = () => {
   const [wrapperRef, isWrapperInView] = useInView();
 
   const params = {
-    src: '/rive/home-hero.riv',
+    src: '/animations/pages/home/hero.riv',
     autoplay: false,
     stateMachines: STATE_MACHINE_NAME,
     layout: new Layout({

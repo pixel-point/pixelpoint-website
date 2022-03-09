@@ -1,10 +1,78 @@
 import { useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import Link from 'components/shared/link';
 import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
 import GithubLogo from 'images/github.inline.svg';
+
+const Card = ({ logo, title, description, githubStars, slug }) => {
+  const { RiveComponent, rive } = useRive({
+    src: '/animations/shared/case-studies-card.riv',
+    autoplay: false,
+    layout: new Layout({
+      fit: Fit.FitHeight,
+      alignment: Alignment.Center,
+    }),
+  });
+
+  const handleCardLinkMouseEnter = () => {
+    if (rive && !rive.isPlaying) {
+      rive.reset();
+      rive.play();
+    }
+  };
+
+  return (
+    <article className="flex flex-col">
+      <h1 className="sr-only">{`${title} case study`}</h1>
+      <Link
+        className="relative flex aspect-[384/200] items-center justify-center overflow-hidden rounded-2xl"
+        to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
+        aria-label={`${title} case study`}
+        style={{ background: 'linear-gradient(254.82deg, #333333 0%, #000000 100%)' }}
+        onMouseEnter={handleCardLinkMouseEnter}
+      >
+        <img
+          className="relative z-10 lg:scale-[0.8] md:scale-100 xs:scale-[0.8]"
+          src={logo.publicURL}
+          loading="lazy"
+          alt={`${title} logo`}
+        />
+        <div className="absolute top-3 left-3 z-10 flex items-center">
+          <GithubLogo className="h-7 text-white" />
+          <p
+            className="ml-2 text-xs font-semibold text-white"
+            aria-label={`${githubStars} stars on Github`}
+          >
+            {githubStars}
+          </p>
+        </div>
+        <RiveComponent className="absolute top-0 left-0 right-0 bottom-0" />
+      </Link>
+      <p className="my-4 font-normal leading-snug md:my-3">{description}</p>
+      <Link
+        className="mt-auto self-start"
+        to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
+        size="base"
+        theme="arrow-red"
+      >
+        {title} case study
+      </Link>
+    </article>
+  );
+};
+
+Card.propTypes = {
+  logo: PropTypes.exact({
+    publicURL: PropTypes.string.isRequired,
+  }).isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  githubStars: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+};
 
 const CaseStudies = ({ title, itemsType }) => {
   const {
@@ -55,44 +123,9 @@ const CaseStudies = ({ title, itemsType }) => {
           {title}
         </h2>
         <div className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:block sm:space-y-8">
-          {itemsToRender.map(
-            ({ slug, frontmatter: { logo, title, description, githubStars } }, index) => (
-              <article className="flex flex-col" key={index}>
-                <h1 className="sr-only">{`${title} case study`}</h1>
-                <Link
-                  className="relative flex aspect-[384/200] items-center justify-center rounded-2xl"
-                  to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
-                  aria-label={`${title} case study`}
-                  style={{ background: 'linear-gradient(254.82deg, #333333 0%, #000000 100%)' }}
-                >
-                  <img
-                    className="lg:scale-[0.8] md:scale-100 xs:scale-[0.8]"
-                    src={logo.publicURL}
-                    loading="lazy"
-                    alt={`${title} logo`}
-                  />
-                  <div className="absolute top-3 left-3 flex items-center">
-                    <GithubLogo className="h-7 text-white" />
-                    <p
-                      className="ml-2 text-xs font-semibold text-white"
-                      aria-label={`${githubStars} stars on Github`}
-                    >
-                      {githubStars}
-                    </p>
-                  </div>
-                </Link>
-                <p className="my-4 font-normal leading-snug md:my-3">{description}</p>
-                <Link
-                  className="mt-auto self-start"
-                  to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
-                  size="base"
-                  theme="arrow-red"
-                >
-                  {title} case study
-                </Link>
-              </article>
-            )
-          )}
+          {itemsToRender.map(({ slug, frontmatter }, index) => (
+            <Card {...frontmatter} slug={slug} key={index} />
+          ))}
           {/* {itemsType === 'open-source' && (
             <Link
               className="relative flex aspect-[384/200] items-center justify-center rounded-2xl"

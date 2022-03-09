@@ -9,7 +9,7 @@ import lgIllustration2 from './images/lg-illustration-2.svg';
 
 const Services = () => {
   const params = {
-    src: '/rive/services.riv',
+    src: '/animations/pages/home/services.riv',
     autoplay: false,
     layout: new Layout({
       fit: Fit.FitWidth,
