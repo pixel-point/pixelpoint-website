@@ -28,10 +28,7 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
       onMouseEnter={handleMouseEnter}
     >
       <h1 className="sr-only">{`${title} case study`}</h1>
-      <div
-        className="relative flex aspect-[384/200] items-center justify-center overflow-hidden rounded-2xl"
-        style={{ background: 'linear-gradient(254.82deg, #333333 0%, #000000 100%)' }}
-      >
+      <div className="relative flex aspect-[384/200] items-center justify-center overflow-hidden rounded-2xl bg-black">
         <img
           className="relative z-10 lg:scale-[0.8] md:scale-100 xs:scale-[0.8]"
           src={logo.publicURL}

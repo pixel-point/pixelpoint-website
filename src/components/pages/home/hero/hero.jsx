@@ -219,7 +219,6 @@ const Hero = () => {
             ref={secondSectionRef}
           >
             <Title items={secondSectionTitleItems} controls={secondSectionTitleControls} />
-
             <img
               className="mx-auto mt-16 hidden max-w-[620px] lg:block md:mt-12 md:max-w-[440px] sm:mt-8 sm:max-w-full"
               src={lgIllustration2}
