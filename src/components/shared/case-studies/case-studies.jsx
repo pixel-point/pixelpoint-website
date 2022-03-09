@@ -23,7 +23,7 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
 
   return (
     <Link
-      className="flex flex-col"
+      className="group flex flex-col"
       to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
       onMouseEnter={handleMouseEnter}
     >
@@ -50,7 +50,12 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
         <RiveComponent className="absolute top-0 left-0 right-0 bottom-0" />
       </div>
       <p className="my-4 font-normal leading-snug md:my-3">{description}</p>
-      <Link className="mt-auto self-start" size="base" theme="arrow-red" withoutHover>
+      <Link
+        className="mt-auto self-start group-hover:text-blue"
+        size="base"
+        theme="arrow-red"
+        withoutHover
+      >
         {title} case study
       </Link>
     </Link>
