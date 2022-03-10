@@ -4,4 +4,8 @@
       @apply relative font-normal text-red no-underline transition-colors duration-200 hover:text-blue;
     }
   }
+
+  .with-nested-link-red-hover:hover .nested-link-red {
+    @apply text-blue;
+  }
 }

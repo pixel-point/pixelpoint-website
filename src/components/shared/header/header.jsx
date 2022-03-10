@@ -73,7 +73,7 @@ const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
 
               {items?.length > 0 && (
                 // <div className="invisible absolute -left-24 bottom-0 w-[500px] translate-y-full pt-6 text-[0px] opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100">
-                <div className="invisible absolute left-[-238px] bottom-0 w-[500px] translate-y-full pt-6 text-[0px] opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100">
+                <div className="invisible absolute left-[-238px] bottom-0 w-[500px] translate-y-full cursor-default pt-6 text-[0px] opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100">
                   <ul
                     className="rounded-2xl bg-white p-6 pb-7"
                     style={{
@@ -85,13 +85,13 @@ const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
                         className={clsx(index !== 0 && 'mt-7 border-t border-t-gray-4 pt-7')}
                         key={index}
                       >
-                        <Link className="menu-link-wrapper flex space-x-5" to={to}>
+                        <Link className="with-nested-link-red-hover flex space-x-5" to={to}>
                           <Icon className="h-14 shrink-0" />
                           <div>
                             <span className="text-2xl font-normal leading-snug">{text}</span>
                             <p className="mt-2.5 text-base">{description}</p>
                             <Link
-                              className="menu-link mt-4"
+                              className="nested-link-red mt-4"
                               size="base"
                               theme="arrow-red"
                               withoutHover
