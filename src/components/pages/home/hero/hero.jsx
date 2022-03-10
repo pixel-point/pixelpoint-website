@@ -132,9 +132,9 @@ const Hero = () => {
   const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true });
   const [secondSectionRef, isSecondSectionInView] = useInView({
     triggerOnce: true,
-    threshold: 0.8,
+    threshold: 0.75,
   });
-  const [thirdSectionRef, isThirdSectionInView] = useInView({ triggerOnce: true, threshold: 0.8 });
+  const [thirdSectionRef, isThirdSectionInView] = useInView({ triggerOnce: true, threshold: 0.85 });
 
   const firstSectionTitleControls = useAnimation();
   const secondSectionTitleControls = useAnimation();
@@ -241,6 +241,7 @@ const Hero = () => {
         </div>
         <div className="lg:hidden">
           <div
+            // className="absolute top-0 h-[2000px] w-[733px]"
             className="absolute top-0 h-[3000px] w-[1100px]"
             style={{
               transform: `translateY(${
