@@ -5,6 +5,7 @@
   src: url('/fonts/ibm-plex-mono/ibm-plex-mono-regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
 
 @font-face {
@@ -14,6 +15,7 @@
   font-style: normal;
   font-weight: 400;
   font-stretch: normal;
+  font-display: block;
 }
 @font-face {
   font-family: 'usual';
@@ -22,6 +24,7 @@
   font-style: normal;
   font-weight: 600;
   font-stretch: normal;
+  font-display: block;
 }
 @font-face {
   font-family: 'usual';
@@ -30,4 +33,5 @@
   font-style: normal;
   font-weight: 300;
   font-stretch: normal;
+  font-display: block;
 }
