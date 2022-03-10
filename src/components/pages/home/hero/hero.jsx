@@ -132,9 +132,9 @@ const Hero = () => {
   const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true });
   const [secondSectionRef, isSecondSectionInView] = useInView({
     triggerOnce: true,
-    threshold: 0.5,
+    threshold: 0.8,
   });
-  const [thirdSectionRef, isThirdSectionInView] = useInView({ triggerOnce: true, threshold: 0.5 });
+  const [thirdSectionRef, isThirdSectionInView] = useInView({ triggerOnce: true, threshold: 0.8 });
 
   const firstSectionTitleControls = useAnimation();
   const secondSectionTitleControls = useAnimation();
@@ -215,7 +215,7 @@ const Hero = () => {
             />
           </div>
           <div
-            className="flex items-center pt-[100px] lg:block lg:pt-44 md:pt-36 sm:pt-20"
+            className="flex items-center pt-[100px] pb-[500px] lg:block lg:pt-44 lg:pb-0 md:pt-36 sm:pt-20"
             ref={secondSectionRef}
           >
             <Title items={secondSectionTitleItems} controls={secondSectionTitleControls} />
@@ -227,7 +227,7 @@ const Hero = () => {
             />
           </div>
           <div
-            className="flex items-center pt-[700px] pb-[360px] lg:block lg:py-44 md:py-36 sm:py-20"
+            className="flex items-center pt-[200px] pb-[360px] lg:block lg:py-44 md:py-36 sm:py-20"
             ref={thirdSectionRef}
           >
             <Title items={thirdSectionTitleItems} controls={thirdSectionTitleControls} />
