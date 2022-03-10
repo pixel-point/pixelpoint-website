@@ -102,12 +102,11 @@ module.exports = {
     },
     {
       resolve: 'gatsby-plugin-netlify',
-      // TODO: Either uncomment this part of the code if fonts are stored in /static/fonts/ or delete it
-      // options: {
-      //   headers: {
-      //     '/fonts/*': ['Cache-Control: public, max-age: 31536000, immutable'],
-      //   },
-      // },
+      options: {
+        headers: {
+          '/fonts/*': ['Cache-Control: public, max-age: 31536000, immutable'],
+        },
+      },
     },
     'gatsby-alias-imports',
     'gatsby-plugin-postcss',

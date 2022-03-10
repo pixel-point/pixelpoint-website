@@ -4,7 +4,7 @@ import React from 'react';
 const fontsBasePath = '/fonts';
 
 // TODO: Add paths to fonts that need to be preloaded, need to add only fonts that are being used in header + hero sections
-const fontsPaths = [];
+const fontsPaths = ['/usual/usual-600.woff2', '/usual/usual-400.woff2'];
 
 const HTML = ({
   htmlAttributes,
@@ -33,7 +33,6 @@ const HTML = ({
         />
       ))}
       {headComponents}
-      <link rel="stylesheet" href="https://use.typekit.net/xfa4vpe.css" />
     </head>
     <body {...bodyAttributes}>
       {preBodyComponents}
