@@ -23,7 +23,7 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
 
   return (
     <Link
-      className="group flex flex-col"
+      className="with-nested-link-red-hover flex flex-col"
       to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
       onMouseEnter={handleMouseEnter}
     >
@@ -48,7 +48,7 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
       </div>
       <p className="my-4 font-normal leading-snug md:my-3">{description}</p>
       <Link
-        className="mt-auto self-start group-hover:text-blue"
+        className="nested-link-red mt-auto self-start"
         size="base"
         theme="arrow-red"
         withoutHover

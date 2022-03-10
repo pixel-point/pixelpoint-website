@@ -4,7 +4,3 @@
     -webkit-tap-highlight-color: transparent;
   }
 }
-
-.menu-link-wrapper:hover .menu-link {
-  @apply text-blue;
-}
