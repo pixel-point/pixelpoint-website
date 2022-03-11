@@ -132,17 +132,17 @@ const Features = () => {
         <h2 className="max-w-[700px] text-4xl font-normal leading-snug lg:max-w-[560px] lg:text-3xl md:max-w-[440px] md:text-2xl sm:max-w-[370px] sm:text-xl">
           Here is what we have to offer for the next ideal&nbsp;marketing website of yours
         </h2>
-        <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:gap-y-10 sm:mt-8 sm:block sm:space-y-8">
+        <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:gap-y-10 sm:mt-8 sm:grid-cols-2 sm:gap-y-8 xs:text-sm">
           {items.map((item, index) => {
             const Icon = icons[index].component;
 
             return (
-              <li key={index}>
+              <li className="xs:max-w-[150px]" key={index}>
                 <ImagePlaceholder className="w-20" width={80} height={62} aria-hidden>
                   <Icon />
                 </ImagePlaceholder>
                 <p
-                  className="sm:hide-br mt-3 font-normal leading-snug md:mt-2.5"
+                  className="sm:hide-br mt-3 font-normal leading-snug md:mt-2.5 xs:leading-tight"
                   dangerouslySetInnerHTML={{ __html: item }}
                 />
               </li>
