@@ -7,6 +7,7 @@ import Keynotes from 'components/pages/case-study/keynotes';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
+import SEO_DATA from 'constants/seo-data';
 
 const CaseStudyTemplate = ({
   data: {
@@ -27,7 +28,10 @@ const CaseStudyTemplate = ({
   };
 
   return (
-    <Layout headerTheme="white">
+    <Layout
+      seo={SEO_DATA.blogPost({ title: frontmatter.title, description: frontmatter.description })}
+      headerTheme="white"
+    >
       <Content {...content} />
       <Keynotes items={frontmatter.keynotes} iconsName={slug.slice(0, -1)} />
       <CaseStudies />

@@ -3,8 +3,6 @@ title: 'Why I HATE your FAKE redesign'
 description: 'I’m tired of seeing new and frankly stupid redesigns of Facebook, Skype, and Twitter pop up on my newsfeed. Why not make something useful…'
 ---
 
-## Why I HATE your FAKE redesign
-
 I’m tired of seeing new and frankly stupid redesigns of Facebook, Skype, and Twitter pop up on my newsfeed. Why not make something useful? Stop supporting these redesigns with likes, re-posts, and articles at Muzli, Medium, Designer News, etc. You’re aiding and abetting this brainless work. These designers may start to think that they are true professionals, and that they know more about how popular services should look than their creators.
 
 **Disclaimer**: I don’t think that all redesigns have silly and unattractive UI, but I think that 99% of them do. If you read this article to the end, your redesign might just end up in the 1%.

@@ -6,7 +6,7 @@ import Header from 'components/shared/header';
 import MobileMenu from 'components/shared/mobile-menu';
 import SEO from 'components/shared/seo';
 
-const Layout = ({ headerTheme, children }) => {
+const Layout = ({ seo, headerTheme, children }) => {
   const headerRef = useRef(null);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,7 +21,7 @@ const Layout = ({ headerTheme, children }) => {
 
   return (
     <>
-      <SEO />
+      <SEO {...seo} />
       <div className="flex min-h-screen flex-col">
         <Header
           theme={headerTheme}
@@ -42,8 +42,17 @@ const Layout = ({ headerTheme, children }) => {
 };
 
 Layout.propTypes = {
+  seo: PropTypes.exact({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    ogImage: PropTypes.string,
+  }),
   headerTheme: PropTypes.oneOf(['black', 'white']).isRequired,
   children: PropTypes.node.isRequired,
+};
+
+Layout.defaultProps = {
+  seo: {},
 };
 
 export default Layout;

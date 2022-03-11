@@ -7,13 +7,14 @@ import Hero from 'components/pages/case-studies/hero';
 import SharedCaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
+import SEO_DATA from 'constants/seo-data';
 
 const CaseStudiesPage = ({
   data: {
     allMdx: { nodes },
   },
 }) => (
-  <Layout headerTheme="white">
+  <Layout seo={SEO_DATA.caseStudies} headerTheme="white">
     <Hero />
     <CaseStudies items={nodes} />
     <SharedCaseStudies title="All case studies" itemsType="not-featured" />

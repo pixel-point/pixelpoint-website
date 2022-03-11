@@ -1,11 +1,8 @@
 ---
 title: 'Track blockchain transactions with web3.js'
 description: 'Common examples of solving transactions tracking in Ethereum network for Ether and ERC20 tokens with web3.js'
+cover: cover.jpg
 ---
-
-## Track blockchain transactions with web3.js
-
-![Track blockchain transactions with web3.js](ogimage.jpeg)
 
 The number of dApps and tokens on the market is rapidly growing, with annual increases of over 1000 of new distributed applications, 500 new tokens, and online services built around both of these. There are a lot of fascinating features and benefits that blockchain technology brings into our lives. Nevertheless, the underlying idea is always the same; a transaction should be posted into a blockchain and mined in order to transfer crypto funds or execute any other function of a smart-contract.
 
@@ -13,7 +10,7 @@ For some applications and online services, it is crucial to know the current sta
 
 In this article, I will shed light on how do we deal with this at Pixel Point.
 
-### Different projects — same tasks
+## Different projects — same tasks
 
 Every blockchain uses different consensus protocols, but in terms of wallet and transaction watching, they all have a lot in common. Determining of the moment of funds transfer and verifying that the transaction has gained the number of confirmations needed for security reasons is a typical task for crypto projects.
 
@@ -37,7 +34,7 @@ However, the original and most popular one is JavaScript implementation, which i
 npm install web3
 ```
 
-### ETH transactions subscriptions
+## ETH transactions subscriptions
 
 Web3 API doesn’t allow you to subscribe directly to a wallet’s incoming transactions, so to solve our particular problem, we have to use a different strategy. First, we subscribe to all pending transactions, then we filter them by the sender’s wallet address and certain other criteria.
 
@@ -99,7 +96,7 @@ function watchEtherTransfers() {
 }
 ```
 
-### ETH transactions confirmations counting
+## ETH transactions confirmations counting
 
 Once we determine which transaction we need to track, we can start monitoring the confirmations until they reach the needed amount.
 
@@ -155,7 +152,7 @@ function confirmEtherTransaction(txHash, confirmations = 10) {
 }
 ```
 
-### Tracking ERC20 tokens
+## Tracking ERC20 tokens
 
 Knowing that ERC20 tokens are built on Ethereum as smart contracts, it may seem easy at first glance to track as Ether. Finding incoming transactions to a wallet with a certain crypto amount is different from Ether, because the transaction’s recipient address will always be a smart contract’s address. However, for each token transfer made, a special token contract’s function is called. This function calls Transfer events on blockchain when it succeeds and all events are logged by blockchain, becoming accessible at any time.
 
@@ -218,7 +215,7 @@ function watchTokenTransfers() {
 
 A transaction object of Ether transfer is subject to the same rules as a Transfer transaction, which means we can apply exactly the same _confirmEtherTransaction()_ function as we did with the Ether transaction in the above example.
 
-### Final thoughts
+## Final thoughts
 
 These examples show how to specifically track ERC20 Token transfers, but the same technique can be applied to any other smart contract’s functions depending on your business needs. I have summed up the examples above in a simple node.js service, which can serve as a starting point to blockchain exploration.
 
