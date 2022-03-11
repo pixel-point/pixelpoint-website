@@ -104,8 +104,9 @@ const CaseStudies = ({ title, itemsType }) => {
         process.env.NODE_ENV === 'production' &&
         process.env.CONTEXT !== 'deploy-preview' &&
         process.env.CONTEXT !== 'branch-deploy'
-      )
+      ) {
         return !isDraft;
+      }
       return true;
     })
     .filter(({ frontmatter: { isOpenSource, isFeatured } }) => {
