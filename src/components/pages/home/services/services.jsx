@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
+import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
 
 import lgIllustration1 from './images/lg-illustration-1.svg';
@@ -34,12 +35,12 @@ const Services = () => {
       ref={wrapperRef}
     >
       <div className="container relative">
-        <div className="flex max-w-[550px] items-center pt-[300px] lg:max-w-[560px] lg:pt-44 md:max-w-[420px] md:pt-36 sm:max-w-[350px] sm:pt-20">
+        <div className="flex max-w-[550px] items-center pt-[300px] lg:max-w-[560px] lg:pt-[200px] md:max-w-[420px] md:pt-36 sm:max-w-[350px] sm:pt-20">
           <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
             We’ll get you covered on what we can do best:
           </h2>
         </div>
-        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] lg:max-w-none lg:pt-44 md:pt-36 sm:pt-20">
+        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] lg:max-w-[424px] lg:pt-[225px] md:max-w-none md:pt-36 sm:pt-20">
           <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
             Web design
           </h2>
@@ -57,14 +58,16 @@ const Services = () => {
           >
             Read more
           </Link>
-          <img
-            className="mx-auto mt-16 hidden max-w-[620px] lg:block md:mt-12 md:max-w-[440px] sm:mt-8 sm:max-w-full"
-            src={lgIllustration1}
-            alt=""
+          <ImagePlaceholder
+            className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
+            width={620}
+            height={306}
             aria-hidden
-          />
+          >
+            <img src={lgIllustration1} alt="" />
+          </ImagePlaceholder>
         </div>
-        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px] lg:max-w-none lg:py-44 md:py-36 sm:py-20">
+        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px] lg:max-w-[424px] lg:pt-[225px] lg:pb-[200px] md:max-w-none md:py-36 sm:py-20">
           <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
             Web development
           </h2>
@@ -81,17 +84,17 @@ const Services = () => {
           >
             Read more
           </Link>
-          <img
-            className="mx-auto mt-16 hidden max-w-[620px] lg:block md:mt-12 md:max-w-[440px] sm:mt-8 sm:max-w-full"
-            src={lgIllustration2}
-            alt=""
+          <ImagePlaceholder
+            className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
+            width={620}
+            height={502}
             aria-hidden
-          />
+          >
+            <img src={lgIllustration2} alt="" />
+          </ImagePlaceholder>
         </div>
-        <div className="lg:hidden">
-          <div className="absolute top-0 right-[-260px] h-[2050px] w-[1090px]">
-            <RiveComponent />
-          </div>
+        <div className="absolute top-0 right-[-260px] h-[2050px] w-[1090px] lg:right-[-152px] lg:h-[1366px] lg:w-[726px] md:hidden">
+          <RiveComponent />
         </div>
       </div>
     </section>
