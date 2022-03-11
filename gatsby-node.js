@@ -10,7 +10,12 @@ const getBlogPostPath = require('./src/utils/get-blog-post-path');
 // We are rendering ALL posts, including draft ones in development mode
 // And we are skipping draft posts in production mode
 // We have an array structure here in order to use it in the filter using the "in" operator
-const DRAFT_FILTER = process.env.NODE_ENV === 'production' ? [false] : [true, false];
+const DRAFT_FILTER =
+  process.env.NODE_ENV === 'production' &&
+  process.env.CONTEXT !== 'deploy-preview' &&
+  process.env.CONTEXT !== 'branch-deploy'
+    ? [false]
+    : [true, false];
 
 const POST_REQUIRED_FIELDS = ['title', 'description'];
 
@@ -66,7 +71,12 @@ async function createBlogPosts({ graphql, actions }) {
 
   result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
     // Do not create a post in production if it's draft
-    if (process.env.NODE_ENV === 'production' && fields.isDraft) {
+    if (
+      process.env.NODE_ENV === 'production' &&
+      process.env.CONTEXT !== 'deploy-preview' &&
+      process.env.CONTEXT !== 'branch-deploy' &&
+      fields.isDraft
+    ) {
       return;
     }
 
@@ -143,7 +153,12 @@ async function createCaseStudies({ graphql, actions }) {
 
   result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
     // Do not create a case study in production if it's draft
-    if (process.env.NODE_ENV === 'production' && fields.isDraft) {
+    if (
+      process.env.NODE_ENV === 'production' &&
+      process.env.CONTEXT !== 'deploy-preview' &&
+      process.env.CONTEXT !== 'branch-deploy' &&
+      fields.isDraft
+    ) {
       return;
     }
 
@@ -203,7 +218,11 @@ exports.onCreateNode = ({ node, actions }) => {
 };
 
 exports.createPages = async (options) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (
+    process.env.NODE_ENV !== 'production' ||
+    process.env.CONTEXT === 'deploy-preview' ||
+    process.env.CONTEXT === 'branch-deploy'
+  ) {
     await createBlogPage(options);
     await createBlogPosts(options);
     await createCaseStudiesPage(options);
