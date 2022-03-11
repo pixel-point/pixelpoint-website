@@ -1,17 +1,17 @@
 @layer components {
   .container-lg {
-    @apply mx-auto max-w-[1840px] 2xl:max-w-full 2xl:px-8 lg:max-w-[936px] lg:px-0 md:max-w-[704px] sm:max-w-none sm:px-4;
+    @apply mx-auto max-w-[1840px] 2xl:max-w-full 2xl:px-8 lg:max-w-none lg:px-11 md:px-8 sm:px-4;
   }
 
   .container {
-    @apply mx-auto max-w-[1216px] lg:max-w-[936px] md:max-w-[704px] sm:max-w-none sm:px-4;
+    @apply mx-auto max-w-[1216px] lg:max-w-none lg:px-11 md:px-8 sm:px-4;
   }
 
   .container-sm {
-    @apply mx-auto max-w-[800px] md:max-w-[704px] sm:max-w-none sm:px-4;
+    @apply mx-auto max-w-[800px] lg:max-w-none lg:px-11 md:px-8 sm:px-4;
   }
 
   .container-xs {
-    @apply mx-auto max-w-[696px] md:max-w-[704px] sm:max-w-none sm:px-4;
+    @apply mx-auto max-w-[696px] lg:max-w-none lg:px-11 md:px-8 sm:px-4;
   }
 }
