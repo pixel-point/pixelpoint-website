@@ -12,6 +12,7 @@ import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 import ServicesCTA from 'components/shared/services-cta';
+import SEO_DATA from 'constants/seo-data';
 
 const servicesCTA = {
   title: 'Still in doubts? Check out what we have to offer on',
@@ -20,7 +21,7 @@ const servicesCTA = {
 };
 
 const ServicesWebDevelopmentPage = () => (
-  <Layout headerTheme="white">
+  <Layout seo={SEO_DATA.servicesWebDesign} headerTheme="white">
     <Hero />
     <InHouseTeam />
     <Benefits />
