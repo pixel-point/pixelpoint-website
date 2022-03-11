@@ -141,9 +141,9 @@ const Hero = () => {
   const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true });
   const [secondSectionRef, isSecondSectionInView] = useInView({
     triggerOnce: true,
-    threshold: 0.75,
+    threshold: 0.5,
   });
-  const [thirdSectionRef, isThirdSectionInView] = useInView({ triggerOnce: true, threshold: 0.85 });
+  const [thirdSectionRef, isThirdSectionInView] = useInView({ triggerOnce: true, threshold: 0.5 });
 
   const firstSectionTitleControls = useAnimation();
   const secondSectionTitleControls = useAnimation();
