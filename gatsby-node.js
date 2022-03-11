@@ -10,7 +10,12 @@ const getBlogPostPath = require('./src/utils/get-blog-post-path');
 // We are rendering ALL posts, including draft ones in development mode
 // And we are skipping draft posts in production mode
 // We have an array structure here in order to use it in the filter using the "in" operator
-const DRAFT_FILTER = process.env.NODE_ENV === 'production' ? [false] : [true, false];
+const DRAFT_FILTER =
+  process.env.NODE_ENV !== 'production' ||
+  process.env.CONTEXT === 'deploy-preview' ||
+  process.env.CONTEXT === 'branch-deploy'
+    ? [true, false]
+    : [false];
 
 const POST_REQUIRED_FIELDS = ['title', 'description'];
 
@@ -199,7 +204,11 @@ exports.onCreateNode = ({ node, actions }) => {
 };
 
 exports.createPages = async (options) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (
+    process.env.NODE_ENV !== 'production' ||
+    process.env.CONTEXT === 'deploy-preview' ||
+    process.env.CONTEXT === 'branch-deploy'
+  ) {
     await createBlogPage(options);
     await createBlogPosts(options);
     await createCaseStudiesPage(options);
