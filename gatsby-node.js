@@ -146,7 +146,14 @@ async function createCaseStudies({ graphql, actions }) {
 
   result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
     // Do not create a post in production if it's draft
-    if (process.env.NODE_ENV === 'production' && fields.isDraft) return;
+    if (
+      process.env.NODE_ENV === 'production' &&
+      process.env.CONTEXT !== 'deploy-preview' &&
+      process.env.CONTEXT !== 'branch-deploy' &&
+      fields.isDraft
+    ) {
+      return;
+    }
 
     // Required fields validation
     CASE_STUDY_REQUIRED_FIELDS.forEach((fieldName) => {
