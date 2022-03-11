@@ -1,8 +1,10 @@
 import { motion, useAnimation } from 'framer-motion';
 import PropTypes from 'prop-types';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRive, useStateMachineInput, Layout, Fit, Alignment } from 'rive-react';
+
+import ImagePlaceholder from 'components/shared/image-placeholder';
 
 import lgIllustration1 from './images/lg-illustration-1.svg';
 import lgIllustration2 from './images/lg-illustration-2.svg';
@@ -99,19 +101,26 @@ const titleSpanVariants = {
 };
 
 const Title = ({ items, controls }) => (
-  <h2 className="max-w-[592px] lg:max-w-none">
-    {items.map(({ value, color, delay }, index) => (
-      <motion.span
-        initial="initial"
-        animate={controls}
-        variants={titleSpanVariants}
-        custom={{ color, delay }}
-        key={index}
-      >
-        {value}{' '}
-      </motion.span>
-    ))}
-  </h2>
+  <>
+    <h2 className="max-w-[592px] lg:max-w-none md:hidden">
+      {items.map(({ value, color, delay }, index) => (
+        <motion.span
+          initial="initial"
+          animate={controls}
+          variants={titleSpanVariants}
+          custom={{ color, delay }}
+          key={index}
+        >
+          {value}{' '}
+        </motion.span>
+      ))}
+    </h2>
+    <h2 className="hidden md:block">
+      {items.map(({ value }, index) => (
+        <Fragment key={index}>{value} </Fragment>
+      ))}
+    </h2>
+  </>
 );
 
 Title.propTypes = {
@@ -200,55 +209,53 @@ const Hero = () => {
 
   return (
     <section
-      className="safe-paddings overflow-hidden bg-black text-white lg:pt-32 md:pt-28 sm:pt-20"
+      className="safe-paddings overflow-hidden bg-black text-white md:pt-28 sm:pt-20"
       ref={wrapperRef}
     >
-      <div className="container grid-gap-x relative grid grid-cols-2 lg:block" ref={containerRef}>
+      <div className="container grid-gap-x relative grid grid-cols-2 md:block" ref={containerRef}>
         <div className="relative z-10 text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
-          <div className="flex h-screen items-center lg:block lg:h-auto" ref={firstSectionRef}>
+          <div className="flex h-screen items-center md:block md:h-auto" ref={firstSectionRef}>
             <Title items={firstSectionTitleItems} controls={firstSectionTitleControls} />
-            <img
-              className="mx-auto mt-16 hidden max-w-[620px] lg:block md:mt-12 md:max-w-[440px] sm:mt-8 sm:max-w-full"
-              src={lgIllustration1}
-              alt=""
+            <ImagePlaceholder
+              className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
+              width={620}
+              height={367}
               aria-hidden
-            />
+            >
+              <img src={lgIllustration1} alt="" />
+            </ImagePlaceholder>
           </div>
           <div
-            className="flex items-center pt-[100px] pb-[500px] lg:block lg:pt-44 lg:pb-0 md:pt-36 sm:pt-20"
+            className="flex items-center pt-[100px] pb-[500px] lg:pb-[400px] md:block md:pb-0 md:pt-36 sm:pt-20"
             ref={secondSectionRef}
           >
             <Title items={secondSectionTitleItems} controls={secondSectionTitleControls} />
-            <img
-              className="mx-auto mt-16 hidden max-w-[620px] lg:block md:mt-12 md:max-w-[440px] sm:mt-8 sm:max-w-full"
-              src={lgIllustration2}
-              alt=""
+            <ImagePlaceholder
+              className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
+              width={620}
+              height={339}
               aria-hidden
-            />
+            >
+              <img src={lgIllustration2} alt="" />
+            </ImagePlaceholder>
           </div>
           <div
-            className="flex items-center pt-[200px] pb-[360px] lg:block lg:py-44 md:py-36 sm:py-20"
+            className="flex items-center pt-[200px] pb-[360px] lg:pt-[150px] lg:pb-[300px] md:block md:py-36 sm:py-20"
             ref={thirdSectionRef}
           >
             <Title items={thirdSectionTitleItems} controls={thirdSectionTitleControls} />
-            <img
-              className="mx-auto mt-16 hidden max-w-[620px] lg:block md:mt-12 md:max-w-[440px] sm:mt-8 sm:max-w-full"
-              src={lgIllustration3}
-              alt=""
+            <ImagePlaceholder
+              className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
+              width={620}
+              height={294}
               aria-hidden
-            />
+            >
+              <img src={lgIllustration3} alt="" />
+            </ImagePlaceholder>
           </div>
         </div>
-        <div className="lg:hidden">
-          <div
-            // className="absolute top-0 h-[2000px] w-[733px]"
-            className="absolute top-0 h-[3000px] w-[1100px]"
-            style={{
-              transform: `translateY(${
-                -505 - 480 / 2 + firstSectionHeight / 2
-              }px) translateX(-254px)`,
-            }}
-          >
+        <div className="md:hidden">
+          <div className="absolute top-0 h-[3000px] w-[1100px] translate-y-[calc(-505px_-_480px_/_2_+_100vh_/_2)] translate-x-[-254px] lg:h-[2307px] lg:w-[846px] lg:translate-y-[calc(-388px_-_369px_/_2_+_100vh_/_2)] lg:translate-x-[-174px] md:hidden">
             <RiveComponent />
           </div>
         </div>

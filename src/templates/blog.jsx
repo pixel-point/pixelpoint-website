@@ -7,13 +7,14 @@ import PostsList from 'components/pages/blog/posts-list';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
+import SEO_DATA from 'constants/seo-data';
 
 const BlogTemplate = ({
   data: {
     allMdx: { nodes },
   },
 }) => (
-  <Layout headerTheme="white">
+  <Layout seo={SEO_DATA.blog} headerTheme="white">
     <Hero />
     <PostsList items={nodes} />
     <CaseStudies />

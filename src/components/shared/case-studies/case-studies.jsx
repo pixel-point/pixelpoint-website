@@ -100,7 +100,9 @@ const CaseStudies = ({ title, itemsType }) => {
 
   const items = nodes
     .filter(({ fields: { isDraft } }) => {
-      if (process.env.NODE_ENV === 'production') return !isDraft;
+      if (process.env.NODE_ENV === 'production') {
+        return !isDraft;
+      }
       return true;
     })
     .filter(({ frontmatter: { isOpenSource, isFeatured } }) => {

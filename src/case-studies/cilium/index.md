@@ -33,7 +33,7 @@ cover: cover.jpg
 isOpenSource: true
 isFeatured: true
 isDraft: true
-position: 1
+position: 7
 ---
 
 Cilium project is an integral part of the rapidly growing Isovalent company which brings the power of eBPF to Cloud Native environment, improving a lot networking, observability and security.

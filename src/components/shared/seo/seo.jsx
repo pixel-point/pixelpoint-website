@@ -1,9 +1,9 @@
-/* eslint-disable react/prop-types */
 import { useStaticQuery, graphql } from 'gatsby';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const SEO = ({ title, description }) => {
+const SEO = ({ title, description, ogImage }) => {
   const {
     site: {
       siteMetadata: { siteTitle, siteDescription, siteUrl, siteImage, siteLanguage },
@@ -24,24 +24,35 @@ const SEO = ({ title, description }) => {
 
   return (
     <Helmet
-      title={siteTitle || title}
+      title={title || siteTitle}
       htmlAttributes={{
         lang: siteLanguage,
         prefix: 'og: http://ogp.me/ns#',
       }}
     >
       {/* General */}
-      <meta name="description" content={siteDescription || description} />
+      <meta name="description" content={description || siteDescription} />
       {/* Open Graph */}
-      <meta property="og:title" content={siteTitle || title} />
-      <meta property="og:description" content={siteDescription || description} />
+      <meta property="og:title" content={title || siteTitle} />
+      <meta property="og:description" content={description || siteDescription} />
       <meta property="og:url" content={siteUrl} />
-      <meta property="og:image" content={siteUrl + siteImage} />
+      <meta property="og:image" content={siteUrl + (ogImage || siteImage)} />
       <meta property="og:type" content="website" />
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
     </Helmet>
   );
+};
+
+SEO.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  ogImage: PropTypes.string,
+};
+
+SEO.defaultProps = {
+  description: null,
+  ogImage: null,
 };
 
 export default SEO;
