@@ -16,7 +16,7 @@ Choosing the technology for website development, we need to keep in mind a few f
 
 Here is how a feature comparison table between two frameworks might look like. They are pretty much the same, aren’t they?
 
-![GATSBY_EMPTY_ALT](compare1.png)
+![GATSBY_EMPTY_ALT](compare1.jpg)
 
 However, those minor differences could cause a huge impact on website development.
 
@@ -30,7 +30,7 @@ A simple, tiny thing that every website has. But, in order to be compliant with 
 
 Change a single line in gatsby-config.js and upload png/jpg/svg based favicon...That’s it. Gatsby will generate a set of relevant icons following best practices optimizing the image without any additional work.
 
-![GATSBY_EMPTY_ALT](compare2.png)
+![GATSBY_EMPTY_ALT](compare2.jpg)
 
 ### ...but what about Next.js?
 
