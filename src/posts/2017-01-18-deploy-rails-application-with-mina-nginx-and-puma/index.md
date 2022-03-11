@@ -1,20 +1,17 @@
 ---
 title: 'Deploy rails application with Mina, Nginx and Puma'
 description: 'Let’s find out how to deploy Ruby On Rails application with blazing fast Mina'
+cover: cover.jpg
 ---
 
-## Deploy rails application with Mina, Nginx and Puma
-
-![Deploy rails application with Mina, Nginx and Puma](ogimage.png)
-
-### What is Mina?
+## What is Mina?
 
 Mina is a deployment tool, similar to Capistrano. The major advantage of Mina is its speed. Mina works exceptionally fast because it’s a deploy Bash script generator. It generates an entire procedure as a Bash script, and runs it remotely in the server. It also supports smart command execution, so if you do not change assets (CSS, JS, images), it will not execute assets precompile. The same goes for migrations.
 
 - [Github](https://github.com/mina-deploy/mina)
 - [Mina vs. Capistrano](https://infinum.co/the-capsized-eight/faster-web-application-deployments-using-mina-instead-of-capistrano)
 
-### Mina Setup
+## Mina Setup
 
 Let’s take a look at setting up Mina with Puma. First, you’ll need to add Mina and mina-puma in Gemfile, which is located in the development section. Mina recently changed its maintainer; a new repository is here, and it is best to install it from Git.
 
@@ -34,7 +31,7 @@ mina init
 
 You can find an example of a Mina 1.0.0 default config here. Click here for the full config in that configuration.
 
-### Detailed explanations of the Mina deploy file
+## Detailed explanations of the Mina deploy file
 
 ```ruby
 #Set the domain or ip address of the remote server.
@@ -105,7 +102,7 @@ task :deploy do
 end
 ```
 
-### Puma Setup
+## Puma Setup
 
 Create or fill a puma.rb file in a config folder.
 
@@ -129,11 +126,11 @@ prune_bundler
 
 You must point a path to pumactl.sock at activate_control_app. Otherwise, Mina puma:stop and restart will not work.
 
-### Fill database.yml and secrets.yml
+## Fill database.yml and secrets.yml
 
 Go to the shared folder and make sure that you fill these two files.
 
-### Setup nginx
+## Setup nginx
 
 Create file myapp.conf in a /nginx/etc/conf.d folder with similar content.
 
@@ -177,20 +174,20 @@ server {
 }
 ```
 
-### Generate ssh keys
+## Generate ssh keys
 
 Generate new ssh keys on your server by using that command ssh-keygen. Then, export it to the deploys keys of your github/bitbucket project.
 
-### Mission Completed
+## Mission Completed
 
 That’s it. Now you’re ready to deploy your application. Run mina deploy if you have already executed mina setup and wait.
 
-### Troubleshooting
+## Troubleshooting
 
 If you have problems on git clone, check that you have exported ssh pub key to your repository, and try to clone the repository directly from the server.
 
 Use Mina puma:start on first launch instead of phased_restart.
 
-### Useful Links
+## Useful Links
 
 [Mina and multi-stages](https://github.com/mina-deploy/mina/blob/2608e50049cf21b1425c8bb7c3e5dd0e964b725f/docs/cookbook.md)

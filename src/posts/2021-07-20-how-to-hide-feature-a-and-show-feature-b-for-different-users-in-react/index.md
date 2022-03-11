@@ -1,13 +1,10 @@
 ---
 title: 'How to hide Feature A and show Feature B for different users in React'
 description: 'Have you ever wondered how do companies like Slack, Netlify, Zoom, Facebook (and rest of FAANG for sure) gradually roll out new features just for some users? '
+cover: cover.jpg
 ---
 
-## How to hide Feature A and show Feature B for different users in React
-
-![How to hide Feature A and show Feature B for different users in React](ogimage.webp)
-
-### Overview
+## Overview
 
 Have you ever wondered how do companies like Slack, Netlify, Zoom, Facebook (and rest of FAANG for sure) gradually roll out new features just for some users? 🤔
 
@@ -30,7 +27,7 @@ In this article, we are going to use [Flagsmith](https://github.com/Flagsmith/fl
 
 FF manipulation with Flagsmith can be done pretty much anywhere (frontend/backend/mobile platform). Let's take a look at the following schema:
 
-![ ](ff1.png)
+![GATSBY_EMPTY_ALT](ff1.png)
 
 Let's break down what is happening here.
 
@@ -43,15 +40,15 @@ Definitely not a rocket science. Now to practice!
 GitHub logo Flagsmith / flagsmith
 Open Source Feature Flagging and Remote Config Service. Host on-prem or use our hosted version at <https://flagsmith.com/>
 
-### Our goal
+## Our goal
 
 We want to build pretty much standard dashboard app (sorry, no todos today) with authorization set up. We want to show certain feature components only to those users who opted-in for beta.
 
 React, Next.js, Next-Auth and beautiful dashboard components from Tailwind UI are going to help us building it.
 
-![ ](ff2.png)
+![GATSBY_EMPTY_ALT](ff2.png)
 
-### Pre-requirements
+## Pre-requirements
 
 Create a new app with Next.js, React and Next-Auth or clone this [sample repository](https://github.com/Flagsmith/flagsmith-js-client/tree/main/examples/nextjs-auth)
 
@@ -63,17 +60,17 @@ Additional links
 
 [Then create an account](https://flagsmith.com/) in the cloud version of Flagsmith.
 
-![ ](ff3.png)
+![GATSBY_EMPTY_ALT](ff3.png)
 
-### Configure Flagsmith environment
+## Configure Flagsmith environment
 
 The configuration process is simple. Once you've signed up, create a new project. In Flagsmith you can define multiple environments per project, each environment keeps its own features/users/segments and API key.
 
-![ ](ff4.png)
+![GATSBY_EMPTY_ALT](ff4.png)
 
 Let's create our first feature, we will name it - "pinned_projects". Beta users will be able to pin projects and see them.
 
-![ ](ff5.png)
+![GATSBY_EMPTY_ALT](ff5.png)
 
 Next step we need to install `flagsmith-react` package
 
@@ -155,7 +152,7 @@ Here you can see that we use `getTrait` and `setTrait`. Traits are simply key/va
 
 Let's create first segment and call it `beta_opt_in` . Go to Segments → Create Segment. Here you also could define an expression based on the trait which will add users that match that condition to the segment. We can start from a simple one, such as if email has `[pixelpoint.io](http://pixelpoint.io)` consider them as opted-in for beta features.
 
-![ ](ff6.png)
+![GATSBY_EMPTY_ALT](ff6.png)
 
 The final step is to add a check to our React component using `hasFeature("pinned_projects")`.
 
