@@ -100,11 +100,7 @@ const CaseStudies = ({ title, itemsType }) => {
 
   const items = nodes
     .filter(({ fields: { isDraft } }) => {
-      if (
-        process.env.NODE_ENV === 'production' &&
-        process.env.CONTEXT !== 'deploy-preview' &&
-        process.env.CONTEXT !== 'branch-deploy'
-      ) {
+      if (process.env.NODE_ENV === 'production') {
         return !isDraft;
       }
       return true;
