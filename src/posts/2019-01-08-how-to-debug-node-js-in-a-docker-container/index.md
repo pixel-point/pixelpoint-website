@@ -1,30 +1,27 @@
 ---
 title: 'How to debug Node.js in a Docker container'
 description: 'Combined different scenarios of debugging Node.js app in a Docker container in one simple guide.'
+cover: cover.jpg
 ---
-
-## How to debug Node.js in a Docker container
-
-![How to debug Node.js in a Docker container](ogimage.jpeg)
 
 More and more teams are moving their development environments to Docker containers. It brings a lot of advantages, such as a unified environment shared between all devs, a faster onboarding process for new members, and predictable deployments. For example, in my previous article [“Microservices vs Monolith architecture”](/blog/microservices-vs-monolith-architecture), I made the point that with microservices you have to use Docker, because otherwise you’re launching multiple microservices on a local machine and development becomes a huge pain. When you have even 5–10 microservices, you run them through your terminal one by one and have to make sure that you have all dependencies, db, elasticsearch, etc., installed. Alternatively, you can get it running with one command using docker-compose, a much better approach.
 
 But that approach requires you to understand Docker and to not miss the functionality or experience you had without it. One of the things to understand is how to debug within the Docker container. In this article, we will go through a few use cases related to debugging a
 Node.js app in a docker container.
 
-### Prerequirements
+## Prerequirements
 
 - VS Code
 - Docker
 - Docker extension for VS Code
 
-### Cases
+## Cases
 
 - Node.js, Docker, without Nodemon
 - Node.js, Docker, Nodemon
 - Node.js, Docker with docker-compose
 
-### Node.js, Docker, without Nodemon
+## Node.js, Docker, without Nodemon
 
 If you already have the Node.js app your Dockerfile, it probably looks like this:
 
@@ -35,7 +32,7 @@ RUN npm installCOPY . .CMD [ "npm", "start" ]
 
 In order to continue, we need to build our Dockerfile. I recommend using the VS Code Docker extension and begin building as shown below:
 
-![ ](node1.jpg)
+![GATSBY_EMPTY_ALT](node1.jpg)
 
 To enable the debugger in Node.js, we need to use — inspect or — inspect-brk, but because our app will be launched inside Docker, we also need to allow access from external networks to our debugger by passing 0.0.0.0.
 
@@ -56,11 +53,11 @@ With that command, we expose 3000 and 9229 ports of the Dockerized app to localh
 
 Now we could configure with the VS Code wizard debug launch task. Press CMD(Ctrl)+Shift+P(Command Palette) and find “Debug: Open launch.json”:
 
-![ ](node2.png)
+![GATSBY_EMPTY_ALT](node2.png)
 
 Then choose Docker: Node.js:
 
-![ ](node3.png)
+![GATSBY_EMPTY_ALT](node3.png)
 
 This will generate a launch.json file with the following content:
 
@@ -89,7 +86,7 @@ The configuration for Docker is to manually attach to the debugger port and map 
 
 Go to the Debug Page at VS code, press the “Play” button and enjoy debugging in Docker.
 
-### Node.js, Docker, with Nodemon
+## Node.js, Docker, with Nodemon
 
 The small difference comes when we want to use the debugger with nodemon. To start with, your script in package.json will look like this:
 
@@ -125,9 +122,9 @@ So your launch.json should look like this:
 
 Go to Debug Page at VS code, press the “Play” button and, just as before, enjoy debugging in Docker.
 
-![ ](node4.png)
+![GATSBY_EMPTY_ALT](node4.png)
 
-### Node.js, Docker, with docker-compose
+## Node.js, Docker, with docker-compose
 
 A third option is to run your docker images with docker-compose, which is good if your service also requires a database or other dependencies you can run with Docker.
 

@@ -1,15 +1,12 @@
 ---
 title: 'Real time + Postgres = ?'
 description: 'Experience of implementing real time data subscription on top of existing PostgreSQL database.'
+cover: cover.jpg
 ---
-
-## Real time + Postgres = ?
-
-![Real time + Postgres = ?](ogimage.jpeg)
 
 Real time updates are a part of almost every modern web and mobile application, with uses in everything from banking apps to news feeds. There are so many ways of handling real times updates that there will always be discussions about which way is better.
 
-### A bit of history
+## A bit of history
 
 For the past 10 years, the most common approach was to use a websocket client, such as socket.io, and server and push events to the customers through it by triggering them inside your backend.
 
@@ -21,26 +18,26 @@ Currently, GraphQL can provide you realtime subscriptions, but the issue remains
 
 We faced this issue with one of our own projects when we realised that we needed a simple way of implementing real-time updates without giving up PostgreSQL. This is where Hasura came in! I was so excited to find them at Product Hunt because I’d wanted a solution for this problem for around three years.
 
-### What is Hasura?
+## What is Hasura?
 
 Hasura is a proxy layer between your PostgreSQL database and Graphql server that allows you to set up real time updates very quickly from your PostgreSQL and it’s open-source. You get all the benefits of GraphQL without compromising access to your origin database, including client libraries for web and mobile, query syntax, and subscriptions.
 
-#### Key features of Hasura
+### Key features of Hasura
 
 Real-time updates from your PostgreSQL database
 When I realized how easily this could be set up, it blew my mind.
 
-![ ](real1.gif)
+![GATSBY_EMPTY_ALT](real1.gif)
 
-#### Dynamic access control & auth
+### Dynamic access control & auth
 
 We use Auth0 with our projects; using Hasura, we were able to restrict access to the data while using JWT. Hasura also has a great, simple to use UX for configuring access rules through the UI. Check out this video to see it in action.
 
 As an example, it is possible to have multiple tables that you use from the client part. You can configure it so that a user can only access the data if he is the owner of said data, and define whether that have read, write or delete permissions.
 
-![ ](real2.gif)
+![GATSBY_EMPTY_ALT](real2.gif)
 
-#### Event triggers on database events
+### Event triggers on database events
 
 You could subscribe to each create, update, and delete action in your database and call another service by passing that data. A possible use case for that is as a communication channel between your microservices or to call serverless functions.
 
@@ -48,15 +45,15 @@ The release of this feature was great; previously, we had used native PostgreSQL
 
 The really exciting thing is that it’s a highly reliable solution. No matter what happens with your Hasura or network connection, the event will be delivered once you bring it back. The same is true if, due to some unforeseen problem, the events changes came to PostgreSQL through API calls to the backend but another part of your application was down.
 
-![ ](real3.png)
+![GATSBY_EMPTY_ALT](real3.png)
 
-#### WS to HTTP fallback
+### WS to HTTP fallback
 
 It’s not exactly related to Hasura, but when you use Graphql subscription when your client does not support WebSockets, it automatically uses HTTP as an alternative without any further actions from you.
 
 There are, of course, other features that you might find useful, such as mutation of your data and customer resolvers.
 
-### Personal experience
+## Personal experience
 
 Hasura is a really great product. It’s been a huge time saver for us. It still doesn’t have a stable release and is currently in development, but we already use it in production because all the features we use in our work operate without any problems. Almost every week, there is a new update the developers get closer to v1.0.0.
 

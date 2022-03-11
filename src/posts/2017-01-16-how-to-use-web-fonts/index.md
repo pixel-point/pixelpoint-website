@@ -1,30 +1,27 @@
 ---
 title: 'How to use web fonts?'
 description: 'Here, we’ve compiled a short guide to get you started with Google Fonts, Font Squirrel tools.'
+cover: cover.jpg
 ---
 
-## How to use web fonts?
-
-![How to use web fonts?](ogimage.png)
-
-### Introduction
+## Introduction
 
 We often use Google Fonts during our design and development process. It’s the simplest way to add fonts to a website, and Google’s selection is excellent in terms of both quality and compatibility. When we need to use custom fonts, our choice is Font Squirrel.
 
 Here, we’ve compiled a short guide to get you started with these tools.
 
-### Content
+## Content
 
 - How to add one or few fonts with Google Fonts?
 - How to use Google Fonts locally?
 - How to use custom fonts?
 - How to keep web fonts consistent across all platforms?
 
-### How to add one or few fonts with Google Fonts
+## How to add one or few fonts with Google Fonts
 
 Go to [Google Fonts](https://fonts.google.com/).
 
-![ ](fonts1.gif)
+![GATSBY_EMPTY_ALT](fonts1.gif)
 
 1. Find and add fonts.
 2. Select only the styles and settings that are absolutely necessary (Light, Regular, Bold). Don’t use Cyrillic extended; in most cases, simple Cyrillic will suffice. Extended versions use symbols from rare alphabets that contain out-of-date and church letters. (Some of them are still being used by settlements in Siberia.)
@@ -39,11 +36,11 @@ Go to [Google Fonts](https://fonts.google.com/).
 
 Double check with your designer if you find more than two custom fonts with more than three different styles. This will adversely affect page load speed.
 
-### How to use Google Fonts locally
+## How to use Google Fonts locally
 
 We use [google-webfonts-helper](https://google-webfonts-helper.herokuapp.com) for downloading prepared fonts from the Google Fonts database.
 
-![ ](fonts2.gif)
+![GATSBY_EMPTY_ALT](fonts2.gif)
 
 1. Find font.
 2. Choose styles.
@@ -68,17 +65,17 @@ To use fonts on the Ruby on Rails application, copy these files from the archive
 }
 ```
 
-### How to use custom fonts
+## How to use custom fonts
 
 Sometimes, you’ll need to use custom fonts that are not available from Google Fonts. For this, we like to use Font Squirrel. It’s a very user-friendly service for converting fonts for web usage, and you’ll find a lot of conversion settings in expert mode. Keep in mind, however, that you will not get exactly the same quality as you would with an original web font.
 
-![ ](fonts3.jpeg)
+![GATSBY_EMPTY_ALT](fonts3.jpeg)
 
-### How to keep web fonts consistent across all platforms
+## How to keep web fonts consistent across all platforms
 
 Some of you will have already noticed that fonts rendered on macOS, Linux, and Windows all look slightly different. On macOS and Linux, fonts look bolder.
 
-![ ](fonts4.png)
+![GATSBY_EMPTY_ALT](fonts4.png)
 
 To prevent this problem and make fonts consistent on all platforms, I suggest that you use font-smoothing: antialiased. The font-smooth CSS property controls the application of anti-aliasing when fonts are rendered. Antialiasing smooths fonts at the pixel level, as opposed to on the subpixel. Switching from subpixel rendering to antialiasing for light text on dark backgrounds makes fonts look lighter.
 

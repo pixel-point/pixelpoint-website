@@ -55,20 +55,20 @@ Vercel was a little faster than Cloudflare pages finishing with 10:30 vs. 11:23.
 
 The self-hosted solution was relatively fast and very close in terms of the build time to Gatsby Cloud, but uploading results to Netlify takes around half of that time, so it finished second place.
 
-![ ](time1.png)
+![GATSBY_EMPTY_ALT](time1.jpg)
 
 The funny thing here is that Gatsby Cloud could complete the whole build in the amount of time it took Cloudflare to initialise the environment.
 
-![ ](time2.png)
+![GATSBY_EMPTY_ALT](time2.png)
 
 **Deploy Preview build time**
 Here I’ve started to feel that it will be a death race since competitors began to reveal their problems and how differently they handle different scenarios. In the Deploy Preview test, I created a separate branch from the master and made two changes in a jsx file and another in md file.
 
-![ ](time3.png)
+![GATSBY_EMPTY_ALT](time3.jpg)
 
 Netlify(16:16), Cloudflare(11:16) and AWS Amplify(9:14) showed the slowest results, and here is why. Netlify has a nice plugin that persists cache between builds, BUT it does not work if your build lasts for more than 15 minutes.
 
-![ ](time4.jpg)
+![GATSBY_EMPTY_ALT](time4.jpg)
 
 Cloudflare Pages does not have an option to persist cache between builds, so it shows slow results every time.
 
@@ -81,7 +81,7 @@ Gatsby Cloud was again a winner with 0:49, and the self-hosted version was just 
 **Warm cache build time**
 By the warm cache build time, I mean a subsequent build, that runs from the same branch where the build happened before. It’s a case you have every time you redeploy a website on content change or make additional commits to your Pull Request.
 
-![ ](time5.png)
+![GATSBY_EMPTY_ALT](time5.jpg)
 
 Vercel(1:08) and Selfhosted(1:06) finished very close, but Gatsby Cloud was faster with 0:27.
 
@@ -94,17 +94,17 @@ Then I jumped testing Gatsby v4 connected with the WordPress website. The site h
 **Clean cache build time**
 Netlify even has not finished the build and stopped after 22 minutes. Vercel and Cloudflare pages completed within 24 minutes. Gatsby Cloud was fast, but it was tough even for it - 17:47. AWS Amplify surprised the most, showing consistent time around 15 min. The self-hosted CI achieved the quickest result - 11:30. The server we host is probably closer to the WP hosting, and it took less time for initial assets to download.
 
-![ ](time6.png)
+![GATSBY_EMPTY_ALT](time6.jpg)
 
 **Deploy Preview build time**
 I guess we can consider that Cloudflare, Netlify, AWS Amplify failed this round, so let’s go straight to Vercel. It took 2:39 for Deploy Preview, which is a very nice result. Gatsby Cloud did the same job within 1:45, and the Self-hosted version handled it within 1:23.
 
-![ ](time7.png)
+![GATSBY_EMPTY_ALT](time7.jpg)
 
 **Warm cache build time**
 Vercel did not show any difference from Deploy Preview. For Gatsby Cloud, however, it took 20 seconds less. The self-hosted version had the same excellent results. But I have to mention there was a moment that uploading files over Netlify CLI with a self-hosted version took more than 6 minutes. I decided not to include it because it happened only once.
 
-![ ](time8.png)
+![GATSBY_EMPTY_ALT](time8.jpg)
 
 ## Bonus
 
@@ -112,7 +112,7 @@ It won’t be complete without showing you one more thing. All tests above were 
 
 From an architecture perspective, based on build logs, it feels like Gatsby Cloud keeps the latest instance of your production version in a sleep mode, then they can wake it up quickly and skip some build steps, and knowing a content diff produce a new build very quickly.
 
-![ ](time9.png)
+![GATSBY_EMPTY_ALT](time9.jpg)
 
 It took just 20 seconds from making a change in a CMS to seeing it live in production! That’s very impressive. A few years ago, when [Kyle Mathews](https://twitter.com/kylemathews) (Gatsby creator) said that they were going to make it possible to rebuild the site in a matter of seconds, I was really skeptical about this, but now it seems it could be true. Great job!
 

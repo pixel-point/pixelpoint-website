@@ -21,7 +21,7 @@ const Hero = () => (
             <p>
               There is a key for sustainable growth and successful future for the humanity, and it
               is <span className="text-red">Open source</span> world with its community shared
-              knowlege
+              knowledge
             </p>
           </blockquote>
           <figcaption className="mt-5 flex items-center space-x-4 lg:mt-4 lg:space-x-3 md:mt-3.5 md:space-x-2.5 sm:block sm:space-x-0">
@@ -39,7 +39,7 @@ const Hero = () => (
               <span className="text-base font-normal">Alex Barashkov — CEO at Pixel Point</span>
             </div>
             <Link
-              className="flex items-center space-x-3 rounded-full bg-[#259df4] py-2.5 pl-3.5 pr-5 text-sm font-semibold sm:mt-2.5 sm:inline-flex"
+              className="flex items-center space-x-3 rounded-full bg-[#259df4] py-2.5 pl-3.5 pr-5 text-sm font-semibold transition-colors duration-200 hover:bg-[#1781cf] sm:mt-2.5 sm:inline-flex"
               to="https://twitter.com/alex_barashkov"
               target="_blank"
               rel="noopener noreferrer"

@@ -1,11 +1,8 @@
 ---
 title: 'Getting started with open-source Drone CI'
 description: 'Two years ago, we began the process of building an open-source MacOS app, but this turned out to be a much more challenging journey.'
+cover: cover.jpg
 ---
-
-## Getting started with open-source Drone CI
-
-![Getting started with open-source Drone CI](ogimage.jpeg)
 
 If you are building your side project or startup and want to avoid spending too much money on popular commercial solutions like Travic CI (which costs $69/month), you can use your own self-hosted Drone CI on your laptop, AWS free tier, or any other servers.
 
@@ -20,7 +17,7 @@ Drone CI features:
 
 We will run Drone CI on a single host and using Github, but you could use a multimachine configuration or Kubernetes, and different VCS providers. Find more information here.
 
-### Get the Host
+## Get the Host
 
 For the purposes of this test, we use an AWS EC2 free tier instance, but you can use whatever you want. To use our approach, follow these steps:
 
@@ -29,7 +26,7 @@ For the purposes of this test, we use an AWS EC2 free tier instance, but you can
 - Create a new Ubuntu 18.04 free tier instance on AWS;
 - Allow 80 and 443 ports for the Security Group of your instance; if it’s a fresh account, use launch-wizard-1, or find it in description of your EC2 instance.
 
-### Install Docker
+## Install Docker
 
 You only need Docker to start using Drone. Just follow the instructions here. Check that you installed everything right by running “docker -v”.
 
@@ -38,7 +35,7 @@ root@ip-172-31-23-205:~# docker -v
 Docker version 18.09.3, build 774a1f4
 ```
 
-### Create an OAuth Application
+## Create an OAuth Application
 
 We use Github for examples, but you can also run it on Gitlab, Bitbucket, Gitea, and Gogs. More information here.
 
@@ -50,7 +47,7 @@ We use Github for examples, but you can also run it on Gitlab, Bitbucket, Gitea,
 
 You can use the IP of your server or assign a domain to it to correctly fill this form. If you do this, you can use the Client ID and Client Secret in the next steps.
 
-### Install Drone
+## Install Drone
 
 This is very simple, just use the following:
 
@@ -86,7 +83,7 @@ Your instance should now be up and running, simply log in and use it!
 
 ![Instances](drone2.png)
 
-### Define Your Pipeline
+## Define Your Pipeline
 
 Once you have your Drone CI instance ready, it’s time to activate the repository and create your pipeline. First, find the repository using the search bar and activate it.
 

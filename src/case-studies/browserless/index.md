@@ -1,15 +1,15 @@
 ---
 logo: logo.svg
 title: Browserless
-description: Serverless OS alternative to AWS Aurora Postgres
-websiteUrl: https://zenith.tech
-githubUrl: https://github.com/zenithdb/zenith
-githubStars: '187'
+description: Web browser automation tool
+websiteUrl: https://browserless.io
+githubUrl: https://github.com/browserless/chrome
+githubStars: 4,231
 quote:
-  text: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-  authorName: Stas Kelvich
-  authorPosition: Co-founder of Zenith
-  authorPhoto: author-photo.jpg
+  text: Pixel Point is hands-down the best agency I’ve had the pleasure of working with. Their knowledge of best practices, technologies and web performance are comprehensive. I wouldn’t hesitate to say that they are a key component in what differentiates browserless.io from our competitors.
+  authorName: Joel Griffith
+  authorPosition: CEO of Browserless
+  authorPhoto: author-photo.jpeg
 services:
   - Brand Identity
   - Motion Design
@@ -21,12 +21,12 @@ stack:
   - React
   - Gatsby
   - TailwindCSS
-  - Formspark
+  - Stripe
   - Netlify
 keynotes:
-  - Designed & built a modern landing page
-  - Redesigned admin dashboard
-  - Developed front-end part of the product
+  - Designed & built an animation-rich marketing website
+  - Provided custom MDX-based blog & docs portals
+  - 'Browserless hit the top #1 of the month on Landbook'
 cover: cover.jpg
 isOpenSource: true
 isFeatured: true
@@ -34,6 +34,10 @@ isDraft: true
 position: 1
 ---
 
-We went through the product back and forth, wrapping functionalities into thoughtful UI and robust UX patterns, solving problems its sole maintainer had been finding himself short-handed to work on, and soon enough Drone v1.0 was available to the community. As a cherry on top, we supplied Drone with a beautiful landing page, which, paired with refined product, immediately brought mature look to the company. Eventually all this led to Drone acquisition by Harness Inc.
+Browserless became yet another project in the portfolio of Polychrome Capital, who we’ve been working closely with since the [Flagsmith](/case-studies/flagsmith) project. Of course, they didn't hesitate to reach us out for assistance.
 
-We continued working together later on: first we took part in developing Harness CI/CD proprietary solutions, then got back working on Drone v2.0 redesign once more, introducing long-awaited features to the community. This version is available to public now.
+Briefing made it clear that design should express confidence, maturity, and obvious signs of tech origins, while keeping it a bit playful. We did the trick using a variety of bright colors over the black and white base, combined with the huge set of animations. This set consisted of two groups: the focal animations for the most important blocks like hero, and the small decorative ones for icons and section backgrounds to keep the lively look of the pages. By applying our cooking recipes to Framer and Lottie animations libraries, we were able to keep them performant for the majority of devices.
+
+Browserless was built on GatsbyJS + Headless WP, proving worth of this setup yet again, and the experience we gained working with it allowed us to build up custom blog and documentation portals in no time.
+
+When the website went public, it was really warm welcomed by Twitter community and even hit the top #1 of that month on Landbook.
