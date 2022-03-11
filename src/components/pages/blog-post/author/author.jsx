@@ -31,7 +31,7 @@ const Author = () => (
             Currently focused on React, Next.js, Gatsby.
           </p>
           <Link
-            className="mt-5 inline-flex items-center space-x-3 rounded-full bg-[#259df4] py-2.5 pl-3.5 pr-5 text-sm font-semibold hover:bg-[#1781cf] lg:mt-4 md:mt-3.5"
+            className="mt-5 inline-flex items-center space-x-3 rounded-full bg-[#259df4] py-2.5 pl-3.5 pr-5 text-sm font-semibold transition-colors duration-200 hover:bg-[#1781cf] lg:mt-4 md:mt-3.5"
             to="https://twitter.com/alex_barashkov"
             target="_blank"
             rel="noopener noreferrer"
