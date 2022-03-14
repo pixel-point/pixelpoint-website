@@ -45,12 +45,13 @@ const SEO = ({ title, description, ogImage }) => {
 };
 
 SEO.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   description: PropTypes.string,
   ogImage: PropTypes.string,
 };
 
 SEO.defaultProps = {
+  title: null,
   description: null,
   ogImage: null,
 };

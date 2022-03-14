@@ -43,7 +43,7 @@ const Layout = ({ seo, headerTheme, children }) => {
 
 Layout.propTypes = {
   seo: PropTypes.exact({
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     description: PropTypes.string,
     ogImage: PropTypes.string,
   }),

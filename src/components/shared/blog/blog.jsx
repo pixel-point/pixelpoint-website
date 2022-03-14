@@ -5,10 +5,12 @@ import React from 'react';
 import Link from 'components/shared/link';
 // import getBlogPostPath from 'utils/get-blog-post-path';
 
-const itemsLinks = [
-  'https://dev.to/alex_barashkov/comparing-gatsby-and-nextjs-for-website-development-13b7',
-  'https://dev.to/alex_barashkov/measuring-gatsby-projects-build-time-using-paid-plans-of-popular-static-website-hosting-platforms-47pp',
-];
+const itemsLinks = {
+  '2022-02-22-comparing-gatsby-and-nextjs-for-website-development/':
+    'https://dev.to/alex_barashkov/comparing-gatsby-and-nextjs-for-website-development-13b7',
+  '2022-02-01-measuring-gatsby-projects-build-time-using-paid-plans-of-popular-static-website-hosting-platforms/':
+    'https://dev.to/alex_barashkov/measuring-gatsby-projects-build-time-using-paid-plans-of-popular-static-website-hosting-platforms-47pp',
+};
 
 const Blog = () => {
   const {
@@ -50,11 +52,10 @@ const Blog = () => {
           </Link>
         </h2>
         <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-12 md:mt-10 sm:mt-8 sm:block sm:space-y-8">
-          {/* {items.map(({ slug, frontmatter: { title, cover } }, index) => ( */}
-          {items.map(({ frontmatter: { title, cover } }, index) => (
+          {items.map(({ slug, frontmatter: { title, cover } }, index) => (
             <li key={index}>
               {/* <Link to={getBlogPostPath(slug)}> */}
-              <Link to={itemsLinks[index]}>
+              <Link to={itemsLinks[slug]}>
                 <GatsbyImage
                   className="w-full rounded-2xl"
                   imgClassName="rounded-2xl"
@@ -68,7 +69,7 @@ const Blog = () => {
               <Link
                 className="mt-4 md:mt-3 md:text-sm sm:mt-2"
                 // to={getBlogPostPath(slug)}
-                to={itemsLinks[index]}
+                to={itemsLinks[slug]}
                 size="base"
                 theme="arrow-red"
               >
