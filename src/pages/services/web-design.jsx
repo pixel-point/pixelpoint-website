@@ -29,7 +29,7 @@ const ServicesWebDevelopmentPage = () => (
     <WellThought />
     <GuideAndEngage />
     <CreativeMarketing />
-    <CaseStudies />
+    <CaseStudies title="We designed a whole bunch of marketing websites." />
     {/* <Blog /> */}
     <ServicesCTA {...servicesCTA} />
     <CTA />

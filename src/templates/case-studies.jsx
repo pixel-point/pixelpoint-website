@@ -17,7 +17,7 @@ const CaseStudiesPage = ({
   <Layout seo={SEO_DATA.caseStudies} headerTheme="white">
     <Hero />
     <CaseStudies items={nodes} />
-    <SharedCaseStudies title="All case studies" itemsType="not-featured" />
+    <SharedCaseStudies title="All case studies" itemsType="not-featured" withoutTitleLink />
     <CTA withTopMargin />
   </Layout>
 );

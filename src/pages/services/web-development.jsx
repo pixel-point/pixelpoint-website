@@ -27,7 +27,10 @@ const ServicesWebDevelopmentPage = () => (
     <CodeQuality />
     <ThirdPartiesAndIntegrations />
     <Lighthouse />
-    <CaseStudies itemsType="open-source" />
+    <CaseStudies
+      title="There are numerous living proofs of our work out there."
+      itemsType="open-source"
+    />
     {/* <Blog /> */}
     <ServicesCTA {...servicesCTA} />
     <CTA />

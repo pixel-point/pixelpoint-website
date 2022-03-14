@@ -69,6 +69,7 @@ Card.propTypes = {
   slug: PropTypes.string.isRequired,
 };
 
+// const CaseStudies = ({ title, itemsType, withoutTitleLink }) => {
 const CaseStudies = ({ title, itemsType }) => {
   const {
     allMdx: { nodes },
@@ -121,7 +122,12 @@ const CaseStudies = ({ title, itemsType }) => {
     <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
       <div className="container">
         <h2 className="max-w-[800px] text-4xl font-normal leading-snug lg:max-w-[650px] lg:text-3xl md:max-w-[500px] md:text-2xl sm:max-w-[420px] sm:text-xl">
-          {title}
+          {title}{' '}
+          {/* {!withoutTitleLink && (
+            <Link to="/case-studies" size="4xl" theme="arrow-red">
+              See all cases
+            </Link>
+          )} */}
         </h2>
         <div className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:block sm:space-y-8">
           {itemsToRender.map(({ slug, frontmatter }, index) => (
@@ -136,6 +142,7 @@ const CaseStudies = ({ title, itemsType }) => {
 CaseStudies.propTypes = {
   title: PropTypes.node,
   itemsType: PropTypes.oneOf(['open-source', 'not-featured']),
+  // withoutTitleLink: PropTypes.bool,
 };
 
 CaseStudies.defaultProps = {
@@ -146,6 +153,7 @@ CaseStudies.defaultProps = {
     </>
   ),
   itemsType: 'open-source',
+  // withoutTitleLink: false,
 };
 
 export default CaseStudies;

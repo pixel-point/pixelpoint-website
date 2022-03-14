@@ -13,13 +13,17 @@ const styles = {
       wrapper: 'text-6xl font-normal !leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl',
       icon: 'mt-2.5 ml-4 h-7 lg:mt-2 lg:ml-3 lg:h-6 md:mt-1.5 md:ml-2 md:h-5 sm:ml-1.5 sm:h-4 xs:ml-1 xs:h-3',
     },
+    '4xl': {
+      wrapper: 'text-4xl font-normal !leading-snug lg:text-3xl md:text-2xl sm:text-xl',
+      icon: 'mt-1.5 ml-2 h-5 lg:h-4 md:h-3.5 md:ml-1.5 sm:h-3 sm:mt-1',
+    },
     'lg-only': {
       wrapper: 'text-lg font-semibold',
       icon: 'ml-2 h-2.5 mt-0.5',
     },
     base: {
       wrapper: 'text-base sm:text-sm',
-      icon: ' mt-0.5 ml-1.5 h-2.5 sm:ml-1 sm:h-2',
+      icon: 'mt-[3px] ml-1.5 h-2.5 sm:ml-1 sm:h-2',
     },
   },
   theme: {
@@ -74,7 +78,7 @@ const Link = ({
         {(size === 'base' || size === 'lg-only') && (
           <Arrow className={clsx(styles.size[size]?.icon, styles.theme[theme]?.icon)} />
         )}
-        {size === '6xl' && (
+        {(size === '4xl' || size === '6xl') && (
           <ArrowLarge className={clsx(styles.size[size]?.icon, styles.theme[theme]?.icon)} />
         )}
       </>
