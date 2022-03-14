@@ -34,7 +34,7 @@ const CaseStudyTemplate = ({
     >
       <Content {...content} />
       <Keynotes items={frontmatter.keynotes} iconsName={slug.slice(0, -1)} />
-      <CaseStudies />
+      <CaseStudies title="We provided design & development services for many more projects." />
       <CTA withTopMargin />
     </Layout>
   );
