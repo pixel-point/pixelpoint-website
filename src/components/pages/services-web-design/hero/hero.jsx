@@ -7,7 +7,7 @@ import ImagePlaceholder from 'components/shared/image-placeholder';
 const Hero = () => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({
     triggerOnce: true,
-    threshold: 0.8,
+    threshold: 0.5,
   });
 
   const { RiveComponent, rive } = useRive({
