@@ -51,7 +51,7 @@ const itemVariants = {
 };
 
 const Frameworks = () => {
-  const [contentRef, isContentInView] = useInView({ triggerOnce: true, threshold: 1 });
+  const [contentRef, isContentInView] = useInView({ triggerOnce: true, threshold: 0.8 });
   const [itemsWrapperRef, isItemsWrapperInView] = useInView({ triggerOnce: true, threshold: 0.8 });
 
   const titleControls = useAnimation();

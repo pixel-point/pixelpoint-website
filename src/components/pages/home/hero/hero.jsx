@@ -106,7 +106,12 @@ const Hero = () => {
   useEffect(() => {
     // Add event listener to window scroll
     const handleScroll = () => {
-      if (currentAnimState !== 'fall' && rive && window.scrollY > firstSectionHeight - 600) {
+      if (
+        currentAnimState !== 'fall' &&
+        rive &&
+        rive.lastRenderTime > 0 &&
+        window.scrollY > firstSectionHeight - 600
+      ) {
         window.rive = rive;
         setCurrentAnimState('fall');
         fallState.fire();

@@ -5,10 +5,7 @@ import { useRive, Layout, Fit, Alignment } from 'rive-react';
 import ImagePlaceholder from 'components/shared/image-placeholder';
 
 const Hero = () => {
-  const [animationWrapperRef, isAnimationWrapperInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.5,
-  });
+  const [animationWrapperRef, isAnimationWrapperInView] = useInView({ triggerOnce: true });
 
   const { RiveComponent, rive } = useRive({
     src: '/animations/pages/services-web-design/hero.riv',
