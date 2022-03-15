@@ -1,4 +1,8 @@
-import React from 'react';
+import { useAnimation, motion } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
+
+import TitleAnimation from 'components/shared/title-animation';
 
 import gatsbyBackground from './images/gatsby-background.svg';
 import GatsbyLogo from './images/gatsby.inline.svg';
@@ -18,51 +22,118 @@ const items = [
   },
 ];
 
-const Frameworks = () => (
-  <section className="safe-paddings bg-black pt-52 text-white lg:pt-36 md:pt-32 sm:pt-14">
-    <div className="container grid-gap-x grid grid-cols-2 items-center md:block">
-      <div>
-        <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
-          We leverage the greatest <span className="text-red">React</span> frameworks
-        </h2>
-        <p className="mt-5 max-w-[410px] md:mt-4 md:max-w-none sm:mt-3">
-          Always ready to jump on a project quickly with our custom inclusive GatsbyJS & NextJS
-          starters.
-        </p>
-      </div>
-      <div className="md:mt-8 md:flex md:space-x-4 sm:mt-6 sm:block sm:space-x-0 sm:space-y-4">
-        <div
-          className="relative flex aspect-[592/224] items-center justify-between overflow-hidden rounded-2xl pl-10 pr-6 lg:pl-6 md:aspect-auto md:min-h-[166px] md:basis-1/3 md:flex-col md:items-start md:px-4 md:pt-6 md:pb-5"
-          style={{ background: 'linear-gradient(261.85deg, #773399 19.08%, #402060 81.57%)' }}
-        >
-          <GatsbyLogo className="relative z-10 h-14 lg:h-12 md:h-8" aria-hidden />
-          <span className="sr-only">Gatsby</span>
-          <p className="relative z-10 max-w-[256px] lg:max-w-[190px] lg:text-base md:max-w-none md:text-sm">
-            Best for building SEO-friendly, high-performing marketing websites
-          </p>
-          <img
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:hidden"
-            src={gatsbyBackground}
-            alt=""
-            loading="lazy"
-            aria-hidden
+const titleItems = [
+  { value: 'We' },
+  { value: 'leverage' },
+  { value: 'the' },
+  { value: 'greatest' },
+  { value: 'React', color: '#ee2b6c' },
+  { value: 'frameworks' },
+];
+
+const descriptionVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.3 } },
+};
+
+const itemsWrapperVariants = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  initial: { opacity: 0, translateY: 200 },
+  animate: { opacity: 1, translateY: 0, transition: { duration: 1, ease: [0, 0, 0, 1] } },
+};
+
+const Frameworks = () => {
+  const [contentRef, isContentInView] = useInView({ triggerOnce: true, threshold: 1 });
+  const [itemsWrapperRef, isItemsWrapperInView] = useInView({ triggerOnce: true, threshold: 0.8 });
+
+  const titleControls = useAnimation();
+  const descriptionControls = useAnimation();
+  const itemsWrapperControls = useAnimation();
+
+  useEffect(() => {
+    if (isContentInView) {
+      titleControls.start('animate').then(() => descriptionControls.start('animate'));
+    }
+    if (isItemsWrapperInView) itemsWrapperControls.start('animate');
+  }, [
+    isContentInView,
+    titleControls,
+    descriptionControls,
+    isItemsWrapperInView,
+    itemsWrapperControls,
+  ]);
+
+  return (
+    <section className="safe-paddings bg-black pt-52 text-white lg:pt-36 md:pt-32 sm:pt-14">
+      <div className="container grid-gap-x grid grid-cols-2 items-center md:block">
+        <div ref={contentRef}>
+          <TitleAnimation
+            tag="h2"
+            className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl"
+            items={titleItems}
+            animationName="second"
+            controls={titleControls}
           />
+          <motion.p
+            className="mt-5 max-w-[410px] md:mt-4 md:max-w-none sm:mt-3"
+            initial="initial"
+            animate={descriptionControls}
+            variants={descriptionVariants}
+          >
+            Always ready to jump on a project quickly with our custom inclusive GatsbyJS & NextJS
+            starters.
+          </motion.p>
         </div>
-        <div className="mt-8 flex space-x-8 lg:mt-4 lg:space-x-4 md:mt-0 md:basis-2/3 sm:block sm:space-x-0 sm:space-y-4">
-          {items.map(({ logo: Logo, name, description }, index) => (
-            <div
-              className="flex aspect-[280/224] w-1/2 flex-col items-start justify-between rounded-2xl bg-gray-9 px-6 pt-4 pb-5 md:aspect-auto md:min-h-[166px] md:px-4 sm:w-full"
-              key={index}
-            >
-              <Logo className="h-14 lg:h-12" aria-hidden />
-              <span className="sr-only">{name}</span>
-              <p className="text-base lg:text-sm">{description}</p>
-            </div>
-          ))}
-        </div>
+        <motion.div
+          className="md:mt-8 md:flex md:space-x-4 sm:mt-6 sm:block sm:space-x-0 sm:space-y-4"
+          initial="initial"
+          animate={itemsWrapperControls}
+          variants={itemsWrapperVariants}
+          ref={itemsWrapperRef}
+        >
+          <motion.div
+            className="relative flex aspect-[592/224] items-center justify-between overflow-hidden rounded-2xl pl-10 pr-6 lg:pl-6 md:aspect-auto md:min-h-[166px] md:basis-1/3 md:flex-col md:items-start md:px-4 md:pt-6 md:pb-5"
+            variants={itemVariants}
+            style={{ background: 'linear-gradient(261.85deg, #773399 19.08%, #402060 81.57%)' }}
+          >
+            <GatsbyLogo className="relative z-10 h-14 lg:h-12 md:h-8" aria-hidden />
+            <span className="sr-only">Gatsby</span>
+            <p className="relative z-10 max-w-[256px] lg:max-w-[190px] lg:text-base md:max-w-none md:text-sm">
+              Best for building SEO-friendly, high-performing marketing websites
+            </p>
+            <img
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:hidden"
+              src={gatsbyBackground}
+              alt=""
+              loading="lazy"
+              aria-hidden
+            />
+          </motion.div>
+          <div className="mt-8 flex space-x-8 lg:mt-4 lg:space-x-4 md:mt-0 md:basis-2/3 sm:block sm:space-x-0 sm:space-y-4">
+            {items.map(({ logo: Logo, name, description }, index) => (
+              <motion.div
+                className="flex aspect-[280/224] w-1/2 flex-col items-start justify-between rounded-2xl bg-gray-9 px-6 pt-4 pb-5 md:aspect-auto md:min-h-[166px] md:px-4 sm:w-full"
+                variants={itemVariants}
+                key={index}
+              >
+                <Logo className="h-14 lg:h-12" aria-hidden />
+                <span className="sr-only">{name}</span>
+                <p className="text-base lg:text-sm">{description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Frameworks;

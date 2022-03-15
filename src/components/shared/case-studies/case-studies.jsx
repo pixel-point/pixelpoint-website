@@ -140,18 +140,12 @@ const CaseStudies = ({ title, itemsType }) => {
 };
 
 CaseStudies.propTypes = {
-  title: PropTypes.node,
+  title: PropTypes.node.isRequired,
   itemsType: PropTypes.oneOf(['open-source', 'not-featured']),
   // withoutTitleLink: PropTypes.bool,
 };
 
 CaseStudies.defaultProps = {
-  title: (
-    <>
-      We provide design & development services for popular{' '}
-      <span className="text-red">Open-Source</span> projects:
-    </>
-  ),
   itemsType: 'open-source',
   // withoutTitleLink: false,
 };

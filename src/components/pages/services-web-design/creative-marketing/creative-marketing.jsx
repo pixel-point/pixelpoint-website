@@ -10,8 +10,8 @@ const CreativeMarketing = () => (
   <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
     <div className="container">
       <h2 className="mx-auto max-w-[1008px] text-center text-6xl font-normal leading-snug lg:max-w-[900px] lg:text-5xl md:max-w-[650px] md:text-4xl sm:text-3xl xs:text-2xl">
-        Bring your company credibility up a level with{' '}
-        <span className="text-red">Creative marketing</span> & business assets
+        Bring your company <span className="text-red">Credibility up</span> a level with creative
+        marketing & business assets
       </h2>
       <div className="mt-20 flex space-x-8 lg:mt-16 lg:space-x-6 md:mt-12 md:block md:space-x-0 md:space-y-6 sm:space-y-4">
         <div className="flex flex-1 flex-col space-y-8 lg:space-y-6 md:block sm:space-y-4">

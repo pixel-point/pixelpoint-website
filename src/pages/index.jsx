@@ -17,7 +17,14 @@ const HomePage = () => (
     <Features />
     <Workflow />
     <Services />
-    <CaseStudies />
+    <CaseStudies
+      title={
+        <>
+          Our team loves <span className="text-red">Open Source</span>. We designed and developed
+          many projects in this space:
+        </>
+      }
+    />
     <Blog />
     <CTA withTopMargin />
   </Layout>
