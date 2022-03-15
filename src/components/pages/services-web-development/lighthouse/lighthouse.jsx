@@ -8,18 +8,22 @@ const items = [
   {
     name: 'Performance',
     value: '93',
+    circleValue: 93,
   },
   {
     name: 'Accessibility',
     value: '100',
+    circleValue: 100,
   },
   {
     name: 'Best practices',
     value: '92',
+    circleValue: 92,
   },
   {
     name: 'SEO',
     value: '99',
+    circleValue: 100,
   },
 ];
 
@@ -77,7 +81,7 @@ const Lighthouse = () => {
           animate={itemsWrapperControls}
           ref={itemsWrapperRef}
         >
-          {items.map(({ name, value }, index) => (
+          {items.map(({ name, value, circleValue }, index) => (
             <li
               className={clsx('sm:basis-1/2', (index === 2 || index === 3) && 'sm:mt-4')}
               key={index}
@@ -102,7 +106,7 @@ const Lighthouse = () => {
                     d="M3.49609 72.0001C3.49609 109.834 34.1664 140.504 72.0001 140.504C109.834 140.504 140.504 109.834 140.504 72.0001C140.504 34.1664 109.834 3.49609 72.0001 3.49609C34.1664 3.49609 3.49609 34.1664 3.49609 72.0001Z"
                     strokeWidth="6"
                     strokeLinecap="round"
-                    custom={{ value }}
+                    custom={{ value: circleValue }}
                     variants={itemCircleVariants}
                   />
                 </svg>

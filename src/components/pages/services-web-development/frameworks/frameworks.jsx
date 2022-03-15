@@ -72,7 +72,7 @@ const Frameworks = () => {
   ]);
 
   return (
-    <section className="safe-paddings bg-black pt-80 text-white lg:pt-64 md:pt-52 sm:pt-24">
+    <section className="safe-paddings bg-black pt-52 text-white lg:pt-36 md:pt-32 sm:pt-14">
       <div className="container grid-gap-x grid grid-cols-2 items-center md:block">
         <div ref={contentRef}>
           <TitleAnimation
