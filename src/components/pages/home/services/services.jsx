@@ -9,18 +9,15 @@ import lgIllustration1 from './images/lg-illustration-1.svg';
 import lgIllustration2 from './images/lg-illustration-2.svg';
 
 const Services = () => {
-  const params = {
+  const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+
+  const { RiveComponent, rive } = useRive({
     src: '/animations/pages/home/services.riv',
     autoplay: false,
     layout: new Layout({
       fit: Fit.FitWidth,
       alignment: Alignment.TopCenter,
     }),
-  };
-
-  const { RiveComponent, rive } = useRive(params);
-  const [wrapperRef, isWrapperInView] = useInView({
-    threshold: 0.3,
   });
 
   useEffect(() => {

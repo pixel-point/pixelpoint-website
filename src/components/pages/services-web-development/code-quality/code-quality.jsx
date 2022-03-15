@@ -19,7 +19,7 @@ const descriptionVariants = {
 };
 
 const CodeQuality = () => {
-  const [contentRef, isContentInView] = useInView({ triggerOnce: true, threshold: 1 });
+  const [contentRef, isContentInView] = useInView({ triggerOnce: true, threshold: 0.8 });
   const [illustrationRef, isIllustrationInView] = useInView({ triggerOnce: true, threshold: 0.8 });
 
   const titleControls = useAnimation();

@@ -8,7 +8,10 @@ import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
 
 const CTA = ({ withTopMargin }) => {
-  const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, threshold: 0.5 });
+  const [animationWrapperRef, isAnimationWrapperInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.8,
+  });
 
   const { RiveComponent, rive } = useRive({
     src: '/animations/shared/cta.riv',
@@ -20,8 +23,8 @@ const CTA = ({ withTopMargin }) => {
   });
 
   useEffect(() => {
-    if (isWrapperInView && rive) rive.play();
-  }, [isWrapperInView, rive]);
+    if (isAnimationWrapperInView && rive) rive.play();
+  }, [isAnimationWrapperInView, rive]);
 
   return (
     <section
@@ -29,7 +32,6 @@ const CTA = ({ withTopMargin }) => {
         'safe-paddings bg-black py-20 md:py-18 sm:pt-16 sm:pb-10',
         withTopMargin && 'mt-52 lg:mt-44 md:mt-36 sm:mt-28'
       )}
-      ref={wrapperRef}
     >
       <div className="container grid-gap-x grid grid-cols-2 items-center sm:block">
         <div className="sm:text-center">
@@ -40,9 +42,11 @@ const CTA = ({ withTopMargin }) => {
             Book a call
           </Link>
         </div>
-        <ImagePlaceholder className="sm:mt-2 sm:w-full" width={592} height={560}>
-          <RiveComponent />
-        </ImagePlaceholder>
+        <div className="sm:mt-2" ref={animationWrapperRef}>
+          <ImagePlaceholder className="sm:w-full" width={592} height={560}>
+            <RiveComponent />
+          </ImagePlaceholder>
+        </div>
       </div>
     </section>
   );
