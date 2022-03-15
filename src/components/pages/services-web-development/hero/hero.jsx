@@ -9,7 +9,7 @@ const STATE_MACHINE_NAME = 'State Machine';
 const Hero = () => {
   const [animationWrapperRef, isAnimationWrapperView] = useInView({
     triggerOnce: true,
-    threshold: 0.8,
+    threshold: 0.5,
   });
 
   const { RiveComponent, rive } = useRive({
