@@ -4,11 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { useRive, useStateMachineInput, Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
-import TitleAnimation, {
-  OPACITY_DURATION,
-  COLOR_DURATION,
-  COLOR_DELAY,
-} from 'components/shared/title-animation';
+import TitleAnimation from 'components/shared/title-animation';
 
 import lgIllustration1 from './images/lg-illustration-1.svg';
 import lgIllustration2 from './images/lg-illustration-2.svg';
@@ -18,71 +14,38 @@ const STATE_MACHINE_NAME = 'State Machine';
 const INPUT_NAME = 'Fall Trigger';
 
 const firstSectionTitleItems = [
-  { value: 'Marketing', delay: { opacity: OPACITY_DURATION * 0 } },
-  { value: 'website', delay: { opacity: OPACITY_DURATION * 1 } },
-  { value: 'is', delay: { opacity: OPACITY_DURATION * 2 } },
-  { value: 'a', delay: { opacity: OPACITY_DURATION * 3 } },
-  {
-    value: 'complex',
-    color: '#2b4bee',
-    delay: { opacity: OPACITY_DURATION * 4, color: OPACITY_DURATION * 4 + COLOR_DELAY },
-  },
-  { value: 'thing', delay: { opacity: OPACITY_DURATION * 5 + COLOR_DURATION + COLOR_DELAY } },
-  { value: 'to', delay: { opacity: OPACITY_DURATION * 6 + COLOR_DURATION + COLOR_DELAY } },
-  { value: 'build', delay: { opacity: OPACITY_DURATION * 7 + COLOR_DURATION + COLOR_DELAY } },
-  { value: 'on', delay: { opacity: OPACITY_DURATION * 8 + COLOR_DURATION + COLOR_DELAY } },
-  {
-    value: 'your own',
-    color: '#ee2b6c',
-    delay: {
-      opacity: OPACITY_DURATION * 9 + COLOR_DURATION + COLOR_DELAY,
-      color: OPACITY_DURATION * 9 + COLOR_DURATION + COLOR_DELAY + COLOR_DELAY,
-    },
-  },
+  { value: 'Marketing' },
+  { value: 'website' },
+  { value: 'is' },
+  { value: 'a' },
+  { value: 'complex', color: '#2b4bee' },
+  { value: 'thing' },
+  { value: 'to' },
+  { value: 'build' },
+  { value: 'on' },
+  { value: 'your own', color: '#ee2b6c' },
 ];
 
 const secondSectionTitleItems = [
-  { value: 'You', delay: { opacity: OPACITY_DURATION * 0 } },
-  { value: 'either', delay: { opacity: OPACITY_DURATION * 1 } },
-  { value: 'ask', delay: { opacity: OPACITY_DURATION * 2 } },
-  { value: 'your', delay: { opacity: OPACITY_DURATION * 3 } },
-  {
-    value: 'team',
-    color: '#2b4bee',
-    delay: { opacity: OPACITY_DURATION * 4, color: OPACITY_DURATION * 4 + COLOR_DELAY },
-  },
-  { value: 'of', delay: { opacity: OPACITY_DURATION * 5 + COLOR_DURATION + COLOR_DELAY } },
-  { value: 'specialists', delay: { opacity: OPACITY_DURATION * 6 + COLOR_DURATION + COLOR_DELAY } },
-  { value: 'from', delay: { opacity: OPACITY_DURATION * 7 + COLOR_DURATION + COLOR_DELAY } },
-  {
-    value: 'adjacent fields',
-    color: '#ee2b6c',
-    delay: {
-      opacity: OPACITY_DURATION * 8 + COLOR_DURATION + COLOR_DELAY,
-      color: OPACITY_DURATION * 8 + COLOR_DURATION + COLOR_DELAY + COLOR_DELAY,
-    },
-  },
+  { value: 'You' },
+  { value: 'either' },
+  { value: 'ask' },
+  { value: 'your' },
+  { value: 'team', color: '#2b4bee' },
+  { value: 'of' },
+  { value: 'specialists' },
+  { value: 'from' },
+  { value: 'adjacent fields', color: '#ee2b6c' },
 ];
 
 const thirdSectionTitleItems = [
-  { value: 'Or', delay: { opacity: OPACITY_DURATION * 0 } },
-  { value: 'go', delay: { opacity: OPACITY_DURATION * 1 } },
-  { value: 'wild', delay: { opacity: OPACITY_DURATION * 2 } },
-  {
-    value: 'cherry-picking',
-    color: '#2b4bee',
-    delay: { opacity: OPACITY_DURATION * 3, color: OPACITY_DURATION * 3 + COLOR_DELAY },
-  },
-  { value: '&', delay: { opacity: OPACITY_DURATION * 4 + COLOR_DURATION + COLOR_DELAY } },
-  { value: 'managing', delay: { opacity: OPACITY_DURATION * 5 + COLOR_DURATION + COLOR_DELAY } },
-  {
-    value: 'freelancers',
-    color: '#ee2b6c',
-    delay: {
-      opacity: OPACITY_DURATION * 6 + COLOR_DURATION + COLOR_DELAY,
-      color: OPACITY_DURATION * 6 + COLOR_DURATION + COLOR_DELAY + COLOR_DELAY,
-    },
-  },
+  { value: 'Or' },
+  { value: 'go' },
+  { value: 'wild' },
+  { value: 'cherry-picking', color: '#2b4bee' },
+  { value: '&' },
+  { value: 'managing' },
+  { value: 'freelancers', color: '#ee2b6c' },
 ];
 
 const Hero = () => {
@@ -166,6 +129,7 @@ const Hero = () => {
             <TitleAnimation
               tag="h2"
               items={firstSectionTitleItems}
+              animationName="first"
               controls={firstSectionTitleControls}
             />
             <ImagePlaceholder
@@ -184,6 +148,7 @@ const Hero = () => {
             <TitleAnimation
               tag="h2"
               items={secondSectionTitleItems}
+              animationName="first"
               controls={secondSectionTitleControls}
             />
             <ImagePlaceholder
@@ -202,6 +167,7 @@ const Hero = () => {
             <TitleAnimation
               tag="h2"
               items={thirdSectionTitleItems}
+              animationName="first"
               controls={thirdSectionTitleControls}
             />
             <ImagePlaceholder
