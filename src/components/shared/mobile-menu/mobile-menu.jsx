@@ -42,7 +42,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
   return (
     <nav
       className={clsx(
-        'invisible absolute left-1/2 top-1.5 z-40 hidden w-full max-w-[724px] -translate-x-1/2 rounded-xl border border-gray-3 bg-white px-6 pt-24 pb-5 opacity-0 transition-[opacity,visibility] duration-200 md:block sm:right-1.5 sm:left-1.5 sm:w-auto sm:max-w-none sm:translate-x-0 sm:pt-20',
+        'invisible absolute left-1.5 top-1.5 right-1.5 z-40 hidden rounded-xl border border-gray-3 bg-white px-6 pt-24 pb-5 opacity-0 transition-[opacity,visibility] duration-200 md:block sm:pt-20',
         isOpen && '!visible !opacity-100'
       )}
       style={{ boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)' }}
