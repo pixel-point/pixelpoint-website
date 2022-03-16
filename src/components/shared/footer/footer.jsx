@@ -8,10 +8,10 @@ const links = [
     { text: 'Web design', to: '/services/web-design' },
     { text: 'Web development', to: '/services/web-development' },
   ],
-  [
-    { text: 'Case studies', to: '/case-studies' },
-    { text: 'Blog', to: '/blog' },
-  ],
+  // [
+  //   { text: 'Case studies', to: '/case-studies' },
+  //   { text: 'Blog', to: '/blog' },
+  // ],
   [
     { text: 'Github', to: 'https://github.com/pixel-point' },
     { text: 'Twitter', to: 'https://twitter.com/alex_barashkov' },

@@ -46,7 +46,7 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
         </div>
         <RiveComponent className="absolute top-0 left-0 right-0 bottom-0" />
       </div>
-      <p className="mt-4 font-normal leading-snug lg:mt-3">{description}</p>
+      <p className="mt-4 text-lg font-normal leading-snug lg:mt-3">{description}</p>
       <Link className="nested-link-red mt-3 lg:mt-2" size="base" theme="arrow-red" withoutHover>
         {title} case study
       </Link>
