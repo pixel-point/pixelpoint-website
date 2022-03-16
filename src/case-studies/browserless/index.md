@@ -21,6 +21,7 @@ stack:
   - React
   - Gatsby
   - TailwindCSS
+  - Headless WordPress
   - Stripe
   - Netlify
 keynotes:

@@ -21,6 +21,7 @@ stack:
   - React
   - Gatsby
   - TailwindCSS
+  - MDX
   - Formspark
   - Netlify
 keynotes:
