@@ -125,11 +125,11 @@ const Hero = () => {
 
   return (
     <section
-      className="safe-paddings overflow-hidden bg-black text-white md:pt-28 sm:pt-20"
+      className="safe-paddings overflow-hidden bg-black text-white md:py-28 sm:py-20"
       ref={wrapperRef}
     >
       <div className="container grid-gap-x relative grid grid-cols-2 md:block" ref={containerRef}>
-        <div className="relative z-10 text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
+        <div className="relative z-10 text-6xl font-normal leading-snug lg:text-5xl md:mx-auto md:max-w-[590px] md:text-center md:text-4xl sm:text-3xl xs:text-2xl">
           <div className="flex h-screen items-center md:block md:h-auto" ref={firstSectionRef}>
             <TitleAnimation
               tag="h2"
@@ -139,15 +139,15 @@ const Hero = () => {
             />
             <ImagePlaceholder
               className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
-              width={620}
-              height={367}
+              width={540}
+              height={438}
               aria-hidden
             >
               <img src={lgIllustration1} alt="" />
             </ImagePlaceholder>
           </div>
           <div
-            className="flex items-center pt-[100px] pb-[500px] lg:pb-[400px] md:block md:pb-0 md:pt-28 sm:pt-20"
+            className="flex items-center pt-[100px] pb-[500px] lg:pb-[400px] md:mt-28 md:block md:py-0 sm:mt-20"
             ref={secondSectionRef}
           >
             <TitleAnimation
@@ -157,16 +157,16 @@ const Hero = () => {
               controls={secondSectionTitleControls}
             />
             <ImagePlaceholder
-              className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
-              width={620}
-              height={339}
+              className="mx-auto mt-12 hidden md:block sm:mt-8 sm:max-w-full"
+              width={734}
+              height={445}
               aria-hidden
             >
               <img src={lgIllustration2} alt="" />
             </ImagePlaceholder>
           </div>
           <div
-            className="flex items-center pt-[200px] pb-[360px] lg:pt-[150px] lg:pb-[300px] md:block md:py-28 sm:py-20"
+            className="flex items-center pt-[200px] pb-[360px] lg:pt-[150px] lg:pb-[300px] md:mt-28 md:block md:py-0"
             ref={thirdSectionRef}
           >
             <TitleAnimation
@@ -176,9 +176,9 @@ const Hero = () => {
               controls={thirdSectionTitleControls}
             />
             <ImagePlaceholder
-              className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
-              width={620}
-              height={294}
+              className="mx-auto mt-12 hidden md:block sm:mt-8 sm:max-w-full"
+              width={724}
+              height={430}
               aria-hidden
             >
               <img src={lgIllustration3} alt="" />
