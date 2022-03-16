@@ -68,7 +68,7 @@ const Blog = () => {
                   image={getImage(cover)}
                   alt={title}
                 />
-                <h3 className="mt-5 text-2xl font-normal leading-snug lg:mt-4 md:text-xl sm:text-lg">
+                <h3 className="mt-5 text-2xl font-normal leading-snug lg:mt-4 md:text-lg">
                   {title}
                 </h3>
                 <Link className="nested-link-red mt-3 lg:mt-2" size="base" theme="arrow-red">

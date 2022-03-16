@@ -50,7 +50,7 @@ const icons = {
 const Keynotes = ({ items, iconsName }) => (
   <section className="safe-paddings bg-black pt-32 text-white lg:pt-28 md:pt-24 sm:pt-16">
     <div className="container">
-      <h2 className="text-4xl font-normal leading-snug lg:text-3xl md:text-2xl sm:text-xl">
+      <h2 className="text-4xl font-normal leading-snug lg:text-3xl sm:text-xl">
         Key Results and Outcomes
       </h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:flex sm:flex-col sm:gap-y-0 sm:gap-x-0 sm:space-y-8">
