@@ -61,7 +61,7 @@ const Content = ({
             <img src={logo} alt={title} loading="eager" />
             {githubUrl && githubStars && (
               <Link
-                className="inline-flex items-center rounded-full border border-white p-2 pr-4 xs:mt-4"
+                className="inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red xs:mt-4"
                 to={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -100,7 +100,7 @@ const Content = ({
         <img src={logo} alt={title} loading="eager" />
         {githubUrl && githubStars && (
           <Link
-            className="mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4"
+            className="mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red xs:mt-4"
             to={githubUrl}
             target="_blank"
             rel="noopener noreferrer"

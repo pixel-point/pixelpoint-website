@@ -23,7 +23,7 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
 
   return (
     <Link
-      className="with-nested-link-red-hover flex flex-col"
+      className="with-nested-link-red-hover flex h-full flex-col"
       to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
       onMouseEnter={handleMouseEnter}
     >
@@ -129,11 +129,13 @@ const CaseStudies = ({ title, itemsType }) => {
             </Link>
           )} */}
         </h2>
-        <div className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:block sm:space-y-8">
+        <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:block sm:space-y-8">
           {itemsToRender.map(({ slug, frontmatter }, index) => (
-            <Card {...frontmatter} slug={slug} key={index} />
+            <li key={index}>
+              <Card {...frontmatter} slug={slug} />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

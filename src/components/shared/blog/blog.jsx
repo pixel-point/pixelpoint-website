@@ -54,26 +54,30 @@ const Blog = () => {
         <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-12 md:mt-10 sm:mt-8 sm:block sm:space-y-8">
           {items.map(({ slug, frontmatter: { title, cover } }, index) => (
             <li key={index}>
-              {/* <Link to={getBlogPostPath(slug)}> */}
-              <Link to={itemsLinks[slug]}>
+              {/* <Link
+                className="with-nested-link-red-hover flex h-full flex-col"
+                to={getBlogPostPath(slug)}
+              > */}
+              <Link
+                className="with-nested-link-red-hover flex h-full flex-col"
+                to={itemsLinks[slug]}
+              >
                 <GatsbyImage
                   className="w-full rounded-2xl"
                   imgClassName="rounded-2xl"
                   image={getImage(cover)}
                   alt={title}
                 />
-              </Link>
-              <h3 className="mt-5 text-2xl font-normal leading-snug md:mt-4 md:text-xl sm:mt-3 sm:text-lg">
-                {title}
-              </h3>
-              <Link
-                className="mt-4 md:mt-3 md:text-sm sm:mt-2"
-                // to={getBlogPostPath(slug)}
-                to={itemsLinks[slug]}
-                size="base"
-                theme="arrow-red"
-              >
-                Read article
+                <h3 className="mt-5 mb-4 text-2xl font-normal leading-snug md:mb-3 md:mt-4 md:text-xl sm:mb-2 sm:mt-3 sm:text-lg">
+                  {title}
+                </h3>
+                <Link
+                  className="nested-link-red mt-auto self-start md:text-sm"
+                  size="base"
+                  theme="arrow-red"
+                >
+                  Read article
+                </Link>
               </Link>
             </li>
           ))}
