@@ -17,7 +17,7 @@ const DRAFT_FILTER =
     ? [false]
     : [true, false];
 
-const POST_REQUIRED_FIELDS = ['title', 'description'];
+const POST_REQUIRED_FIELDS = ['title', 'description', 'cover'];
 
 const CASE_STUDY_REQUIRED_FIELDS = [
   'logo',
@@ -61,6 +61,9 @@ async function createBlogPosts({ graphql, actions }) {
           frontmatter {
             title
             description
+            cover {
+              publicURL
+            }
           }
         }
       }
