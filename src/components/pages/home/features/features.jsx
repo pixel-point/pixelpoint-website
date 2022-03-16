@@ -127,7 +127,7 @@ const Features = () => {
   ]);
 
   return (
-    <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20" ref={wrapperRef}>
+    <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20" ref={wrapperRef}>
       <div className="container">
         <h2 className="max-w-[700px] text-4xl font-normal leading-snug lg:max-w-[560px] lg:text-3xl md:max-w-[440px] md:text-2xl sm:max-w-[370px] sm:text-xl">
           Here is what we have to offer for the next ideal&nbsp;marketing website of yours

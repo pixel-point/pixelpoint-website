@@ -19,7 +19,7 @@ const items = [
 ];
 
 const Advantages = () => (
-  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
+  <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
     <div className="container">
       <h2 className="max-w-[740px] text-4xl font-normal leading-snug lg:max-w-[640px] lg:text-3xl md:max-w-[500px] md:text-2xl sm:max-w-[420px] sm:text-xl">
         It doesn’t have to be like that. Work&nbsp;with&nbsp;Pixel Point to see the difference:

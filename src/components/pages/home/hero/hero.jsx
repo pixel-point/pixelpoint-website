@@ -147,7 +147,7 @@ const Hero = () => {
             </ImagePlaceholder>
           </div>
           <div
-            className="flex items-center pt-[100px] pb-[500px] lg:pb-[400px] md:block md:pb-0 md:pt-36 sm:pt-20"
+            className="flex items-center pt-[100px] pb-[500px] lg:pb-[400px] md:block md:pb-0 md:pt-28 sm:pt-20"
             ref={secondSectionRef}
           >
             <TitleAnimation
@@ -166,7 +166,7 @@ const Hero = () => {
             </ImagePlaceholder>
           </div>
           <div
-            className="flex items-center pt-[200px] pb-[360px] lg:pt-[150px] lg:pb-[300px] md:block md:py-36 sm:py-20"
+            className="flex items-center pt-[200px] pb-[360px] lg:pt-[150px] lg:pb-[300px] md:block md:py-28 sm:py-20"
             ref={thirdSectionRef}
           >
             <TitleAnimation

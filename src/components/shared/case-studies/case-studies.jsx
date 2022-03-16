@@ -23,7 +23,7 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
 
   return (
     <Link
-      className="with-nested-link-red-hover flex h-full flex-col"
+      className="with-nested-link-red-hover block"
       to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
       onMouseEnter={handleMouseEnter}
     >
@@ -46,13 +46,8 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
         </div>
         <RiveComponent className="absolute top-0 left-0 right-0 bottom-0" />
       </div>
-      <p className="my-4 font-normal leading-snug md:my-3">{description}</p>
-      <Link
-        className="nested-link-red mt-auto self-start"
-        size="base"
-        theme="arrow-red"
-        withoutHover
-      >
+      <p className="mt-4 font-normal leading-snug lg:mt-3">{description}</p>
+      <Link className="nested-link-red mt-3 lg:mt-2" size="base" theme="arrow-red" withoutHover>
         {title} case study
       </Link>
     </Link>
@@ -119,7 +114,7 @@ const CaseStudies = ({ title, itemsType }) => {
   const itemsToRender = itemsType === 'open-source' ? items.slice(0, 5) : items;
 
   return (
-    <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
+    <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
       <div className="container">
         <h2 className="max-w-[800px] text-4xl font-normal leading-snug lg:max-w-[650px] lg:text-3xl md:max-w-[500px] md:text-2xl sm:max-w-[420px] sm:text-xl">
           {title}{' '}
