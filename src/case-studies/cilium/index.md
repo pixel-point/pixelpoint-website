@@ -9,7 +9,7 @@ quote:
   text: Awaiting for testimonials Awaiting for testimonials Awaiting for testimonials Awaiting for testimonials Awaiting for testimonials Awaiting for testimonials
   authorName: Thomas Graf
   authorPosition: Co-Founder & CTO of Isovalent, Cilium
-  authorPhoto: author-photo.jpeg
+  authorPhoto: author-photo.jpg
 services:
   - Brand Identity
   - Motion Design
@@ -29,9 +29,7 @@ keynotes:
   - Designed & developed eBPF, Cilium and Isovalent websites
   - Filled up platforms with integrations necessary for business
   - Established a clear editing workflow for marketing team
-cover: cover.jpg
 isOpenSource: true
-isFeatured: true
 isDraft: true
 position: 7
 ---
