@@ -108,7 +108,7 @@ const ThirdPartiesAndIntegrations = () => (
       <ul className="grid-gap-x mt-10 grid grid-cols-4 lg:mt-8 md:mt-6 sm:mt-4 sm:block sm:space-y-4">
         {hostingPlatformsItems.map(({ logo: Logo, name }, index) => (
           <li
-            className="flex aspect-[280/180] items-center justify-center rounded-2xl sm:aspect-auto sm:min-h-[166px]"
+            className="flex min-h-[180px] items-center justify-center rounded-2xl lg:min-h-[140px] md:min-h-[106px] sm:min-h-[144px]"
             style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
             key={index}
           >

@@ -100,7 +100,7 @@ const Frameworks = () => {
           ref={itemsWrapperRef}
         >
           <motion.div
-            className="relative flex aspect-[592/224] items-center justify-between overflow-hidden rounded-2xl pl-10 pr-6 lg:pl-6 md:aspect-auto md:min-h-[166px] md:basis-1/3 md:flex-col md:items-start md:px-4 md:pt-6 md:pb-5"
+            className="relative flex min-h-[224px] items-center justify-between overflow-hidden rounded-2xl pl-10 pr-6 lg:min-h-[174px] lg:pl-6 md:min-h-[166px] md:basis-1/3 md:flex-col md:items-start md:px-4 md:pt-6 md:pb-5"
             variants={itemVariants}
             style={{ background: 'linear-gradient(261.85deg, #773399 19.08%, #402060 81.57%)' }}
           >
@@ -120,7 +120,7 @@ const Frameworks = () => {
           <div className="mt-8 flex space-x-8 lg:mt-4 lg:space-x-4 md:mt-0 md:basis-2/3 sm:block sm:space-x-0 sm:space-y-4">
             {items.map(({ logo: Logo, name, description }, index) => (
               <motion.div
-                className="flex aspect-[280/224] w-1/2 flex-col items-start justify-between rounded-2xl bg-gray-9 px-6 pt-4 pb-5 md:aspect-auto md:min-h-[166px] md:px-4 sm:w-full"
+                className="flex min-h-[224px] w-1/2 flex-col items-start justify-between rounded-2xl bg-gray-9 px-6 pt-4 pb-5 lg:min-h-[174px] md:min-h-[166px] md:px-4 sm:w-full"
                 variants={itemVariants}
                 key={index}
               >
