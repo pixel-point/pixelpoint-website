@@ -83,7 +83,7 @@ const Lighthouse = () => {
         >
           {items.map(({ name, value, circleValue }, index) => (
             <li
-              className={clsx('sm:basis-1/2', (index === 2 || index === 3) && 'sm:mt-4')}
+              className={clsx('sm:basis-1/2', (index === 2 || index === 3) && 'sm:mt-8')}
               key={index}
             >
               <div className="relative mx-auto h-36 w-36 lg:h-28 lg:w-28 md:h-24 md:w-24">
