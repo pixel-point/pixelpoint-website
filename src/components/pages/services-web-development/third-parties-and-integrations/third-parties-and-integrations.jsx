@@ -15,7 +15,7 @@ const headlessCmsItems = [
   {
     logo: StrapiLogo,
     name: 'Strapi',
-    description: 'For Node.js and Open source lovers',
+    description: 'For Node.js and Open Source lovers',
     background: 'bg-[#1f1f7a]',
   },
   {

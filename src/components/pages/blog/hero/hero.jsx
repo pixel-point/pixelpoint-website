@@ -40,7 +40,7 @@ const Hero = () => {
             <blockquote className="mt-4 text-2xl lg:mt-3 lg:text-xl sm:mt-2.5 sm:text-lg">
               <p>
                 There is a key for sustainable growth and successful future for the humanity, and it
-                is <span className="text-red">Open source</span> world with its community shared
+                is <span className="text-red">Open Source</span> world with its community shared
                 knowledge
               </p>
             </blockquote>
