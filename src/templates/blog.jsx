@@ -9,14 +9,10 @@ import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
 
-const BlogTemplate = ({
-  data: {
-    allMdx: { nodes },
-  },
-}) => (
+const BlogTemplate = ({ data: { featuredPosts, notFeaturedPosts } }) => (
   <Layout seo={SEO_DATA.blog} headerTheme="white">
     <Hero />
-    <PostsList items={nodes} />
+    <PostsList items={[...featuredPosts.nodes, ...notFeaturedPosts.nodes]} />
     <CaseStudies
       title={
         <>
@@ -31,15 +27,50 @@ const BlogTemplate = ({
 
 export const query = graphql`
   query ($draftFilter: [Boolean]!) {
-    allMdx(
-      filter: { fileAbsolutePath: { regex: "/posts/" }, fields: { isDraft: { in: $draftFilter } } }
+    featuredPosts: allMdx(
+      filter: {
+        fileAbsolutePath: { regex: "/posts/" }
+        fields: { isDraft: { in: $draftFilter }, isFeatured: { eq: true } }
+      }
       sort: { order: DESC, fields: slug }
     ) {
       nodes {
         slug
+        fields {
+          isFeatured
+        }
         frontmatter {
           title
           description
+          cover {
+            childImageSharp {
+              gatsbyImageData(width: 592)
+            }
+          }
+        }
+      }
+    }
+
+    notFeaturedPosts: allMdx(
+      filter: {
+        fileAbsolutePath: { regex: "/posts/" }
+        fields: { isDraft: { in: $draftFilter }, isFeatured: { eq: false } }
+      }
+      sort: { order: DESC, fields: slug }
+    ) {
+      nodes {
+        slug
+        fields {
+          isFeatured
+        }
+        frontmatter {
+          title
+          description
+          cover {
+            childImageSharp {
+              gatsbyImageData(width: 456)
+            }
+          }
         }
       }
     }
