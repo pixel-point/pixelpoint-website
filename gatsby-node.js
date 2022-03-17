@@ -57,6 +57,7 @@ async function createBlogPosts({ graphql, actions }) {
           slug
           fields {
             isDraft
+            isFeatured
           }
           frontmatter {
             title
@@ -71,6 +72,13 @@ async function createBlogPosts({ graphql, actions }) {
   `);
 
   if (result.errors) throw new Error(result.errors);
+
+  const featuredPosts = result.data.allMdx.nodes.filter(({ fields: { isFeatured } }) => isFeatured);
+  if (featuredPosts.length !== 2) {
+    throw new Error(
+      `Amount of posts should always be 2, not more, not less! Current amount: ${featuredPosts.length}`
+    );
+  }
 
   result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
     // Do not create a post in production if it's draft
