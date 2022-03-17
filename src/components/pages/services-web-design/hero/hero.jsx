@@ -27,11 +27,11 @@ const Hero = () => {
           Get your idea shaped into <span className="text-red">Astonishing</span> website
         </h1>
         <div
-          className="mt-[-306px] flex justify-center lg:mt-[-176px] lg:block md:mt-[-132px] sm:mt-[-70px] xs:mt-[-48px]"
+          className="mt-[-306px] flex justify-center 2xl:mt-[-276px] lg:mt-[-176px] lg:block md:mt-[-132px] sm:mt-[-70px] xs:mt-[-48px]"
           ref={animationWrapperRef}
         >
           <ImagePlaceholder
-            className="min-w-[1550px] 2xl:min-w-[calc(100vw-64px)] lg:min-w-0"
+            className="min-w-[1550px] 2xl:min-w-[calc(100vw-256px)] lg:min-w-0"
             width={1550}
             height={1004}
             aria-hidden
