@@ -11,8 +11,8 @@ const Hero = () => (
       <p className="mt-2.5 text-2xl lg:text-xl sm:text-lg">
         See how we have helped our customers achieve their goals
       </p>
-      <div className="mt-16 lg:mt-12 md:mt-10 sm:mx-auto sm:mt-8 sm:flex sm:justify-center">
-        <img className="sm:min-w-[600px]" src={illustration} alt="" loading="eager" aria-hidden />
+      <div className="mt-16 flex justify-center lg:mt-12 md:mt-10 sm:mt-8" aria-hidden>
+        <img className="sm:min-w-[600px]" src={illustration} alt="" loading="eager" />
       </div>
     </div>
   </section>

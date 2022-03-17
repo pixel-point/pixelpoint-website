@@ -38,7 +38,7 @@ const Content = ({
         >
           Visit {title}
         </Link>
-        <figure className="mt-12 lg:mt-10 md:mt-8 sm:mt-6">
+        <figure className="mt-12 lg:mt-10 sm:mt-8">
           <QuoteIcon className="h-7 lg:h-6 sm:h-5" aria-hidden />
           <blockquote className="mt-4 text-2xl lg:mt-3 lg:text-xl sm:mt-2.5 sm:text-lg">
             <p>{quote.text}</p>
@@ -56,7 +56,7 @@ const Content = ({
             </span>
           </figcaption>
         </figure>
-        <div className="mt-8 hidden rounded-2xl border border-gray-8 p-5 md:block sm:mt-6 xs:p-4">
+        <div className="mt-10 hidden rounded-2xl border border-gray-8 p-5 md:block sm:mt-8 xs:p-4">
           <div className="flex items-center justify-between xs:block">
             <img src={logo} alt={title} loading="eager" />
             {githubUrl && githubStars && (
@@ -87,7 +87,7 @@ const Content = ({
             ))}
           </div>
         </div>
-        <h2 className="mt-12 text-2xl font-normal leading-snug lg:mt-10 lg:text-xl md:mt-8 sm:mt-6 sm:text-lg">
+        <h2 className="mt-12 text-2xl font-normal leading-snug lg:mt-10 sm:mt-8 sm:text-xl">
           About the project
         </h2>
         <div className="with-link-red mt-2.5 space-y-5 md:space-y-4">

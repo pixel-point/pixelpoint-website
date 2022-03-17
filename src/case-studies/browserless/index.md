@@ -27,7 +27,7 @@ stack:
 keynotes:
   - Designed & built an animation-rich marketing website
   - Provided custom MDX-based blog & docs portals
-  - 'Browserless hit the top #1 of the month on Landbook'
+  - Finalist of Gatsby Best of 2021 Awards in Best Design category
 cover: cover.jpg
 isOpenSource: true
 isFeatured: true
