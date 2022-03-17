@@ -65,7 +65,7 @@ Card.propTypes = {
 };
 
 // const CaseStudies = ({ title, itemsType, withoutTitleLink }) => {
-const CaseStudies = ({ title, itemsType }) => {
+const CaseStudies = ({ title, itemsType, activeItemSlug }) => {
   const {
     allMdx: { nodes },
   } = useStaticQuery(graphql`
@@ -105,7 +105,8 @@ const CaseStudies = ({ title, itemsType }) => {
       }
       return true;
     })
-    .filter(({ frontmatter: { isOpenSource, isFeatured } }) => {
+    .filter(({ frontmatter: { isOpenSource, isFeatured }, slug }) => {
+      if (slug === activeItemSlug) return false;
       if (itemsType === 'open-source') return isOpenSource;
       if (itemsType === 'not-featured') return !isFeatured;
       return false;
@@ -139,11 +140,13 @@ const CaseStudies = ({ title, itemsType }) => {
 CaseStudies.propTypes = {
   title: PropTypes.node.isRequired,
   itemsType: PropTypes.oneOf(['open-source', 'not-featured']),
+  activeItemSlug: PropTypes.string,
   // withoutTitleLink: PropTypes.bool,
 };
 
 CaseStudies.defaultProps = {
   itemsType: 'open-source',
+  activeItemSlug: '',
   // withoutTitleLink: false,
 };
 
