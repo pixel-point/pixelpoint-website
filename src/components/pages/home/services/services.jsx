@@ -56,14 +56,11 @@ const Services = () => {
             Read more
           </Link>
         </div>
-        <ImagePlaceholder
-          className="mx-auto mt-12 hidden md:block sm:mt-8"
-          width={944}
-          height={402}
-          aria-hidden
-        >
-          <img src={lgIllustration1} alt="" />
-        </ImagePlaceholder>
+        <div className="mt-12 hidden justify-center md:flex sm:mt-8" aria-hidden>
+          <ImagePlaceholder className="min-w-[514px] xs:min-w-[414px]" width={1544} height={658}>
+            <img src={lgIllustration1} alt="" />
+          </ImagePlaceholder>
+        </div>
         <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px] lg:max-w-[424px] lg:pt-[225px] lg:pb-[200px] md:mx-auto md:mt-28 md:max-w-[590px] md:py-0 sm:mt-20">
           <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
             Web development
