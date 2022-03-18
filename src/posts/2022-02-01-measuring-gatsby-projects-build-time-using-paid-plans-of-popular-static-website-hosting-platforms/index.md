@@ -23,22 +23,28 @@ So I decided to run tests across the most popular platforms using paid plans.
 
 ## Platforms
 
-**Netlify**
+### Netlify
+
 Pro plan - $20/month per member.
 
-**Vercel**
+### Vercel
+
 Pro plan - $20/month per member.
 
-**Gatsby Cloud**
+### Gatsby Cloud
+
 Pro plan - $50/month, 2 seats included, $20 per additional member.
 
-**Cloudflare Pages**
+### Cloudflare Pages
+
 Pro plan - $20/month, unlimited seats.
 
-**AWS Amplify**
+### AWS Amplify
+
 First 1000 minutes free, then 0.01$ per build minute.
 
-**Self-hosted**
+### Self-hosted
+
 $50/month, a self-hosted server running Drone CI with the following specs: AMD Ryzen 5 3600 Hexa-Core "Matisse" (Zen2), 64 RAM, 512GB Raid NVME SSD. Unlimited seats. Deployment to Netlify using netlify-cli.
 
 ## Test cases
@@ -49,7 +55,8 @@ I made five runs for each test and then wrote down the average. I also used a st
 
 ## Markdown-based website
 
-**Clean cache build time**
+### Clean cache build time
+
 First in the test was a markdown-based website. The results were quite surprising. Gatsby Cloud did the job within two min., which is eight times faster than Netlify - 16. The results for Gatsby Cloud are quite similar to what I see running builds locally on Apple M1 chips, which is insane. I’m sure they do some nice magic behind the scenes, at least parallel image optimization.
 
 Vercel was a little faster than Cloudflare pages finishing with 10:30 vs. 11:23. I definitely underestimated AWS Amplify and thought they would run builds on free tier EC2 instances, but they are running builds on a host with 4 vCPU, 7GB memory (appreciate that transparency in UI), so it finished as 9:47.
@@ -62,7 +69,8 @@ The funny thing here is that Gatsby Cloud could complete the whole build in the 
 
 ![GATSBY_EMPTY_ALT](time2.png)
 
-**Deploy Preview build time**
+### Deploy Preview build time
+
 Here I’ve started to feel that it will be a death race since competitors began to reveal their problems and how differently they handle different scenarios. In the Deploy Preview test, I created a separate branch from the master and made two changes in a jsx file and another in md file.
 
 ![GATSBY_EMPTY_ALT](time3.jpg)
@@ -79,7 +87,8 @@ Vercel did a great job and finished within 3:32. I was impressed with this resul
 
 Gatsby Cloud was again a winner with 0:49, and the self-hosted version was just 25 seconds behind.
 
-**Warm cache build time**
+### Warm cache build time
+
 By the warm cache build time, I mean a subsequent build, that runs from the same branch where the build happened before. It’s a case you have every time you redeploy a website on content change or make additional commits to your Pull Request.
 
 ![GATSBY_EMPTY_ALT](time5.jpg)
@@ -92,17 +101,20 @@ Cloudflare Pages and Netlify, AWS Netlify however, have room for improvement for
 
 Then I jumped testing Gatsby v4 connected with the WordPress website. The site has two languages, a batch of common WP plugins, and around 1000 pages in total. This is where things get challenging.
 
-**Clean cache build time**
+### Clean cache build time
+
 Netlify even has not finished the build and stopped after 22 minutes. Vercel and Cloudflare pages completed within 24 minutes. Gatsby Cloud was fast, but it was tough even for it - 17:47. AWS Amplify surprised the most, showing consistent time around 15 min. The self-hosted CI achieved the quickest result - 11:30. The server we host is probably closer to the WP hosting, and it took less time for initial assets to download.
 
 ![GATSBY_EMPTY_ALT](time6.jpg)
 
-**Deploy Preview build time**
+### Deploy Preview build time
+
 I guess we can consider that Cloudflare, Netlify, AWS Amplify failed this round, so let’s go straight to Vercel. It took 2:39 for Deploy Preview, which is a very nice result. Gatsby Cloud did the same job within 1:45, and the Self-hosted version handled it within 1:23.
 
 ![GATSBY_EMPTY_ALT](time7.jpg)
 
-**Warm cache build time**
+### Warm cache build time
+
 Vercel did not show any difference from Deploy Preview. For Gatsby Cloud, however, it took 20 seconds less. The self-hosted version had the same excellent results. But I have to mention there was a moment that uploading files over Netlify CLI with a self-hosted version took more than 6 minutes. I decided not to include it because it happened only once.
 
 ![GATSBY_EMPTY_ALT](time8.jpg)
@@ -133,5 +145,5 @@ A self-hosted alternative is fast, does not have any limits, and costs just $50/
 
 Want to hear more about Gatsby, Next.js, and tips for building high-performing and visually stunning websites? [Follow me on Twitter.](https://twitter.com/alex_barashkov)
 
-[Headless WordPress website source code](https://github.com/vshn/website)
-Markdown based website will be open-sourced this or next week. Feel free to reach me out via DM if you want verify results on your own.
+- [Headless WordPress website source code](https://github.com/vshn/website)
+- [Markdown based website source code](https://github.com/cilium/cilium.io)
