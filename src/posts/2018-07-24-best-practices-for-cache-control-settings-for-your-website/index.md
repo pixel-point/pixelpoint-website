@@ -18,8 +18,7 @@ Almost every web server has some cache settings in header responses by default ,
 
 Without cache control settings, the browser goes to the web server for every request for resources and reads information from it. This increases load times of the affected site, adds extra load to your web server when transferring information, and increase the number of calls to your backend.
 
-![GATSBY_EMPTY_ALT](cache1.jpeg)
-_Requests flow with no cache settings_
+![Requests flow with no cache settings](cache1.jpeg)
 
 It’s up to the browser to decide what to do and how to cache information without instructions from the server. Currently, Chrome and Safari download data from the backend every time, without cache instruction. This can change and lead to different behaviours, however, especially on other platforms.
 
@@ -29,11 +28,9 @@ To clearly define what to do with certain files, let’s do a deep dive into lea
 
 Etag is one of the cache settings. The main idea behind this HTTP header is to allow your browser to be aware of modifications to relevant resources without downloading full files. The server could calculate something similar with hash sum of each file and then send this hash sum to the client. The next time the client tries to access this resource, instead of downloading the file, the browser will send something like this in the HTTP header: **If-None-Match: W/“1d2e7–1648e509289”**. The server will then check this hash sum against the hash sum of the current file and, if there is the difference, force client to download a new file. Otherwise, the client will be informed that it should use a cached version.
 
-![GATSBY_EMPTY_ALT](cache2.jpeg)
-_Requests flow with Etag — 1st load_
+![Requests flow with Etag — 1st load](cache2.jpeg)
 
-![GATSBY_EMPTY_ALT](cache3.jpeg)
-_Requests flow with Etag — 2nd load_
+![Requests flow with Etag — 2nd load](cache3.jpeg)
 
 With an Etag cache policy turned on, we always go to the server to check the hash sum of a file, and only after that will the browser decide take it from the cache or load it completely. When a resource has not been modified, it takes just 80–100 bytes to verify no matter what you are requesting, whether a 10KB or 10MB file.
 
@@ -46,14 +43,11 @@ The reality is that browsers have their internal cache policies and could decide
 > Last-Modified is a weak caching header, as the browser applies a heuristic to determine whether to fetch the item from the cache or not., and heuristics vary between browsers.
 > **Google caching best practices guide**
 
-![GATSBY_EMPTY_ALT](cache4.jpeg)
-_Requests flow with Last-Modified — 1st load_
+![Requests flow with Last-Modified — 1st load](cache4.jpeg)
 
-![GATSBY_EMPTY_ALT](cache5.png)
-_Requests flow with Last-Modified — 2nd load (Perfect Scenario)_
+![Requests flow with Last-Modified — 2nd load (Perfect Scenario)](cache5.png)
 
-![GATSBY_EMPTY_ALT](cache6.jpeg)
-_Requests flow with Last-Modified — 2nd load (Common case)_
+![Requests flow with Last-Modified — 2nd load (Common case)](cache6.jpeg)
 
 As a result we can’t rely only on Last-Modified, so I prefer to completely remove it from my server settings to reduce traffic, even if it’s just few bytes.
 

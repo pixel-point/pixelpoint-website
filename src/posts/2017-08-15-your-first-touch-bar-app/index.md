@@ -13,20 +13,19 @@ Our idea was simple. When you’re in a meeting using Hangouts, Skype, Slack, or
 
 As you can see, the idea is extremely straightforward. But for us, the application’s simplicity is as important as how effectively it can improve your productivity.
 
-![GATSBY_EMPTY_ALT](mute1.png)
-_You can download the application [here](https://muteme.pixelpoint.io/)_
+![You can download the application here](mute1.png)
+
+<!-- _You can download the application [here](https://muteme.pixelpoint.io/)_ -->
 
 ## Key facts about the development of Touch Bar applications
 
 The development of Touch Bar applications is similar to the process of making other MacOS desktop apps. Adding Touch Bar support to the existing desktop application is easy. You only need to add corresponding controls to Xcode Storyboard.
 
-![GATSBY_EMPTY_ALT](mute2.png)
-_Special controls in Xcode for Touch Bar_
+![Special controls in Xcode for Touch Bar](mute2.png)
 
 The structure of MacOS applications and iOS applications is very similar. This means that you can develop applications for Touch Bar without having to own the new MacBook that features Touch Bar. You can test the embedded application in Xcode emulator.
 
-![GATSBY_EMPTY_ALT](mute3.png)
-_Touch Bar emulator_
+![Touch Bar emulator](mute3.png)
 
 To create your application, it’s helpful to look at short videos on youtube, like [this one](https://www.youtube.com/watch?v=-QX8sPNeE0I). You can also read great Apple guides like these:
 
@@ -36,8 +35,7 @@ To create your application, it’s helpful to look at short videos on youtube, l
 
 ## Touch bar custom button
 
-![GATSBY_EMPTY_ALT](mute4.png)
-_Touch Bar with one custom button and four constant buttons_
+![Touch Bar with one custom button and four constant buttons](mute4.png)
 
 Touch Bar has an area with permanent buttons, and Apple doesn’t explain in their documents how to modify it. However, we did find application guides that helped. We solved one problem with a guide on GitHub, and learned that the right-hand Touch Bar area supports four system buttons and one float on where you can put your own button.
 
@@ -49,8 +47,7 @@ Another issue is that you can’t use the design tool for creating your Touch Ba
 
 As with all other desktop MacOS applications, Touch Bar applications have a start window.
 
-![GATSBY_EMPTY_ALT](mute5.png)
-_Mute Me application start window with settings_
+![Mute Me application start window with settings](mute5.png)
 
 Logically, you’ll need to hide them. We had some troubles with this issue, but managed to find a solution:
 

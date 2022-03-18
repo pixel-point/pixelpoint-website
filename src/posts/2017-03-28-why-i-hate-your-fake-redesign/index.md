@@ -23,19 +23,22 @@ Let me explain why lazy redesigns are not good PR for you, how to compile an imp
 If you are at the beginning of your career and lack a portfolio, coming up with a Facebook redesign concept may seem tempting. But, more likely than not, you will make a lot of mistakes that professional UI designers will spot immediately. Just take a look at these redesigns:
 
 ![Google redesign](google.png)
-_[Google redesign](https://medium.muz.li/google-redesign-8947ccadab46)_
+
+<!-- _[Google redesign](https://medium.muz.li/google-redesign-8947ccadab46)_ -->
 
 For some reason, this designer decided to forget about branding and use a bold background color that looks pretty good but splits focus. They also moved the Account Settings to the left corner, when there is an established practice of placing it at the top right corner.
 
 ![Skype redesign](skype.png)
-_[Skype redesign](https://medium.muz.li/skype-redesign-concepts-46972389979)_
+
+<!-- _[Skype redesign](https://medium.muz.li/skype-redesign-concepts-46972389979)_ -->
 
 This is a Skype concept from Muzli. Again, we see that the designer forgot about branding and made Skype look too similar to Viber. I have no idea why there is a bold, purple and pink left panel. With this design, users are encouraged to focus more on the list of conversations than on their current chat.
 
 The designer probably used these colors because they thought it looked cool. Stop it. Make it because it’s right, because it has meaning, because it will help users solve a problem, or because it will help sell your product. Don’t do it just because it looks cool!
 
 ![Facebook redesign](facebook.png)
-_[Facebook redesign](https://medium.muz.li/facebook-redesign-concepts-ca694efff84f)_
+
+<!-- _[Facebook redesign](https://medium.muz.li/facebook-redesign-concepts-ca694efff84f)_ -->
 
 Another Facebook concept. These guys made tons of work, but I can’t imagine Facebook implementing these changes anytime soon. Dark colors, grid view, Apple-style gradient button, and no ads? Really?
 

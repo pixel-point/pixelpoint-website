@@ -26,15 +26,17 @@ But we were wrong in our initial assumptions. Spread of and interest in cryptocu
 
 After that, we redirected our research towards Europe. At that time, our working theory was that the European was ready because crypto startups and cryptocurrencies were already popular in daily life. We started research into the biggest Europe countries first, focusing on major local sites like Leboncoin in France, Gumtree in UK, and Ebay-kleinanzeigen in Germany. Results better than from our first research attempt, but still poor: France had 587 ads, UK had 142, and Berlin had 147. While we may have missed some examples, there was enough data to build a clear picture.
 
-![GATSBY_EMPTY_ALT](crypto2.jpeg)
-_[leboncoin.fr](https://www.leboncoin.fr/) (The biggest classified ads site in France)_
+![[leboncoin.fr - The biggest classified ads site in France](crypto2.jpeg)
+
+<!-- _[leboncoin.fr](https://www.leboncoin.fr/) (The biggest classified ads site in France)_ -->
 
 ## Regulation surprisingly helps crypto market
 
 Finally, we redirected our research efforts to North America and saw some surprising results. In the USA, people typically use the incredibly popular Craigslist for classified ads to buy/sell goods. In New York alone, we found more than 2,000 ads that offered crypto payment options. Looking exclusively at Manhattan, we found more than 400 ads, more than in all of the UK. Craigslist even allows users to click on a checkbox titled ‘Cryptocurrency: OK’ and filter their search results for goods available for purchase with crypto. Craigslist understands that people are ready to have cryptocurrency in their lives.
 
-![GATSBY_EMPTY_ALT](crypto3.jpeg)
-_[newyork.craigslist.org](https://newyork.craigslist.org/) (Classified ads in New York)_
+![newyork.craigslist.org - Classified ads in New York](crypto3.jpeg)
+
+<!-- _[newyork.craigslist.org](https://newyork.craigslist.org/) (Classified ads in New York)_ -->
 
 Thanks to our research, we were able to quickly identify our best target market. But this raised another interesting question: why did we see a very different situation in the USA than what we identified in the other countries we looked at?
 
@@ -53,7 +55,8 @@ Once people start using cryptocurrency on a daily basis to buy goods and service
 
 That’s why our company has made the first steps at this direction by opening [bitsburg.com](https://bitsburg.com/), offering opportunities to buy and sell goods with crypto.
 
-![GATSBY_EMPTY_ALT](crypto4.jpeg)
-_[bitsburg.com](https://bitsburg.com/) (Cryptocurrency classified ads. Buy and sell with Bitcoin and Ethereum)_
+![bitsburg.com - Cryptocurrency classified ads. Buy and sell with Bitcoin and Ethereum](crypto4.jpeg)
+
+<!-- _[bitsburg.com](https://bitsburg.com/) (Cryptocurrency classified ads. Buy and sell with Bitcoin and Ethereum)_ -->
 
 We have tried to make our website beautiful, easy to use, and with great cryptocurrencies related features. For example, users can write price in their chosen fiat currency and our system automatically translates these to BTC or ETH. Publish ads your old or unused goods at Bitsburg or at other sites help cryptocurrency become more popular in the world.

@@ -20,8 +20,7 @@ It is important to understand that design is, first of all, an engineering profe
 
 We can observe a similar process in other areas that require design, including IT. Research into subject domain comprises the root of any project: designers must study the audience of a product, analytical data, the scope of application, etc. Only after the research has ended can the process of prototyping and drawing begin. The designer must also understand the minimum work principles of a program part (it has to work correctly with the main components).
 
-![GATSBY_EMPTY_ALT](ui1.png)
-_My illustration of the full web design life cycle, from bottom to top._
+![My illustration of the full web design life cycle, from bottom to top](ui1.png)
 
 ## UI/UX designer: Responsibility and scope
 
@@ -51,29 +50,35 @@ I am skeptical about such works for the following reasons:
 
 - **Lack of analytics**. As I wrote above, design is a marriage of subject domain research and current website analytics. Designers who offer new visions of YouTube or any other large website do not have this information. Therefore, the usefulness of such work is reduced almost to zero. It is important to understand that a website must not only look beautiful, but also perform its main functions (captivate users, bring in income, etc.). Generally, such purposes aren’t considered in concept designs.
 
-![GATSBY_EMPTY_ALT](ui3.png)
-_NYT redesign concept. Media is funded by advertising, but I don’t see it in this design. [project](http://bit.ly/2mlQoQG)_
-![GATSBY_EMPTY_ALT](ui4.png)
-_Current NYT design. In concepts, designers don’t usually consider financial practicalities._
+![NYT redesign concept. Media is funded by advertising, but I don’t see it in this design.](ui3.png)
+
+<!-- _NYT redesign concept. Media is funded by advertising, but I don’t see it in this design. [project](http://bit.ly/2mlQoQG)_ -->
+
+![Current NYT design. In concepts, designers don’t usually consider financial practicalities](ui4.png)
 
 - **Lack of testing**. Large websites with audiences in the millions never issue a product without preliminary testing on a user sample. After such tests, there are usually completions and adjustments. Only after several iterations is the new design released to the masses.
 
-![GATSBY_EMPTY_ALT](ui5.png)
-_Okay, looks good. But why do I see only four videos on the full pageview? [project](http://bit.ly/2mlRtrM)_
-![GATSBY_EMPTY_ALT](ui6.png)
-_Compare with the current YouTube homepage. It looks older, but more functional._
+![Okay, looks good. But why do I see only four videos on the full pageview?](ui5.png)
+
+<!-- _Okay, looks good. But why do I see only four videos on the full pageview? [project](http://bit.ly/2mlRtrM)_ -->
+
+![Compare with the current YouTube homepage. It looks older, but more functional](ui6.png)
 
 - **Violation of brand guidelines**. I have noticed that beginner designers often show their personal vision of a product, changing practically everything about it and rendering it unrecognizable at first glance. In such concepts, brand identification is lost. In my opinion, this is the biggest mistake a designer can make. We are used to Skype being blue, YouTube being red, and Spotify being green. In fact, every brand has a recognizable company color and style that remains from version to version. It is silly and shortsighted to change this, even in a concept.
 
-![GATSBY_EMPTY_ALT](ui7.png)
-_Purple Skype design. Brand identification is lost [project](http://bit.ly/2mm9MwH)_
-![GATSBY_EMPTY_ALT](ui8.png)
-_Purple Spotify design. I don’t know why this color decision was made. Just for novelty? [project](http://bit.ly/2mlQbg3)_
+![Purple Skype design. Brand identification is lost ](ui7.png)
+
+<!-- _Purple Skype design. Brand identification is lost [project](http://bit.ly/2mm9MwH)_ -->
+
+![Purple Spotify design. I don’t know why this color decision was made. Just for novelty?](ui8.png)
+
+<!-- _Purple Spotify design. I don’t know why this color decision was made. Just for novelty? [project](http://bit.ly/2mlQbg3)_ -->
 
 - **Complexity of support**. Often, when creating a concept, the designer thinks only about the beautiful picture, losing sight of such important factors as accessibility and future product support. For example, in the media sphere, it is important that editors can put out articles quickly after having prepared all the necessary materials. Concepts often lose sight of such nuances.
 
-![GATSBY_EMPTY_ALT](ui9.png)
-_Some may think this design looks good, but I find it hard to support. It requires too much time to process the picture and make a selection. [project](http://bit.ly/2mm155F)_
+![Some may think this design looks good, but I find it hard to support. It requires too much time to process the picture and make a selection. ](ui9.png)
+
+<!-- _Some may think this design looks good, but I find it hard to support. It requires too much time to process the picture and make a selection. [project](http://bit.ly/2mm155F)_ -->
 
 I believe that designers who invest time and effort into creating such concepts generally do so for the sake of publicity around the work. New concepts of large websites will draw media exposure easily, and lead to many likes and follows. But from a practical point of view, they will be useless. And, in such works, the essence of the UI/UX design profession is washed away. In place of reasonable decisions, there are only nice pictures.
 
@@ -94,8 +99,7 @@ In my opinion, it is extremely useful for designers to develop the following ski
 
 When you spend your time drawing concepts, at most, you will be able to develop a sense of style. This is only the tip of the iceberg in the UI/UX design sphere.
 
-![GATSBY_EMPTY_ALT](ui10.png)
-_UI is only the tip of the iceberg in the product design life cycle._
+![UI is only the tip of the iceberg in the product design life cycle](ui10.png)
 
 ## Conclusion
 

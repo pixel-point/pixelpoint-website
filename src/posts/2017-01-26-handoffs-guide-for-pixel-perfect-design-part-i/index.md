@@ -16,8 +16,9 @@ Don’t forget to read other parts too:
 
 Photoshop has a lot of useful plugins to expedite your work process, but we recommend Sketch or Adobe XD. These tools combine the advantages of using vector graphics with the easily adjustable properties of raster images. They are especially useful when designing for mobile applications on devices with big pixel densities. In these cases, you will not need to worry about color profile, the size of your project files will be smaller, and you will get to utilize a lot of functions that help you work more effectively.
 
-![GATSBY_EMPTY_ALT](pp1.png)
-_[iOS Human Interface Guidelines file size for Photoshop and Sketch](http://apple.co/28YytHY)_
+![iOS Human Interface Guidelines file size for Photoshop and Sketch](pp1.png)
+
+<!-- _[iOS Human Interface Guidelines file size for Photoshop and Sketch](http://apple.co/28YytHY)_ -->
 
 ## Naming of assets
 
@@ -53,13 +54,11 @@ Here are two likely scenarios if you do: First, the developer will not consider 
 
 Use optimization tools like [Kraken](https://kraken.io/web-interface), [ImageOptim](https://imageoptim.com/mac), or [Optimage](http://getoptimage.com/). Tools like Photoshop and Sketch save picture metadata by default, and don’t use optimal algorithms to make your picture look the same but take up less space.
 
-![GATSBY_EMPTY_ALT](pp3.png)
-_How well does Kraken.io perform?_
+![How well does Kraken.io perform?](pp3.png)
 
 Kraken has a few different options in Expert Mode for optimizing your picture.
 
-![GATSBY_EMPTY_ALT](pp4.png)
-_Kraken options_
+![Kraken options](pp4.png)
 
 ### Establish what compression level is acceptable for non-static pictures
 
@@ -78,15 +77,13 @@ Convert SVG text to curves; otherwise, you will get text objects in the default 
 
 Check that you don’t have a base64 image inserted into your SVG. It can appear when you try to export as an SVG rasterized picture.
 
-![GATSBY_EMPTY_ALT](pp7.png)
-_Example of base64 image inserted into your SVG_
+![Example of base64 image inserted into your SVG](pp7.png)
 
 Optimize the SVG by removing all unnecessary information with SVGOMG. Usually, your SVG file will contain some meta information (like title and description) by default. It will have prettify code instead of inline minimized, unused groups, or empty containers. You can remove all of that without losing quality if you use [SVGOMG](https://jakearchibald.github.io/svgomg/).
 
 Check the SVG in a browser before adding it to your assets. This lets you ensure that you exported it right, and that the SVG rendered like you planned. You will be able to catch some bugs, like unset height or width, or rendered problems before the developer does. Use only integer values for width, height, and the position of various elements.
 
-![GATSBY_EMPTY_ALT](pp8.png)
-_From left to right: SVG export with fixed height and width, SVG export with 100% height and width_
+![From left to right: SVG export with fixed height and width, SVG export with 100% height and width](pp8.png)
 
 ## Favicon
 
