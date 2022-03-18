@@ -66,7 +66,7 @@ I am skeptical about such works for the following reasons:
 
 - **Violation of brand guidelines**. I have noticed that beginner designers often show their personal vision of a product, changing practically everything about it and rendering it unrecognizable at first glance. In such concepts, brand identification is lost. In my opinion, this is the biggest mistake a designer can make. We are used to Skype being blue, YouTube being red, and Spotify being green. In fact, every brand has a recognizable company color and style that remains from version to version. It is silly and shortsighted to change this, even in a concept.
 
-![Purple Skype design. Brand identification is lost ](ui7.png)
+![Purple Skype design. Brand identification is lost](ui7.png)
 
 <!-- _Purple Skype design. Brand identification is lost [project](http://bit.ly/2mm9MwH)_ -->
 
