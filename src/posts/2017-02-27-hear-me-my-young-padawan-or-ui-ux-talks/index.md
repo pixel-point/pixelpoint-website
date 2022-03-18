@@ -76,7 +76,7 @@ I am skeptical about such works for the following reasons:
 
 - **Complexity of support**. Often, when creating a concept, the designer thinks only about the beautiful picture, losing sight of such important factors as accessibility and future product support. For example, in the media sphere, it is important that editors can put out articles quickly after having prepared all the necessary materials. Concepts often lose sight of such nuances.
 
-![Some may think this design looks good, but I find it hard to support. It requires too much time to process the picture and make a selection. ](ui9.png)
+![Some may think this design looks good, but I find it hard to support. It requires too much time to process the picture and make a selection.](ui9.png)
 
 <!-- _Some may think this design looks good, but I find it hard to support. It requires too much time to process the picture and make a selection. [project](http://bit.ly/2mm155F)_ -->
 

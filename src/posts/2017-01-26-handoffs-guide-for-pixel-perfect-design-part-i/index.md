@@ -63,7 +63,7 @@ Kraken has a few different options in Expert Mode for optimizing your picture.
 ### Establish what compression level is acceptable for non-static pictures
 
 Test different compression levels in Photoshop, or ask your developer to demonstrate how s/he will process images to define what relation between quality and size you can accept. Below, you will see a reference table of sizes that are acceptable for different kinds of pictures.
-![ ](pp5.png)
+![GATSBY_EMPTY_ALT](pp5.png)
 
 ## Don’t make sprites
 
