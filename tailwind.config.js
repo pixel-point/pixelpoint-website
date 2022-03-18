@@ -16,7 +16,7 @@ module.exports = {
       xs: { max: '413px' },
     },
     fontFamily: {
-      sans: ['usual', ...defaultTheme.fontFamily.sans],
+      sans: ['Usual', ...defaultTheme.fontFamily.sans],
       mono: ['IBM Plex Mono', ...defaultTheme.fontFamily.mono],
     },
     fontSize: {
@@ -63,5 +63,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-safe-area'), require('@tailwindcss/typography')],
+  plugins: [require('tailwindcss-safe-area')],
 };

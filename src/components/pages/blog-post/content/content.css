@@ -1,93 +1,86 @@
 @layer components {
-  .prose {
-    @apply max-w-none text-black;
-
-    a:not(.gatsby-resp-image-link) {
-      @apply relative font-normal text-red no-underline transition-colors duration-200 hover:text-blue;
+  .content {
+    > *:first-child {
+      @apply mt-0;
     }
 
-    h1,
+    > *:last-child {
+      @apply mb-0;
+    }
+
     h2,
     h3,
     h4,
     h5,
-    h6,
-    strong,
-    blockquote {
-      @apply font-normal text-inherit;
+    h6 {
+      @apply font-semibold leading-snug;
+    }
+
+    h2 {
+      @apply mt-10 mb-5 text-2xl;
+    }
+
+    h3 {
+      @apply mt-8 mb-5 text-xl;
+    }
+
+    ul,
+    ol,
+    p {
+      @apply my-5;
+    }
+
+    strong {
+      @apply font-normal;
+    }
+
+    a {
+      @apply relative font-normal text-red transition-colors duration-200 hover:text-blue;
+    }
+
+    figure {
+      @apply my-10;
+    }
+
+    .gatsby-resp-image-figure figcaption {
+      @apply mt-2 text-center text-sm font-normal text-gray-7;
     }
 
     ul,
     ol {
-      @apply list-none pl-6;
-
-      > li {
-        @apply relative pl-0;
-
-        &::before {
-          @apply absolute top-4 -translate-y-1/2;
-        }
-
-        ol {
-          @apply sm:pl-4;
-        }
-      }
+      @apply space-y-2 pl-14;
     }
 
     ul {
-      @apply sm:pl-4;
-
       > li {
+        @apply relative;
+
         &::before {
-          @apply -left-6 h-2 w-2 rounded-full bg-red content-[''] sm:top-3 sm:-left-4 sm:h-1.5 sm:w-1.5;
+          @apply absolute top-2.5 -left-2.5 h-1.5 w-1.5 -translate-x-full rounded-full bg-red content-[''];
         }
       }
     }
 
     ol {
       counter-reset: custom-counter;
-      @apply sm:pl-0;
 
       > li {
+        @apply relative;
         counter-increment: custom-counter;
 
         &::before {
-          @apply -left-2 -translate-x-full font-normal text-red sm:static;
+          @apply absolute top-0 -left-2.5 -translate-x-full font-normal text-red;
           content: counter(custom-counter) '. ' !important;
         }
       }
     }
 
-    .gatsby-resp-image-wrapper + em {
-      @apply mt-[1em] block text-center text-[0.8888889em] not-italic;
-    }
-
     pre {
-      @apply code-block p-4;
-
-      code {
-        @apply !font-mono text-[1em] !text-white;
-      }
+      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-9 px-6 py-4 text-white;
     }
 
     :not(pre) > code {
-      @apply !rounded-sm !px-1.5 !py-0.5 !font-mono !font-normal !text-black;
-
-      &::before,
-      &::after {
-        @apply hidden;
-      }
-    }
-
-    blockquote {
-      @apply border-red font-light not-italic;
-
-      p {
-        &::before,
-        &::after {
-          @apply hidden;
-        }
-      }
+      @apply rounded-sm bg-gray-2 px-1.5 py-0.5 text-base text-red;
     }
   }
 }

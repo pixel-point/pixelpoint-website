@@ -9,8 +9,8 @@ const WillTweet = () => (
         <span className="text-red">Will tweet</span> about
       </h2>
       <StaticImage
-        className="mt-20 rounded-2xl lg:mt-16 lg:rounded-xl md:mt-12 md:rounded-lg sm:mt-8 sm:rounded-md xs:rounded-sm"
-        imgClassName="rounded-2xl lg:rounded-xl md:rounded-lg sm:rounded-md"
+        className="mt-20 rounded-2xl lg:mt-16 md:mt-12 sm:mt-8"
+        imgClassName="rounded-2xl"
         src="../will-tweet/images/illustration.jpg"
         alt=""
         loading="lazy"

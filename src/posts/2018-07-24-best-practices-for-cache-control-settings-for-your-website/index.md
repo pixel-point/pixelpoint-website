@@ -43,8 +43,9 @@ Another cache control setting is the “Last Modified” HTTP header. The main i
 
 The reality is that browsers have their internal cache policies and could decide by themselves whether or not take a resource from the cache or download a new copy.
 
-> Last-Modified is a weak caching header, as the browser applies a heuristic to determine whether to fetch the item from the cache or not., and heuristics vary between browsers.
-> **Google caching best practices guide**
+<Quote authorName="Google caching best practices guide">
+Last-Modified is a weak caching header, as the browser applies a heuristic to determine whether to fetch the item from the cache or not., and heuristics vary between browsers.
+</Quote>
 
 ![GATSBY_EMPTY_ALT](cache4.jpeg)
 _Requests flow with Last-Modified — 1st load_

@@ -1,5 +1,5 @@
 @layer components {
-  .code-block {
+  .tailwindcss-code-block {
     @apply scrollbar-hidden overflow-scroll rounded-2xl bg-gray-9 text-white;
 
     .linenumber {
