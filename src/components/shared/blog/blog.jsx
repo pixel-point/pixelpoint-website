@@ -43,7 +43,7 @@ const Blog = () => {
   `);
 
   return (
-    <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
+    <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
       <div className="container">
         <h2 className="text-center text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
           Blog. {/* <Link size="6xl" theme="arrow-red" to="/blog"> */}
@@ -68,14 +68,10 @@ const Blog = () => {
                   image={getImage(cover)}
                   alt={title}
                 />
-                <h3 className="mt-5 mb-4 text-2xl font-normal leading-snug md:mb-3 md:mt-4 md:text-xl sm:mb-2 sm:mt-3 sm:text-lg">
+                <h3 className="mt-5 text-2xl font-normal leading-snug lg:mt-4 md:text-lg sm:text-base">
                   {title}
                 </h3>
-                <Link
-                  className="nested-link-red mt-auto self-start md:text-sm"
-                  size="base"
-                  theme="arrow-red"
-                >
+                <Link className="nested-link-red mt-3 lg:mt-2" size="base" theme="arrow-red">
                   Read article
                 </Link>
               </Link>

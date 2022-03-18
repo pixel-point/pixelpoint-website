@@ -28,16 +28,16 @@ const Services = () => {
 
   return (
     <section
-      className="safe-paddings mt-52 overflow-hidden bg-black text-white lg:mt-44 md:mt-36 sm:mt-20"
+      className="safe-paddings mt-52 overflow-hidden bg-black text-white lg:mt-36 md:mt-28 md:py-28 sm:mt-20 sm:py-20"
       ref={wrapperRef}
     >
       <div className="container relative">
-        <div className="flex max-w-[550px] items-center pt-[300px] lg:max-w-[560px] lg:pt-[200px] md:max-w-[420px] md:pt-36 sm:max-w-[350px] sm:pt-20">
-          <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
+        <div className="flex max-w-[550px] items-center pt-[300px] lg:max-w-[560px] lg:pt-[200px] md:mx-auto md:max-w-[420px] md:pt-0 sm:max-w-[350px]">
+          <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-center md:text-4xl sm:text-3xl xs:text-2xl">
             We’ll get you covered on what we can do best:
           </h2>
         </div>
-        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] lg:max-w-[424px] lg:pt-[225px] md:max-w-none md:pt-36 sm:pt-20">
+        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] lg:max-w-[424px] lg:pt-[225px] md:mx-auto md:mt-28 md:max-w-[590px] md:pt-0 sm:mt-20">
           <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
             Web design
           </h2>
@@ -55,16 +55,13 @@ const Services = () => {
           >
             Read more
           </Link>
-          <ImagePlaceholder
-            className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
-            width={620}
-            height={306}
-            aria-hidden
-          >
+        </div>
+        <div className="mt-12 hidden justify-center md:flex sm:mt-8" aria-hidden>
+          <ImagePlaceholder className="min-w-[514px] xs:min-w-[414px]" width={1544} height={658}>
             <img src={lgIllustration1} alt="" />
           </ImagePlaceholder>
         </div>
-        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px] lg:max-w-[424px] lg:pt-[225px] lg:pb-[200px] md:max-w-none md:py-36 sm:py-20">
+        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px] lg:max-w-[424px] lg:pt-[225px] lg:pb-[200px] md:mx-auto md:mt-28 md:max-w-[590px] md:py-0 sm:mt-20">
           <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
             Web development
           </h2>
@@ -83,8 +80,8 @@ const Services = () => {
           </Link>
           <ImagePlaceholder
             className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
-            width={620}
-            height={502}
+            width={540}
+            height={437}
             aria-hidden
           >
             <img src={lgIllustration2} alt="" />

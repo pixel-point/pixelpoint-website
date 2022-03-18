@@ -30,7 +30,7 @@ const CTA = ({ withTopMargin }) => {
     <section
       className={clsx(
         'safe-paddings bg-black py-20 md:py-18 sm:pt-16 sm:pb-10',
-        withTopMargin && 'mt-52 lg:mt-44 md:mt-36 sm:mt-28'
+        withTopMargin && 'mt-52 lg:mt-36 md:mt-28 sm:mt-28'
       )}
     >
       <div className="container grid-gap-x grid grid-cols-2 items-center sm:block">

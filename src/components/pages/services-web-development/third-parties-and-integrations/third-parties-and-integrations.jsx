@@ -15,7 +15,7 @@ const headlessCmsItems = [
   {
     logo: StrapiLogo,
     name: 'Strapi',
-    description: 'For Node.js and Open source lovers',
+    description: 'For Node.js and Open Source lovers',
     background: 'bg-[#1f1f7a]',
   },
   {
@@ -52,13 +52,13 @@ const hostingPlatformsItems = [
 ];
 
 const ThirdPartiesAndIntegrations = () => (
-  <section className="safe-paddings mt-52 lg:mt-44 md:mt-36 sm:mt-20">
+  <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
     <div className="container">
       <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug lg:max-w-[700px] lg:text-5xl md:max-w-[600px] md:text-4xl sm:max-w-none sm:text-3xl xs:text-2xl">
         Choosing <span className="text-red">best-in-class</span> third-party integrations
       </h2>
 
-      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 md:text-2xl sm:text-xl">
+      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 sm:text-xl">
         Flexible content management solutions
       </h3>
       <div className="grid-gap-x mt-10 grid grid-cols-2 lg:mt-8 md:mt-6 md:block md:space-y-4 sm:mt-4">
@@ -102,7 +102,7 @@ const ThirdPartiesAndIntegrations = () => (
         </div>
       </div>
 
-      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 md:text-2xl sm:text-xl">
+      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 sm:text-xl">
         The fastest and most reliable hosting platforms
       </h3>
       <ul className="grid-gap-x mt-10 grid grid-cols-4 lg:mt-8 md:mt-6 sm:mt-4 sm:block sm:space-y-4">

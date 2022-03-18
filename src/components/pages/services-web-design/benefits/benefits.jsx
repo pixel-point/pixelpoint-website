@@ -19,9 +19,9 @@ const items = [
 ];
 
 const Benefits = () => (
-  <section className="safe-paddings bg-black py-52 text-white lg:py-44 md:py-36 sm:py-20">
+  <section className="safe-paddings bg-black py-52 text-white lg:py-36 md:py-28 sm:py-20">
     <div className="container">
-      <h2 className="text-4xl font-normal leading-snug lg:text-3xl md:text-2xl sm:text-xl">
+      <h2 className="text-4xl font-normal leading-snug lg:text-3xl sm:text-xl">
         Unlock design process with benefits you wouldn’t want to lose:
       </h2>
       <ul className="grid-gap-x mt-16 grid grid-cols-3 lg:mt-12 md:mt-10 md:block md:space-y-6 sm:mt-8">

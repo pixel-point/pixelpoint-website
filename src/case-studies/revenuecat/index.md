@@ -19,6 +19,7 @@ stack:
   - React
   - Gatsby
   - TailwindCSS
+  - Headless WordPress
   - Formspark
   - Netlify
 keynotes:

@@ -10,14 +10,22 @@ const CaseStudies = ({ items }) => (
     <div className="container space-y-40 lg:space-y-32 md:space-y-28 sm:space-y-20">
       {items.map(({ slug, frontmatter: { logo, title, description, quote, cover } }, index) => (
         <article
-          className="grid-gap-x grid grid-cols-2 items-center md:flex md:flex-col md:items-stretch"
+          className="grid-gap-x grid grid-cols-2 md:flex md:flex-col md:items-stretch"
           key={index}
         >
-          <div className="md:mt-6">
-            <h1 className="sr-only">{`${title} case study`}</h1>
-            <img className="invert" src={logo.publicURL} alt={`${title} logo`} loading="lazy" />
-            <p className="mt-4 font-normal leading-snug md:mt-2.5">{description}</p>
-            <figure className="mt-5 border-t border-t-gray-4 pt-5 md:mt-3.5 md:pt-3.5">
+          <h1 className="sr-only">{`${title} case study`}</h1>
+          <div className="hidden md:block">
+            <Link className="inline-block" to={`${CASE_STUDIES_BASE_PATH}/${slug}`}>
+              <img className="invert" src={logo.publicURL} alt={`${title} logo`} loading="lazy" />
+            </Link>
+            <p className="mt-2.5 font-normal leading-snug">{description}</p>
+          </div>
+          <div className="md:order-last md:mt-4">
+            <Link className="inline-block md:hidden" to={`${CASE_STUDIES_BASE_PATH}/${slug}`}>
+              <img className="invert" src={logo.publicURL} alt={`${title} logo`} loading="lazy" />
+            </Link>
+            <p className="mt-4 font-normal leading-snug md:hidden">{description}</p>
+            <figure className="mt-5 border-t border-t-gray-4 pt-5 md:mt-0 md:border-t-0 md:pt-0">
               <blockquote>
                 <p>{quote.text}</p>
               </blockquote>
@@ -44,7 +52,7 @@ const CaseStudies = ({ items }) => (
             </Link>
           </div>
           <Link
-            className="md:order-first"
+            className="md:mt-4"
             to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
             aria-label={`${title} case study`}
           >

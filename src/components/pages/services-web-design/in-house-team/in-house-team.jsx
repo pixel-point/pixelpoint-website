@@ -2,7 +2,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 
 const InHouseTeam = () => (
-  <section className="safe-paddings bg-black pt-80 lg:pt-64 md:pt-52 sm:pt-24">
+  <section className="safe-paddings bg-black pt-80 lg:pt-64 md:pt-52 sm:pt-32">
     <div className="container grid-gap-x grid grid-cols-12 items-center md:block">
       <div className="col-span-6 text-white">
         <h2 className="max-w-[520px] text-6xl font-normal leading-snug lg:text-5xl md:max-w-none md:text-4xl sm:text-3xl xs:text-2xl">

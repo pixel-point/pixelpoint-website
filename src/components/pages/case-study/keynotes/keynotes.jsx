@@ -48,12 +48,12 @@ const icons = {
 };
 
 const Keynotes = ({ items, iconsName }) => (
-  <section className="safe-paddings bg-black pt-32 text-white lg:pt-28 md:pt-24 sm:pt-16">
+  <section className="safe-paddings overflow-hidden bg-black pt-32 text-white lg:pt-28 md:pt-24 sm:pt-16">
     <div className="container">
-      <h2 className="text-4xl font-normal leading-snug lg:text-3xl md:text-2xl sm:text-xl">
+      <h2 className="text-4xl font-normal leading-snug lg:text-3xl sm:text-xl">
         Key Results and Outcomes
       </h2>
-      <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:flex sm:flex-col sm:gap-y-0 sm:gap-x-0 sm:space-y-8">
+      <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:grid-cols-2 md:gap-y-10 sm:mt-8 sm:gap-y-8 xs:block xs:gap-y-0 xs:gap-x-0 xs:space-y-8">
         {items.map((item, index) => {
           const Icon = icons[iconsName]?.[index];
 
@@ -70,20 +70,16 @@ const Keynotes = ({ items, iconsName }) => (
               )}
               key={index}
             >
-              {Icon && <Icon className="h-16 md:h-14" aria-hidden />}
-              <p className="mt-3 font-normal leading-snug md:mt-2.5">{item}</p>
+              {Icon && <Icon className="h-16" aria-hidden />}
+              <p className="mt-3 font-normal leading-snug md:mt-2.5 sm:text-sm">{item}</p>
             </li>
           );
         })}
       </ul>
     </div>
-    <img
-      className="mx-auto mt-32 lg:mt-28 md:mt-24 sm:mt-16"
-      src={illustration}
-      loading="lazy"
-      alt=""
-      aria-hidden
-    />
+    <div className="mt-32 flex justify-center lg:mt-28 md:mt-24 sm:mt-16" aria-hidden>
+      <img className="sm:min-w-[600px]" src={illustration} alt="" loading="lazy" />
+    </div>
   </section>
 );
 
