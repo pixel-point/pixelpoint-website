@@ -31,7 +31,6 @@ keynotes:
 cover: cover.jpg
 isOpenSource: true
 isFeatured: true
-isDraft: true
 position: 1
 ---
 
