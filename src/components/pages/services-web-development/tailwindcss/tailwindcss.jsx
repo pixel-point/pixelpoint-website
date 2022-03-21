@@ -122,7 +122,7 @@ const Tailwindcss = () => {
           </motion.div>
           <motion.div variants={itemVariants}>
             <SyntaxHighlighter
-              className="code-block mt-8 p-3 text-sm lg:p-2 lg:text-[13px] md:p-3 md:text-sm sm:hidden"
+              className="tailwindcss-code-block mt-8 p-3 text-sm lg:p-2 lg:text-[13px] md:p-3 md:text-sm sm:hidden"
               language="jsx"
               useInlineStyles={false}
               showLineNumbers
@@ -130,7 +130,7 @@ const Tailwindcss = () => {
               {illustrationCode}
             </SyntaxHighlighter>
             <SyntaxHighlighter
-              className="code-block mt-6 hidden p-2 text-[13px] sm:block xs:text-xs"
+              className="tailwindcss-code-block mt-6 hidden p-2 text-[13px] sm:block xs:text-xs"
               language="jsx"
               useInlineStyles={false}
             >

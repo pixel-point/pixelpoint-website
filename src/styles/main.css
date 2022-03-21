@@ -8,8 +8,8 @@
 @import './grid-gap.css';
 
 /* Components */
-@import './code-block.css';
 @import './container.css';
+@import '../components/pages/services-web-development/tailwindcss/tailwindcss.css';
 @import '../components/pages/blog-post/content/content.css';
 
 /* Utilities */

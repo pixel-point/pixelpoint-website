@@ -57,8 +57,8 @@ const CaseStudies = ({ items }) => (
             aria-label={`${title} case study`}
           >
             <GatsbyImage
-              className="w-full rounded-2xl lg:rounded-xl md:rounded-lg sm:rounded-md xs:rounded"
-              imgClassName="rounded-2xl lg:rounded-xl md:rounded-lg sm:rounded-md xs:rounded"
+              className="w-full rounded-2xl"
+              imgClassName="rounded-2xl"
               image={getImage(cover)}
               alt={`${title} website`}
               loading="lazy"

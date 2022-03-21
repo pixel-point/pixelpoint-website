@@ -17,7 +17,7 @@ const PostsList = ({ items }) => (
               className={clsx(isFeatured ? 'col-span-6' : 'col-span-4 lg:col-span-6')}
               key={index}
             >
-              <Link className="with-nested-link-red-hover" to={getBlogPostPath(slug)}>
+              <Link className="with-nested-link-red-hover block" to={getBlogPostPath(slug)}>
                 <GatsbyImage
                   className={clsx(
                     'w-full lg:rounded-2xl',

@@ -10,18 +10,15 @@ Keep in mind the behavior of CSS Grid Systems as you build your design. Take a l
 
 When you build UI, you always show a static picture, and, of course, you have a static container size. So, for example, if you have a 1920px artboard and a 960px container, you will have one column at 80px, with a 15px inner padding and a 50px inner column size. Read this article to understand how to build the right fluid grid with Sketch.
 
-![GATSBY_EMPTY_ALT](pp1.png)
-_Bootstrap Grid behavior_
+![Bootstrap Grid behavior](pp1.png)
 
 When you build UI based on a Grid system like Bootstrap, you don’t need to tell the developer the size of each column; you will just need to show him/her the column overlay. The developer will know what classes s/he needs to use in CSS: .col-sm-2 or .col-sm-6, for example.
 
-![GATSBY_EMPTY_ALT](pp2.png)
-_Example of grid usage from pixelpoint.io_
+![Example of grid usage from pixelpoint.io](pp2.png)
 
 Many grid generators have their own ideas regarding how to build grids. They’ll have a single gutter size between columns and a margin for the container. To understand this better, use that guide or read the Bootstrap Grid section.
 
-![GATSBY_EMPTY_ALT](pp3.png)
-_Example of grid generator_
+![Example of grid generator](pp3.png)
 
 ## Responsive design
 
@@ -33,8 +30,7 @@ Your main goal is to show the developer how each element will look at different 
 
 Another typical mistake designers make is forgetting about height and only showing the behavior of elements based on width changes of the container. Sometimes, you have elements with relative height, too, and you will need to explain the behavior of those objects to the developer . You must establish the minimum height or maximum height, and the position of the elements inside that element.
 
-![GATSBY_EMPTY_ALT](pp4.gif)
-_Example of responsive design from pixelpoint.io_
+![Example of responsive design from pixelpoint.io](pp4.gif)
 
 Use some basic breakpoints: 320x568, 375x667, 768x1024, 1024x768, 1280x768, 1366x768, and 1920x1080. And, of course, don’t forget to test your design on landscape mobile view.
 
@@ -52,8 +48,7 @@ If you don’t have time, or are not sure that you can build small components (l
 - How you will mark a picked date.
 - How you will switch years or months.
 
-![GATSBY_EMPTY_ALT](pp6.png)
-_Example of simple and clean datepicker “Air-datepicker”_
+![Example of simple and clean datepicker “Air-datepicker”](pp6.png)
 
 We are living in a world where everyone is trying to build their own startup. Sometimes, it is better for clients to reach MVP than waste time and money on a designer who is trying to be creative. Designers should understand that they can use existing libraries of components and polish them for diverse projects. This reduces the often irrational costs of developer work, even when it’s necessary to create custom solutions.
 
@@ -61,8 +56,7 @@ We are living in a world where everyone is trying to build their own startup. So
 
 Instead of writing notes explaining how your animations should look or behave, show it. It’s unlikely that your description of the animation will be as good as it is in your imagination. Use InVision or Axure for prototyping user journeys, and use Principle, Framer, or Adobe After Effects for animations. This will prevent headache-inducing misunderstandings between you, developers, and clients. It will also help you check your assumptions before implementation. Animations and prototypes make cool presentations for clients, and make your designs seem extra special.
 
-![GATSBY_EMPTY_ALT](pp7.gif)
-_Creating simple mobile prototype (Flinto app)_
+![Creating simple mobile prototype (Flinto app)](pp7.gif)
 
 [Part 1 — Software, Naming, Image Optimization, Sprites, SVG, Favicon](/blog/handoffs-guide-for-pixel-perfect-design-part-i)
 
