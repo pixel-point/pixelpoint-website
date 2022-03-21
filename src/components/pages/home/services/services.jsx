@@ -57,7 +57,7 @@ const Services = () => {
           </Link>
         </div>
         <div className="mt-12 hidden justify-center md:flex sm:mt-8" aria-hidden>
-          <ImagePlaceholder className="min-w-[514px] xs:min-w-[414px]" width={1544} height={658}>
+          <ImagePlaceholder width={1544} height={658}>
             <img src={lgIllustration1} alt="" />
           </ImagePlaceholder>
         </div>

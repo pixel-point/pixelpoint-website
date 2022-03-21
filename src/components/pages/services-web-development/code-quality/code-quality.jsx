@@ -64,8 +64,8 @@ const CodeQuality = () => {
         </div>
         <div
           className="relative col-span-6 flex items-center justify-center md:mt-8 sm:mt-6"
-          ref={illustrationRef}
           aria-label="Prettier, ESLint, Lighthouse CI, Webpack bundle with pre/post processing, MarkdownLint, Conventional commits"
+          ref={illustrationRef}
         >
           <ImagePlaceholder width={592} height={518}>
             <RiveComponent />
