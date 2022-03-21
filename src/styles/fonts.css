@@ -8,6 +8,15 @@
     font-stretch: normal;
     font-display: block;
   }
+  @font-face {
+    font-family: 'Usual';
+    src: url('/fonts/usual/usual-light-italic.woff2') format('woff2');
+    font-display: auto;
+    font-style: italic;
+    font-weight: 300;
+    font-stretch: normal;
+    font-display: block;
+  }
 
   @font-face {
     font-family: 'Usual';

@@ -26,7 +26,7 @@ But we were wrong in our initial assumptions. Spread of and interest in cryptocu
 
 After that, we redirected our research towards Europe. At that time, our working theory was that the European was ready because crypto startups and cryptocurrencies were already popular in daily life. We started research into the biggest Europe countries first, focusing on major local sites like Leboncoin in France, Gumtree in UK, and Ebay-kleinanzeigen in Germany. Results better than from our first research attempt, but still poor: France had 587 ads, UK had 142, and Berlin had 147. While we may have missed some examples, there was enough data to build a clear picture.
 
-![[leboncoin.fr - The biggest classified ads site in France](crypto2.jpeg)
+![leboncoin.fr - The biggest classified ads site in France](crypto2.jpeg)
 
 <!-- _[leboncoin.fr](https://www.leboncoin.fr/) (The biggest classified ads site in France)_ -->
 

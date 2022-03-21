@@ -1,11 +1,11 @@
 @layer components {
   .content {
     > *:first-child {
-      @apply mt-0;
+      @apply !mt-0;
     }
 
     > *:last-child {
-      @apply mb-0;
+      @apply !mb-0;
     }
 
     h2,
@@ -38,7 +38,10 @@
       @apply relative font-normal text-red transition-colors duration-200 hover:text-blue;
     }
 
-    figure {
+    figure,
+    p > .gatsby-resp-image-wrapper,
+    p > img,
+    .gatsby-highlight {
       @apply my-10;
     }
 
