@@ -32,15 +32,13 @@ const components = {
 };
 
 const Content = ({ className, content }) => (
-  <article className="safe-paddings mt-10">
-    <div className="container-xs">
-      <div className={clsx('content', className)}>
-        <MDXProvider components={components}>
-          <MDXRenderer>{content}</MDXRenderer>
-        </MDXProvider>
-      </div>
+  <div className="mt-10">
+    <div className={clsx('content', className)}>
+      <MDXProvider components={components}>
+        <MDXRenderer>{content}</MDXRenderer>
+      </MDXProvider>
     </div>
-  </article>
+  </div>
 );
 
 Content.propTypes = {

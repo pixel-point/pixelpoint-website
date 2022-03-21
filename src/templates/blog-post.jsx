@@ -5,6 +5,7 @@ import React from 'react';
 import Author from 'components/pages/blog-post/author';
 import Content from 'components/pages/blog-post/content';
 import Hero from 'components/pages/blog-post/hero';
+import Share from 'components/pages/blog-post/share';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
@@ -13,6 +14,7 @@ const BlogPostTemplate = ({
   data: {
     mdx: { slug, body, frontmatter },
   },
+  location,
 }) => (
   <Layout
     seo={SEO_DATA.blogPost({
@@ -22,8 +24,13 @@ const BlogPostTemplate = ({
     })}
     headerTheme="black"
   >
-    <Hero {...frontmatter} slug={slug} />
-    <Content content={body} />
+    <article className="safe-paddings pt-40 lg:pt-32 md:pt-28 sm:pt-20">
+      <div className="container-xs relative">
+        <Hero {...frontmatter} slug={slug} />
+        <Content content={body} />
+        <Share url={location.href} />
+      </div>
+    </article>
     <Author />
     <CTA withTopMargin />
   </Layout>
