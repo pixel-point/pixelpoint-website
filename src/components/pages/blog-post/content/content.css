@@ -17,17 +17,17 @@
     }
 
     h2 {
-      @apply mt-10 mb-5 text-2xl;
+      @apply mt-10 mb-5 text-2xl md:mt-8 md:mb-4 md:text-xl;
     }
 
     h3 {
-      @apply mt-8 mb-5 text-xl;
+      @apply mt-8 mb-5 text-xl md:mt-6 md:mb-4 md:text-lg;
     }
 
     ul,
     ol,
     p {
-      @apply my-5;
+      @apply my-5 md:my-4;
     }
 
     strong {
@@ -39,19 +39,19 @@
     }
 
     figure,
-    p > .gatsby-resp-image-wrapper,
-    p > img,
+    > .gatsby-resp-image-wrapper,
+    > img,
     .gatsby-highlight {
-      @apply my-10;
+      @apply my-10 md:my-8;
     }
 
     .gatsby-resp-image-figure figcaption {
-      @apply mt-2 text-center text-sm font-normal text-gray-7;
+      @apply mt-2 text-center text-sm font-normal text-gray-7 md:mt-1.5;
     }
 
     ul,
     ol {
-      @apply space-y-2 pl-14;
+      @apply space-y-2 pl-14 md:space-y-1.5 md:pl-8;
     }
 
     ul {
@@ -79,11 +79,11 @@
     }
 
     pre {
-      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-9 px-6 py-4 text-base text-white;
+      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-9 px-6 py-4 text-base text-white md:px-4 md:py-3 md:text-sm;
     }
 
     :not(pre) > code {
-      @apply rounded-sm bg-gray-2 px-1.5 py-0.5 text-base text-red;
+      @apply rounded-sm bg-gray-2 px-1.5 py-0.5 text-base text-red md:px-1 md:py-px md:text-sm;
     }
   }
 }

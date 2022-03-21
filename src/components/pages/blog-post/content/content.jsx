@@ -9,7 +9,7 @@ import QuoteIcon from 'images/quote.inline.svg';
 
 const Quote = ({ authorName, children }) => (
   <figure
-    className="rounded-2xl p-7 text-2xl"
+    className="rounded-2xl p-7"
     style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
   >
     <QuoteIcon className="h-7 lg:h-6 sm:h-5" aria-hidden />
@@ -29,10 +29,22 @@ Quote.propTypes = {
 
 const components = {
   Quote,
+  p: ({ children }) => {
+    // We have this check in order NOT to wrap specified elements into <p> tag
+    if (
+      children?.props?.mdxType === 'img' ||
+      children?.props?.mdxType === 'figure' ||
+      children?.props?.className === 'gatsby-resp-image-wrapper'
+    ) {
+      return children;
+    }
+
+    return <p>{children}</p>;
+  },
 };
 
 const Content = ({ className, content }) => (
-  <div className="mt-10">
+  <div className="mt-10 md:mt-8">
     <div className={clsx('content', className)}>
       <MDXProvider components={components}>
         <MDXRenderer>{content}</MDXRenderer>

@@ -8,6 +8,7 @@
     font-stretch: normal;
     font-display: block;
   }
+
   @font-face {
     font-family: 'Usual';
     src: url('/fonts/usual/usual-light-italic.woff2') format('woff2');

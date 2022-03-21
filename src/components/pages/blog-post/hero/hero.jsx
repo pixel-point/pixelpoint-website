@@ -27,7 +27,7 @@ const Hero = ({ title, description, cover, slug }) => (
       <span className="text-sm text-gray-7 sm:order-first">{getBlogPostDateFromSlug(slug)}</span>
     </div>
     <GatsbyImage
-      className="mt-10 rounded-2xl"
+      className="mt-10 rounded-2xl md:mt-8"
       imgClassName="rounded-2xl"
       image={getImage(cover)}
       alt=""

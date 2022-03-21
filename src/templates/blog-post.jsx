@@ -5,7 +5,7 @@ import React from 'react';
 import Author from 'components/pages/blog-post/author';
 import Content from 'components/pages/blog-post/content';
 import Hero from 'components/pages/blog-post/hero';
-import Share from 'components/pages/blog-post/share';
+import SocialShare from 'components/pages/blog-post/social-share';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
@@ -28,7 +28,7 @@ const BlogPostTemplate = ({
       <div className="container-xs relative">
         <Hero {...frontmatter} slug={slug} />
         <Content content={body} />
-        <Share url={location.href} />
+        <SocialShare url={location.href} />
       </div>
     </article>
     <Author />
