@@ -23,8 +23,7 @@ We all know that the most common advice says to document your API but lots of pe
 
 **Remember that without good documentation for your super duper API, using it becomes like piecing together a complicated puzzle.**
 
-![GATSBY_EMPTY_ALT](api1.jpeg)
-_Postman API Documentation example_
+![Postman API Documentation example](api1.jpeg)
 
 ## Errors handling
 

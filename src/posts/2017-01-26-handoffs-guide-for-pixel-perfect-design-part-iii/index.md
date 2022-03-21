@@ -12,8 +12,7 @@ In a UI kit, you should illustrate your project’s: colors; typography; compone
 
 We recommend Craft for creating your project’s UI library. For larger projects, it is a good idea to have an HTML and CSS version of a UI kit, and use them as a reference for other elements.
 
-![GATSBY_EMPTY_ALT](pp1.png)
-_CRAFT plugin (collect reusable elements in project)_
+![CRAFT plugin (collect reusable elements in project)](pp1.png)
 
 ## Export
 
@@ -24,13 +23,11 @@ Make the developer’s life easier and increase your chances of building a pixel
 - [Sympli](https://sympli.io/)
 - [Sketch Measure](https://github.com/utom/sketch-measure)
 
-![GATSBY_EMPTY_ALT](pp2.png)
-_Zeplin: modern instrument for design inspection_
+![Zeplin: modern instrument for design inspection](pp2.png)
 
 They can help you retrieve colors, fonts, sizes, assets, distance between elements, CSS properties, and other stuff from your Sketch or PSD. Invision and Zeplin also let you write in notes instead of forcing you to create additional layers, like Photoshop.
 
-![GATSBY_EMPTY_ALT](pp3.png)
-_Old way. Creating comments in Photoshop layers_
+![Old way. Creating comments in Photoshop layers](pp3.png)
 
 ## Element states
 
@@ -42,8 +39,7 @@ To prevent misunderstandings, we recommend that you use specific terminology for
 - **Focus**: The state of element that is currently targeted by the keyboard, or activated by the mouse (i.e. inputs, text areas)
 - **Visited**: The state of the links that have already been visited
 
-![GATSBY_EMPTY_ALT](pp5.png)
-_Examples of elements states_
+![Examples of elements states](pp5.png)
 
 ## Line-height
 
@@ -79,8 +75,7 @@ Here are couple things to remember about using fonts:
 - Don’t use more than two fonts. This will affect page loading times, especially if the fonts are custom.
 - Don’t use too many different sizes or styles (italic/bold/light/thin/regular).
 
-![GATSBY_EMPTY_ALT](pp8.png)
-_Google fonts library of free-to-use fonts_
+![Google fonts library of free-to-use fonts](pp8.png)
 
 ## Developers and designers
 

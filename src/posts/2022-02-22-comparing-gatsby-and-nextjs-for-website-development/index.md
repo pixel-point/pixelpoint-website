@@ -65,8 +65,7 @@ For the best customer experience, it’s precious to provide the greatest flexib
 
 With Gatsby, the integration is a matter of plugin installation and providing API keys. No need to deal with SDKs and nerding through API docs. Everything will be fetched and added to a unified Gatsby Graphql Layer. There are so many plugins that you can find a source plugin literally for anything. The client uses some recruiting platform and wants to display a jobs list on his own website as well? Not a problem. Does he plan to display a list of Github repositories with stars counter - just go and grab the plugin for this. Data will be added to Graphql, and you wouldn’t need to worry about the learning curve for understanding various APIs.
 
-![GATSBY_EMPTY_ALT](compare4.png)
-_Example of fetching data with Gatsby Graphql using gatsby-source-wordpress plugin_
+![Example of fetching data with Gatsby Graphql using gatsby-source-wordpress plugin](compare4.png)
 
 ### Next.js tailored approach
 

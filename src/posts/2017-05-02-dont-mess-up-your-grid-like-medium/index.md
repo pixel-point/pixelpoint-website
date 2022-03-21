@@ -16,27 +16,21 @@ At the end of this article, I will give a few thoughts about creating covers.
 
 You may have noticed that even within one page, the aspect ratio of covers varies. It looks especially strange on the lower row. Perhaps it has been created so that you do not use sizes at 33.3%, but since Medium has a flexible grid, float values meet across in other places.
 
-![GATSBY_EMPTY_ALT](medium1.png)
-_Popular on Medium_
+![Popular on Medium](medium1.png)
 
 Look how similar blocks have slightly different cover proportions. From my perspective, it seems like an odd choice. It’s possible that it’s just a realization bug, though.
 
-![GATSBY_EMPTY_ALT](medium2.png)
-_Publications_
+![Publications](medium2.png)
 
-![GATSBY_EMPTY_ALT](medium3.png)
-_Publications_
+![Publications](medium3.png)
 
-![GATSBY_EMPTY_ALT](medium4.png)
-_Main_
+![Main](medium4.png)
 
 On some pages, the post previews use images with the initial ratio. The truth is that this only happens when the first picture in the post isn’t stretched to 100% on page width or haven’t large size. This was likely a pragmatic choice.
 
-![GATSBY_EMPTY_ALT](medium5.png)
-_User stories_
+![User stories](medium5.png)
 
-![GATSBY_EMPTY_ALT](medium6.png)
-_Tag_
+![Tag](medium6.png)
 
 Below, I have included three nearly identical blocks that are found in different sections. They have identical aspect ratios, but the sizes of the pictures different.
 ![GATSBY_EMPTY_ALT](medium7.png)
