@@ -10,7 +10,7 @@ const PostsList = ({ items }) => (
   <section className="safe-paddings mt-32 lg:mt-28 md:mt-24 sm:mt-16">
     <div className="container">
       <div className="grid-gap-x grid grid-cols-12 gap-y-16 lg:gap-y-12 md:gap-y-10 sm:block sm:space-y-8">
-        {items.map(({ slug, frontmatter: { title, description, cover } }, index) => {
+        {items.map(({ slug, frontmatter: { title, cover } }, index) => {
           const isFeatured = index === 0 || index === 1;
           return (
             <article
@@ -35,7 +35,6 @@ const PostsList = ({ items }) => (
                 >
                   {title}
                 </h1>
-                <p className="mt-2.5 text-base lg:mt-1.5">{description}</p>
                 <Link
                   className="nested-link-red mt-3 lg:mt-2"
                   size="base"
@@ -62,7 +61,6 @@ PostsList.propTypes = {
       }).isRequired,
       frontmatter: PropTypes.exact({
         title: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
         cover: PropTypes.exact({
           childImageSharp: PropTypes.exact({
             gatsbyImageData: PropTypes.object.isRequired,
