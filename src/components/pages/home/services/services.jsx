@@ -28,50 +28,45 @@ const Services = () => {
 
   return (
     <section
-      className="safe-paddings mt-52 overflow-hidden bg-black text-white lg:mt-36 md:mt-28 md:py-28 sm:mt-20 sm:py-20"
+      className="safe-paddings mt-52 overflow-hidden bg-black text-white lg:mt-36 md:pb-24 md:pt-20 sm:mt-20 sm:pb-20 sm:pt-10"
       ref={wrapperRef}
     >
       <div className="container relative">
-        <div className="flex max-w-[550px] items-center pt-[300px] lg:max-w-[560px] lg:pt-[200px] md:mx-auto md:max-w-[420px] md:pt-0 sm:max-w-[350px]">
-          <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-center md:text-4xl sm:text-3xl xs:text-2xl">
+        <div className="flex max-w-[592px] items-center pt-[300px] lg:max-w-[458px] lg:pt-[200px] md:max-w-[430px] md:pt-0 sm:max-w-[350px]">
+          <h2 className="text-6xl font-normal leading-snug lg:text-[42px] md:text-4xl sm:text-2xl">
             We’ll get you covered on what we can do best:
           </h2>
         </div>
-        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] lg:max-w-[424px] lg:pt-[225px] md:mx-auto md:mt-28 md:max-w-[590px] md:pt-0 sm:mt-20">
-          <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
+        <div className="flex max-w-[488px] flex-col justify-center pt-[400px] lg:max-w-[406px] lg:pt-[200px] md:mt-36 md:max-w-none md:pt-0 sm:mt-20">
+          <h2 className="text-6xl font-normal leading-snug lg:text-[42px] md:text-4xl sm:text-2xl">
             Web design
           </h2>
-          <p className="mt-5 text-lg md:mt-4 sm:mt-3">
+          <p className="mt-5 text-lg md:mt-3 sm:text-base">
             Our approach is rather inclusive: web design to us is not only effective, efficient and
             visually pleasing screens, but motion design with its live animations, as well as
             graphic design with entertaining illustrations, exciting social media covers and, of
             course, high-quality branded items.
           </p>
-          <Link
-            className="mt-5 md:mt-4 sm:mt-3"
-            to="/services/web-design"
-            size="base"
-            theme="arrow-red"
-          >
+          <Link className="mt-5 md:mt-4" to="/services/web-design" size="base" theme="arrow-red">
             Read more
           </Link>
         </div>
-        <div className="mt-12 hidden justify-center md:flex sm:mt-8" aria-hidden>
+        <div className="mt-14 hidden md:block sm:mt-8" aria-hidden>
           <ImagePlaceholder width={1544} height={658}>
             <img src={lgIllustration1} alt="" />
           </ImagePlaceholder>
         </div>
-        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px] lg:max-w-[424px] lg:pt-[225px] lg:pb-[200px] md:mx-auto md:mt-28 md:max-w-[590px] md:py-0 sm:mt-20">
-          <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
+        <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px] lg:max-w-[406px] lg:pt-[200px] lg:pb-[200px] md:mt-36 md:max-w-none md:py-0 sm:mt-20">
+          <h2 className="text-6xl font-normal leading-snug lg:text-[42px] md:text-4xl sm:text-2xl">
             Web development
           </h2>
-          <p className="mt-5 text-lg md:mt-4 sm:mt-3">
+          <p className="mt-5 text-lg md:mt-3 sm:text-base">
             Clean codebase, flexible content management, robust release flow and custom integrations
             will please the business while website performance, accessibility and mobile devices
             adaptation will ensure an outstanding experience for your customers.
           </p>
           <Link
-            className="mt-5 md:mt-4 sm:mt-3"
+            className="mt-5 md:mt-4"
             to="/services/web-development"
             size="base"
             theme="arrow-red"
@@ -79,7 +74,7 @@ const Services = () => {
             Read more
           </Link>
           <ImagePlaceholder
-            className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
+            className="mx-auto mt-14 hidden max-w-[468px] md:block sm:mt-8"
             width={540}
             height={437}
             aria-hidden

@@ -43,12 +43,12 @@ const links = [
 
 const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
   <header className="safe-paddings absolute top-0 left-0 right-0 z-50 w-full" ref={ref}>
-    <div className="container-lg flex h-[88px] items-center justify-between lg:h-20 sm:h-16">
+    <div className="container-lg flex h-[88px] items-center justify-between sm:h-18">
       <Link to="/">
         <span className="sr-only">Pixel Point</span>
         <Logo
           className={clsx(
-            'h-9 transition-all duration-200 sm:h-8',
+            'h-9 transition-all duration-200',
             isMobileMenuOpen && 'md:invert',
             theme === 'black' && 'invert'
           )}

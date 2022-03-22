@@ -29,20 +29,20 @@ const CTA = ({ withTopMargin }) => {
   return (
     <section
       className={clsx(
-        'safe-paddings bg-black py-20 md:py-18 sm:pt-16 sm:pb-10',
-        withTopMargin && 'mt-52 lg:mt-36 md:mt-28 sm:mt-28'
+        'safe-paddings bg-black py-20 lg:py-[74px] md:py-20 sm:pt-11 sm:pb-9',
+        withTopMargin && 'mt-52 lg:mt-36 md:mt-28 sm:mt-20'
       )}
     >
       <div className="container grid-gap-x grid grid-cols-2 items-center sm:block">
         <div className="sm:text-center">
-          <h2 className="text-6xl font-normal leading-snug text-white lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
+          <h2 className="text-6xl font-normal leading-snug text-white lg:text-5xl md:text-[32px] sm:text-3xl xs:text-2xl">
             Let's have a chat
           </h2>
           <Link size="6xl" theme="arrow-red" to="https://calendly.com/pixel-point/30min">
             Book a call
           </Link>
         </div>
-        <div className="sm:mt-2" ref={animationWrapperRef}>
+        <div className="sm:mt-4.5" ref={animationWrapperRef}>
           <ImagePlaceholder className="sm:w-full" width={592} height={560}>
             <RiveComponent />
           </ImagePlaceholder>
