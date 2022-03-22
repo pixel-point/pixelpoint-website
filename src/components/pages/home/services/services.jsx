@@ -28,7 +28,7 @@ const Services = () => {
 
   return (
     <section
-      className="safe-paddings mt-52 overflow-hidden bg-black text-white lg:mt-36 md:pb-24 md:pt-20 sm:mt-20 sm:pb-20 sm:pt-10"
+      className="safe-paddings mt-52 overflow-hidden bg-black text-white lg:mt-36 md:pb-24 md:pt-20 sm:mt-20 sm:pb-20"
       ref={wrapperRef}
     >
       <div className="container relative">
