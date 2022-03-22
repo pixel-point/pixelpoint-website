@@ -20,7 +20,7 @@ const BlogPostTemplate = ({
     seo={SEO_DATA.blogPost({
       title: frontmatter.title,
       description: frontmatter.description,
-      ogImage: frontmatter.ogImage?.publicURL,
+      ogImage: frontmatter.ogImage.publicURL,
     })}
     headerTheme="black"
   >
