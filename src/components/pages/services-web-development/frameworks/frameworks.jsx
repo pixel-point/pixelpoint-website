@@ -83,7 +83,7 @@ const Frameworks = () => {
             controls={titleControls}
           />
           <motion.p
-            className="mt-5 max-w-[410px] md:mt-4 md:max-w-none sm:mt-3"
+            className="mt-5 max-w-[410px] text-lg md:mt-4 md:max-w-none sm:mt-3"
             initial="initial"
             animate={descriptionControls}
             variants={descriptionVariants}
@@ -106,7 +106,7 @@ const Frameworks = () => {
           >
             <GatsbyLogo className="relative z-10 h-14 lg:h-12 md:h-8" aria-hidden />
             <span className="sr-only">Gatsby</span>
-            <p className="relative z-10 max-w-[256px] lg:max-w-[190px] lg:text-base md:max-w-none md:text-sm">
+            <p className="relative z-10 max-w-[256px] text-lg lg:max-w-[190px] lg:text-base md:max-w-none md:text-sm">
               Best for building SEO-friendly, high-performing marketing websites
             </p>
             <img

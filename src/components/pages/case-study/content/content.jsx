@@ -27,7 +27,7 @@ const Content = ({
         <h1 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
           {title}
         </h1>
-        <p className="mt-3 font-normal leading-snug md:mt-2.5">{description}</p>
+        <p className="mt-3 text-lg font-normal leading-snug md:mt-2.5">{description}</p>
         <Link
           className="mt-7 rounded-full border border-red py-3 px-5 transition-colors duration-200 hover:border-blue md:mt-5 sm:mt-4"
           to={websiteUrl}
@@ -90,7 +90,7 @@ const Content = ({
         <h2 className="mt-12 text-2xl font-normal leading-snug lg:mt-10 sm:mt-8 sm:text-xl">
           About the project
         </h2>
-        <div className="with-link-red mt-2.5 space-y-5 md:space-y-4">
+        <div className="with-link-red mt-2.5 space-y-5 text-lg md:space-y-4">
           <MDXProvider>
             <MDXRenderer>{text}</MDXRenderer>
           </MDXProvider>

@@ -71,7 +71,7 @@ const Keynotes = ({ items, iconsName }) => (
               key={index}
             >
               {Icon && <Icon className="h-16" aria-hidden />}
-              <p className="mt-3 font-normal leading-snug md:mt-2.5 sm:text-sm">{item}</p>
+              <p className="mt-3 text-lg font-normal leading-snug md:mt-2.5 sm:text-sm">{item}</p>
             </li>
           );
         })}

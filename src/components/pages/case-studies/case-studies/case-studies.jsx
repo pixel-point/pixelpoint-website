@@ -24,10 +24,10 @@ const CaseStudies = ({ items }) => (
             <Link className="inline-block md:hidden" to={`${CASE_STUDIES_BASE_PATH}/${slug}`}>
               <img className="invert" src={logo.publicURL} alt={`${title} logo`} loading="lazy" />
             </Link>
-            <p className="mt-4 font-normal leading-snug md:hidden">{description}</p>
+            <p className="mt-4 text-lg font-normal leading-snug md:hidden">{description}</p>
             <figure className="mt-5 border-t border-t-gray-4 pt-5 md:mt-0 md:border-t-0 md:pt-0">
               <blockquote>
-                <p>{quote.text}</p>
+                <p className="text-lg">{quote.text}</p>
               </blockquote>
               <figcaption className="mt-3 flex items-center md:mt-2.5">
                 <GatsbyImage

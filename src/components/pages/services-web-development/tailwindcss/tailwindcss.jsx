@@ -81,7 +81,7 @@ const Tailwindcss = () => {
             controls={titleControls}
           />
           <motion.p
-            className="mt-5 max-w-[420px] md:mt-4 md:max-w-none sm:mt-3"
+            className="mt-5 max-w-[420px] text-lg md:mt-4 md:max-w-none sm:mt-3"
             initial="initial"
             animate={descriptionControls}
             variants={descriptionVariants}

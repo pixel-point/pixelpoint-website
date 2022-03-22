@@ -30,7 +30,7 @@ const PostsList = ({ items }) => (
                 <h1
                   className={clsx(
                     'font-normal leading-snug md:text-lg sm:text-base',
-                    isFeatured ? 'mt-5 text-2xl lg:mt-4' : 'mt-4 text-xl lg:mt-3'
+                    isFeatured ? 'mt-5 text-2xl lg:mt-4' : 'mt-4 text-lg lg:mt-3'
                   )}
                 >
                   {title}

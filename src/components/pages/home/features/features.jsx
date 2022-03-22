@@ -144,7 +144,7 @@ const Features = () => {
                   </ImagePlaceholder>
                 )}
                 <p
-                  className="sm:hide-br mt-3 font-normal leading-snug md:mt-2.5 xs:leading-tight"
+                  className="sm:hide-br mt-3 text-lg font-normal leading-snug md:mt-2.5 xs:leading-tight"
                   dangerouslySetInnerHTML={{ __html: item }}
                 />
               </li>

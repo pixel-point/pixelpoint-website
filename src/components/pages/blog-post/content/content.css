@@ -1,5 +1,7 @@
 @layer components {
   .content {
+    @apply text-lg;
+
     > *:first-child {
       @apply !mt-0;
     }

@@ -26,7 +26,7 @@ const Author = () => (
           <h2 className="text-2xl font-normal leading-snug lg:text-xl sm:text-lg">
             Written by <span className="text-red">Alex Barashkov</span>
           </h2>
-          <p className="mt-3 md:mt-2.5">
+          <p className="mt-3 text-lg md:mt-2.5">
             CEO at Pixel Point. Software engineer with 10+ years of web development experience.
             Currently focused on React, Next.js, Gatsby.
           </p>

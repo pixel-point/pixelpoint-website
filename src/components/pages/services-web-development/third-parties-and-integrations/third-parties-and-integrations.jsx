@@ -95,7 +95,7 @@ const ThirdPartiesAndIntegrations = () => (
             style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
           >
             <span className="text-2xl font-semibold leading-snug lg:text-xl">OR</span>
-            <span className="mt-2.5 max-w-[130px] font-normal leading-snug lg:mt-2 lg:text-base">
+            <span className="mt-2.5 max-w-[130px] text-lg font-normal leading-snug lg:mt-2 lg:text-base">
               any other CMS of your choice
             </span>
           </p>

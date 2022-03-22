@@ -117,7 +117,7 @@ const Lighthouse = () => {
                   />
                 )}
               </div>
-              <div className="mt-4 text-center font-normal md:mt-2">{name}</div>
+              <div className="mt-4 text-center text-lg font-normal md:mt-2">{name}</div>
             </li>
           ))}
         </motion.ul>

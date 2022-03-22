@@ -41,7 +41,7 @@ const Services = () => {
           <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
             Web design
           </h2>
-          <p className="mt-5 md:mt-4 sm:mt-3">
+          <p className="mt-5 text-lg md:mt-4 sm:mt-3">
             Our approach is rather inclusive: web design to us is not only effective, efficient and
             visually pleasing screens, but motion design with its live animations, as well as
             graphic design with entertaining illustrations, exciting social media covers and, of
@@ -65,7 +65,7 @@ const Services = () => {
           <h2 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
             Web development
           </h2>
-          <p className="mt-5 md:mt-4 sm:mt-3">
+          <p className="mt-5 text-lg md:mt-4 sm:mt-3">
             Clean codebase, flexible content management, robust release flow and custom integrations
             will please the business while website performance, accessibility and mobile devices
             adaptation will ensure an outstanding experience for your customers.
