@@ -35,7 +35,7 @@ const CTA = ({ withTopMargin }) => {
     >
       <div className="container grid-gap-x grid grid-cols-2 items-center sm:block">
         <div className="sm:text-center">
-          <h2 className="text-6xl font-normal leading-snug text-white lg:text-[42px] md:text-[32px] sm:text-3xl xs:text-2xl">
+          <h2 className="text-6xl font-normal leading-snug text-white lg:text-[42px] md:text-[32px] sm:text-2xl">
             Let's have a chat
           </h2>
           <Link size="6xl" theme="arrow-red" to="https://calendly.com/pixel-point/30min">

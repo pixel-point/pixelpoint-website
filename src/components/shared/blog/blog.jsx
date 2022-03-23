@@ -45,7 +45,7 @@ const Blog = () => {
   return (
     <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
       <div className="container">
-        <h2 className="text-center text-6xl font-normal leading-snug lg:text-[42px] md:text-[32px] sm:text-3xl xs:text-2xl">
+        <h2 className="text-center text-6xl font-normal leading-snug lg:text-[42px] md:text-[32px] sm:text-2xl">
           Blog. {/* <Link size="6xl" theme="arrow-red" to="/blog"> */}
           <Link size="6xl" theme="arrow-red" to="https://dev.to/alex_barashkov">
             Explore team experience
