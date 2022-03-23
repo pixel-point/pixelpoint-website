@@ -42,18 +42,18 @@ const CodeQuality = () => {
   }, [isContentInView, titleControls, descriptionControls, isIllustrationInView, rive]);
 
   return (
-    <section className="safe-paddings bg-black py-80 lg:py-64 md:pt-52 sm:py-24">
+    <section className="safe-paddings bg-black py-80 lg:py-56 md:py-40 sm:py-24">
       <div className="container grid-gap-x grid grid-cols-12 items-center md:block">
         <div className="col-span-6 text-white" ref={contentRef}>
           <TitleAnimation
             tag="h2"
-            className="max-w-[520px] text-6xl font-normal leading-snug lg:text-5xl md:max-w-none md:text-4xl sm:text-3xl xs:text-2xl"
+            className="max-w-[520px] text-6xl font-normal leading-snug lg:max-w-[420px] lg:text-[42px] md:max-w-[490px] md:text-4xl sm:text-2xl"
             items={titleItems}
             animationName="second"
             controls={titleControls}
           />
           <motion.p
-            className="mt-5 max-w-[520px] text-lg md:mt-4 md:max-w-none sm:mt-3"
+            className="mt-5 max-w-[520px] text-lg md:mt-3 md:max-w-[490px] sm:mt-2.5 sm:max-w-none sm:text-base"
             initial="initial"
             animate={descriptionControls}
             variants={descriptionVariants}
@@ -63,7 +63,7 @@ const CodeQuality = () => {
           </motion.p>
         </div>
         <div
-          className="relative col-span-6 flex items-center justify-center md:mt-8 sm:mt-6"
+          className="relative col-span-6 flex items-center justify-center md:mx-auto md:mt-11 md:max-w-[590px] sm:mt-8"
           aria-label="Prettier, ESLint, Lighthouse CI, Webpack bundle with pre/post processing, MarkdownLint, Conventional commits"
           ref={illustrationRef}
         >

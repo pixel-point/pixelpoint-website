@@ -69,21 +69,21 @@ const Lighthouse = () => {
   }, [isItemsWrapperInView, itemsWrapperControls]);
 
   return (
-    <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
+    <section className="safe-paddings mt-52 lg:mt-36 sm:mt-20">
       <div className="container">
-        <h2 className="mx-auto max-w-[1008px] text-center text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
+        <h2 className="mx-auto max-w-[1008px] text-center text-6xl font-normal leading-snug lg:max-w-[782px] lg:text-[42px] md:text-4xl sm:text-2xl">
           Always in the upper <span className="text-red">Lighthouse</span> threshold to outperform
           competitors
         </h2>
         <motion.ul
-          className="mt-16 flex justify-center space-x-44 lg:mt-12 lg:space-x-32 md:mt-10 md:justify-between md:space-x-0 sm:mt-8 sm:flex-wrap"
+          className="mt-16 flex justify-center space-x-44 lg:mt-14 lg:space-x-32 md:mt-12 md:justify-between md:space-x-0 sm:mt-11 sm:flex-wrap"
           initial="initial"
           animate={itemsWrapperControls}
           ref={itemsWrapperRef}
         >
           {items.map(({ name, value, circleValue }, index) => (
             <li
-              className={clsx('sm:basis-1/2', (index === 2 || index === 3) && 'sm:mt-8')}
+              className={clsx('sm:basis-1/2', (index === 2 || index === 3) && 'sm:mt-11')}
               key={index}
             >
               <div className="relative mx-auto h-36 w-36 lg:h-28 lg:w-28 md:h-24 md:w-24">
@@ -117,7 +117,7 @@ const Lighthouse = () => {
                   />
                 )}
               </div>
-              <div className="mt-4 text-center text-lg font-normal md:mt-2">{name}</div>
+              <div className="mt-4 text-center text-lg font-normal">{name}</div>
             </li>
           ))}
         </motion.ul>

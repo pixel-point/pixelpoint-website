@@ -52,27 +52,31 @@ const hostingPlatformsItems = [
 ];
 
 const ThirdPartiesAndIntegrations = () => (
-  <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
+  <section className="safe-paddings mt-52 lg:mt-36 sm:mt-20">
     <div className="container">
-      <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug lg:max-w-[700px] lg:text-5xl md:max-w-[600px] md:text-4xl sm:max-w-none sm:text-3xl xs:text-2xl">
+      <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug lg:max-w-[568px] lg:text-[42px] md:max-w-[458px] md:text-4xl sm:max-w-none sm:text-2xl">
         Choosing <span className="text-red">best-in-class</span> third-party integrations
       </h2>
-
-      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 sm:text-xl">
+      <h3 className="mt-20 text-4xl leading-snug lg:mt-14 lg:text-3xl md:mt-10 md:text-xl sm:mt-6 sm:text-lg">
         Flexible content management solutions
       </h3>
-      <div className="grid-gap-x mt-10 grid grid-cols-2 lg:mt-8 md:mt-6 md:block md:space-y-4 sm:mt-4">
-        <div className="rounded-2xl bg-gray-9 p-8 pb-6 lg:p-6 lg:pb-5 sm:p-4 sm:pt-5">
-          <WordPressLogo className="h-14 lg:h-12 sm:h-8" aria-hidden />
+      <div className="grid-gap-x mt-10 grid grid-cols-2 lg:mt-8 md:mt-5 md:block md:space-y-5 sm:mt-4 sm:space-y-4">
+        <div className="rounded-2xl bg-gray-9 p-8 pb-6 lg:rounded-xl lg:p-6 md:flex md:items-center md:space-x-6 sm:block sm:space-x-0 sm:p-5 sm:pb-4">
+          <div>
+            <WordPressLogo className="h-14 lg:h-11 sm:h-8" aria-hidden />
+            <p className="mt-5 hidden text-xl text-white md:block sm:hidden">
+              Default option providing best flexibility for a reasonable price
+            </p>
+          </div>
           <span className="sr-only">WordPress</span>
           <StaticImage
-            className="mt-8 lg:mt-6 sm:mt-4"
+            className="mt-8 lg:mt-5 md:mt-4"
             src="./images/wordpress-illustration.png"
             alt=""
             loading="lazy"
             aria-hidden
           />
-          <p className="mt-8 text-2xl text-white lg:mt-6 lg:text-xl sm:mt-4 sm:text-base">
+          <p className="mt-8 text-2xl text-white lg:mt-7 lg:text-xl md:hidden sm:mt-4 sm:block sm:text-base">
             Default option providing best flexibility for a reasonable price
           </p>
         </div>
@@ -80,18 +84,18 @@ const ThirdPartiesAndIntegrations = () => (
           {headlessCmsItems.map(({ logo: Logo, name, description, background }, index) => (
             <div
               className={clsx(
-                'flex flex-col items-start justify-between rounded-2xl px-6 pb-5 pt-4 lg:p-4 lg:pt-3 md:min-h-[166px]',
+                'flex flex-col items-start justify-between rounded-2xl px-6 pb-5 pt-4 lg:min-h-[176px] lg:rounded-xl lg:py-4 lg:px-5 md:min-h-[144px]',
                 background
               )}
               key={index}
             >
-              <Logo className="h-14 lg:h-12" aria-hidden />
+              <Logo className="h-14 lg:h-11" aria-hidden />
               <span className="sr-only">{name}</span>
-              <p className="text-base text-white lg:text-sm sm:text-base">{description}</p>
+              <p className="text-base text-white">{description}</p>
             </div>
           ))}
           <p
-            className="flex flex-col items-center justify-center rounded-2xl text-center md:min-h-[166px]"
+            className="flex flex-col items-center justify-center rounded-2xl text-center lg:min-h-[176px] lg:rounded-xl md:min-h-[144px]"
             style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
           >
             <span className="text-2xl font-semibold leading-snug lg:text-xl">OR</span>
@@ -102,17 +106,17 @@ const ThirdPartiesAndIntegrations = () => (
         </div>
       </div>
 
-      <h3 className="mt-20 text-4xl leading-snug lg:mt-16 lg:text-3xl md:mt-12 sm:text-xl">
+      <h3 className="mt-20 text-4xl leading-snug lg:mt-14 lg:text-3xl md:mt-10 md:text-xl sm:mt-10 sm:text-lg">
         The fastest and most reliable hosting platforms
       </h3>
-      <ul className="grid-gap-x mt-10 grid grid-cols-4 lg:mt-8 md:mt-6 sm:mt-4 sm:block sm:space-y-4">
+      <ul className="grid-gap-x mt-10 grid grid-cols-4 lg:mt-8 md:mt-5 sm:mt-4 sm:block sm:space-y-4">
         {hostingPlatformsItems.map(({ logo: Logo, name }, index) => (
           <li
-            className="flex min-h-[180px] items-center justify-center rounded-2xl lg:min-h-[140px] md:min-h-[106px] sm:min-h-[144px]"
+            className="flex min-h-[180px] items-center justify-center rounded-2xl lg:min-h-[120px] lg:rounded-xl md:min-h-[100px] sm:min-h-[120px]"
             style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
             key={index}
           >
-            <Logo className="h-20 lg:h-16 md:h-12 sm:h-18" aria-hidden />
+            <Logo className="h-20 lg:h-16 md:h-14 sm:h-16" aria-hidden />
             <span className="sr-only">{name}</span>
           </li>
         ))}
