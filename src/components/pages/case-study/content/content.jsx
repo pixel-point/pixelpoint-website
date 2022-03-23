@@ -21,15 +21,15 @@ const Content = ({
   services,
   stack,
 }) => (
-  <article className="safe-paddings bg-black pt-40 text-white lg:pt-32 md:pt-28 sm:pt-20">
+  <article className="safe-paddings bg-black pt-40 text-white lg:pt-36 sm:pt-24">
     <div className="container grid-gap-x grid grid-cols-12 items-start md:block">
       <div className="col-span-8">
-        <h1 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
+        <h1 className="text-6xl font-normal leading-snug lg:text-[42px] md:text-4xl sm:text-2xl">
           {title}
         </h1>
-        <p className="mt-3 text-lg font-normal leading-snug md:mt-2.5">{description}</p>
+        <p className="mt-2.5 text-lg font-normal leading-snug lg:text-base">{description}</p>
         <Link
-          className="mt-7 rounded-full border border-red py-3 px-5 transition-colors duration-200 hover:border-blue md:mt-5 sm:mt-4"
+          className="mt-7 rounded-full border border-red py-3 px-5 transition-colors duration-200 hover:border-blue lg:mt-6 md:mt-5"
           to={websiteUrl}
           size="base"
           theme="arrow-red"
@@ -38,12 +38,12 @@ const Content = ({
         >
           Visit {title}
         </Link>
-        <figure className="mt-12 lg:mt-10 sm:mt-8">
-          <QuoteIcon className="h-7 lg:h-6 sm:h-5" aria-hidden />
-          <blockquote className="mt-4 text-2xl lg:mt-3 lg:text-xl sm:mt-2.5 sm:text-lg">
+        <figure className="mt-12">
+          <QuoteIcon className="w-10 lg:w-8 sm:h-5" aria-hidden />
+          <blockquote className="mt-4 text-2xl lg:text-xl">
             <p>{quote.text}</p>
           </blockquote>
-          <figcaption className="mt-5 flex items-center lg:mt-4 md:mt-3.5">
+          <figcaption className="mt-5 flex items-center">
             <GatsbyImage
               className="w-12 shrink-0 rounded-full"
               imgClassName="rounded-full"
@@ -51,17 +51,17 @@ const Content = ({
               alt={quote.authorName}
               loading="lazy"
             />
-            <span className="ml-4 text-base font-normal lg:ml-3 md:ml-2.5">
+            <span className="ml-4 text-base font-normal">
               {quote.authorName} — {quote.authorPosition}
             </span>
           </figcaption>
         </figure>
-        <div className="mt-10 hidden rounded-2xl border border-gray-8 p-5 md:block sm:mt-8 xs:p-4">
-          <div className="flex items-center justify-between xs:block">
+        <div className="mt-12 hidden rounded-xl border border-gray-8 p-7 md:block sm:px-5 sm:py-6">
+          <div className="flex items-center justify-between">
             <img src={logo} alt={title} loading="eager" />
             {githubUrl && githubStars && (
               <Link
-                className="inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red xs:mt-4"
+                className="inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red"
                 to={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -71,14 +71,14 @@ const Content = ({
               </Link>
             )}
           </div>
-          <div className="mt-6 flex md:mt-5 md:space-x-4 sm:mt-4 sm:block sm:space-x-0 sm:space-y-4">
+          <div className="mt-6 flex md:mt-7 md:space-x-4 md:border-t md:border-t-gray-9 md:pt-7 sm:mt-6 sm:block sm:space-x-0 sm:space-y-6 sm:pt-6">
             {[
               { title: 'Provided services', items: services },
               { title: 'Technology stack', items: stack },
             ].map(({ title, items }, index) => (
               <div className="flex-1" key={index}>
                 <h4 className="text-base font-semibold leading-snug text-red">{title}</h4>
-                <ul className="mt-2.5 space-y-2.5 text-base font-normal leading-snug">
+                <ul className="mt-3 space-y-3 text-base font-normal leading-snug">
                   {items.map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
@@ -87,20 +87,18 @@ const Content = ({
             ))}
           </div>
         </div>
-        <h2 className="mt-12 text-2xl font-normal leading-snug lg:mt-10 sm:mt-8 sm:text-xl">
-          About the project
-        </h2>
+        <h2 className="mt-12 text-2xl font-normal leading-snug sm:text-xl">About the project</h2>
         <div className="with-link-red mt-2.5 space-y-5 text-lg md:space-y-4">
           <MDXProvider>
             <MDXRenderer>{text}</MDXRenderer>
           </MDXProvider>
         </div>
       </div>
-      <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7 lg:col-start-9 md:hidden">
+      <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7 lg:col-start-9 lg:rounded-xl md:hidden">
         <img src={logo} alt={title} loading="eager" />
         {githubUrl && githubStars && (
           <Link
-            className="mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red xs:mt-4"
+            className="mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red"
             to={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
