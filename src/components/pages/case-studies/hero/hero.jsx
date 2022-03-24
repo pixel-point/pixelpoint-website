@@ -3,16 +3,16 @@ import React from 'react';
 import illustration from './images/illustration.svg';
 
 const Hero = () => (
-  <section className="safe-paddings overflow-hidden bg-black pt-40 text-center text-white lg:pt-32 md:pt-28 sm:pt-20">
+  <section className="safe-paddings overflow-hidden bg-black pt-28 text-center text-white sm:pt-24">
     <div className="container">
       <h1 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
         Case studies
       </h1>
-      <p className="mt-2.5 text-2xl lg:text-xl sm:text-lg">
+      <p className="mt-2.5 text-2xl lg:text-xl md:text-lg sm:text-base">
         See how we have helped our customers achieve their goals
       </p>
-      <div className="mt-16 flex justify-center lg:mt-12 md:mt-10 sm:mt-8" aria-hidden>
-        <img className="sm:min-w-[600px]" src={illustration} alt="" loading="eager" />
+      <div className="mt-14 flex justify-center lg:mt-11 md:mt-10 sm:mt-4" aria-hidden>
+        <img className="sm:min-w-[862px]" src={illustration} alt="" loading="eager" />
       </div>
     </div>
   </section>
