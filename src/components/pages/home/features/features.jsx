@@ -127,24 +127,24 @@ const Features = () => {
   ]);
 
   return (
-    <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20" ref={wrapperRef}>
+    <section className="safe-paddings mt-52 lg:mt-36 sm:mt-20" ref={wrapperRef}>
       <div className="container">
-        <h2 className="max-w-[700px] text-4xl font-normal leading-snug lg:max-w-[560px] lg:text-3xl sm:max-w-[370px] sm:text-xl">
-          Here is what we have to offer for the next ideal&nbsp;marketing website of yours
+        <h2 className="max-w-[700px] text-4xl font-normal leading-snug lg:text-[32px] sm:max-w-[370px] sm:text-2xl">
+          Here is what we have to offer for the next ideal marketing website of yours
         </h2>
-        <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-12 lg:gap-y-12 md:mt-10 md:gap-y-10 sm:mt-8 sm:grid-cols-2 sm:gap-y-8 xs:text-sm">
+        <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-14 lg:gap-y-14 md:mt-11 md:gap-y-11 sm:mt-10 sm:grid-cols-2 sm:gap-y-10">
           {items.map((item, index) => {
             const Icon = icons[index].component;
 
             return (
-              <li className="xs:max-w-[150px]" key={index}>
+              <li className="sm:max-w-[150px]" key={index}>
                 {Icon && (
                   <ImagePlaceholder className="w-20" width={80} height={62} aria-hidden>
                     <Icon />
                   </ImagePlaceholder>
                 )}
                 <p
-                  className="sm:hide-br mt-3 font-normal leading-snug md:mt-2.5 xs:leading-tight"
+                  className="sm:hide-br mt-3 text-lg font-normal leading-snug lg:text-base"
                   dangerouslySetInnerHTML={{ __html: item }}
                 />
               </li>

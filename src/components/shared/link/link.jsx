@@ -10,8 +10,8 @@ const styles = {
   base: 'inline-flex leading-none transition-colors duration-200',
   size: {
     '6xl': {
-      wrapper: 'text-6xl font-normal !leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl',
-      icon: 'mt-2.5 ml-4 h-7 lg:mt-2 lg:ml-3 lg:h-6 md:mt-1.5 md:ml-2 md:h-5 sm:ml-1.5 sm:h-4 xs:ml-1 xs:h-3',
+      wrapper: 'text-6xl font-normal !leading-snug lg:text-[42px] md:text-[32px] sm:text-2xl',
+      icon: 'mt-2.5 ml-4 h-7 lg:mt-2 lg:ml-3 lg:h-6 md:mt-1.5 md:ml-2 md:h-5 sm:ml-1 sm:h-3',
     },
     '4xl': {
       wrapper: 'text-4xl font-normal !leading-snug lg:text-3xl sm:text-xl',
@@ -22,8 +22,8 @@ const styles = {
       icon: 'ml-2 h-2.5 mt-0.5',
     },
     base: {
-      wrapper: 'text-base sm:text-sm',
-      icon: 'mt-[3px] ml-1.5 h-2.5 sm:ml-1 sm:h-2',
+      wrapper: 'text-base',
+      icon: 'mt-[3px] ml-1.5 h-2.5',
     },
   },
   theme: {

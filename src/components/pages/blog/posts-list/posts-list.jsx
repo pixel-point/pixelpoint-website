@@ -7,40 +7,37 @@ import Link from 'components/shared/link';
 import getBlogPostPath from 'utils/get-blog-post-path';
 
 const PostsList = ({ items }) => (
-  <section className="safe-paddings mt-32 lg:mt-28 md:mt-24 sm:mt-16">
+  <section className="safe-paddings mt-32 lg:mt-24 md:mt-20 sm:mt-16">
     <div className="container">
       <div className="grid-gap-x grid grid-cols-12 gap-y-16 lg:gap-y-12 md:gap-y-10 sm:block sm:space-y-8">
         {items.map(({ slug, frontmatter: { title, cover } }, index) => {
           const isFeatured = index === 0 || index === 1;
           return (
             <article
-              className={clsx(isFeatured ? 'col-span-6' : 'col-span-4 lg:col-span-6')}
+              className={clsx(isFeatured ? 'col-span-6' : 'col-span-4 md:col-span-6')}
               key={index}
             >
               <Link className="with-nested-link-red-hover block" to={getBlogPostPath(slug)}>
                 <GatsbyImage
                   className={clsx(
-                    'w-full lg:rounded-2xl',
-                    isFeatured ? 'rounded-2xl' : 'rounded-lg'
+                    'w-full lg:rounded-xl',
+                    isFeatured ? 'rounded-2xl' : 'rounded-xl'
                   )}
-                  imgClassName={clsx('lg:rounded-2xl', isFeatured ? 'rounded-2xl' : 'rounded-lg')}
+                  imgClassName={clsx('lg:rounded-xl', isFeatured ? 'rounded-2xl' : 'rounded-xl')}
                   image={getImage(cover)}
                   alt=""
                 />
                 <h1
                   className={clsx(
-                    'font-normal leading-snug md:text-lg sm:text-base',
-                    isFeatured ? 'mt-5 text-2xl lg:mt-4' : 'mt-4 text-xl lg:mt-3'
+                    'font-normal leading-snug',
+                    isFeatured
+                      ? 'my-4 text-2xl lg:my-3 lg:text-xl md:my-2.5 sm:text-lg'
+                      : 'my-2.5 text-lg'
                   )}
                 >
                   {title}
                 </h1>
-                <Link
-                  className="nested-link-red mt-3 lg:mt-2"
-                  size="base"
-                  theme="arrow-red"
-                  withoutHover
-                >
+                <Link className="nested-link-red" size="base" theme="arrow-red" withoutHover>
                   Read article
                 </Link>
               </Link>

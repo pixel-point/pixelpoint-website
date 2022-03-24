@@ -24,7 +24,7 @@ const BlogPostTemplate = ({
     })}
     headerTheme="black"
   >
-    <article className="safe-paddings pt-40 lg:pt-32 md:pt-28 sm:pt-20">
+    <article className="safe-paddings pt-40 md:pt-32 sm:pt-24">
       <div className="container-xs relative">
         <Hero {...frontmatter} slug={slug} />
         <Content content={body} />

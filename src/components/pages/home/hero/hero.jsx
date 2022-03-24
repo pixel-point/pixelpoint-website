@@ -125,60 +125,63 @@ const Hero = () => {
 
   return (
     <section
-      className="safe-paddings overflow-hidden bg-black text-white md:py-28 sm:py-20"
+      className="safe-paddings overflow-hidden bg-black text-white md:py-36 sm:pt-28 sm:pb-20"
       ref={wrapperRef}
     >
       <div className="container grid-gap-x relative grid grid-cols-2 md:block" ref={containerRef}>
-        <div className="relative z-10 text-6xl font-normal leading-snug lg:text-5xl md:mx-auto md:max-w-[590px] md:text-center md:text-4xl sm:text-3xl xs:text-2xl">
+        <div className="relative z-10 text-6xl font-normal leading-snug lg:text-[42px] md:mx-auto md:text-4xl sm:text-2xl">
           <div className="flex h-screen items-center md:block md:h-auto" ref={firstSectionRef}>
             <TitleAnimation
+              className="md:max-w-[538px]"
               tag="h2"
               items={firstSectionTitleItems}
               animationName="first"
               controls={firstSectionTitleControls}
             />
             <ImagePlaceholder
-              className="mx-auto mt-12 hidden max-w-[440px] md:block sm:mt-8 sm:max-w-full"
-              width={540}
-              height={438}
+              className="mx-auto mt-11 hidden max-w-[468px] md:block sm:mt-8"
+              width={468}
+              height={380}
               aria-hidden
             >
               <img src={lgIllustration1} alt="" />
             </ImagePlaceholder>
           </div>
           <div
-            className="flex items-center pt-[100px] pb-[500px] lg:pb-[400px] md:mt-28 md:block md:py-0 sm:mt-20"
+            className="flex items-center pt-[100px] pb-[500px] lg:pb-[400px] md:mt-36 md:block md:py-0 sm:mt-20"
             ref={secondSectionRef}
           >
             <TitleAnimation
+              className="md:max-w-[530px]"
               tag="h2"
               items={secondSectionTitleItems}
               animationName="first"
               controls={secondSectionTitleControls}
             />
             <ImagePlaceholder
-              className="mx-auto mt-12 hidden md:block sm:mt-8 sm:max-w-full"
-              width={734}
-              height={445}
+              className="mx-auto mt-11 hidden max-w-[590px] md:block sm:mt-8"
+              width={590}
+              height={700}
               aria-hidden
             >
               <img src={lgIllustration2} alt="" />
             </ImagePlaceholder>
           </div>
           <div
-            className="flex items-center pt-[200px] pb-[360px] lg:pt-[150px] lg:pb-[300px] md:mt-28 md:block md:py-0"
+            className="flex items-center pt-[200px] pb-[360px] lg:pt-[150px] lg:pb-[300px] md:mt-36 md:block md:py-0 sm:mt-20"
             ref={thirdSectionRef}
           >
             <TitleAnimation
+              className="md:max-w-[434px]"
               tag="h2"
               items={thirdSectionTitleItems}
               animationName="first"
               controls={thirdSectionTitleControls}
             />
             <ImagePlaceholder
-              className="mx-auto mt-12 hidden md:block sm:mt-8 sm:max-w-full"
-              width={724}
-              height={430}
+              className="mx-auto mt-11 hidden max-w-[590px] md:block sm:mt-8"
+              width={590}
+              height={766}
               aria-hidden
             >
               <img src={lgIllustration3} alt="" />
