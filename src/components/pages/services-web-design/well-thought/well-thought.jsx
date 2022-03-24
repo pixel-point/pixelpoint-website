@@ -9,7 +9,7 @@ const WellThought = () => (
       </h2>
       <StaticImage
         className="mt-20 rounded-2xl lg:mt-14 lg:rounded-xl md:mt-11 sm:mt-6"
-        imgclassName="rounded-2xl lg:rounded-xl"
+        imgClassName="rounded-2xl lg:rounded-xl"
         src="../well-thought/images/illustration.jpg"
         alt=""
         loading="lazy"
