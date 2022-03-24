@@ -16,7 +16,12 @@ const CaseStudies = ({ items }) => (
           <h1 className="sr-only">{`${title} case study`}</h1>
           <div className="lg:max-w-[436px] md:max-w-none">
             <Link className="inline-block" to={`${CASE_STUDIES_BASE_PATH}/${slug}`}>
-              <img className="invert" src={logo.publicURL} alt={`${title} logo`} loading="lazy" />
+              <img
+                className="invert lg:m-[-10%] lg:scale-[0.8]"
+                src={logo.publicURL}
+                alt={`${title} logo`}
+                loading="lazy"
+              />
             </Link>
             <p className="mt-4 text-lg font-normal leading-snug lg:mt-3 lg:text-base">
               {description}

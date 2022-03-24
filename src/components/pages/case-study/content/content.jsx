@@ -58,16 +58,18 @@ const Content = ({
         </figure>
         <div className="mt-12 hidden rounded-xl border border-gray-8 p-7 md:block sm:px-5 sm:py-6">
           <div className="flex items-center justify-between">
-            <img src={logo} alt={title} loading="eager" />
+            <img className="sm:m-[-10%] sm:scale-[0.7]" src={logo} alt={title} loading="eager" />
             {githubUrl && githubStars && (
               <Link
-                className="inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red"
+                className="inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red sm:p-1.5 sm:pr-3.5"
                 to={githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <GithubLogo className="h-7 text-white" aria-hidden />
-                <span className="ml-2 text-xs font-semibold text-white">{githubStars}</span>
+                <GithubLogo className="h-7 text-white sm:h-6" aria-hidden />
+                <span className="ml-2 text-xs font-semibold text-white sm:ml-1.5">
+                  {githubStars}
+                </span>
               </Link>
             )}
           </div>
