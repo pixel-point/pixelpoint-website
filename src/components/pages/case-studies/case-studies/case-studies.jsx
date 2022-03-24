@@ -17,13 +17,13 @@ const CaseStudies = ({ items }) => (
           <div className="lg:max-w-[436px] md:max-w-none">
             <Link className="inline-block" to={`${CASE_STUDIES_BASE_PATH}/${slug}`}>
               <img
-                className="invert lg:m-[-10%] lg:scale-[0.8]"
+                className="invert lg:translate-x-[-10%] lg:scale-[0.8]"
                 src={logo.publicURL}
                 alt={`${title} logo`}
                 loading="lazy"
               />
             </Link>
-            <p className="mt-4 text-lg font-normal leading-snug lg:mt-3 lg:text-base">
+            <p className="mt-4 text-lg font-normal leading-snug lg:mt-3 lg:text-base sm:mt-2">
               {description}
             </p>
             <figure className="mt-5 border-t border-t-gray-4 pt-5 lg:mt-4 lg:pt-4">

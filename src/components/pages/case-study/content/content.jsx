@@ -56,9 +56,14 @@ const Content = ({
             </span>
           </figcaption>
         </figure>
-        <div className="mt-12 hidden rounded-xl border border-gray-8 p-7 md:block sm:px-5 sm:py-6">
+        <div className="mt-12 hidden rounded-xl border border-gray-8 p-7 md:block sm:px-5 sm:pt-4 sm:pb-6">
           <div className="flex items-center justify-between">
-            <img className="sm:m-[-10%] sm:scale-[0.7]" src={logo} alt={title} loading="eager" />
+            <img
+              className="sm:translate-x-[-15%] sm:scale-[0.7]"
+              src={logo}
+              alt={title}
+              loading="eager"
+            />
             {githubUrl && githubStars && (
               <Link
                 className="inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red sm:p-1.5 sm:pr-3.5"
@@ -73,7 +78,7 @@ const Content = ({
               </Link>
             )}
           </div>
-          <div className="mt-6 flex md:mt-7 md:space-x-4 md:border-t md:border-t-gray-9 md:pt-7 sm:mt-6 sm:block sm:space-x-0 sm:space-y-6 sm:pt-6">
+          <div className="mt-6 flex md:mt-7 md:space-x-4 md:border-t md:border-t-gray-9 md:pt-7 sm:mt-4 sm:block sm:space-x-0 sm:space-y-6 sm:pt-6">
             {[
               { title: 'Provided services', items: services },
               { title: 'Technology stack', items: stack },
