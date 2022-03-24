@@ -4,12 +4,12 @@ import clsx from 'clsx';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import PropTypes from 'prop-types';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 
 import Link from 'components/shared/link';
+import useGithubRepoStars from 'hooks/use-github-repo-stars';
 import GithubLogo from 'images/github.inline.svg';
 import QuoteIcon from 'images/quote.inline.svg';
-import getGithubRepoAPILink from 'utils/get-github-repo-api-link';
 import getGithubRepoLink from 'utils/get-github-repo-link';
 
 const Content = ({
@@ -24,15 +24,7 @@ const Content = ({
   services,
   stack,
 }) => {
-  const [githubStars, setGithubStars] = useState();
-
-  useEffect(() => {
-    fetch(getGithubRepoAPILink(githubUsername, githubRepoName))
-      .then((response) => response.json())
-      .then(({ stargazers_count }) =>
-        setGithubStars(new Intl.NumberFormat('en-US').format(stargazers_count))
-      );
-  });
+  const githubStars = useGithubRepoStars(githubUsername, githubRepoName);
 
   return (
     <article className="safe-paddings bg-black pt-40 text-white lg:pt-36 sm:pt-24">

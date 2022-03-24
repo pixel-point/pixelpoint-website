@@ -1,16 +1,16 @@
 import clsx from 'clsx';
 import { useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import Link from 'components/shared/link';
 import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
+import useGithubRepoStars from 'hooks/use-github-repo-stars';
 import GithubLogo from 'images/github.inline.svg';
-import getGithubRepoAPILink from 'utils/get-github-repo-api-link';
 
 const Card = ({ logo, title, description, githubUsername, githubRepoName, slug }) => {
-  const [githubStars, setGithubStars] = useState();
+  const githubStars = useGithubRepoStars(githubUsername, githubRepoName);
 
   const { RiveComponent, rive } = useRive({
     src: '/animations/shared/case-studies-card.riv',
@@ -19,14 +19,6 @@ const Card = ({ logo, title, description, githubUsername, githubRepoName, slug }
       fit: Fit.FitHeight,
       alignment: Alignment.Center,
     }),
-  });
-
-  useEffect(() => {
-    fetch(getGithubRepoAPILink(githubUsername, githubRepoName))
-      .then((response) => response.json())
-      .then(({ stargazers_count }) =>
-        setGithubStars(new Intl.NumberFormat('en-US').format(stargazers_count))
-      );
   });
 
   const handleMouseEnter = () => {
