@@ -33,7 +33,6 @@ keynotes:
   - Github Stars increase from 200 to 1.4k
   - 'Flagsmith made it to Product Hunt top #5'
 isOpenSource: true
-isDraft: true
 position: 6
 ---
 

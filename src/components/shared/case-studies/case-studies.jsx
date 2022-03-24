@@ -112,7 +112,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug }) => {
       return false;
     });
 
-  const itemsToRender = itemsType === 'open-source' ? items.slice(0, 6) : items;
+  const itemsToRender = itemsType === 'open-source' ? items.slice(0, 3) : items;
 
   return (
     <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
