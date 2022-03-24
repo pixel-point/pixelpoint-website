@@ -9,14 +9,14 @@ import QuoteIcon from 'images/quote.inline.svg';
 
 const Quote = ({ authorName, children }) => (
   <figure
-    className="rounded-2xl p-7"
+    className="rounded-2xl p-7 lg:rounded-xl"
     style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
   >
-    <QuoteIcon className="h-7 lg:h-6 sm:h-5" aria-hidden />
-    <blockquote className="mt-4 text-2xl lg:mt-3 lg:text-xl sm:mt-2.5 sm:text-lg">
+    <QuoteIcon className="w-10 sm:w-8" aria-hidden />
+    <blockquote className="mt-4 text-2xl sm:text-xl">
       <p className="my-0 before:hidden after:hidden">{children}</p>
     </blockquote>
-    <figcaption className="mt-5 flex items-center lg:mt-4 md:mt-3.5">
+    <figcaption className="mt-5 flex items-center">
       <span className="text-base font-normal">{authorName}</span>
     </figcaption>
   </figure>
