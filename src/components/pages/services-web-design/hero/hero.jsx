@@ -27,7 +27,7 @@ const Hero = () => {
           Get your idea shaped into <span className="text-red">Astonishing</span> website
         </h1>
         <div
-          className="mt-[-306px] flex justify-center lg:mt-[-176px] lg:block md:mt-[-132px] sm:mt-[-70px] xs:mt-[-48px]"
+          className="mt-[-20vw] flex justify-center lg:mt-[-176px] lg:block md:mt-[-132px] sm:mt-[-70px] xs:mt-[-48px]"
           ref={animationWrapperRef}
         >
           <ImagePlaceholder
