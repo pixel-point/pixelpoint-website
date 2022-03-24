@@ -3,8 +3,8 @@ logo: logo.svg
 title: Browserless
 description: Web browser automation tool
 websiteUrl: https://browserless.io
-githubUrl: https://github.com/browserless/chrome
-githubStars: 4,231
+githubUsername: browserless
+githubRepoName: chrome
 quote:
   text: Pixel Point is hands-down the best agency I’ve had the pleasure of working with. Their knowledge of best practices, technologies and web performance are comprehensive. I wouldn’t hesitate to say that they are a key component in what differentiates browserless.io from our competitors.
   authorName: Joel Griffith

@@ -3,8 +3,8 @@ logo: logo.svg
 title: Drone
 description: Self-service continuous integration platform
 websiteUrl: https://drone.io
-githubUrl: https://github.com/harness/drone
-githubStars: 24,576
+githubUsername: harness
+githubRepoName: drone
 quote:
   text: You guys revived my faith in open source! Drone has finally obtained a proper brand image and I have dozens of positive feedback from our users about new look and feel of the product itself. Bravo!
   authorName: Brad Rydzewski

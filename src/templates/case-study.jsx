@@ -19,8 +19,8 @@ const CaseStudyTemplate = ({
     title: frontmatter.title,
     description: frontmatter.description,
     websiteUrl: frontmatter.websiteUrl,
-    githubUrl: frontmatter.githubUrl,
-    githubStars: frontmatter.githubStars,
+    githubUsername: frontmatter.githubUsername,
+    githubRepoName: frontmatter.githubRepoName,
     quote: frontmatter.quote,
     text: body,
     services: frontmatter.services,
@@ -55,8 +55,8 @@ export const query = graphql`
         title
         description
         websiteUrl
-        githubUrl
-        githubStars
+        githubUsername
+        githubRepoName
         quote {
           text
           authorName

@@ -3,8 +3,8 @@ logo: logo.svg
 title: Cilium
 description: eBPF-based Networking, Observability, and Security
 websiteUrl: https://cilium.io
-githubUrl: https://github.com/cilium/cilium
-githubStars: 11,127
+githubUsername: cilium
+githubRepoName: cilium
 quote:
   text: Awaiting for testimonials Awaiting for testimonials Awaiting for testimonials Awaiting for testimonials Awaiting for testimonials Awaiting for testimonials
   authorName: Thomas Graf

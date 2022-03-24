@@ -34,7 +34,7 @@ const CASE_STUDY_REQUIRED_FIELDS = [
   'position',
 ];
 const FEATURED_CASE_STUDY_REQUIRED_FIELDS = ['cover'];
-const OPEN_SOURCE_CASE_STUDY_REQUIRED_FIELDS = ['githubUrl', 'githubStars'];
+const OPEN_SOURCE_CASE_STUDY_REQUIRED_FIELDS = ['githubUsername', 'githubRepoName'];
 
 async function createBlogPage({ actions }) {
   const { createPage } = actions;
@@ -135,8 +135,8 @@ async function createCaseStudies({ graphql, actions }) {
             title
             description
             websiteUrl
-            githubUrl
-            githubStars
+            githubUsername
+            githubRepoName
             quote {
               text
               authorName
