@@ -12,7 +12,12 @@ const Hero = () => (
         See how we have helped our customers achieve their goals
       </p>
       <div className="mt-14 flex justify-center lg:mt-11 md:mt-10 sm:mt-4" aria-hidden>
-        <img className="sm:min-w-[862px]" src={illustration} alt="" loading="eager" />
+        <img
+          className="sm:min-w-[862px] sm:translate-x-[64px]"
+          src={illustration}
+          alt=""
+          loading="eager"
+        />
       </div>
     </div>
   </section>

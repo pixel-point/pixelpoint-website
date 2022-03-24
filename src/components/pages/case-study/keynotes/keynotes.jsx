@@ -71,14 +71,21 @@ const Keynotes = ({ items, iconsName }) => (
               key={index}
             >
               {Icon && <Icon className="h-18" aria-hidden />}
-              <p className="mt-3 text-lg font-normal leading-snug lg:text-base">{item}</p>
+              <p className="mt-3 text-lg font-normal leading-snug lg:text-base sm:text-sm">
+                {item}
+              </p>
             </li>
           );
         })}
       </ul>
     </div>
     <div className="mt-32 flex justify-center lg:mt-28 md:mt-24 sm:mt-11" aria-hidden>
-      <img className="sm:min-w-[862px]" src={illustration} alt="" loading="lazy" />
+      <img
+        className="sm:min-w-[862px] sm:translate-x-[64px]"
+        src={illustration}
+        alt=""
+        loading="lazy"
+      />
     </div>
   </section>
 );
