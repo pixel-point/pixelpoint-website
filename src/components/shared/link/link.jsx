@@ -47,7 +47,7 @@ const styles = {
     },
     'arrow-red': {
       wrapper: {
-        base: 'items-center font-semibold text-red',
+        base: 'items-center font-semibold text-red whitespace-nowrap',
         hover: 'hover:text-blue',
       },
     },
