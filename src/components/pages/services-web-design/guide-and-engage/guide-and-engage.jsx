@@ -32,9 +32,8 @@ const GuideAndEngage = () => {
       ref={wrapperRef}
     >
       <div className="container">
-        <h2 className="sm::text-2xl mx-auto max-w-[950px] text-center text-6xl font-normal leading-snug lg:max-w-[690px] lg:text-[42px] md:max-w-[650px] md:text-4xl sm:text-2xl">
-          <span className="text-red">Guide and engage</span> your customers with sleek, on-point
-          animations
+        <h2 className="sm::text-2xl with-text-highlight-red mx-auto max-w-[950px] text-center text-6xl font-normal leading-snug lg:max-w-[690px] lg:text-[42px] md:max-w-[650px] md:text-4xl sm:text-2xl">
+          <span>Guide and engage</span> your customers with sleek, on-point animations
         </h2>
         <ImagePlaceholder
           className="mt-20 lg:mt-14 md:mt-11 sm:mt-8"

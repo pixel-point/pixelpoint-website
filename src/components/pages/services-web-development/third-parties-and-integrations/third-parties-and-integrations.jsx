@@ -54,8 +54,8 @@ const hostingPlatformsItems = [
 const ThirdPartiesAndIntegrations = () => (
   <section className="safe-paddings mt-52 lg:mt-36 sm:mt-20">
     <div className="container">
-      <h2 className="mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug lg:max-w-[568px] lg:text-[42px] md:max-w-[458px] md:text-4xl sm:max-w-none sm:text-2xl">
-        Choosing <span className="text-red">best-in-class</span> third-party integrations
+      <h2 className="with-text-highlight-red mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug lg:max-w-[568px] lg:text-[42px] md:max-w-[458px] md:text-4xl sm:max-w-none sm:text-2xl">
+        Choosing <span>best-in-class</span> third-party integrations
       </h2>
       <h3 className="mt-20 text-4xl leading-snug lg:mt-14 lg:text-3xl md:mt-10 md:text-xl sm:mt-6 sm:text-lg">
         Flexible content management solutions

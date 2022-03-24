@@ -9,6 +9,8 @@
 
 /* Components */
 @import './container.css';
+@import './with-link.css';
+@import './with-text-highlight.css';
 @import '../components/pages/services-web-development/tailwindcss/tailwindcss.css';
 @import '../components/pages/blog-post/content/content.css';
 

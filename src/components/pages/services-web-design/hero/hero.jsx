@@ -23,8 +23,8 @@ const Hero = () => {
   return (
     <section className="safe-paddings overflow-hidden bg-black pt-40 text-white lg:pt-36 sm:pt-28">
       <div className="container">
-        <h1 className="relative z-10 mx-auto max-w-[660px] text-center text-6xl font-normal leading-snug lg:max-w-[570px] lg:text-[42px] md:max-w-[440px] md:text-4xl sm:max-w-[290px] sm:text-2xl">
-          Get your idea shaped into <span className="text-red">Astonishing</span> website
+        <h1 className="with-text-highlight-red relative z-10 mx-auto max-w-[660px] text-center text-6xl font-normal leading-snug lg:max-w-[570px] lg:text-[42px] md:max-w-[440px] md:text-4xl sm:max-w-[290px] sm:text-2xl">
+          Get your idea shaped into <span>Astonishing</span> website
         </h1>
         <div
           className="mt-[-366px] flex justify-center 2xl:mt-[-20vw] lg:mt-[-22vw] lg:block md:mt-[-20vw] sm:mt-[-18vw]"

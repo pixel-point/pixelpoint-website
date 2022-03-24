@@ -30,22 +30,19 @@ const Hero = () => {
       ref={animationWrapperRef}
     >
       <div className="container grid-gap-x grid grid-cols-12 md:flex md:flex-col">
-        <h1 className="hidden font-normal  leading-snug md:block md:text-4xl sm:text-2xl">
-          Sharing Pixel Point <span className="text-red">Collective experience:</span> OS, tools &
-          processes
+        <h1 className="with-text-highlight-red hidden  font-normal leading-snug md:block md:text-4xl sm:text-2xl">
+          Sharing Pixel Point <span>Collective experience:</span> OS, tools & processes
         </h1>
         <div className="col-span-6 md:order-last md:mt-8 sm:mt-5">
-          <h1 className="text-6xl font-normal leading-snug lg:max-w-[458px] lg:text-[42px] md:hidden">
-            Sharing Pixel Point <span className="text-red">Collective experience:</span> OS, tools &
-            processes
+          <h1 className="with-text-highlight-red text-6xl font-normal leading-snug lg:max-w-[458px] lg:text-[42px] md:hidden">
+            Sharing Pixel Point <span>Collective experience:</span> OS, tools & processes
           </h1>
           <figure className="mt-8 border-t border-t-gray-9 pt-8 lg:mt-0 sm:pt-5">
             <QuoteIcon className="w-10 lg:w-8" aria-hidden />
             <blockquote className="mt-4 text-2xl lg:text-xl">
-              <p>
+              <p className="with-text-highlight-red">
                 There is a key for sustainable growth and successful future for the humanity, and it
-                is <span className="text-red">Open Source</span> world with its community shared
-                knowledge
+                is <span>Open Source</span> world with its community shared knowledge
               </p>
             </blockquote>
             <figcaption className="mt-5 flex items-center space-x-4 lg:mt-4 lg:space-x-2.5 md:mt-3.5 md:space-x-2.5 sm:block sm:space-x-0">

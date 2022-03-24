@@ -16,8 +16,8 @@ const BlogTemplate = ({ data: { featuredPosts, notFeaturedPosts } }) => (
     <CaseStudies
       title={
         <>
-          Our team loves <span className="text-red">Open Source</span>. We designed and developed
-          many projects in this space:
+          Our team loves <span>Open Source</span>. We designed and developed many projects in this
+          space:
         </>
       }
     />

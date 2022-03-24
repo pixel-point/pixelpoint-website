@@ -23,8 +23,8 @@ const Author = () => (
         />
 
         <div>
-          <h2 className="text-2xl font-normal leading-snug sm:text-xl">
-            Written by <span className="text-red">Alex Barashkov</span>
+          <h2 className="with-text-highlight-red text-2xl font-normal leading-snug sm:text-xl">
+            Written by <span>Alex Barashkov</span>
           </h2>
           <p className="mt-3 sm:mt-2.5 sm:text-base">
             CEO at Pixel Point. Software engineer with 10+ years of web development experience.

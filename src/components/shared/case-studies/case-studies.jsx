@@ -117,7 +117,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug }) => {
   return (
     <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
       <div className="container">
-        <h2 className="max-w-[800px] text-4xl font-normal leading-snug lg:text-[32px] sm:text-2xl">
+        <h2 className="with-text-highlight-red max-w-[800px] text-4xl font-normal leading-snug lg:text-[32px] sm:text-2xl">
           {title}{' '}
           {/* {!withoutTitleLink && (
             <Link to="/case-studies" size="4xl" theme="arrow-red">
