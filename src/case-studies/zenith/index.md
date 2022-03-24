@@ -3,8 +3,8 @@ logo: logo.svg
 title: Zenith
 description: Serverless OS alternative to AWS Aurora Postgres
 websiteUrl: https://zenith.tech
-githubUrl: https://github.com/zenithdb/zenith
-githubStars: <1k
+githubUsername: zenithdb
+githubRepoName: zenith
 quote:
   text: Highly recommend Pixel Point, the quality of their work is second to none. Zenith’s new website looks absolutely fantastic and we’re already getting praised from new clients. The staff is very helpful and prompt to all your needs. Thank you all!
   authorName: Stas Kelvich

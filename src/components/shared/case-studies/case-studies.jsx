@@ -1,13 +1,17 @@
+import clsx from 'clsx';
 import { useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import Link from 'components/shared/link';
 import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
 import GithubLogo from 'images/github.inline.svg';
+import getGithubRepoAPILink from 'utils/get-github-repo-api-link';
 
-const Card = ({ logo, title, description, githubStars, slug }) => {
+const Card = ({ logo, title, description, githubUsername, githubRepoName, slug }) => {
+  const [githubStars, setGithubStars] = useState();
+
   const { RiveComponent, rive } = useRive({
     src: '/animations/shared/case-studies-card.riv',
     autoplay: false,
@@ -15,6 +19,14 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
       fit: Fit.FitHeight,
       alignment: Alignment.Center,
     }),
+  });
+
+  useEffect(() => {
+    fetch(getGithubRepoAPILink(githubUsername, githubRepoName))
+      .then((response) => response.json())
+      .then(({ stargazers_count }) =>
+        setGithubStars(new Intl.NumberFormat('en-US').format(stargazers_count))
+      );
   });
 
   const handleMouseEnter = () => {
@@ -35,15 +47,22 @@ const Card = ({ logo, title, description, githubStars, slug }) => {
           loading="lazy"
           alt={`${title} logo`}
         />
-        <div className="absolute top-3 left-3 z-10 flex items-center lg:top-2.5 lg:left-2.5 md:top-3 md:left-3">
-          <GithubLogo className="h-[26px] text-white" />
-          <p
-            className="ml-2 text-xs font-semibold text-white"
-            aria-label={`${githubStars} stars on Github`}
+        {githubUsername && githubRepoName && (
+          <div
+            className={clsx(
+              'invisible absolute top-3 left-3 z-10 flex items-center opacity-0 transition-[opacity,visibility] duration-200 lg:top-2.5 lg:left-2.5 md:top-3 md:left-3',
+              githubStars && '!visible !opacity-100'
+            )}
           >
-            {githubStars}
-          </p>
-        </div>
+            <GithubLogo className="h-[26px] text-white" />
+            <p
+              className="ml-2 text-xs font-semibold text-white"
+              aria-label={`${githubStars} stars on Github`}
+            >
+              {githubStars}
+            </p>
+          </div>
+        )}
         <RiveComponent className="absolute top-0 left-0 right-0 bottom-0" />
       </div>
       <p className="mt-2.5 text-lg font-normal leading-snug">{description}</p>
@@ -60,7 +79,8 @@ Card.propTypes = {
   }).isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  githubStars: PropTypes.string.isRequired,
+  githubUsername: PropTypes.string.isRequired,
+  githubRepoName: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
 };
 
@@ -85,7 +105,8 @@ const CaseStudies = ({ title, itemsType, activeItemSlug }) => {
             }
             title
             description
-            githubStars
+            githubUsername
+            githubRepoName
             isOpenSource
             isFeatured
           }
