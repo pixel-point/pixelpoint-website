@@ -4,7 +4,7 @@ export default function useGithubRepoStars(username, repoName) {
   const [githubStars, setGithubStars] = useState();
 
   useEffect(() => {
-    if (fetch) {
+    if (typeof window !== 'undefined') {
       fetch(`https://api.github.com/repos/${username}/${repoName}`)
         .then((response) => response.json())
         .then(({ stargazers_count }) =>
