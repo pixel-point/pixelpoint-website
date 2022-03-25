@@ -25,7 +25,7 @@ const Hero = () => {
 
   return (
     <section
-      className="safe-paddings overflow-hidden bg-black pt-28 text-center text-white sm:pt-24"
+      className="safe-paddings overflow-hidden bg-black pt-32 text-center text-white sm:pt-24"
       ref={wrapperRef}
     >
       <div className="container">

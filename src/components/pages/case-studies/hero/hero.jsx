@@ -4,7 +4,7 @@ import illustrationSm from './images/illustration-sm.svg';
 import illustration from './images/illustration.svg';
 
 const Hero = () => (
-  <section className="safe-paddings overflow-hidden bg-black pt-28 text-center text-white sm:pt-24">
+  <section className="safe-paddings overflow-hidden bg-black pt-32 text-center text-white sm:pt-24">
     <div className="container">
       <h1 className="text-6xl font-normal leading-snug lg:text-5xl md:text-4xl sm:text-3xl xs:text-2xl">
         Case studies
