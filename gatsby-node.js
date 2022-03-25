@@ -77,9 +77,7 @@ async function createBlogPosts({ graphql, actions }) {
 
   result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
     // Do not create a post in production if it's draft
-    if (process.env.NODE_ENV === 'production' && fields.isDraft) {
-      return;
-    }
+    if (process.env.NODE_ENV === 'production' && fields.isDraft) return;
 
     // Required fields validation
     POST_REQUIRED_FIELDS.forEach((fieldName) => {
@@ -154,9 +152,7 @@ async function createCaseStudies({ graphql, actions }) {
 
   result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
     // Do not create a case study in production if it's draft
-    if (process.env.NODE_ENV === 'production' && fields.isDraft) {
-      return;
-    }
+    if (process.env.NODE_ENV === 'production' && fields.isDraft) return;
 
     // Required fields validation
     CASE_STUDY_REQUIRED_FIELDS.forEach((fieldName) => {
@@ -214,10 +210,8 @@ exports.onCreateNode = ({ node, actions }) => {
 };
 
 exports.createPages = async (options) => {
-  if (process.env.NODE_ENV !== 'production') {
-    await createBlogPage(options);
-    await createBlogPosts(options);
-  }
+  await createBlogPage(options);
+  await createBlogPosts(options);
   await createCaseStudiesPage(options);
   await createCaseStudies(options);
 };
