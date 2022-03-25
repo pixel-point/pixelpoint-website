@@ -24,10 +24,10 @@ const links = [
       },
     ],
   },
-  // {
-  //   text: 'Case studies',
-  //   to: '/case-studies',
-  // },
+  {
+    text: 'Case studies',
+    to: '/case-studies',
+  },
   // {
   //   text: 'Blog',
   //   to: '/blog',

@@ -7,6 +7,7 @@ const links = [
   [
     { text: 'Web design', to: '/services/web-design' },
     { text: 'Web development', to: '/services/web-development' },
+    { text: 'Case studies', to: '/case-studies' },
   ],
   // [
   //   { text: 'Case studies', to: '/case-studies' },

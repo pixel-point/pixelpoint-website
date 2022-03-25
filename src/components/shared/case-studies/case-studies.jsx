@@ -76,8 +76,7 @@ Card.propTypes = {
   slug: PropTypes.string.isRequired,
 };
 
-// const CaseStudies = ({ title, itemsType, withoutTitleLink }) => {
-const CaseStudies = ({ title, itemsType, activeItemSlug }) => {
+const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => {
   const {
     allMdx: { nodes },
   } = useStaticQuery(graphql`
@@ -130,13 +129,13 @@ const CaseStudies = ({ title, itemsType, activeItemSlug }) => {
   return (
     <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
       <div className="container">
-        <h2 className="with-text-highlight-red max-w-[800px] text-4xl font-normal leading-snug lg:text-[32px] sm:text-2xl">
+        <h2 className="with-text-highlight-red max-w-[950px] text-4xl font-normal leading-snug lg:text-[32px] sm:text-2xl">
           {title}{' '}
-          {/* {!withoutTitleLink && (
+          {!withoutTitleLink && (
             <Link to="/case-studies" size="4xl" theme="arrow-red">
               See all cases
             </Link>
-          )} */}
+          )}
         </h2>
         <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-14 lg:gap-y-14 md:mt-11 md:grid-cols-2 md:gap-y-11 sm:mt-10 sm:block sm:space-y-10">
           {itemsToRender.map(({ slug, frontmatter }, index) => (
@@ -154,13 +153,13 @@ CaseStudies.propTypes = {
   title: PropTypes.node.isRequired,
   itemsType: PropTypes.oneOf(['open-source', 'not-featured']),
   activeItemSlug: PropTypes.string,
-  // withoutTitleLink: PropTypes.bool,
+  withoutTitleLink: PropTypes.bool,
 };
 
 CaseStudies.defaultProps = {
   itemsType: 'open-source',
   activeItemSlug: '',
-  // withoutTitleLink: false,
+  withoutTitleLink: false,
 };
 
 export default CaseStudies;

@@ -1,6 +1,6 @@
 ---
 logo: logo.svg
-title: k6
+title: Grafana k6
 description: Load testing tool and cloud service
 websiteUrl: https://k6.io
 githubUsername: grafana
@@ -8,7 +8,7 @@ githubRepoName: k6
 quote:
   text: My special thanks to the Pixel Point team! The crocodile animation, fantastic design and attention to detail definitely helped to make this acquisition happen. It was one of the first things pointed out [by Grafana] in our initial acquisition discussions. Our website and look-and-feel was miles ahead of competition.
   authorName: Pavel Suwala
-  authorPosition: CTO of k6
+  authorPosition: CTO of Grafana k6
   authorPhoto: author-photo.jpg
 services:
   - Brand Identity

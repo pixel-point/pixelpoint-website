@@ -28,7 +28,7 @@ const ServicesWebDevelopmentPage = () => (
     <ThirdPartiesAndIntegrations />
     <Lighthouse />
     <CaseStudies
-      title="There are numerous living proofs of our work out there:"
+      title="There are numerous living proofs of our work out there."
       itemsType="open-source"
     />
     <Blog />
