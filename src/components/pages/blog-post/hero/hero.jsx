@@ -20,7 +20,7 @@ const Hero = ({ title, description, cover, slug }) => (
           alt="Alex Barashkov"
           loading="eager"
         />
-        <span className="ml-4 text-base font-normal sm:space-x-3">
+        <span className="ml-4 text-base font-normal sm:ml-3">
           Alex Barashkov — CEO at Pixel Point
         </span>
       </div>
