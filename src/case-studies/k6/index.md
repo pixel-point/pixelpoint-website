@@ -1,6 +1,6 @@
 ---
 logo: logo.svg
-title: k6
+title: Grafana k6
 description: Load testing tool and cloud service
 websiteUrl: https://k6.io
 githubUsername: grafana

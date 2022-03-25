@@ -13,14 +13,7 @@ const BlogTemplate = ({ data: { featuredPosts, notFeaturedPosts } }) => (
   <Layout seo={SEO_DATA.blog} headerTheme="white">
     <Hero />
     <PostsList items={[...featuredPosts.nodes, ...notFeaturedPosts.nodes]} />
-    <CaseStudies
-      title={
-        <>
-          Our team loves <span>Open Source</span>. We designed and developed many projects in this
-          space:
-        </>
-      }
-    />
+    <CaseStudies title="Our team loves Open Source. We designed and developed many projects in this space." />
     <CTA withTopMargin />
   </Layout>
 );

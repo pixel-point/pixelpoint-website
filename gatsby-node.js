@@ -236,7 +236,7 @@ exports.createPages = async (options) => {
   ) {
     await createBlogPage(options);
     await createBlogPosts(options);
-    await createCaseStudiesPage(options);
   }
+  await createCaseStudiesPage(options);
   await createCaseStudies(options);
 };

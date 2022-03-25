@@ -1,6 +1,6 @@
 @layer components {
   .with-text-highlight-red {
-    span {
+    > span {
       @apply whitespace-nowrap text-red;
     }
   }
