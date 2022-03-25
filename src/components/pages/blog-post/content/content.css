@@ -81,11 +81,60 @@
     }
 
     pre {
-      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-9 px-6 py-4 text-base text-white md:px-4 md:py-3 md:text-sm;
+      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-1 px-6 py-4 text-base text-black md:px-4 md:py-3 md:text-sm;
+
+      .token.atrule,
+      .token.attr-value,
+      .token.keyword {
+        @apply text-[#0f2cbd];
+      }
+
+      .token.function,
+      .token.class-name {
+        @apply text-[#d41153];
+      }
+
+      .token.operator,
+      .token.entity,
+      .token.url,
+      .language-css .token.string,
+      .style .token.string {
+        @apply text-[#7e428a];
+      }
+
+      .token.property,
+      .token.tag,
+      .token.boolean,
+      .token.number,
+      .token.constant,
+      .token.symbol,
+      .token.deleted {
+        @apply text-[#82174c];
+      }
+
+      .token.selector,
+      .token.attr-name,
+      .token.string,
+      .token.char,
+      .token.builtin,
+      .token.inserted {
+        @apply text-[#00994c];
+      }
+
+      .token.punctuation {
+        @apply text-[#737373];
+      }
+
+      .token.comment,
+      .token.prolog,
+      .token.doctype,
+      .token.cdata {
+        @apply text-[#a6a6a6];
+      }
     }
 
     :not(pre) > code {
-      @apply rounded-sm bg-gray-2 px-1.5 py-0.5 text-base text-red md:px-1 md:py-px md:text-sm;
+      @apply rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-[#d41153] md:px-1 md:py-px md:text-sm;
     }
 
     iframe {

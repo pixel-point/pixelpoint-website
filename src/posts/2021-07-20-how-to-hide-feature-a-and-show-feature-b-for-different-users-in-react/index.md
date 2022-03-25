@@ -74,13 +74,13 @@ Let's create our first feature, we will name it - "pinned_projects". Beta users 
 
 Next step we need to install `flagsmith-react` package
 
-```javascript
+```bash
 npm i flagsmith-react
 ```
 
 As an initial step, we will wrap our \_app.js with FlagsmithProvider and pass Flagsmith API key, which we can get from the Settings page in Flagsmith UI. FlagsmithProvider will allow to use useFlagsmith hook and pass the state to underlying components.
 
-```javascript
+```jsx
 import Auth from 'components/auth';
 import { Provider as SessionProvider } from 'next-auth/client';
 import { FlagsmithProvider } from 'flagsmith-react';
@@ -106,7 +106,7 @@ export default function MyApp({ Component, pageProps }) {
 
 `FlagsmithProvider` will initialise Flagsmith javascript client under the hood and you will be able to start getting flags declared in the UI. But it does not make too much sense unless we get user-specific flags. To let Flagsmith know which user requests flags, we need to identify him. The perfect place for this Auth component, that responsible for checking user session and redirecting users to the sign-in page in case it's expired.
 
-```javascript
+```jsx
 import { useSession, signIn } from 'next-auth/client';
 import { useEffect } from 'react';
 import { useFlagsmith } from 'flagsmith-react';
@@ -156,7 +156,7 @@ Let's create first segment and call it `beta_opt_in` . Go to Segments → Create
 
 The final step is to add a check to our React component using `hasFeature("pinned_projects")`.
 
-```javascript
+```jsx
 const Home = () => {
   const { hasFeature } = useFlagsmith();
 
