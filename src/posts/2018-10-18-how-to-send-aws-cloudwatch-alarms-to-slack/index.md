@@ -49,7 +49,7 @@ Finally, type a role name, such as “cloudwatch-to-slack-role,” click on the 
 
 To deploy the AWS Lambda function, you need to clone the repository and have Node.js installed on your local machine. Especially for that guide, we contributed significantly in the repository to get a better configuration process.
 
-```javascript
+```bash
 git clone git@github.com:assertible/lambda-cloudwatch-slack.git
 cd lambda-cloudwatch-slack
 cp .env.example .env
@@ -81,7 +81,7 @@ Fill in the AWS Access Key and Secret with your keys from the first step.
 
 Now we’re ready to deploy; simply execute the following command in your terminal from the folder with the repository we cloned:
 
-```javascript
+```bash
 npm install
 npm run deploy
 ```

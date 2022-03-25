@@ -25,7 +25,7 @@ Node.js app in a docker container.
 
 If you already have the Node.js app your Dockerfile, it probably looks like this:
 
-```javascript
+```Dockerfile
 FROM node:10-alpineEXPOSE 3000WORKDIR /usr/src/appCOPY package*.json ./
 RUN npm installCOPY . .CMD [ "npm", "start" ]
 ```
@@ -36,7 +36,7 @@ In order to continue, we need to build our Dockerfile. I recommend using the VS 
 
 To enable the debugger in Node.js, we need to use — inspect or — inspect-brk, but because our app will be launched inside Docker, we also need to allow access from external networks to our debugger by passing 0.0.0.0.
 
-```javascript
+```json
 "scripts": {
     "start": "node --inspect=0.0.0.0 index.js"
   },
@@ -61,24 +61,24 @@ Then choose Docker: Node.js:
 
 This will generate a launch.json file with the following content:
 
-```javascript
+```json
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Docker: Attach to Node",
-            "type": "node",
-            "request": "attach",
-            "port": 9229,
-            "address": "localhost",
-            "localRoot": "${workspaceFolder}",
-            "remoteRoot": "/usr/src/app",
-            "protocol": "inspector"
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Docker: Attach to Node",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/usr/src/app",
+      "protocol": "inspector"
+    }
+  ]
 }
 ```
 
@@ -90,7 +90,7 @@ Go to the Debug Page at VS code, press the “Play” button and enjoy debugging
 
 The small difference comes when we want to use the debugger with nodemon. To start with, your script in package.json will look like this:
 
-```javascript
+```json
 "start": "nodemon --inspect=0.0.0.0 src/index.js",
 ```
 
@@ -98,25 +98,25 @@ Then, because nodemon will restart your app on each change, your debugger will l
 
 So your launch.json should look like this:
 
-```javascript
+```json
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Docker: Attach to Node",
-            "type": "node",
-            "request": "attach",
-            "port": 9229,
-            "address": "localhost",
-            "localRoot": "${workspaceFolder}",
-            "remoteRoot": "/usr/src/app",
-            "protocol": "inspector",
-            "restart": true
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Docker: Attach to Node",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/usr/src/app",
+      "protocol": "inspector",
+      "restart": true
+    }
+  ]
 }
 ```
 
@@ -130,7 +130,7 @@ A third option is to run your docker images with docker-compose, which is good i
 
 Create a docker-compose.yaml in your app folder with the following content:
 
-```javascript
+```yaml
 version: '3'services:
   example-service:
     build: .

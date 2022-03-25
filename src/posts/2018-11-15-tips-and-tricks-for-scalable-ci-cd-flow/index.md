@@ -52,15 +52,15 @@ Companies today increasingly use microservices architecture; a unified pipeline 
 - To tag a Docker image, you can use a concatenation of a build branch and build number. As a result, you will have something like “master-6.” Alternatively, you can use your git tag version. `tags: "${DRONE_COMMIT_BRANCH}-${DRONE_BUILD_NUMBER}"`
 - Use a repository name for deployments in your orchestration tools. Example of Drone CI deployment to Kubernetes cluster with env variables.
 
-```bash
+```yaml
 deploy:
-   image: peloton/drone-k8s-deployment
-   deployment_names: "${DRONE_REPO_NAME}"
-   container_names: "${DRONE_REPO_NAME}"
-   namespaces: microservices
-   docker_image: "62673275295.dkr.ecr.eu-west-1.amazonaws.com/${DRONE_REPO_NAME}:${DRONE_COMMIT_BRANCH}-${DRONE_BUILD_NUMBER}"
-   date_label: deployment.drone.io/date-deployed
-   secrets: [kubernetes_url, kubernetes_token]
+  image: peloton/drone-k8s-deployment
+  deployment_names: '${DRONE_REPO_NAME}'
+  container_names: '${DRONE_REPO_NAME}'
+  namespaces: microservices
+  docker_image: '62673275295.dkr.ecr.eu-west-1.amazonaws.com/${DRONE_REPO_NAME}:${DRONE_COMMIT_BRANCH}-${DRONE_BUILD_NUMBER}'
+  date_label: deployment.drone.io/date-deployed
+  secrets: [kubernetes_url, kubernetes_token]
 ```
 
 ## Define Docker Image Names Convention

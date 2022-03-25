@@ -30,7 +30,7 @@ Let’s start from the currency of the Ethereum blockchain–Ether. Thanks to th
 
 However, the original and most popular one is JavaScript implementation, which is called web3.js. So let us use this powerful tool for working directly with Ethereum blockchain nodes and see how it works:
 
-```javascript
+```bash
 npm install web3
 ```
 
