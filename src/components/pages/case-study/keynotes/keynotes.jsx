@@ -20,6 +20,7 @@ import FlagsmithIcon3 from './images/flagsmith-icon-3.inline.svg';
 import FlagsmithIcon4 from './images/flagsmith-icon-4.inline.svg';
 import FlagsmithIcon5 from './images/flagsmith-icon-5.inline.svg';
 import FlagsmithIcon6 from './images/flagsmith-icon-6.inline.svg';
+import illustrationSm from './images/illustration-sm.svg';
 import illustration from './images/illustration.svg';
 import K6Icon1 from './images/k6-icon-1.inline.svg';
 import K6Icon2 from './images/k6-icon-2.inline.svg';
@@ -71,7 +72,7 @@ const Keynotes = ({ items, iconsName }) => (
               key={index}
             >
               {Icon && <Icon className="h-18" aria-hidden />}
-              <p className="mt-3 text-lg font-normal leading-snug lg:text-base sm:text-sm">
+              <p className="mt-3 text-lg font-normal leading-snug lg:text-base sm:max-w-[95%] sm:text-sm">
                 {item}
               </p>
             </li>
@@ -80,12 +81,8 @@ const Keynotes = ({ items, iconsName }) => (
       </ul>
     </div>
     <div className="mt-32 flex justify-center lg:mt-28 md:mt-24 sm:mt-11" aria-hidden>
-      <img
-        className="sm:min-w-[862px] sm:translate-x-[64px]"
-        src={illustration}
-        alt=""
-        loading="lazy"
-      />
+      <img className="sm:hidden" src={illustration} alt="" loading="lazy" />
+      <img className="hidden sm:block" src={illustrationSm} alt="" loading="lazy" />
     </div>
   </section>
 );
