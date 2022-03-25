@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import ImagePlaceholder from 'components/shared/image-placeholder';
+
 import BrowserlessIcon1 from './images/browserless-icon-1.inline.svg';
 import BrowserlessIcon2 from './images/browserless-icon-2.inline.svg';
 import BrowserlessIcon3 from './images/browserless-icon-3.inline.svg';
@@ -80,9 +82,17 @@ const Keynotes = ({ items, iconsName }) => (
         })}
       </ul>
     </div>
-    <div className="mt-32 flex justify-center lg:mt-28 md:mt-24 sm:mt-11" aria-hidden>
-      <img className="sm:hidden" src={illustration} alt="" loading="lazy" />
-      <img className="hidden sm:block" src={illustrationSm} alt="" loading="lazy" />
+
+    <div className="mt-32 flex justify-center lg:mt-28 md:mt-24 sm:hidden" aria-hidden>
+      <ImagePlaceholder className="mx-2" width={1270} height={134}>
+        <img src={illustration} alt="" loading="lazy" />
+      </ImagePlaceholder>
+    </div>
+
+    <div className="mt-11 hidden justify-center sm:flex" aria-hidden>
+      <ImagePlaceholder className="mx-1 w-full max-w-[414px]" width={466} height={90}>
+        <img src={illustrationSm} alt="" loading="lazy" />
+      </ImagePlaceholder>
     </div>
   </section>
 );
