@@ -2,6 +2,7 @@ import { useAnimation, motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import Link from 'components/shared/link';
 import TitleAnimation from 'components/shared/title-animation';
 
 import gatsbyBackground from './images/gatsby-background.svg';
@@ -88,7 +89,24 @@ const Frameworks = () => {
             animate={descriptionControls}
             variants={descriptionVariants}
           >
-            Always ready to jump on a project quickly with our custom inclusive GatsbyJS & NextJS
+            Always ready to jump on a project quickly with our custom inclusive{' '}
+            <Link
+              to="https://github.com/pixel-point/gatsby-tailwind-starter"
+              theme="underline-red"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GatsbyJS
+            </Link>{' '}
+            &{' '}
+            <Link
+              to="https://github.com/pixel-point/nextjs-tailwind-starter"
+              theme="underline-red"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              NextJS
+            </Link>{' '}
             starters.
           </motion.p>
         </div>
