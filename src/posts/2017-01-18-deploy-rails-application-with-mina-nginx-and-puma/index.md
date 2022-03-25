@@ -24,7 +24,7 @@ Add Puma gem to the global section if you are using a Rails version below 5.
 
 Then, install gems and execute the initial Mina command for generating a config/deploy.rb file.
 
-```ruby
+```bash
 bundle
 mina init
 ```
@@ -106,7 +106,7 @@ end
 
 Create or fill a puma.rb file in a config folder.
 
-```javascript
+```ruby
 environment "production"
 
 bind  "unix:///{path_to_your_app}/shared/tmp/sockets/puma.sock"

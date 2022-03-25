@@ -10,7 +10,7 @@ Probably you know that Kubernetes has built-in port forwarding functionality in 
 
 Generally speaking, using port forwarding you could get on your ‘localhost’ any services launched in your cluster. For example, if you have Redis installed in the cluster on 6379, by using a command like this:
 
-```javascript
+```bash
 kubectl port-forward redis-master-765d459796-258hz 7000:6379
 ```
 

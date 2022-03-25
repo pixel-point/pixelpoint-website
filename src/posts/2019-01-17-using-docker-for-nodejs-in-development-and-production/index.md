@@ -27,7 +27,7 @@ _Disclaimer: This guide is large and focused on different audiences with varying
 
 Before we start to configure our Dockerfile, let’s add a .dockerignore file to your app folder. The .dockerignore file excludes during the COPY/ADD command files described in the file. [Read more here](https://docs.docker.com/engine/reference/builder/#dockerignore-file)
 
-```javascript
+```env
 node_modules
 npm-debug.log
 Dockerfile*
@@ -44,7 +44,7 @@ LICENSE
 
 To ensure clear understanding, we will start from basic Dockerfile you could use for simple Node.js projects. By simple, I mean that your code does not have any extra native dependencies or build logic.
 
-```javascript
+```Dockerfile
 FROM node:10-alpine
 
 WORKDIR /usr/src/app
@@ -59,13 +59,13 @@ CMD [ "npm", "start" ]
 
 You will find something like this in every Node.js Docker article. Let’s briefly go through it.
 
-```javascript
+```Dockerfile
 WORKDIR / usr / src / app;
 ```
 
 The workdir is sort of default directory that is used for any RUN, CMD, ENTRYPOINT, COPY and ADD instructions. In some articles you will see that people do mkdir /app and then set it as workdir, but this is not best practice. Use a pre-existing folder/usr/src/app that is better suited for this.
 
-```javascript
+```Dockerfile
 COPY package*.json ./
 RUN npm install
 ```
@@ -117,7 +117,7 @@ There are few different options for this:
 
 1. Replace CMD with the command for running your app without nodemon, which can be a separate defined command in your package.json file, such as:
 
-   ```javascript
+   ```json
    "scripts": {
      "start": "nodemon --inspect=0.0.0.0 src/index.js",
      "start:prod": "node src/index.js"
@@ -126,7 +126,7 @@ There are few different options for this:
 
    In that case your Dockerfile could be like this:
 
-   ```javascript
+   ```Dockerfile
    FROM node:10-alpine
 
    WORKDIR /usr/src/app
@@ -157,7 +157,7 @@ It’s generally preferable to keep your production image size as small as possi
 
 Revisit your package.json file and split devDependencies apart from dependencies. [Read more here](https://stackoverflow.com/questions/18875674/whats-the-difference-between-dependencies-devdependencies-and-peerdependencies). In brief, if you run your npm install with --production flag or set your NODE_ENV as production, all devDependencies will not be installed. We will add extra lines to our docker file to handle that:
 
-```javascript
+```Dockerfile
 FROM node:10-alpine
 
 ARG NODE_ENV=development
@@ -175,7 +175,7 @@ CMD [ "npm", “run”, "start:prod" ]
 
 To customize the behaviour we use
 
-```javascript
+```Dockerfile
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
 ```
@@ -190,7 +190,7 @@ Not every app you will try to run in Docker will exclusively use JS dependencies
 
 To help solve that problem we can use multi-stage builds, which help us to install and build all dependencies in a separate container and move only the result of the installation without any garbage to the final container. The Dockerfile could look like this:
 
-```javascript
+```Dockerfile
 // The instructions for the first stage
 FROM node:10-alpine as builder
 
@@ -217,7 +217,7 @@ In that example, we installed and compiled all dependencies based on the environ
 
 The line `RUN apk --no-cache add python make g++` may be different from project to project, likely because you will need extra dependencies.
 
-```javascript
+```Dockerfile
 COPY --from=builder node_modules node_modules
 ```
 
