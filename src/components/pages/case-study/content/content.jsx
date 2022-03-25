@@ -51,13 +51,13 @@ const Content = ({
             </blockquote>
             <figcaption className="mt-5 flex items-center">
               <GatsbyImage
-                className="w-12 shrink-0 rounded-full"
+                className="w-12 shrink-0 rounded-full sm:!h-10 sm:!w-10"
                 imgClassName="rounded-full"
                 image={getImage(quote.authorPhoto)}
                 alt={quote.authorName}
                 loading="lazy"
               />
-              <span className="ml-4 text-base font-normal">
+              <span className="ml-4 text-base font-normal sm:ml-3">
                 {quote.authorName} — {quote.authorPosition}
               </span>
             </figcaption>

@@ -53,7 +53,7 @@
 
     ul,
     ol {
-      @apply space-y-2 pl-14 md:space-y-2.5 md:pl-4;
+      @apply space-y-2 pl-14 md:space-y-2.5 md:pl-8;
     }
 
     ul {

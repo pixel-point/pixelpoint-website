@@ -11,7 +11,7 @@ const Hero = ({ title, description, cover, slug }) => (
     <div className="mt-5 flex items-center justify-between font-normal sm:mt-3 sm:flex-col sm:items-start">
       <div className="flex items-center">
         <StaticImage
-          className="w-12 shrink-0 rounded-full"
+          className="w-12 shrink-0 rounded-full sm:!h-10 sm:!w-10"
           imgClassName="rounded-full"
           src="../../../../images/alex-barashkov.jpg"
           layout="fixed"
@@ -20,7 +20,9 @@ const Hero = ({ title, description, cover, slug }) => (
           alt="Alex Barashkov"
           loading="eager"
         />
-        <span className="ml-4 text-base sm:ml-1">Alex Barashkov — CEO at Pixel Point</span>
+        <span className="ml-4 text-base font-normal sm:space-x-3">
+          Alex Barashkov — CEO at Pixel Point
+        </span>
       </div>
       <span className="text-sm text-gray-7 sm:order-first sm:hidden">
         {getBlogPostDateFromSlug(slug)}

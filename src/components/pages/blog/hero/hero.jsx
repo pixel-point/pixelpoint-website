@@ -46,9 +46,9 @@ const Hero = () => {
               </p>
             </blockquote>
             <figcaption className="mt-5 flex items-center space-x-4 lg:mt-4 lg:space-x-2.5 md:mt-3.5 md:space-x-2.5 sm:block sm:space-x-0">
-              <div className="flex items-center space-x-4 lg:space-x-2.5 md:space-x-2.5 sm:space-x-1">
+              <div className="flex items-center space-x-4 sm:space-x-3">
                 <StaticImage
-                  className="w-12 shrink-0 rounded-full"
+                  className="w-12 shrink-0 rounded-full sm:!h-10 sm:!w-10"
                   imgClassName="rounded-full"
                   src="../../../../images/alex-barashkov.jpg"
                   layout="fixed"
