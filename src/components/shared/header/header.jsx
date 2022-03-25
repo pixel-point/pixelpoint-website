@@ -35,10 +35,10 @@ const links = [
     text: 'Case studies',
     to: '/case-studies',
   },
-  // {
-  //   text: 'Blog',
-  //   to: '/blog',
-  // },
+  {
+    text: 'Blog',
+    to: '/blog',
+  },
 ];
 
 const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
@@ -72,8 +72,7 @@ const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
               </Link>
 
               {items?.length > 0 && (
-                // <div className="invisible absolute -left-24 bottom-0 w-[500px] translate-y-full pt-6 text-[0px] opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100">
-                <div className="invisible absolute left-[-238px] bottom-0 w-[500px] translate-y-full cursor-default pt-6 text-[0px] opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100">
+                <div className="invisible absolute -left-24 bottom-0 w-[500px] translate-y-full pt-6 text-[0px] opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100">
                   <ul
                     className="rounded-2xl bg-white p-6 pb-7"
                     style={{

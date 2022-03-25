@@ -3,14 +3,7 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React from 'react';
 
 import Link from 'components/shared/link';
-// import getBlogPostPath from 'utils/get-blog-post-path';
-
-const itemsLinks = {
-  '2022-02-22-comparing-gatsby-and-nextjs-for-website-development/':
-    'https://dev.to/alex_barashkov/comparing-gatsby-and-nextjs-for-website-development-13b7',
-  '2022-02-01-measuring-gatsby-projects-build-time-using-paid-plans-of-popular-static-website-hosting-platforms/':
-    'https://dev.to/alex_barashkov/measuring-gatsby-projects-build-time-using-paid-plans-of-popular-static-website-hosting-platforms-47pp',
-};
+import getBlogPostPath from 'utils/get-blog-post-path';
 
 const Blog = () => {
   const {
@@ -46,21 +39,17 @@ const Blog = () => {
     <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
       <div className="container">
         <h2 className="text-center text-6xl font-normal leading-snug lg:text-[42px] md:text-[32px] sm:text-2xl">
-          Blog. {/* <Link size="6xl" theme="arrow-red" to="/blog"> */}
-          <Link size="6xl" theme="arrow-red" to="https://dev.to/alex_barashkov">
+          Blog.
+          <Link size="6xl" theme="arrow-red" to="/blog">
             Explore team experience
           </Link>
         </h2>
         <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-14 md:mt-11 sm:mt-10 sm:block sm:space-y-10">
           {items.map(({ slug, frontmatter: { title, cover } }, index) => (
             <li key={index}>
-              {/* <Link
-                className="with-nested-link-red-hover flex h-full flex-col"
-                to={getBlogPostPath(slug)}
-              > */}
               <Link
                 className="with-nested-link-red-hover flex h-full flex-col"
-                to={itemsLinks[slug]}
+                to={getBlogPostPath(slug)}
               >
                 <GatsbyImage
                   className="w-full rounded-2xl lg:rounded-xl"
