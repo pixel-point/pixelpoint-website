@@ -31,7 +31,7 @@ export const query = graphql`
     allMdx(
       filter: {
         fileAbsolutePath: { regex: "/case-studies/" }
-        fields: { isFeatured: { eq: true }, isDraft: { in: $draftFilter } }
+        fields: { isDraft: { in: $draftFilter }, isFeatured: { eq: true } }
       }
       sort: { fields: frontmatter___position, order: ASC }
     ) {
@@ -55,7 +55,7 @@ export const query = graphql`
           }
           cover {
             childImageSharp {
-              gatsbyImageData(width: 712)
+              gatsbyImageData(width: 704)
             }
           }
         }
