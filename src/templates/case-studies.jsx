@@ -51,7 +51,7 @@ export const query = graphql`
           }
           cover {
             childImageSharp {
-              gatsbyImageData(width: 704)
+              gatsbyImageData(width: 712)
             }
           }
         }
