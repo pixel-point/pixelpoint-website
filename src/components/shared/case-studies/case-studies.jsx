@@ -26,7 +26,7 @@ const Card = ({ logo, title, description, githubUsername, githubRepoName, slug }
   });
 
   const handleMouseEnter = () => {
-    if (rive && !rive.isPlaying) rive.play([`hover-${getRandomInt(0, 4)}`]);
+    if (rive && !rive.isPlaying) rive.play([`hover-${getRandomInt(1, 5)}`]);
   };
 
   return (
