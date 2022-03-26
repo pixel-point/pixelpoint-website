@@ -9,6 +9,10 @@ import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
 import useGithubRepoStars from 'hooks/use-github-repo-stars';
 import GithubLogo from 'images/github.inline.svg';
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min)) + Math.ceil(min));
+}
+
 const Card = ({ logo, title, description, githubUsername, githubRepoName, slug }) => {
   const githubStars = useGithubRepoStars(githubUsername, githubRepoName);
 
@@ -22,7 +26,7 @@ const Card = ({ logo, title, description, githubUsername, githubRepoName, slug }
   });
 
   const handleMouseEnter = () => {
-    if (rive && !rive.isPlaying) rive.play(['Animations']);
+    if (rive && !rive.isPlaying) rive.play([`hover-${getRandomInt(1, 5)}`]);
   };
 
   return (
@@ -108,13 +112,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
 
   const items = nodes
     .filter(({ fields: { isDraft } }) => {
-      if (
-        process.env.NODE_ENV === 'production' &&
-        process.env.CONTEXT !== 'deploy-preview' &&
-        process.env.CONTEXT !== 'branch-deploy'
-      ) {
-        return !isDraft;
-      }
+      if (process.env.NODE_ENV === 'production') return !isDraft;
       return true;
     })
     .filter(({ frontmatter: { isOpenSource, isFeatured }, slug }) => {
