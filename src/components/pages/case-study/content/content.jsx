@@ -44,24 +44,26 @@ const Content = ({
           >
             Visit {title}
           </Link>
-          <figure className="mt-12">
-            <QuoteIcon className="w-10 lg:w-8 sm:h-5" aria-hidden />
-            <blockquote className="mt-4 text-2xl lg:text-xl">
-              <p>{quote.text}</p>
-            </blockquote>
-            <figcaption className="mt-5 flex items-center">
-              <GatsbyImage
-                className="w-12 shrink-0 rounded-full sm:!h-10 sm:!w-10"
-                imgClassName="rounded-full"
-                image={getImage(quote.authorPhoto)}
-                alt={quote.authorName}
-                loading="lazy"
-              />
-              <span className="ml-4 text-base font-normal sm:ml-3">
-                {quote.authorName} — {quote.authorPosition}
-              </span>
-            </figcaption>
-          </figure>
+          {title !== 'Cilium' && (
+            <figure className="mt-12">
+              <QuoteIcon className="w-10 lg:w-8 sm:h-5" aria-hidden />
+              <blockquote className="mt-4 text-2xl lg:text-xl">
+                <p>{quote.text}</p>
+              </blockquote>
+              <figcaption className="mt-5 flex items-center">
+                <GatsbyImage
+                  className="w-12 shrink-0 rounded-full sm:!h-10 sm:!w-10"
+                  imgClassName="rounded-full"
+                  image={getImage(quote.authorPhoto)}
+                  alt={quote.authorName}
+                  loading="lazy"
+                />
+                <span className="ml-4 text-base font-normal sm:ml-3">
+                  {quote.authorName} — {quote.authorPosition}
+                </span>
+              </figcaption>
+            </figure>
+          )}
           <div className="mt-12 hidden rounded-xl border border-gray-8 p-7 md:block sm:px-5 sm:pt-4 sm:pb-6">
             <div className="flex items-center justify-between">
               <img
