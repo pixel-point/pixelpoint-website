@@ -1,6 +1,5 @@
 ---
 title: 'Comparing Gatsby and Next.js for website development'
-description: 'Gatsby and Next.js, from a first glance, could look pretty much the same.'
 cover: cover.jpg
 isFeatured: true
 ---

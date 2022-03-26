@@ -1,6 +1,5 @@
 ---
 title: 'Kubernetes port forwarding simple like never before'
-description: 'Kube Forwarder app as an alternative for native built-in Kubernetes port forwarding.'
 cover: cover.jpg
 ---
 

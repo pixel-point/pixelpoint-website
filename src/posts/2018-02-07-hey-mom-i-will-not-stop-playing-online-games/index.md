@@ -1,6 +1,5 @@
 ---
 title: 'Hey Mom, I will not stop playing online games!'
-description: 'API Design tips and tricks based on our experience'
 cover: cover.jpg
 ---
 

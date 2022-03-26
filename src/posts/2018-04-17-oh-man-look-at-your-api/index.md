@@ -1,6 +1,5 @@
 ---
 title: 'Oh Man, Look at Your API!'
-description: 'API Design tips and tricks based on our experience'
 cover: cover.jpg
 ---
 

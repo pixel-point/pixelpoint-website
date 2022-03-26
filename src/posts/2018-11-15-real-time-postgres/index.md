@@ -1,6 +1,5 @@
 ---
 title: 'Real time + Postgres = ?'
-description: 'Experience of implementing real time data subscription on top of existing PostgreSQL database.'
 cover: cover.jpg
 ---
 

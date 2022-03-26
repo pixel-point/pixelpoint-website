@@ -1,6 +1,5 @@
 ---
 title: 'Using Docker for Node.js in Development and Production'
-description: 'My current primary tech stack is Node.js/Javascript and, like many teams, I moved our development and production environments in to Docker containers.'
 cover: cover.jpg
 ---
 
@@ -27,7 +26,7 @@ _Disclaimer: This guide is large and focused on different audiences with varying
 
 Before we start to configure our Dockerfile, let’s add a .dockerignore file to your app folder. The .dockerignore file excludes during the COPY/ADD command files described in the file. [Read more here](https://docs.docker.com/engine/reference/builder/#dockerignore-file)
 
-```env
+```text
 node_modules
 npm-debug.log
 Dockerfile*

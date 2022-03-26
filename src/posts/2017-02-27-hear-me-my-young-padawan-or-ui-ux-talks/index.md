@@ -1,6 +1,5 @@
 ---
 title: 'Hear me, my young Padawan. Or, UI/UX talks'
-description: 'About first steps, mistakes and some advices for beginners in UI and UX design'
 cover: cover.jpg
 ---
 

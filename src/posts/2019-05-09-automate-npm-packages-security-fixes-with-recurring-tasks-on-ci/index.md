@@ -1,6 +1,5 @@
 ---
 title: 'Automate NPM packages security fixes with recurring tasks on CI'
-description: 'When developing on Node.js, our team uses a lot open source NPM packages. Each of them has their own benefits and drawbacks that they bring to your project.'
 cover: cover.jpg
 ---
 

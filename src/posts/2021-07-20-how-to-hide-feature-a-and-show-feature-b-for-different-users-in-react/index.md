@@ -1,6 +1,5 @@
 ---
 title: 'How to hide Feature A and show Feature B for different users in React'
-description: 'Have you ever wondered how do companies like Slack, Netlify, Zoom, Facebook (and rest of FAANG for sure) gradually roll out new features just for some users? '
 cover: cover.jpg
 ---
 

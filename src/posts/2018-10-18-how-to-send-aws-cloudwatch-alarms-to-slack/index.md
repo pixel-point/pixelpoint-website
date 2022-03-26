@@ -1,6 +1,5 @@
 ---
 title: 'How to send AWS CloudWatch Alarms to Slack'
-description: 'This article reveals the secrets you should know to set up the alarms you need in five minutes.'
 cover: cover.jpg
 ---
 

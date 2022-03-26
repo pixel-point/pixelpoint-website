@@ -1,6 +1,5 @@
 ---
 title: 'Speed up your development with this new VS Code extension'
-description: 'My friend and I recently developed VS Code extension – Snipsnap that aims to solve the existing problem with code snippets collections.'
 cover: cover.jpg
 ---
 

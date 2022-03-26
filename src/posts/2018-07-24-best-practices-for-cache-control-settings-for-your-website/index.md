@@ -1,6 +1,5 @@
 ---
 title: 'Best practices for cache control settings for your website'
-description: 'In this article, I will show you the right cache settings and techniques to help you keep your website up to date.'
 cover: cover.jpg
 ---
 

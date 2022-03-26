@@ -1,6 +1,5 @@
 ---
 title: 'Don’t mess up your grid like Medium'
-description: 'Our analysis of Medium’s grid for creating covers with the right ratio uncovered shocking results.'
 cover: cover.jpg
 ---
 

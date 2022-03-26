@@ -1,6 +1,5 @@
 ---
 title: 'How to debug Node.js in a Docker container'
-description: 'Combined different scenarios of debugging Node.js app in a Docker container in one simple guide.'
 cover: cover.jpg
 ---
 

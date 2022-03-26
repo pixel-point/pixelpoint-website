@@ -1,6 +1,5 @@
 ---
 title: 'Tips and tricks for scalable CI/CD flow'
-description: 'Our advice for making scalable CI/CD flow.'
 cover: cover.jpg
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: 'Why I HATE your FAKE redesign'
-description: 'I’m tired of seeing new and frankly stupid redesigns of Facebook, Skype, and Twitter pop up on my newsfeed. Why not make something useful…'
 cover: 'cover.jpg'
 ---
 

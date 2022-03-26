@@ -1,6 +1,5 @@
 ---
 title: 'The Challenges of Building Own MacOS App'
-description: 'Two years ago, we began the process of building an open-source MacOS app, but this turned out to be a much more challenging journey.'
 cover: cover.jpg
 ---
 

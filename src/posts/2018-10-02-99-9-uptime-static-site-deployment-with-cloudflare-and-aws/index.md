@@ -1,6 +1,5 @@
 ---
 title: '99.9% uptime static site deployment with Cloudflare and AWS S3'
-description: 'Welcome to our simple guide for those of you looking for 99.9% uptime and an almost free deployment solution for your static websites.'
 cover: cover.jpg
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: 'Microservices vs. Monolith Architecture'
-description: 'Pros and cons of using microservices vs. monolith architecture.'
 cover: cover.jpg
 ---
 

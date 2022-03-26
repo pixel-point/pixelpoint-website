@@ -1,6 +1,5 @@
 ---
 title: 'Track blockchain transactions with web3.js'
-description: 'Common examples of solving transactions tracking in Ethereum network for Ether and ERC20 tokens with web3.js'
 cover: cover.jpg
 ---
 

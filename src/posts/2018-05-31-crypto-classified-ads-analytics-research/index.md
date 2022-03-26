@@ -1,6 +1,5 @@
 ---
 title: 'Crypto classified ads analytics research'
-description: 'We did wide-reaching research into the popularity of cryptocurrency enabled classified ads all over the world, then created a heat map'
 cover: cover.jpg
 ---
 

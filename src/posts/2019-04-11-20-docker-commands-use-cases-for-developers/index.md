@@ -1,6 +1,5 @@
 ---
 title: '20 Docker commands use cases for developers'
-description: 'Technology is most effective when you know how to work with it; bear this in mind when you work with Docker.'
 cover: cover.jpg
 ---
 

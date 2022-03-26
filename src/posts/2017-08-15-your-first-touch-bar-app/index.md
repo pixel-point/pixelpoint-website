@@ -1,6 +1,5 @@
 ---
 title: 'Probably, your first useful Touch Bar app'
-description: 'How we created a small but useful application for Touch Bar'
 cover: cover.jpg
 ---
 

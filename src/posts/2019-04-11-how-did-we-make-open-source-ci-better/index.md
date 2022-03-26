@@ -1,6 +1,5 @@
 ---
 title: 'How did we make open source CI better?'
-description: 'In this article, we talk about Drone CI, a very powerful, lightweight, docker-based, multi-pipeline, multi-platform, open-source CI tool.'
 cover: cover.jpg
 ---
 
