@@ -10,7 +10,7 @@ const titleItems = [
   { value: 'Developed' },
   { value: 'with' },
   { value: 'industry' },
-  { value: 'best practices', color: '#ee2b6c' },
+  { value: 'Best practices', color: '#ee2b6c' },
 ];
 
 const descriptionVariants = {
