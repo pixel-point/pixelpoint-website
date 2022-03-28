@@ -130,7 +130,7 @@ const Features = () => {
     <section className="safe-paddings mt-52 lg:mt-36 sm:mt-20" ref={wrapperRef}>
       <div className="container">
         <h2 className="max-w-[700px] text-4xl font-normal leading-snug lg:text-[32px] sm:max-w-[370px] sm:text-2xl">
-          Here is what we have to offer for the next ideal marketing website of yours
+          Here is what we have to offer for the next ideal marketing website of yours:
         </h2>
         <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-14 lg:gap-y-14 md:mt-11 md:gap-y-11 sm:mt-10 sm:grid-cols-2 sm:gap-y-10">
           {items.map((item, index) => {
