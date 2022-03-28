@@ -96,7 +96,7 @@ const Content = ({
               ].map(({ title, items }, index) => (
                 <div className="flex-1" key={index}>
                   <h4 className="text-base font-semibold leading-snug text-red">{title}</h4>
-                  <ul className="mt-2 space-y-2 text-base font-normal leading-snug">
+                  <ul className="mt-2.5 space-y-2.5 text-base font-normal leading-snug">
                     {items.map((item, index) => (
                       <li key={index}>{item}</li>
                     ))}
@@ -133,8 +133,8 @@ const Content = ({
             { title: 'Technology stack', items: stack },
           ].map(({ title, items }, index) => (
             <Fragment key={index}>
-              <h4 className="mt-7 text-base font-semibold leading-snug text-red">{title}</h4>
-              <ul className="mt-2 space-y-2 text-base font-normal leading-snug">
+              <h4 className="mt-8 text-base font-semibold leading-snug text-red">{title}</h4>
+              <ul className="mt-2.5 space-y-2.5 text-base font-normal leading-snug">
                 {items.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
