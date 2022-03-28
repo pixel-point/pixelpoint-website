@@ -16,7 +16,6 @@ services:
   - Web Design
   - Illustrations
   - Web Development
-  - Product Design
 stack:
   - React
   - Gatsby
