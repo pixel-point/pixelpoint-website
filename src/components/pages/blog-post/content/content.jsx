@@ -4,8 +4,39 @@ import clsx from 'clsx';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import PropTypes from 'prop-types';
 import React from 'react';
+import slugify from 'slugify';
 
 import QuoteIcon from 'images/quote.inline.svg';
+
+const Heading =
+  (Tag) =>
+  // eslint-disable-next-line react/prop-types
+  ({ children }) => {
+    const id = typeof children === 'string' ? slugify(children).toLocaleLowerCase() : undefined;
+
+    return <Tag id={id}>{children}</Tag>;
+  };
+
+Heading.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+const Paragraph = ({ children }) => {
+  // We have this check in order NOT to wrap specified elements into <p> tag
+  if (
+    children?.props?.mdxType === 'img' ||
+    children?.props?.mdxType === 'figure' ||
+    children?.props?.className === 'gatsby-resp-image-wrapper'
+  ) {
+    return children;
+  }
+
+  return <p>{children}</p>;
+};
+
+Paragraph.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 const Quote = ({ authorName, children }) => (
   <figure
@@ -28,19 +59,10 @@ Quote.propTypes = {
 };
 
 const components = {
+  h2: Heading('h2'),
+  h3: Heading('h3'),
+  p: Paragraph,
   Quote,
-  p: ({ children }) => {
-    // We have this check in order NOT to wrap specified elements into <p> tag
-    if (
-      children?.props?.mdxType === 'img' ||
-      children?.props?.mdxType === 'figure' ||
-      children?.props?.className === 'gatsby-resp-image-wrapper'
-    ) {
-      return children;
-    }
-
-    return <p>{children}</p>;
-  },
 };
 
 const Content = ({ className, content }) => (
