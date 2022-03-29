@@ -20,7 +20,7 @@ const BlogPostTemplate = ({
     seo={SEO_DATA.blogPost({
       title: frontmatter.title,
       description: excerpt,
-      ogImage: frontmatter.ogImage.publicURL,
+      ogImage: frontmatter.ogImage.childImageSharp.fixed.src,
     })}
     headerTheme="black"
   >
@@ -50,7 +50,18 @@ export const query = graphql`
           }
         }
         ogImage: cover {
-          publicURL
+          childImageSharp {
+            fixed(
+              width: 1200
+              height: 630
+              toFormat: JPG
+              cropFocus: CENTER
+              fit: COVER
+              quality: 90
+            ) {
+              src
+            }
+          }
         }
       }
     }
