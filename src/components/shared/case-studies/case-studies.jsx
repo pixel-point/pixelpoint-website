@@ -32,7 +32,7 @@ const Card = ({ logo, title, description, githubUsername, githubRepoName, slug }
   return (
     <Link
       className="with-nested-link-red-hover block"
-      to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
+      to={`${CASE_STUDIES_BASE_PATH}${slug}`}
       onMouseEnter={handleMouseEnter}
     >
       <h1 className="sr-only">{`${title} case study`}</h1>
@@ -130,7 +130,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
         <h2 className="with-text-highlight-red max-w-[950px] text-4xl font-normal leading-snug lg:text-[32px] sm:text-2xl">
           {title}{' '}
           {!withoutTitleLink && (
-            <Link to="/case-studies" size="4xl" theme="arrow-red">
+            <Link to="/case-studies/" size="4xl" theme="arrow-red">
               See all cases
             </Link>
           )}

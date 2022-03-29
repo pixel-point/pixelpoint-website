@@ -19,7 +19,7 @@ const links = [
         description:
           'Get a stunning-looking website made by in-house team of motion, graphic, and web designers.',
         linkText: 'Read more',
-        to: '/services/web-design',
+        to: '/services/web-design/',
       },
       {
         icon: ServicesWebDevelopmentIcon,
@@ -27,17 +27,17 @@ const links = [
         description:
           'Have a JAMStack powered web platform built with React, 3rd parties & integrations at your disposal',
         linkText: 'Read more',
-        to: '/services/web-development',
+        to: '/services/web-development/',
       },
     ],
   },
   {
     text: 'Case studies',
-    to: '/case-studies',
+    to: '/case-studies/',
   },
   {
     text: 'Blog',
-    to: '/blog',
+    to: '/blog/',
   },
 ];
 

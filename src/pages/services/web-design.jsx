@@ -17,7 +17,7 @@ import SEO_DATA from 'constants/seo-data';
 const servicesCTA = {
   title: 'Still in doubts? Check out what we have to offer on',
   linkText: 'Development services',
-  linkUrl: '/services/web-development',
+  linkUrl: '/services/web-development/',
 };
 
 const ServicesWebDevelopmentPage = () => (

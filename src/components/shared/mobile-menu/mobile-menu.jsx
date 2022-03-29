@@ -15,22 +15,22 @@ const links = [
       {
         icon: ServicesWebDesignIcon,
         text: 'Web design',
-        to: '/services/web-design',
+        to: '/services/web-design/',
       },
       {
         icon: ServicesWebDevelopmentIcon,
         text: 'Web development',
-        to: '/services/web-development',
+        to: '/services/web-development/',
       },
     ],
   },
   {
     text: 'Case studies',
-    to: '/case-studies',
+    to: '/case-studies/',
   },
   {
     text: 'Blog',
-    to: '/blog',
+    to: '/blog/',
   },
 ];
 

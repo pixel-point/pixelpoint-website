@@ -47,7 +47,7 @@ const Services = () => {
             graphic design with entertaining illustrations, exciting social media covers and, of
             course, high-quality branded items.
           </p>
-          <Link className="mt-5 md:mt-4" to="/services/web-design" size="base" theme="arrow-red">
+          <Link className="mt-5 md:mt-4" to="/services/web-design/" size="base" theme="arrow-red">
             Read more
           </Link>
         </div>
@@ -67,7 +67,7 @@ const Services = () => {
           </p>
           <Link
             className="mt-5 md:mt-4"
-            to="/services/web-development"
+            to="/services/web-development/"
             size="base"
             theme="arrow-red"
           >

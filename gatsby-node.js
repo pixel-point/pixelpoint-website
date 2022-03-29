@@ -177,7 +177,7 @@ async function createCaseStudies({ graphql, actions }) {
     }
 
     actions.createPage({
-      path: `${CASE_STUDIES_BASE_PATH}/${slug}`,
+      path: `${CASE_STUDIES_BASE_PATH}${slug}`,
       component: path.resolve('./src/templates/case-study.jsx'),
       context: { id },
     });
