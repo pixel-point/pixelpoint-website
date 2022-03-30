@@ -52,7 +52,7 @@ docker run -d -p 4000:3000 docker-examples:latest
 `-p` publishes the container port to the local machine port **host_port:docker_port.**
 
 **Shortcut with VS Code**
-![GATSBY_EMPTY_ALT](docker6.jpg)
+![GATSBY_EMPTY_ALT](docker6.png)
 
 ```bash
 docker run docker-examples:latest
@@ -81,7 +81,7 @@ docker stop container_name
 **Details:** You can find the container name by using the “docker ps -a” command.
 
 **Shortcut with VS Code**
-![GATSBY_EMPTY_ALT](docker9.jpg)
+![GATSBY_EMPTY_ALT](docker9.png)
 
 ```bash
 docker stop $(docker ps -a -q)
@@ -194,7 +194,7 @@ docker-compose up -d
 **Use case:** You want to build and run all services in the background and see their statuses later.
 
 **Shortcut with VS Code**
-![GATSBY_EMPTY_ALT](docker19.jpg)
+![GATSBY_EMPTY_ALT](docker19.png)
 
 ```bash
 docker-compose up -d example-service-1

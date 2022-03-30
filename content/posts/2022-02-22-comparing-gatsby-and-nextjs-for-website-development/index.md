@@ -16,7 +16,7 @@ Choosing the technology for website development, we need to keep in mind a few f
 
 Here is how a feature comparison table between two frameworks might look like. They are pretty much the same, aren’t they?
 
-![GATSBY_EMPTY_ALT](compare1.jpg)
+![GATSBY_EMPTY_ALT](compare1.png)
 
 However, those minor differences could cause a huge impact on website development.
 
@@ -30,13 +30,13 @@ A simple, tiny thing that every website has. But, in order to be compliant with 
 
 Change a single line in gatsby-config.js and upload png/jpg/svg based favicon...That’s it. Gatsby will generate a set of relevant icons following best practices optimizing the image without any additional work.
 
-![GATSBY_EMPTY_ALT](compare2.jpg)
+![GATSBY_EMPTY_ALT](compare2.png)
 
 ### ...but what about Next.js?
 
 There is no opinionated way that Next.js recommends for this. [Try to Google it](https://www.google.com/search?q=next+js+favicon&rlz=1C5CHFA_enFR972FR972&oq=nextjs+favicon&aqs=chrome.1.69i57j0i10i67j0i10i512l2j0i10i22i30l3.4091j0j7&sourceid=chrome&ie=UTF-8) and see how different the answers are, e.g., this [Stackoverflow Thread](https://stackoverflow.com/questions/56213019/how-to-add-a-favicon-to-a-next-js-static-site). Everything has to be done manually - image optimization, image resizing, embedding the proper tags using `<Head>` tag. As an option, you can use favicons generators services like [this](https://realfavicongenerator.net/).
 
-![GATSBY_EMPTY_ALT](compare3.jpg)
+![GATSBY_EMPTY_ALT](compare3.png)
 
 ## Future is here with image optimization
 

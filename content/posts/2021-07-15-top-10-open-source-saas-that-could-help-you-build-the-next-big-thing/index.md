@@ -59,7 +59,7 @@ Modern applications deserve modern infrastructure and managing it could be a pai
 
 Drone is a Container-Native, Continuous Delivery Platform
 
-![drone](drone.jpg)
+![drone](drone.png)
 
 Despite Github actions and Gitlab are very popular solutions, Drone CI has fantastic architecture and a very simple set-up. After it's been acquired by Harness, it's got a major 2.0.0 update that brought a lot of cool features such as activity charts, user management, new UI. Drone CI is a very powerful and flexible tool.
 
@@ -75,7 +75,7 @@ You can't build the next big thing without having a proper monitoring analytics 
 
 A modern load testing tool, using Go and JavaScript
 
-![k6](k6.jpg)
+![k6](k6.png)
 
 The best performance testing tool and it's open source. Recently K6 has been acquired by Grafana Labs, so I'm sure it will become even better. If you had experience writing scripts for jMeter, K6 experience will be 100x times better.
 
@@ -83,7 +83,7 @@ The best performance testing tool and it's open source. Recently K6 has been acq
 
 Sentry is cross-platform application monitoring, with a focus on error reporting.
 
-![sentry](sentry.jpg)
+![sentry](sentry.png)
 
 Error reporting is crucial when you want to handle customer issues before it will have a negative impact on your business. Sentry allows you to simply integrate their SDK in your framework/language and start to receive alerts when errors happen either on the client or server-side.
 

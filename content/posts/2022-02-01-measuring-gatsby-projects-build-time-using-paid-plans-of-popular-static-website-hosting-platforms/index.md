@@ -76,7 +76,7 @@ Here I’ve started to feel that it will be a death race since competitors began
 
 Netlify(16:16), Cloudflare(11:16) and AWS Amplify(9:14) showed the slowest results, and here is why. Netlify has a nice plugin that persists cache between builds, BUT it does not work if your build lasts for more than 15 minutes.
 
-![GATSBY_EMPTY_ALT](time4.jpg)
+![GATSBY_EMPTY_ALT](time4.png)
 
 Cloudflare Pages does not have an option to persist cache between builds, so it shows slow results every time.
 
