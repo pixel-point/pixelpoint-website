@@ -1,35 +1,8 @@
 import React from 'react';
 
 import Link from 'components/shared/link';
+import MENUS from 'constants/menus.js';
 import Logo from 'images/logo.inline.svg';
-
-const links = [
-  [
-    { text: 'Web design', to: '/services/web-design/' },
-    { text: 'Web development', to: '/services/web-development/' },
-  ],
-  [
-    { text: 'Case studies', to: '/case-studies/' },
-    { text: 'Blog', to: '/blog/' },
-  ],
-  [
-    { text: 'Github', to: 'https://github.com/pixel-point' },
-    { text: 'Twitter', to: 'https://twitter.com/alex_barashkov' },
-  ],
-];
-
-const linksSm = [
-  [
-    { text: 'Web design', to: '/services/web-design/' },
-    { text: 'Web development', to: '/services/web-development/' },
-    { text: 'Case studies', to: '/case-studies/' },
-  ],
-  [
-    { text: 'Blog', to: '/blog/' },
-    { text: 'Github', to: 'https://github.com/pixel-point' },
-    { text: 'Twitter', to: 'https://twitter.com/alex_barashkov' },
-  ],
-];
 
 const Footer = () => (
   <footer className="safe-paddings bg-black">
@@ -49,7 +22,7 @@ const Footer = () => (
         </Link>
       </div>
       <nav className="sm:grid-gap-x flex space-x-20 pt-2.5 sm:mt-10 sm:grid sm:grid-cols-2 sm:space-x-0 sm:pt-0">
-        {links.map((links, index) => (
+        {MENUS.footer.map((links, index) => (
           <ul className="space-y-8 sm:hidden" key={index}>
             {links.map(({ to, text }, index) => (
               <li className="text-[0px]" key={index}>
@@ -60,7 +33,7 @@ const Footer = () => (
             ))}
           </ul>
         ))}
-        {linksSm.map((links, index) => (
+        {MENUS.footerSm.map((links, index) => (
           <ul className="hidden space-y-6 sm:block" key={index}>
             {links.map(({ to, text }, index) => (
               <li className="text-[0px]" key={index}>

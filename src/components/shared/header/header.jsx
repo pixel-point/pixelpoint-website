@@ -4,42 +4,16 @@ import React, { forwardRef } from 'react';
 
 import Burger from 'components/shared/burger';
 import Link from 'components/shared/link';
+import MENUS from 'constants/menus.js';
 import Logo from 'images/logo.inline.svg';
 
 import ServicesWebDesignIcon from './images/services-web-design.inline.svg';
 import ServicesWebDevelopmentIcon from './images/services-web-development.inline.svg';
 
-const links = [
-  {
-    text: 'Services',
-    items: [
-      {
-        icon: ServicesWebDesignIcon,
-        text: 'Web design',
-        description:
-          'Get a stunning-looking website made by in-house team of motion, graphic, and web designers.',
-        linkText: 'Read more',
-        to: '/services/web-design/',
-      },
-      {
-        icon: ServicesWebDevelopmentIcon,
-        text: 'Web development',
-        description:
-          'Have a JAMStack powered web platform built with React, 3rd parties & integrations at your disposal',
-        linkText: 'Read more',
-        to: '/services/web-development/',
-      },
-    ],
-  },
-  {
-    text: 'Case studies',
-    to: '/case-studies/',
-  },
-  {
-    text: 'Blog',
-    to: '/blog/',
-  },
-];
+const icons = {
+  webDevelopment: ServicesWebDesignIcon,
+  webDesign: ServicesWebDevelopmentIcon,
+};
 
 const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
   <header className="safe-paddings absolute top-0 left-0 right-0 z-50 w-full" ref={ref}>
@@ -57,7 +31,7 @@ const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
       </Link>
       <nav className="flex items-center">
         <ul className="flex items-center space-x-10 text-[0px] md:hidden">
-          {links.map(({ text, to, items }, index) => (
+          {MENUS.header.map(({ text, to, items }, index) => (
             <li
               className={clsx(
                 items?.length > 0 &&
@@ -79,28 +53,31 @@ const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
                       boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.05), 0px 6px 20px rgba(0, 0, 0, 0.1)',
                     }}
                   >
-                    {items.map(({ icon: Icon, text, description, linkText, to }, index) => (
-                      <li
-                        className={clsx(index !== 0 && 'mt-7 border-t border-t-gray-4 pt-7')}
-                        key={index}
-                      >
-                        <Link className="with-nested-link-red-hover flex space-x-5" to={to}>
-                          <Icon className="h-14 shrink-0" />
-                          <div>
-                            <span className="text-2xl font-normal leading-snug">{text}</span>
-                            <p className="mt-2.5 text-base">{description}</p>
-                            <Link
-                              className="nested-link-red mt-4"
-                              size="base"
-                              theme="arrow-red"
-                              withoutHover
-                            >
-                              {linkText}
-                            </Link>
-                          </div>
-                        </Link>
-                      </li>
-                    ))}
+                    {items.map(({ iconName, text, description, linkText, to }, index) => {
+                      const Icon = icons[iconName];
+                      return (
+                        <li
+                          className={clsx(index !== 0 && 'mt-7 border-t border-t-gray-4 pt-7')}
+                          key={index}
+                        >
+                          <Link className="with-nested-link-red-hover flex space-x-5" to={to}>
+                            <Icon className="h-14 shrink-0" />
+                            <div>
+                              <span className="text-2xl font-normal leading-snug">{text}</span>
+                              <p className="mt-2.5 text-base">{description}</p>
+                              <Link
+                                className="nested-link-red mt-4"
+                                size="base"
+                                theme="arrow-red"
+                                withoutHover
+                              >
+                                {linkText}
+                              </Link>
+                            </div>
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}
