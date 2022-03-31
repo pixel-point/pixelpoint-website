@@ -15,7 +15,7 @@ const CaseStudies = ({ items }) => (
         >
           <h1 className="sr-only">{`${title} case study`}</h1>
           <div className="lg:max-w-[436px] md:max-w-none">
-            <Link className="inline-block" to={`${CASE_STUDIES_BASE_PATH}/${slug}`}>
+            <Link className="inline-block" to={`${CASE_STUDIES_BASE_PATH}${slug}`}>
               <img
                 className="invert lg:translate-x-[-10%] lg:scale-[0.8]"
                 src={logo.publicURL}
@@ -45,7 +45,7 @@ const CaseStudies = ({ items }) => (
             </figure>
             <Link
               className="mt-8 lg:mt-5 md:mt-4"
-              to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
+              to={`${CASE_STUDIES_BASE_PATH}${slug}`}
               size="base"
               theme="arrow-red"
             >
@@ -54,7 +54,7 @@ const CaseStudies = ({ items }) => (
           </div>
           <Link
             className="md:mt-11 sm:mt-8"
-            to={`${CASE_STUDIES_BASE_PATH}/${slug}`}
+            to={`${CASE_STUDIES_BASE_PATH}${slug}`}
             aria-label={`${title} case study`}
           >
             <GatsbyImage
