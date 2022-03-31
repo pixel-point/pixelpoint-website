@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 
 import Link from 'components/shared/link';
 import TitleAnimation from 'components/shared/title-animation';
+import LINKS from 'constants/links';
 
 import gatsbyBackground from './images/gatsby-background.svg';
 import GatsbyLogo from './images/gatsby.inline.svg';
@@ -91,7 +92,7 @@ const Frameworks = () => {
           >
             Always ready to jump on a project quickly with our custom inclusive{' '}
             <Link
-              to="https://github.com/pixel-point/gatsby-tailwind-starter"
+              to={LINKS.gatsbyStarter}
               theme="underline-red"
               target="_blank"
               rel="noopener noreferrer"
@@ -100,7 +101,7 @@ const Frameworks = () => {
             </Link>{' '}
             &{' '}
             <Link
-              to="https://github.com/pixel-point/nextjs-tailwind-starter"
+              to={LINKS.nextjsStarter}
               theme="underline-red"
               target="_blank"
               rel="noopener noreferrer"
