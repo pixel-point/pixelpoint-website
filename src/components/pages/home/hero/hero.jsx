@@ -144,7 +144,7 @@ const Hero = () => {
               height={380}
               aria-hidden
             >
-              <img src={lgIllustration1} alt="" />
+              <img src={lgIllustration1} width={468} height={380} alt="" />
             </ImagePlaceholder>
           </div>
           <div
@@ -164,7 +164,7 @@ const Hero = () => {
               height={700}
               aria-hidden
             >
-              <img src={lgIllustration2} alt="" />
+              <img src={lgIllustration2} width={590} height={700} alt="" />
             </ImagePlaceholder>
           </div>
           <div
@@ -184,7 +184,7 @@ const Hero = () => {
               height={766}
               aria-hidden
             >
-              <img src={lgIllustration3} alt="" />
+              <img src={lgIllustration3} width={590} height={766} alt="" />
             </ImagePlaceholder>
           </div>
         </div>
