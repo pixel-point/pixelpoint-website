@@ -6,6 +6,7 @@ import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import Link from 'components/shared/link';
 import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
+import LINKS from 'constants/links';
 import useGithubRepoStars from 'hooks/use-github-repo-stars';
 import GithubLogo from 'images/github.inline.svg';
 
@@ -130,7 +131,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
         <h2 className="with-text-highlight-red max-w-[950px] text-4xl font-normal leading-snug lg:text-[32px] sm:text-2xl">
           {title}{' '}
           {!withoutTitleLink && (
-            <Link to="/case-studies/" size="4xl" theme="arrow-red">
+            <Link to={LINKS.caseStudies} size="4xl" theme="arrow-red">
               See all cases
             </Link>
           )}

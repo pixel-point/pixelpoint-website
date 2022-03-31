@@ -6,6 +6,7 @@ import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
+import LINKS from 'constants/links.js';
 
 const CTA = ({ withTopMargin }) => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({
@@ -38,7 +39,7 @@ const CTA = ({ withTopMargin }) => {
           <h2 className="text-6xl font-normal leading-snug text-white lg:text-[42px] md:text-[32px] sm:text-2xl">
             Let's have a chat
           </h2>
-          <Link size="6xl" theme="arrow-red" to="https://calendly.com/pixel-point/30min">
+          <Link size="6xl" theme="arrow-red" to={LINKS.bookCall}>
             Book a call
           </Link>
         </div>

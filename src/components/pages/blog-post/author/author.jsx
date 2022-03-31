@@ -2,6 +2,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 
 import Link from 'components/shared/link';
+import LINKS from 'constants/links.js';
 import TwitterIcon from 'images/twitter.inline.svg';
 
 const Author = () => (
@@ -32,7 +33,7 @@ const Author = () => (
           </p>
           <Link
             className="mt-5 inline-flex items-center space-x-3 rounded-full bg-[#259df4] py-2.5 pl-3.5 pr-5 text-sm font-semibold transition-colors duration-200 hover:bg-[#1781cf] md:mt-4 sm:w-full sm:justify-center"
-            to="https://twitter.com/alex_barashkov"
+            to={LINKS.twitter}
             target="_blank"
             rel="noopener noreferrer"
           >

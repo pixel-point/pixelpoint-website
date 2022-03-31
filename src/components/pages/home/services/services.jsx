@@ -4,6 +4,7 @@ import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
+import LINKS from 'constants/links';
 
 import lgIllustration1 from './images/lg-illustration-1.svg';
 import lgIllustration2 from './images/lg-illustration-2.svg';
@@ -47,7 +48,7 @@ const Services = () => {
             graphic design with entertaining illustrations, exciting social media covers and, of
             course, high-quality branded items.
           </p>
-          <Link className="mt-5 md:mt-4" to="/services/web-design/" size="base" theme="arrow-red">
+          <Link className="mt-5 md:mt-4" to={LINKS.webDesign} size="base" theme="arrow-red">
             Read more
           </Link>
         </div>
@@ -65,12 +66,7 @@ const Services = () => {
             will please the business while website performance, accessibility and mobile devices
             adaptation will ensure an outstanding experience for your customers.
           </p>
-          <Link
-            className="mt-5 md:mt-4"
-            to="/services/web-development/"
-            size="base"
-            theme="arrow-red"
-          >
+          <Link className="mt-5 md:mt-4" to={LINKS.webDevelopment} size="base" theme="arrow-red">
             Read more
           </Link>
           <ImagePlaceholder

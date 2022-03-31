@@ -1,11 +1,4 @@
-const links = {
-  webDesign: '/services/web-design/',
-  webDevelopment: '/services/web-development/',
-  caseStudies: '/case-studies/',
-  blog: '/blog/',
-  github: 'https://github.com/pixel-point',
-  twitter: 'https://twitter.com/alex_barashkov',
-};
+import LINKS from 'constants/links.js';
 
 export default {
   header: [
@@ -18,7 +11,7 @@ export default {
           description:
             'Get a stunning-looking website made by in-house team of motion, graphic, and web designers.',
           linkText: 'Read more',
-          to: links.webDesign,
+          to: LINKS.webDesign,
         },
         {
           iconName: 'webDevelopment',
@@ -26,43 +19,43 @@ export default {
           description:
             'Have a JAMStack powered web platform built with React, 3rd parties & integrations at your disposal',
           linkText: 'Read more',
-          to: links.webDevelopment,
+          to: LINKS.webDevelopment,
         },
       ],
     },
     {
       text: 'Case studies',
-      to: links.caseStudies,
+      to: LINKS.caseStudies,
     },
     {
       text: 'Blog',
-      to: links.blog,
+      to: LINKS.blog,
     },
   ],
   footer: [
     [
-      { text: 'Web design', to: links.webDesign },
-      { text: 'Web development', to: links.webDevelopment },
+      { text: 'Web design', to: LINKS.webDesign },
+      { text: 'Web development', to: LINKS.webDevelopment },
     ],
     [
-      { text: 'Case studies', to: links.caseStudies },
-      { text: 'Blog', to: links.blog },
+      { text: 'Case studies', to: LINKS.caseStudies },
+      { text: 'Blog', to: LINKS.blog },
     ],
     [
-      { text: 'Github', to: links.github },
-      { text: 'Twitter', to: links.twitter },
+      { text: 'Github', to: LINKS.github },
+      { text: 'Twitter', to: LINKS.twitter },
     ],
   ],
   footerSm: [
     [
-      { text: 'Web design', to: links.webDesign },
-      { text: 'Web development', to: links.webDevelopment },
-      { text: 'Case studies', to: links.caseStudies },
+      { text: 'Web design', to: LINKS.webDesign },
+      { text: 'Web development', to: LINKS.webDevelopment },
+      { text: 'Case studies', to: LINKS.caseStudies },
     ],
     [
-      { text: 'Blog', to: links.blog },
-      { text: 'Github', to: links.github },
-      { text: 'Twitter', to: links.twitter },
+      { text: 'Blog', to: LINKS.blog },
+      { text: 'Github', to: LINKS.github },
+      { text: 'Twitter', to: LINKS.twitter },
     ],
   ],
   mobile: [
@@ -72,22 +65,22 @@ export default {
         {
           iconName: 'webDesign',
           text: 'Web design',
-          to: links.webDesign,
+          to: LINKS.webDesign,
         },
         {
           iconName: 'webDevelopment',
           text: 'Web development',
-          to: links.webDevelopment,
+          to: LINKS.webDevelopment,
         },
       ],
     },
     {
       text: 'Case studies',
-      to: links.caseStudies,
+      to: LINKS.caseStudies,
     },
     {
       text: 'Blog',
-      to: links.blog,
+      to: LINKS.blog,
     },
   ],
 };

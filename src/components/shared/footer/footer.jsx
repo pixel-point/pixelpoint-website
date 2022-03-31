@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Link from 'components/shared/link';
+import LINKS from 'constants/links.js';
 import MENUS from 'constants/menus.js';
 import Logo from 'images/logo.inline.svg';
 
@@ -12,12 +13,7 @@ const Footer = () => (
           <span className="sr-only">Pixel Point</span>
           <Logo className="h-9" aria-hidden />
         </Link>
-        <Link
-          className="sm:hidden"
-          to="mailto:info@pixelpoint.io"
-          size="base"
-          theme="underline-red"
-        >
+        <Link className="sm:hidden" to={LINKS.email} size="base" theme="underline-red">
           info@pixelpoint.io
         </Link>
       </div>
