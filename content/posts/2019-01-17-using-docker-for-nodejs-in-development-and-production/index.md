@@ -100,7 +100,7 @@ docker-compose up
 
 Or use VS code extension for the same purpose.
 
-![GATSBY_EMPTY_ALT](docker1.jpg)
+![GATSBY_EMPTY_ALT](docker1.png)
 
 With this command, we expose 3000 and 9229 ports of the Dockerized app to localhost, then we mount the current folder with the app to /usr/src/app and use a hack to prevent overriding of node modules from the local machine through Docker.
 

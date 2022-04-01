@@ -5,6 +5,7 @@ import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
+import LINKS from 'constants/links.js';
 import QuoteIcon from 'images/quote.inline.svg';
 import TwitterIcon from 'images/twitter.inline.svg';
 
@@ -61,7 +62,7 @@ const Hero = () => {
               </div>
               <Link
                 className="flex items-center space-x-3 rounded-full bg-[#259df4] py-2.5 pl-3.5 pr-5 text-sm font-semibold transition-colors duration-200 hover:bg-[#1781cf] sm:mt-4 sm:inline-flex sm:w-full sm:justify-center"
-                to="https://twitter.com/alex_barashkov"
+                to={LINKS.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
               >

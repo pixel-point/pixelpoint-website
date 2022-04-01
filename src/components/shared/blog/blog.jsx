@@ -3,6 +3,7 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import React from 'react';
 
 import Link from 'components/shared/link';
+import LINKS from 'constants/links';
 import getBlogPostPath from 'utils/get-blog-post-path';
 
 const Blog = () => {
@@ -40,7 +41,7 @@ const Blog = () => {
       <div className="container">
         <h2 className="text-center text-6xl font-normal leading-snug lg:text-[42px] md:text-[32px] sm:text-2xl">
           Blog.{' '}
-          <Link size="6xl" theme="arrow-red" to="/blog/">
+          <Link size="6xl" theme="arrow-red" to={LINKS.blog}>
             Explore team experience
           </Link>
         </h2>

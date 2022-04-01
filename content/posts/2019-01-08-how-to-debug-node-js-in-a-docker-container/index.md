@@ -31,7 +31,7 @@ RUN npm installCOPY . .CMD [ "npm", "start" ]
 
 In order to continue, we need to build our Dockerfile. I recommend using the VS Code Docker extension and begin building as shown below:
 
-![GATSBY_EMPTY_ALT](node1.jpg)
+![GATSBY_EMPTY_ALT](node1.png)
 
 To enable the debugger in Node.js, we need to use — inspect or — inspect-brk, but because our app will be launched inside Docker, we also need to allow access from external networks to our debugger by passing 0.0.0.0.
 

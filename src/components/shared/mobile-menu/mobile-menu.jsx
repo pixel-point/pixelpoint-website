@@ -3,36 +3,16 @@ import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 
 import Link from 'components/shared/link';
+import MENUS from 'constants/menus.js';
 import useClickOutside from 'hooks/use-click-outside';
 
 import ServicesWebDesignIcon from './images/services-web-design.inline.svg';
 import ServicesWebDevelopmentIcon from './images/services-web-development.inline.svg';
 
-const links = [
-  {
-    text: 'Services',
-    items: [
-      {
-        icon: ServicesWebDesignIcon,
-        text: 'Web design',
-        to: '/services/web-design/',
-      },
-      {
-        icon: ServicesWebDevelopmentIcon,
-        text: 'Web development',
-        to: '/services/web-development/',
-      },
-    ],
-  },
-  {
-    text: 'Case studies',
-    to: '/case-studies/',
-  },
-  {
-    text: 'Blog',
-    to: '/blog/',
-  },
-];
+const icons = {
+  webDevelopment: ServicesWebDesignIcon,
+  webDesign: ServicesWebDevelopmentIcon,
+};
 
 const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
   const ref = useRef(null);
@@ -49,7 +29,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
       ref={ref}
     >
       <ul>
-        {links.map(({ text, to, items }, index) => (
+        {MENUS.mobile.map(({ text, to, items }, index) => (
           <li className={clsx('border-b border-b-gray-3', items?.length > 0 && 'pb-5')} key={index}>
             <Link
               className={clsx('block text-lg font-normal leading-none', !items && 'py-5')}
@@ -60,14 +40,18 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
 
             {items?.length > 0 && (
               <ul className="mt-5 space-y-5">
-                {items.map(({ icon: Icon, text, to }, index) => (
-                  <li key={index}>
-                    <Link className="flex items-center space-x-3.5" to={to}>
-                      <Icon className="h-12 shrink-0" />
-                      <span className="text-lg font-semibold">{text}</span>
-                    </Link>
-                  </li>
-                ))}
+                {items.map(({ iconName, text, to }, index) => {
+                  const Icon = icons[iconName];
+
+                  return (
+                    <li key={index}>
+                      <Link className="flex items-center space-x-3.5" to={to}>
+                        <Icon className="h-12 shrink-0" />
+                        <span className="text-lg font-semibold">{text}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </li>

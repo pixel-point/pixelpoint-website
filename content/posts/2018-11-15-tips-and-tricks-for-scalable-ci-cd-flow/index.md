@@ -7,7 +7,7 @@ When you plan a project, you don’t always know how big it will be by the end. 
 
 At the beginning of a typical development process, before the project is ready for publication, your CI flow looks something like this:
 
-![GATSBY_EMPTY_ALT](tips1.png)
+![GATSBY_EMPTY_ALT](tips1.jpg)
 
 During the development phase, more steps are added to the process until it looks something like the image below. However, you may see many more steps than this in some projects. [Original image](https://user-images.githubusercontent.com/2697570/48337431-33340c80-e663-11e8-87b0-cdc4e24aa776.jpg).
 
