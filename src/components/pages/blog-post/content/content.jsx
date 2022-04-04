@@ -12,14 +12,13 @@ const Heading =
   (Tag) =>
   // eslint-disable-next-line react/prop-types
   ({ children }) => {
-    const id = typeof children === 'string' ? slugify(children).toLocaleLowerCase() : undefined;
+    const id =
+      typeof children === 'string'
+        ? slugify(children, { strict: true }).toLocaleLowerCase()
+        : undefined;
 
     return <Tag id={id}>{children}</Tag>;
   };
-
-Heading.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 const Paragraph = ({ children }) => {
   // We have this check in order NOT to wrap specified elements into <p> tag
