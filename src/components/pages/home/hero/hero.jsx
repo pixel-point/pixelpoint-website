@@ -14,7 +14,8 @@ const STATE_MACHINE_NAME = 'State Machine';
 const INPUT_NAME = 'Fall Trigger';
 
 const firstSectionTitleItems = [
-  { value: 'Marketing' },
+  { value: 'A' },
+  { value: 'marketing' },
   { value: 'website' },
   { value: 'is' },
   { value: 'a' },
@@ -132,7 +133,7 @@ const Hero = () => {
         <div className="relative z-10 text-6xl font-normal leading-snug lg:text-[42px] md:mx-auto md:text-4xl sm:text-2xl">
           <div className="flex h-screen items-center md:block md:h-auto" ref={firstSectionRef}>
             <TitleAnimation
-              className="md:max-w-[538px]"
+              className="md:max-w-[574px]"
               tag="h2"
               items={firstSectionTitleItems}
               animationName="first"
@@ -144,7 +145,7 @@ const Hero = () => {
               height={380}
               aria-hidden
             >
-              <img src={lgIllustration1} alt="" />
+              <img src={lgIllustration1} width={468} height={380} alt="" />
             </ImagePlaceholder>
           </div>
           <div
@@ -164,7 +165,7 @@ const Hero = () => {
               height={700}
               aria-hidden
             >
-              <img src={lgIllustration2} alt="" />
+              <img src={lgIllustration2} width={590} height={700} alt="" />
             </ImagePlaceholder>
           </div>
           <div
@@ -184,7 +185,7 @@ const Hero = () => {
               height={766}
               aria-hidden
             >
-              <img src={lgIllustration3} alt="" />
+              <img src={lgIllustration3} width={590} height={766} alt="" />
             </ImagePlaceholder>
           </div>
         </div>
