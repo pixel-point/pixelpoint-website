@@ -1,4 +1,12 @@
-# Pixel Point Gatsby Tailwind Starter
+<h1 align="center">
+  Pixel Point — Web Design and Development
+</h1>
+
+<p align="center">
+  <a href="https://www.pixelpoint.io">
+    <img alt="Gatsby" src="https://pixelpoint.io/images/social-preview.jpg" />
+  </a>
+</p>
 
 ## Table of Contents
 
@@ -16,10 +24,10 @@
 
 ## Getting Started
 
-1. Clone this repository or hit "Use this template" button
+1. Clone repository repository
 
 ```bash
-git clone git@github.com:pixel-point/gatsby-tailwind-starter.git
+git clone git@github.com:pixel-point/pixelpoint-website.git
 ```
 
 2. Install dependencies
@@ -28,7 +36,7 @@ git clone git@github.com:pixel-point/gatsby-tailwind-starter.git
 npm install
 ```
 
-3. Fill environment variables
+3. Add `.env` file
 
 ```bash
 cp .env.example .env
@@ -63,23 +71,32 @@ npm run clean
 ## Project Structure
 
 ```text
+├── content
+│   ├── case-studies
+│   └── posts
 ├── src
 │   ├── components
-│   │  ├── pages — React components that are being used specifically on a certain page
-│   │  └── shared — React components that are being used across the whole website
+│   │   ├── pages — React components that are being used specifically on a certain page
+│   │   └── shared — React components that are being used across the whole website
+│   ├── constants
 │   ├── hooks
 │   ├── images
 │   ├── pages
 │   ├── styles
 │   ├── templates
 │   ├── utils
-│   └── html.jsx — HTML template for all generated pages. Read more about it here — gatsbyjs.org/docs/custom-html
+│   └── html.jsx
 ├── static
-│   └── fonts
-├── gatsby-browser.js — Usage of the Gatsby browser APIs. Read more about it [here](gatsbyjs.org/docs/browser-apis)
-├── gatsby-config.js — Main configuration file for a Gatsby site. Read more about it [here](gatsbyjs.org/docs/gatsby-config)
-├── gatsby-node.js — Usage of the Gatsby Node APIs. [Read more about it here](gatsbyjs.org/docs/node-apis)
-└── gatsby-ssr.js — Usage of the Gatsby server-side rendering APIs. [Read more about it here](gatsbyjs.org/docs/ssr-apis)
+│   ├── animations
+│   │   ├── pages — Rive animation files that are being used specifically on a certain page
+│   │   └── shared — Rive animation files that are being used across the whole website
+│   ├── fonts
+│   └── images
+├── gatsby-browser.js
+├── gatsby-config.js
+├── gatsby-node.js
+├── gatsby-ssr.js
+└── tailwind.config.js
 ```
 
 ## Component Folder Structure
@@ -106,7 +123,7 @@ component
 │  ├── images
 │  │  ├── nested-component-image.jpg
 │  │  ├── nested-component-inline-svg.inline.svg
-│  │  └── nested-component-url-svg.url.svg
+│  │  └── nested-component-url-svg.svg
 │  ├── nested-component.js
 │  └── index.js
 ├── data
@@ -114,7 +131,7 @@ component
 ├── images
 │  ├── component-image.jpg
 │  ├── component-inline-svg.inline.svg
-│  └── component-url-svg.url.svg
+│  └── component-url-svg.svg
 ├── component.js
 └── index.js
 ```
@@ -162,7 +179,7 @@ After installation enable "ESLint on save" by adding to your VS Code settings.js
 
 ```json
 "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+  "source.fixAll.eslint": true
 }
 ```
 
