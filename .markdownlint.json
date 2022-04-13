@@ -2,6 +2,6 @@
   "line-length": false,
   "no-duplicate-heading": false,
   "no-inline-html": {
-    "allowed_elements": ["Quote", "iframe"]
+    "allowed_elements": ["Quote", "iframe", "video"]
   }
 }

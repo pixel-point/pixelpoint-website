@@ -78,8 +78,6 @@ Okay, let’s step back here because I’m sure that many people don’t even bo
 
 If you use Gatsby, it supports the most popular CMSs, and it works seamlessly. You can either use Gatsby Cloud, and the preview server will be created automatically, and all you will have to do is just point CMS to a correct URL, or you can deploy a self-hosted version running gatsby with `GATSBY_ENABLE_REFRESH_ENDPOINT=true`. Below is an example of how it works with Gatsby + Headless WP.
 
-<!-- markdownlint-disable MD033 -->
-
 <video src="/video.mp4" width="640" height="444" controls></video>
 
 With Next.js, things yet again get more complicated; [see the official doc](https://nextjs.org/docs/advanced-features/preview-mode). Again, there is a need to write it manually for every entity you plan to preview, defining rules of how the data from a preview trigger will be parsed, what will be fetched later, and what will be rendered. Instead of a five-minute setup with Gatsby, you will have to spend hours to get something usable.
