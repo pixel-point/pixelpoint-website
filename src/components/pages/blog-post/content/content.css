@@ -137,8 +137,9 @@
       @apply rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-[#d41153] md:px-1 md:py-px md:text-sm;
     }
 
-    iframe {
-      @apply max-w-full;
+    iframe,
+    video {
+      @apply mx-auto max-w-full;
     }
   }
 }
