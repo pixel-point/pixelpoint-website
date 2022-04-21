@@ -41,7 +41,7 @@
 
 Hello there! This repo is a home to Pixel Point, a web agency that designs and develops world-class marketing websites. We made this codebase available to open source community so everyone can get something useful out of our expertise, be it for project structure, code patterns or plugins.
 
-Below you will find some basic information about how to work with this project. If you've spotted a bug, a copywrite mistake or want to suggest some better solution, please, refer to the [contribution](#contribution) section.
+Below you will find some basic information about how to work with this project. If you've spotted a bug, a copywriting mistake or just want to suggest some better solution, please, refer to the [contribution](#contribution) section.
 
 ## Getting Started
 
