@@ -1,6 +1,15 @@
-<h1 align="center">
+<h1 align="left">
   Pixel Point — Web Design and Development
 </h1>
+
+<p align="left">
+<a href="https://twitter.com/intent/follow?screen_name=alex_barashkov">
+  <img alt="Follow on Twitter" src="https://img.shields.io/twitter/follow/alex_barashkov?color=%23ee2b6c&label=Follow%20Pixel%20Point%20on%20Twitter&labelColor=black&logoColor=%23ee2b6c&style=for-the-badge" />
+</a>
+<a href="https://app.netlify.com/sites/pixelpoint-website/deploys" alt="Netlify Status">
+  <img src="https://img.shields.io/netlify/d25e0926-7706-4f32-b200-3231fdff5e79?label=Netlify%20build&labelColor=black&style=for-the-badge" />
+</a>
+</p>
 
 <p align="center">
   <a href="https://www.pixelpoint.io">
@@ -10,6 +19,7 @@
 
 ## Table of Contents
 
+- [Welcome](#welcome)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
   - [Run the website](#run-the-website)
@@ -25,6 +35,13 @@
   - [ESLint](#eslint)
   - [Prettier](#prettier)
   - [VS Code](#vs-code)
+- [Contribution](#contribution)
+
+## Welcome
+
+Hello there! This repo is a home to Pixel Point, a web agency that designs and develops world-class marketing websites. We made this codebase available to open source community so everyone can get something useful out of our expertise, be it for project structure, code patterns or plugins.
+
+Below you will find some basic information about how to work with this project. If you've spotted a bug, a copywrite mistake or want to suggest some better solution, please, refer to the [contribution](#contribution) section.
 
 ## Getting Started
 
@@ -192,3 +209,21 @@ You can navigate to settings.json by using Command Pallete (CMD+Shift+P) and the
 To enable Prettier go to Preferences -> Settings -> type "Format". Then check that you have esbenp.prettier-vscode as default formatter, and also enable "Format On Save".
 
 Reload VS Code and auto-format will work for you.
+
+## Contribution
+
+Contribution is highly welcomed!
+
+If there is a bug you've encountered, an occasional typo or just want to ask something, don't hesitate to raise and issue or even make a PR.
+
+There are no special contribution guidelines, just use your common sense, keep your changes cohesive with the overall code style and leverage the project info above.
+
+When raising and issue or making a pull request, please do use appropriate labels.
+
+Thank you!
+
+## License
+
+All assets and code are under the [MIT LICENSE](/LICENSE) and in the public domain unless specified otherwise.
+
+The client logos are trademarks of their respective companies and are under their terms and license.
