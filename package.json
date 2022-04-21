@@ -1,6 +1,15 @@
 {
   "name": "pixelpoint-website",
   "version": "0.1.0",
+  "description": "Design and development of JAMStack-based marketing websites",
+  "keywords": ["react", "gatsby", "tailwindcss", "rive", "jamstack", "jamstack-site"],
+  "license": "MIT",
+  "homepage": "https://pixelpoint.io",
+  "author": "Pixel Point <info@pixelpoint.io> (https://pixelpoint.io)",
+  "engines": {
+    "node": ">=14.15.0",
+    "npm": ">=8.6.0"
+  },
   "scripts": {
     "start": "npm run develop",
     "develop": "gatsby develop -H 0.0.0.0",

@@ -1,7 +1,25 @@
-# Pixel Point Gatsby Tailwind Starter
+<h1 align="left">
+  Pixel Point — Web Design and Development
+</h1>
+
+<p align="left">
+<a href="https://twitter.com/intent/follow?screen_name=alex_barashkov">
+  <img alt="Follow on Twitter" src="https://img.shields.io/twitter/follow/alex_barashkov?color=%23ee2b6c&label=Follow%20Pixel%20Point%20on%20Twitter&labelColor=black&logoColor=%23ee2b6c&style=for-the-badge" />
+</a>
+<a href="https://app.netlify.com/sites/pixelpoint-website/deploys" alt="Netlify Status">
+  <img src="https://img.shields.io/netlify/d25e0926-7706-4f32-b200-3231fdff5e79?label=Netlify%20build&labelColor=black&style=for-the-badge" />
+</a>
+</p>
+
+<p align="center">
+  <a href="https://www.pixelpoint.io">
+    <img alt="Gatsby" src="https://pixelpoint.io/images/social-preview.jpg" />
+  </a>
+</p>
 
 ## Table of Contents
 
+- [Welcome](#welcome)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
   - [Run the website](#run-the-website)
@@ -9,17 +27,28 @@
   - [Run the built website](#run-the-built-website)
   - [Clean Gatsby cache](#clean-gatsby-cache)
 - [Project Structure](#project-structure)
+- [Component Folder Structure](#component-folder-structure)
+  - [Each component includes](#each-component-includes)
+  - [Each component optionally may include](#each-component-optionally-may-include)
+  - [Example structure](#example-structure)
 - [Code Style](#code-style)
   - [ESLint](#eslint)
   - [Prettier](#prettier)
   - [VS Code](#vs-code)
+- [Contribution](#contribution)
+
+## Welcome
+
+Hello there! This repo is a home to Pixel Point, a web agency that designs and develops world-class marketing websites. We made this codebase available to open source community so everyone can get something useful out of our expertise, be it for project structure, code patterns or plugins.
+
+Below you will find some basic information about how to work with this project. If you've spotted a bug, a copywriting mistake or just want to suggest some better solution, please, refer to the [contribution](#contribution) section.
 
 ## Getting Started
 
-1. Clone this repository or hit "Use this template" button
+1. Clone repository repository
 
 ```bash
-git clone git@github.com:pixel-point/gatsby-tailwind-starter.git
+git clone git@github.com:pixel-point/pixelpoint-website.git
 ```
 
 2. Install dependencies
@@ -28,7 +57,7 @@ git clone git@github.com:pixel-point/gatsby-tailwind-starter.git
 npm install
 ```
 
-3. Fill environment variables
+3. Add `.env` file
 
 ```bash
 cp .env.example .env
@@ -63,23 +92,32 @@ npm run clean
 ## Project Structure
 
 ```text
+├── content
+│   ├── case-studies
+│   └── posts
 ├── src
 │   ├── components
-│   │  ├── pages — React components that are being used specifically on a certain page
-│   │  └── shared — React components that are being used across the whole website
+│   │   ├── pages — React components that are being used specifically on a certain page
+│   │   └── shared — React components that are being used across the whole website
+│   ├── constants
 │   ├── hooks
 │   ├── images
 │   ├── pages
 │   ├── styles
 │   ├── templates
 │   ├── utils
-│   └── html.jsx — HTML template for all generated pages. Read more about it here — gatsbyjs.org/docs/custom-html
+│   └── html.jsx
 ├── static
-│   └── fonts
-├── gatsby-browser.js — Usage of the Gatsby browser APIs. Read more about it [here](gatsbyjs.org/docs/browser-apis)
-├── gatsby-config.js — Main configuration file for a Gatsby site. Read more about it [here](gatsbyjs.org/docs/gatsby-config)
-├── gatsby-node.js — Usage of the Gatsby Node APIs. [Read more about it here](gatsbyjs.org/docs/node-apis)
-└── gatsby-ssr.js — Usage of the Gatsby server-side rendering APIs. [Read more about it here](gatsbyjs.org/docs/ssr-apis)
+│   ├── animations
+│   │   ├── pages — Rive animation files that are being used specifically on a certain page
+│   │   └── shared — Rive animation files that are being used across the whole website
+│   ├── fonts
+│   └── images
+├── gatsby-browser.js
+├── gatsby-config.js
+├── gatsby-node.js
+├── gatsby-ssr.js
+└── tailwind.config.js
 ```
 
 ## Component Folder Structure
@@ -106,7 +144,7 @@ component
 │  ├── images
 │  │  ├── nested-component-image.jpg
 │  │  ├── nested-component-inline-svg.inline.svg
-│  │  └── nested-component-url-svg.url.svg
+│  │  └── nested-component-url-svg.svg
 │  ├── nested-component.js
 │  └── index.js
 ├── data
@@ -114,7 +152,7 @@ component
 ├── images
 │  ├── component-image.jpg
 │  ├── component-inline-svg.inline.svg
-│  └── component-url-svg.url.svg
+│  └── component-url-svg.svg
 ├── component.js
 └── index.js
 ```
@@ -162,7 +200,7 @@ After installation enable "ESLint on save" by adding to your VS Code settings.js
 
 ```json
 "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+  "source.fixAll.eslint": true
 }
 ```
 
@@ -171,3 +209,21 @@ You can navigate to settings.json by using Command Pallete (CMD+Shift+P) and the
 To enable Prettier go to Preferences -> Settings -> type "Format". Then check that you have esbenp.prettier-vscode as default formatter, and also enable "Format On Save".
 
 Reload VS Code and auto-format will work for you.
+
+## Contribution
+
+Contribution is highly welcomed!
+
+If there is a bug you've encountered, an occasional typo or just want to ask something, don't hesitate to raise and issue or even make a PR.
+
+There are no special contribution guidelines, just use your common sense, keep your changes cohesive with the overall code style and leverage the project info above.
+
+When raising and issue or making a pull request, please do use appropriate labels.
+
+Thank you!
+
+## License
+
+All assets and code are under the [MIT LICENSE](/LICENSE) and in the public domain unless specified otherwise.
+
+The client logos are trademarks of their respective companies and are under their terms and license.
