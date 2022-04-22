@@ -45,7 +45,7 @@ Below you will find some basic information about how to work with this project. 
 
 ## Getting Started
 
-1. Clone repository repository
+1. Clone repository
 
 ```bash
 git clone git@github.com:pixel-point/pixelpoint-website.git
