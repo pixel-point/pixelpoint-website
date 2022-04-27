@@ -2,7 +2,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 
 import Link from 'components/shared/link';
-import LINKS from 'constants/links.js';
+import LINKS from 'constants/links';
 import TwitterIcon from 'images/twitter.inline.svg';
 
 const Author = () => (

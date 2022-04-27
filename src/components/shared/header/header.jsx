@@ -4,7 +4,8 @@ import React, { forwardRef } from 'react';
 
 import Burger from 'components/shared/burger';
 import Link from 'components/shared/link';
-import MENUS from 'constants/menus.js';
+import LINKS from 'constants/links';
+import MENUS from 'constants/menus';
 import Logo from 'images/logo.inline.svg';
 
 import ServicesWebDesignIcon from './images/services-web-design.inline.svg';
@@ -91,7 +92,7 @@ const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
               theme === 'black' && 'border-l-gray-4'
             )}
           >
-            <Link to="mailto:info@pixelpoint.io" size="base" theme="underline-red">
+            <Link to={LINKS.email} size="base" theme="underline-red">
               info@pixelpoint.io
             </Link>
           </li>
