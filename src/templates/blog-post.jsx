@@ -25,9 +25,9 @@ const BlogPostTemplate = ({
     })}
     headerTheme="black"
   >
-    <article className="safe-paddings mt-22 border-t border-t-gray-3 lg:mt-0 lg:border-t-0 lg:pt-32 sm:pt-24">
+    <article className="safe-paddings mt-22 border-t border-t-gray-3 md:mt-0 md:border-t-0 md:pt-32 sm:pt-24">
       <div className="container">
-        <div className="relative max-w-[696px] pt-16 lg:mx-auto lg:pt-0">
+        <div className="relative max-w-[696px] pt-16 pb-52 lg:max-w-[626px] lg:pb-36 md:mx-auto md:max-w-none md:pb-0 md:pt-0">
           <Hero {...frontmatter} slug={slug} />
           <Content content={body} />
           <Sidebar />
@@ -36,7 +36,7 @@ const BlogPostTemplate = ({
       </div>
     </article>
     <Author />
-    <CTA withTopMargin />
+    <CTA className="md:mt-28 sm:mt-20" />
   </Layout>
 );
 

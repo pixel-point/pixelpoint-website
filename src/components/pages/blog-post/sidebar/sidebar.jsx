@@ -6,8 +6,8 @@ import LINKS from 'constants/links.js';
 import TwitterIcon from 'images/twitter.inline.svg';
 
 const Sidebar = () => (
-  <aside className="absolute -right-24 top-0 h-full max-w-[326px] translate-x-full border-l border-l-gray-3 pt-16 lg:hidden">
-    <div className="sticky right-0 top-16 pl-8">
+  <aside className="absolute -right-24 top-0 h-full max-w-[326px] translate-x-full border-l border-l-gray-3 pt-16 pb-52 lg:-right-8 lg:max-w-[292px] lg:pb-36 md:hidden">
+    <div className="sticky right-0 top-16 pl-8 lg:pl-6">
       <StaticImage
         className="w-16 shrink-0 rounded-full"
         imgClassName="rounded-full"

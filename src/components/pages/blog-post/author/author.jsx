@@ -6,8 +6,8 @@ import LINKS from 'constants/links.js';
 import TwitterIcon from 'images/twitter.inline.svg';
 
 const Author = () => (
-  <section className="safe-paddings mt-20 hidden text-white lg:block sm:mt-10">
-    <div className="container-xs">
+  <section className="safe-paddings mt-20 hidden text-white md:block sm:mt-10">
+    <div className="container">
       <div
         className="flex space-x-8 rounded-2xl p-8 sm:block sm:space-x-0 sm:space-y-6 sm:p-6"
         style={{ background: 'linear-gradient(254.82deg, #333333 0%, #000000 100%)' }}

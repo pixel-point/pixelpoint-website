@@ -8,7 +8,7 @@ import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
 import LINKS from 'constants/links.js';
 
-const CTA = ({ withTopMargin }) => {
+const CTA = ({ className, withTopMargin }) => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({
     triggerOnce: true,
     threshold: 0.8,
@@ -31,7 +31,8 @@ const CTA = ({ withTopMargin }) => {
     <section
       className={clsx(
         'safe-paddings bg-black py-20 lg:py-[74px] md:py-20 sm:pt-11 sm:pb-9',
-        withTopMargin && 'mt-52 lg:mt-36 md:mt-28 sm:mt-20'
+        withTopMargin && 'mt-52 lg:mt-36 md:mt-28 sm:mt-20',
+        className
       )}
     >
       <div className="container grid-gap-x grid grid-cols-2 items-center sm:block">
@@ -54,10 +55,12 @@ const CTA = ({ withTopMargin }) => {
 };
 
 CTA.propTypes = {
+  className: PropTypes.string,
   withTopMargin: PropTypes.bool,
 };
 
 CTA.defaultProps = {
+  className: null,
   withTopMargin: false,
 };
 
