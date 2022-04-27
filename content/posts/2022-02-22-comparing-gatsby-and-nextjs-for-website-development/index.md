@@ -1,5 +1,6 @@
 ---
 title: 'Comparing Gatsby and Next.js for website development'
+author: Alex Barashkov
 cover: cover.jpg
 isFeatured: true
 ---

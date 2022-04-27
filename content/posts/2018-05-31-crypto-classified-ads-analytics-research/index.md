@@ -1,5 +1,6 @@
 ---
 title: 'Crypto classified ads analytics research'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

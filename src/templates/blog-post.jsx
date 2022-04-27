@@ -31,7 +31,7 @@ const BlogPostTemplate = ({
         <SocialShare url={location.href} />
       </div>
     </article>
-    <Author />
+    <Author author={frontmatter.author} />
     <CTA withTopMargin />
   </Layout>
 );
@@ -44,6 +44,7 @@ export const query = graphql`
       body
       frontmatter {
         title
+        author
         cover {
           childImageSharp {
             gatsbyImageData(width: 696)

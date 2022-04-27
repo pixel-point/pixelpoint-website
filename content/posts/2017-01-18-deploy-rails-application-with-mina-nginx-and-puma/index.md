@@ -1,5 +1,6 @@
 ---
 title: 'Deploy rails application with Mina, Nginx and Puma'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

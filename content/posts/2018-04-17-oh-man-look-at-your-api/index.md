@@ -1,5 +1,6 @@
 ---
 title: 'Oh Man, Look at Your API!'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

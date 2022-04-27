@@ -1,5 +1,6 @@
 ---
 title: 'Tips and tricks for scalable CI/CD flow'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

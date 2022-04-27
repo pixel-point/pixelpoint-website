@@ -1,5 +1,6 @@
 ---
 title: 'Don’t mess up your grid like Medium'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

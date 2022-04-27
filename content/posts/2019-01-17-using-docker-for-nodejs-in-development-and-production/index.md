@@ -1,5 +1,6 @@
 ---
 title: 'Using Docker for Node.js in Development and Production'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

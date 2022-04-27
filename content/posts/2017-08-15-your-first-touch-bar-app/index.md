@@ -1,5 +1,6 @@
 ---
 title: 'Probably, your first useful Touch Bar app'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

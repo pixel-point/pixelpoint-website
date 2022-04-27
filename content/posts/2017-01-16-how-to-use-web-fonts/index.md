@@ -1,5 +1,6 @@
 ---
 title: 'How to use web fonts?'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

@@ -1,5 +1,6 @@
 ---
 title: 'Handoffs Guide for Pixel Perfect Design. Part III.'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 
