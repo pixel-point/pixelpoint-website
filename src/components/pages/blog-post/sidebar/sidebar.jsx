@@ -1,12 +1,14 @@
-import { StaticImage } from 'gatsby-plugin-image';
+import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import Link from 'components/shared/link';
 import LINKS from 'constants/links.js';
 import TwitterIcon from 'images/twitter.inline.svg';
+import getBlogPostPath from 'utils/get-blog-post-path';
 
-const Sidebar = () => (
-  <aside className="absolute -right-24 top-0 h-full max-w-[326px] translate-x-full border-l border-l-gray-3 pt-16 pb-52 lg:-right-8 lg:max-w-[292px] lg:pb-36 md:hidden">
+const Sidebar = ({ readMorePosts }) => (
+  <aside className="absolute -right-24 top-0 h-full max-w-[360px] translate-x-full border-l border-l-gray-3 pt-16 pb-52 lg:-right-8 lg:max-w-[300px] lg:pb-36 md:hidden">
     <div className="sticky right-0 top-16 pl-8 lg:pl-6">
       <StaticImage
         className="w-16 shrink-0 rounded-full"
@@ -31,8 +33,44 @@ const Sidebar = () => (
       >
         <TwitterIcon className="h-5" /> <span>Follow on Twitter</span>
       </Link>
+      <h2 className="mt-16 font-semibold md:mt-10">More from Pixel Point</h2>
+      <ul className="mt-7 space-y-7 md:mt-5 md:space-x-5">
+        {readMorePosts.map(({ slug, frontmatter: { title, cover } }, index) => (
+          <li key={index}>
+            <Link
+              className="flex items-center space-x-3 transition-colors duration-200 hover:text-red"
+              to={getBlogPostPath(slug)}
+            >
+              <h3 className="font-normal line-clamp-2 lg:text-sm">{title}</h3>
+              <GatsbyImage
+                className="w-20 shrink-0 rounded-sm"
+                imgClassName="rounded-sm"
+                image={getImage(cover)}
+                loading="eager"
+                alt=""
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   </aside>
 );
+
+Sidebar.propTypes = {
+  readMorePosts: PropTypes.arrayOf(
+    PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+      frontmatter: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        cover: PropTypes.exact({
+          childImageSharp: PropTypes.exact({
+            gatsbyImageData: PropTypes.object.isRequired,
+          }).isRequired,
+        }).isRequired,
+      }).isRequired,
+    }).isRequired
+  ).isRequired,
+};
 
 export default Sidebar;

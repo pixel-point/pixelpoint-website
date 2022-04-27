@@ -2,7 +2,14 @@
   "name": "pixelpoint-website",
   "version": "0.1.0",
   "description": "Design and development of JAMStack-based marketing websites",
-  "keywords": ["react", "gatsby", "tailwindcss", "rive", "jamstack", "jamstack-site"],
+  "keywords": [
+    "react",
+    "gatsby",
+    "tailwindcss",
+    "rive",
+    "jamstack",
+    "jamstack-site"
+  ],
   "license": "MIT",
   "homepage": "https://pixelpoint.io",
   "author": "Pixel Point <info@pixelpoint.io> (https://pixelpoint.io)",
@@ -26,6 +33,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@tailwindcss/line-clamp": "^0.3.1",
     "clsx": "^1.1.1",
     "framer-motion": "^6.2.4",
     "gatsby": "^4.6.2",

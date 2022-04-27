@@ -14,6 +14,7 @@ import SEO_DATA from 'constants/seo-data';
 const BlogPostTemplate = ({
   data: {
     mdx: { slug, excerpt, body, frontmatter },
+    allMdx: { nodes: readMorePosts },
   },
   location,
 }) => (
@@ -30,7 +31,7 @@ const BlogPostTemplate = ({
         <div className="relative max-w-[696px] pt-16 pb-52 lg:max-w-[626px] lg:pb-36 md:mx-auto md:max-w-none md:pb-0 md:pt-0">
           <Hero {...frontmatter} slug={slug} />
           <Content content={body} />
-          <Sidebar />
+          <Sidebar readMorePosts={readMorePosts} />
           <SocialShare url={location.href} />
         </div>
       </div>
@@ -64,6 +65,23 @@ export const query = graphql`
               quality: 90
             ) {
               src
+            }
+          }
+        }
+      }
+    }
+    allMdx(
+      filter: { fileAbsolutePath: { regex: "/posts/" }, id: { ne: $id } }
+      limit: 4
+      sort: { order: DESC, fields: slug }
+    ) {
+      nodes {
+        slug
+        frontmatter {
+          title
+          cover {
+            childImageSharp {
+              gatsbyImageData(width: 80, layout: FIXED)
             }
           }
         }
