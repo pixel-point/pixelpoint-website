@@ -5,6 +5,7 @@ import React from 'react';
 import Author from 'components/pages/blog-post/author';
 import Content from 'components/pages/blog-post/content';
 import Hero from 'components/pages/blog-post/hero';
+import ReadMore from 'components/pages/blog-post/read-more';
 import Sidebar from 'components/pages/blog-post/sidebar';
 import SocialShare from 'components/pages/blog-post/social-share';
 import CTA from 'components/shared/cta';
@@ -37,6 +38,7 @@ const BlogPostTemplate = ({
       </div>
     </article>
     <Author />
+    <ReadMore items={readMorePosts} />
     <CTA className="md:mt-28 sm:mt-20" />
   </Layout>
 );
@@ -79,7 +81,12 @@ export const query = graphql`
         slug
         frontmatter {
           title
-          cover {
+          mediumCover: cover {
+            childImageSharp {
+              gatsbyImageData(width: 384)
+            }
+          }
+          smallCover: cover {
             childImageSharp {
               gatsbyImageData(width: 80, layout: FIXED)
             }

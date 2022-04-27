@@ -35,7 +35,7 @@ const Sidebar = ({ readMorePosts }) => (
       </Link>
       <h2 className="mt-16 font-semibold md:mt-10">More from Pixel Point</h2>
       <ul className="mt-7 space-y-7 md:mt-5 md:space-x-5">
-        {readMorePosts.map(({ slug, frontmatter: { title, cover } }, index) => (
+        {readMorePosts.map(({ slug, frontmatter: { title, smallCover: cover } }, index) => (
           <li key={index}>
             <Link
               className="flex items-center space-x-3 transition-colors duration-200 hover:text-red"
@@ -63,7 +63,12 @@ Sidebar.propTypes = {
       slug: PropTypes.string.isRequired,
       frontmatter: PropTypes.shape({
         title: PropTypes.string.isRequired,
-        cover: PropTypes.exact({
+        mediumCover: PropTypes.exact({
+          childImageSharp: PropTypes.exact({
+            gatsbyImageData: PropTypes.object.isRequired,
+          }).isRequired,
+        }).isRequired,
+        smallCover: PropTypes.exact({
           childImageSharp: PropTypes.exact({
             gatsbyImageData: PropTypes.object.isRequired,
           }).isRequired,
