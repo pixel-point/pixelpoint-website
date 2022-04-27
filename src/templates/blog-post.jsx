@@ -26,11 +26,13 @@ const BlogPostTemplate = ({
     headerTheme="black"
   >
     <article className="safe-paddings mt-22 border-t border-t-gray-3 lg:mt-0 lg:border-t-0 lg:pt-32 sm:pt-24">
-      <div className="container-xs relative pt-16 lg:pt-0">
-        <Hero {...frontmatter} slug={slug} />
-        <Content content={body} />
-        <Sidebar />
-        <SocialShare url={location.href} />
+      <div className="container">
+        <div className="relative max-w-[696px] pt-16 lg:mx-auto lg:pt-0">
+          <Hero {...frontmatter} slug={slug} />
+          <Content content={body} />
+          <Sidebar />
+          <SocialShare url={location.href} />
+        </div>
       </div>
     </article>
     <Author />
