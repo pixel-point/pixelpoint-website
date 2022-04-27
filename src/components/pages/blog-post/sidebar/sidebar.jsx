@@ -8,8 +8,8 @@ import TwitterIcon from 'images/twitter.inline.svg';
 import getBlogPostPath from 'utils/get-blog-post-path';
 
 const Sidebar = ({ readMorePosts }) => (
-  <aside className="absolute -right-24 top-0 h-full max-w-[360px] translate-x-full border-l border-l-gray-3 pt-16 pb-52 lg:-right-8 lg:max-w-[300px] lg:pb-36 md:hidden">
-    <div className="sticky right-0 top-16 pl-8 lg:pl-6">
+  <aside className="absolute -right-24 top-0 h-full max-w-[360px] translate-x-full border-l border-l-gray-3 pt-8 pb-44 lg:-right-8 lg:max-w-[300px] lg:pb-28 md:hidden">
+    <div className="scrollbar-hidden sticky right-0 top-0 max-h-screen overflow-auto pt-8 pb-8 pl-8 lg:pl-6">
       <StaticImage
         className="w-16 shrink-0 rounded-full"
         imgClassName="rounded-full"
@@ -18,7 +18,7 @@ const Sidebar = ({ readMorePosts }) => (
         height={64}
         width={64}
         alt="Alex Barashkov"
-        loading="lazy"
+        loading="eager"
       />
       <h2 className="mt-5 font-semibold">Alex Barashkov</h2>
       <p className="mt-2.5">
