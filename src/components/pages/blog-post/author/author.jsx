@@ -6,7 +6,7 @@ import LINKS from 'constants/links.js';
 import TwitterIcon from 'images/twitter.inline.svg';
 
 const Author = () => (
-  <section className="safe-paddings mt-20 text-white sm:mt-10">
+  <section className="safe-paddings mt-20 hidden text-white lg:block sm:mt-10">
     <div className="container-xs">
       <div
         className="flex space-x-8 rounded-2xl p-8 sm:block sm:space-x-0 sm:space-y-6 sm:p-6"

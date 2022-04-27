@@ -5,6 +5,7 @@ import React from 'react';
 import Author from 'components/pages/blog-post/author';
 import Content from 'components/pages/blog-post/content';
 import Hero from 'components/pages/blog-post/hero';
+import Sidebar from 'components/pages/blog-post/sidebar';
 import SocialShare from 'components/pages/blog-post/social-share';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
@@ -24,10 +25,11 @@ const BlogPostTemplate = ({
     })}
     headerTheme="black"
   >
-    <article className="safe-paddings pt-32 sm:pt-24">
-      <div className="container-xs relative">
+    <article className="safe-paddings mt-22 border-t border-t-gray-3 lg:mt-0 lg:border-t-0 lg:pt-32 sm:pt-24">
+      <div className="container-xs relative pt-16 lg:pt-0">
         <Hero {...frontmatter} slug={slug} />
         <Content content={body} />
+        <Sidebar />
         <SocialShare url={location.href} />
       </div>
     </article>
