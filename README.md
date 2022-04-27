@@ -218,7 +218,7 @@ If there is a bug you've encountered, an occasional typo or just want to ask som
 
 There are no special contribution guidelines, just use your common sense, keep your changes cohesive with the overall code style and leverage the project info above.
 
-When raising and issue or making a pull request, please do use appropriate labels.
+When raising an issue or making a pull request, please do use appropriate labels.
 
 Thank you!
 

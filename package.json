@@ -14,7 +14,7 @@
   "homepage": "https://pixelpoint.io",
   "author": "Pixel Point <info@pixelpoint.io> (https://pixelpoint.io)",
   "engines": {
-    "node": ">=14.15.0",
+    "node": ">=16.0.0",
     "npm": ">=8.6.0"
   },
   "scripts": {
