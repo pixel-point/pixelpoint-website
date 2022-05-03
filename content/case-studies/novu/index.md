@@ -32,7 +32,7 @@ isOpenSource: true
 position: 1
 ---
 
-Since 2021 Novu team has been building an open-source notification infrastructure for developers. They’ve already got a live, engaged community and a solid list of contributors. Having raised series A, they reached out to us, asking for help with establishing a new brand image and getting a marketing website based on that.
+Since 2021 Novu team has been building an open-source notification infrastructure for developers. They’ve already got a live, engaged community and a solid list of contributors. Having raised seed round A, they reached out to us, asking for help with establishing a new brand image and getting a marketing website based on that.
 
 We began as usual: learned what the project was about, the long-term vision, and gathered a massive moodboard based on style preferences.
 The layout structure and the core message got approved very quickly, and we moved on to the visual direction. Novu wanted to make the website developer-centric, so we prepared a gorgeous dark theme, enriched with graphics, custom icons and a prominent color palette. Every single piece of UI now screams it was made by developers and for developers, proving our goal is accomplished.
