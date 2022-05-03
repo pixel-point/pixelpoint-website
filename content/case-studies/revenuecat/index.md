@@ -28,7 +28,7 @@ keynotes:
 cover: cover.jpg
 isFeatured: true
 isDraft: true
-position: 2
+position: 3
 ---
 
 We went through the product back and forth, wrapping functionalities into thoughtful UI and robust UX patterns, solving problems its sole maintainer had been finding himself short-handed to work on, and soon enough Drone v1.0 was available to the community. As a cherry on top, we supplied Drone with a beautiful landing page, which, paired with refined product, immediately brought mature look to the company. Eventually all this led to Drone acquisition by Harness Inc.
