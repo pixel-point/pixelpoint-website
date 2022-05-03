@@ -29,8 +29,7 @@ keynotes:
 cover: cover.jpg
 isFeatured: true
 isOpenSource: true
-isDraft: true
-position: 2
+position: 1
 ---
 
 Since 2021 Novu team has been building an open-source notification infrastructure for developers. They’ve already got a live, engaged community and a solid list of contributors. Having raised series A, they reached out to us, asking for help with establishing a new brand image and getting a marketing website based on that.

@@ -28,12 +28,12 @@ stack:
   - Hotjar Analytics
   - AWS
 keynotes:
+  - Github Stars increase from 4k to 16k
+  - k6 got acquired by Grafana Labs
   - Reimagined brand identity
   - Built powerful custom mdx-based blog & docs platforms
   - Provided long-term design & development support
   - Median user visit time increased tenfold
-  - Github Stars increase from 4k to 15.5k
-  - k6 got acquired by Grafana Labs
 isOpenSource: true
 position: 5
 ---
