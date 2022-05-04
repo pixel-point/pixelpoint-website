@@ -1,12 +1,12 @@
 ---
 logo: logo.svg
 title: RevenueCat
-description: Serverless OS alternative to AWS Aurora Postgres
-websiteUrl: https://zenith.tech
+description: Subscription Management for Mobile Apps
+websiteUrl: https://revenuecat.com
 quote:
-  text: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-  authorName: Stas Kelvich
-  authorPosition: Co-founder of Zenith
+  text: Pixel Point was an amazing partner to work with. They were able to translate our vision for our brand into a beautiful finished product and were collaborative and responsive every step of the way.
+  authorName: Corey Rabazinski
+  authorPosition: Head of Marketing at RevenueCat
   authorPhoto: author-photo.jpg
 services:
   - Brand Identity
@@ -19,18 +19,19 @@ stack:
   - Gatsby
   - TailwindCSS
   - Headless WordPress
-  - Formspark
-  - Netlify
+  - HubSpot
+  - Gatsby Cloud
 keynotes:
-  - Designed & built a modern landing page
-  - Redesigned admin dashboard
-  - Developed front-end part of the product
+  - Designed & developed a brand-new marketing website
+  - Diligently migrated all the content and integrations from Webflow
+  - Increased the performance score up to 97 points despite animation-heavy content
 cover: cover.jpg
 isFeatured: true
-isDraft: true
-position: 3
+position: 2
 ---
 
-We went through the product back and forth, wrapping functionalities into thoughtful UI and robust UX patterns, solving problems its sole maintainer had been finding himself short-handed to work on, and soon enough Drone v1.0 was available to the community. As a cherry on top, we supplied Drone with a beautiful landing page, which, paired with refined product, immediately brought mature look to the company. Eventually all this led to Drone acquisition by Harness Inc.
+Almost 5 straight years RevenueCat has been represented to their customers via a simple website built with Webflow. While it was just enough for the beginning, the company expansion made it obvious that they had outgrown the no-code platform, which appeared to be slow, had limited code customization, and confusing traffic plan variations. They've started to look for an agency that could help with the redesign and migration to a modern JAMStack-based website and found us.
 
-We continued working together later on: first we took part in developing Harness CI/CD proprietary solutions, then got back working on Drone v2.0 redesign once more, introducing long-awaited features to the community. This version is available to public now.
+We came up with a brand-new look for the upcoming platform quite fast as the guys already had wonderful company history and tons of content to dig through and learn. However, the "what" and "how" visualization of the in-app subscriptions service by the means of illustrations and complex animations is not an easy thing to do, so it took us a good deal of iteration to make it perfect.
+
+We reimagined a whole bunch of product, pricing, and customer pages, all the time working side-by-side with the RevenueCat’s product designer to make sure the assets and visual direction we were introducing would fit into the product app neatly. The website was powered yet again by Gatsby and Headless WP, ensuring the sweatless pages creation and editing experience without compromising on performance.

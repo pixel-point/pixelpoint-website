@@ -33,6 +33,9 @@ import K6Icon6 from './images/k6-icon-6.inline.svg';
 import NovuIcon1 from './images/novu-icon-1.inline.svg';
 import NovuIcon2 from './images/novu-icon-2.inline.svg';
 import NovuIcon3 from './images/novu-icon-3.inline.svg';
+import RevenuecatIcon1 from './images/revenuecat-icon-1.inline.svg';
+import RevenuecatIcon2 from './images/revenuecat-icon-2.inline.svg';
+import RevenuecatIcon3 from './images/revenuecat-icon-3.inline.svg';
 import ZenithIcon1 from './images/zenith-icon-1.inline.svg';
 import ZenithIcon2 from './images/zenith-icon-2.inline.svg';
 import ZenithIcon3 from './images/zenith-icon-3.inline.svg';
@@ -51,6 +54,7 @@ const icons = {
   ],
   k6: [K6Icon1, K6Icon2, K6Icon3, K6Icon4, K6Icon5, K6Icon6],
   novu: [NovuIcon1, NovuIcon2, NovuIcon3],
+  revenuecat: [RevenuecatIcon1, RevenuecatIcon2, RevenuecatIcon3],
   zenith: [ZenithIcon1, ZenithIcon2, ZenithIcon3],
 };
 
