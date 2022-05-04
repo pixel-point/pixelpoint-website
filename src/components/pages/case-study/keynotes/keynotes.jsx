@@ -24,6 +24,9 @@ import FlagsmithIcon5 from './images/flagsmith-icon-5.inline.svg';
 import FlagsmithIcon6 from './images/flagsmith-icon-6.inline.svg';
 import illustrationSm from './images/illustration-sm.svg';
 import illustration from './images/illustration.svg';
+import IsovalentIcon1 from './images/isovalent-icon-1.inline.svg';
+import IsovalentIcon2 from './images/isovalent-icon-2.inline.svg';
+import IsovalentIcon3 from './images/isovalent-icon-3.inline.svg';
 import K6Icon1 from './images/k6-icon-1.inline.svg';
 import K6Icon2 from './images/k6-icon-2.inline.svg';
 import K6Icon3 from './images/k6-icon-3.inline.svg';
@@ -52,6 +55,7 @@ const icons = {
     FlagsmithIcon5,
     FlagsmithIcon6,
   ],
+  isovalent: [IsovalentIcon1, IsovalentIcon2, IsovalentIcon3],
   k6: [K6Icon1, K6Icon2, K6Icon3, K6Icon4, K6Icon5, K6Icon6],
   novu: [NovuIcon1, NovuIcon2, NovuIcon3],
   revenuecat: [RevenuecatIcon1, RevenuecatIcon2, RevenuecatIcon3],

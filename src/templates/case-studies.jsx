@@ -43,6 +43,7 @@ export const query = graphql`
           }
           title
           description
+          overview
           quote {
             text
             authorName
