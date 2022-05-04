@@ -117,15 +117,20 @@ const Content = ({
           {githubUsername && githubRepoName && (
             <Link
               className={clsx(
-                'invisible mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4 opacity-0 transition-[opacity,visibility,border-color] duration-200 hover:border-red',
+                'group invisible mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4 opacity-0 transition-[opacity,visibility,border-color] duration-200 hover:border-blue',
                 githubStars && '!visible !opacity-100'
               )}
               to={getGithubRepoLink(githubUsername, githubRepoName)}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <GithubLogo className="h-7 text-white" aria-hidden />
-              <span className="ml-2 text-xs font-semibold text-white">{githubStars}</span>
+              <GithubLogo
+                className="h-7 text-white duration-200 group-hover:text-blue"
+                aria-hidden
+              />
+              <span className="ml-2 text-xs font-semibold text-white duration-200 group-hover:text-blue">
+                {githubStars}
+              </span>
             </Link>
           )}
           {[
