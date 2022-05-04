@@ -8,7 +8,7 @@ githubRepoName: drone
 quote:
   text: You guys revived my faith in open source! Drone has finally obtained a proper brand image and I have dozens of positive feedback from our users about new look and feel of the product itself. Bravo!
   authorName: Brad Rydzewski
-  authorPosition: CEO of Drone
+  authorPosition: CEO
   authorPhoto: author-photo.jpg
 services:
   - Brand Identity
