@@ -8,7 +8,7 @@ githubRepoName: chrome
 quote:
   text: Pixel Point is hands-down the best agency I’ve had the pleasure of working with. Their knowledge of best practices, technologies and web performance are comprehensive. I wouldn’t hesitate to say that they are a key component in what differentiates browserless.io from our competitors.
   authorName: Joel Griffith
-  authorPosition: CEO of Browserless
+  authorPosition: CEO
   authorPhoto: author-photo.jpeg
 services:
   - Brand Identity
