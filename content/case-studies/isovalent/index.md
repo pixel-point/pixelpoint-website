@@ -5,7 +5,7 @@ description: Cloud native networking, security, and observability
 websiteUrl: https://isovalent.com
 githubUsername: cilium
 githubRepoName: cilium
-overview: Overview!
+overview: We've been working on Isovalent's marketing website along with the Cilium and eBPF's ones, solving a typical enterprise problem - uniting different projects under a roof of a single brand. See how we did it!
 services:
   - Web Design
   - Web Development
