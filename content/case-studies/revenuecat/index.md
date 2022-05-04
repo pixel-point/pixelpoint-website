@@ -4,9 +4,9 @@ title: RevenueCat
 description: Subscription Management for Mobile Apps
 websiteUrl: https://revenuecat.com
 quote:
-  text: Working with Alex and his team at Pixel Point was awesome! Love how they made complex things easy to discuss and resolve. We’ve finally moved from Webflow to our own website and it looks astounding!
-  authorName: Jacob Eiting
-  authorPosition: CEO & Co-Founder of RevenueCat
+  text: Pixel Point was an amazing partner to work with. They were able to translate our vision for our brand into a beautiful finished product and were collaborative and responsive every step of the way.
+  authorName: Corey Rabazinski
+  authorPosition: Head of Marketing at RevenueCat
   authorPhoto: author-photo.jpg
 services:
   - Brand Identity

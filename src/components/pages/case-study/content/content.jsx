@@ -44,7 +44,7 @@ const Content = ({
           >
             Visit {title}
           </Link>
-          {title !== 'Cilium' && title !== 'RevenueCat' && (
+          {title !== 'Cilium' && (
             <figure className="mt-12">
               <QuoteIcon className="w-10 lg:w-8 sm:h-5" aria-hidden />
               <blockquote className="mt-4 text-2xl lg:text-xl">
