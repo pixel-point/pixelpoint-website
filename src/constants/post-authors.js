@@ -26,7 +26,7 @@ module.exports = {
   },
   'Dmitry Semenovsky': {
     name: 'Dmitry Semenovsky',
-    photo: '/images/post-authors/dmitry-semenovsky.jpeg',
+    photo: '/images/post-authors/dmitry-semenovsky.jpg',
     description:
       'Friend of Pixel Point and innovator revolutionizing digital signatures and document authentication.',
   },
