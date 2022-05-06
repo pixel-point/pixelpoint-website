@@ -1,6 +1,7 @@
 ---
 title: '20 Docker commands use cases for developers'
 author: Alex Barashkov
+shortDescription: The most popular docker commands you'll find useful in development. Illustrative GIF's included.
 cover: cover.jpg
 ---
 

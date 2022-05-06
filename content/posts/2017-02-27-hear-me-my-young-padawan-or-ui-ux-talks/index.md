@@ -1,6 +1,7 @@
 ---
 title: 'Hear me, my young Padawan. Or, UI/UX talks'
 author: Alex Barashkov
+shortDescription: Some thoughts about the role of a designer in the projects, what differs UI and UX parts, and a little bit more.
 cover: cover.jpg
 ---
 

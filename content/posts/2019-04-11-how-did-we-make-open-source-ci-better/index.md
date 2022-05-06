@@ -1,6 +1,7 @@
 ---
 title: 'How did we make open source CI better?'
 author: Alex Barashkov
+shortDescription: Our story of UI/UX design and front-end development for the open-source CI platform called Drone CI
 cover: cover.jpg
 ---
 

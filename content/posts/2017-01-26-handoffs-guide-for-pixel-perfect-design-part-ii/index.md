@@ -1,6 +1,7 @@
 ---
 title: 'Handoffs Guide for Pixel Perfect Design. Part II.'
 author: Alex Barashkov
+shortDescription: The further conversation on matters of pixel-perfect design - grid, responsive design, animations
 cover: cover.jpg
 ---
 

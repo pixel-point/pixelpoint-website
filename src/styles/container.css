@@ -7,6 +7,10 @@
     @apply mx-auto max-w-[1216px] lg:mx-10 lg:max-w-none md:mx-7 sm:mx-4;
   }
 
+  .container-md {
+    @apply mx-auto max-w-[1008px] lg:mx-10 lg:max-w-none md:mx-7 sm:mx-4;
+  }
+
   .container-sm {
     @apply mx-auto max-w-[800px] md:mx-7 md:max-w-none sm:mx-4;
   }

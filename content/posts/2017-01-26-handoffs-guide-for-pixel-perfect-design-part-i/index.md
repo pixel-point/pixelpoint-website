@@ -1,6 +1,7 @@
 ---
 title: 'Handoffs Guide for Pixel Perfect Design. Part I.'
 author: Alex Barashkov
+shortDescription: 'Best practices for delivering pixel-perfect design: tools, image optimization, handling SVG and more'
 cover: cover.jpg
 ---
 

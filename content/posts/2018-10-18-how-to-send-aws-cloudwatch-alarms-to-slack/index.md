@@ -1,6 +1,7 @@
 ---
 title: 'How to send AWS CloudWatch Alarms to Slack'
 author: Alex Barashkov
+shortDescription: The secrets you should know to set up the alarms you need in five minutes with AWS CloudWatch.
 cover: cover.jpg
 ---
 

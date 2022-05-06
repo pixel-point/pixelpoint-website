@@ -12,14 +12,14 @@ import SEO_DATA from 'constants/seo-data';
 
 const BlogPostTemplate = ({
   data: {
-    mdx: { slug, excerpt, body, frontmatter },
+    mdx: { slug, body, frontmatter },
   },
   location,
 }) => (
   <Layout
     seo={SEO_DATA.blogPost({
       title: frontmatter.title,
-      description: excerpt,
+      description: frontmatter.shortDescription,
       ogImage: frontmatter.ogImage.childImageSharp.fixed.src,
     })}
     headerTheme="black"
@@ -40,11 +40,11 @@ export const query = graphql`
   query ($id: String!) {
     mdx(id: { eq: $id }) {
       slug
-      excerpt(pruneLength: 160)
       body
       frontmatter {
         title
         author
+        shortDescription
         cover {
           childImageSharp {
             gatsbyImageData(width: 696)

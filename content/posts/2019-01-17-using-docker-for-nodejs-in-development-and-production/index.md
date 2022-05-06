@@ -1,6 +1,7 @@
 ---
 title: 'Using Docker for Node.js in Development and Production'
 author: Alex Barashkov
+shortDescription: Differences between Node.js apps for development and production along with Docker tips and tricks showcase
 cover: cover.jpg
 ---
 

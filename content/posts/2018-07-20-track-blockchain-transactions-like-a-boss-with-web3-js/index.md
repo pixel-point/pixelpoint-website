@@ -1,6 +1,7 @@
 ---
 title: 'Track blockchain transactions with web3.js'
 author: Alex Barashkov
+shortDescription: Deep dive into transaction tracking with web3.js, examples of functions for ETH and ERC20 tokens.
 cover: cover.jpg
 ---
 

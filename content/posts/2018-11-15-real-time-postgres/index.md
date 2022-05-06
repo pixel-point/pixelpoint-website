@@ -1,6 +1,7 @@
 ---
 title: 'Real time + Postgres = ?'
 author: Alex Barashkov
+shortDescription: There are so many ways of handling real-time updates that there will always be discussions about which way is better. Can we stop it with Hasura?
 cover: cover.jpg
 ---
 
