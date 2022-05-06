@@ -8,7 +8,7 @@ import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
 const CaseStudies = ({ items }) => (
   <section className="safe-paddings pt-32 sm:pt-24">
     <div className="container">
-      <h1 className="mx-auto max-w-[800px] text-4xl font-semibold leading-snug lg:text-[32px] sm:text-2xl">
+      <h1 className="mx-auto max-w-[800px] text-center text-4xl font-semibold leading-snug lg:text-[32px] sm:text-2xl">
         <span className="text-red">Case studies.</span> See how we have helped our customers achieve
         their goals
       </h1>
