@@ -1,17 +1,19 @@
 import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { LinkedinShareButton, TwitterShareButton } from 'react-share';
 
 import Link from 'components/shared/link';
 import LINKS from 'constants/links.js';
+import LinkedinIcon from 'images/linkedin.inline.svg';
 import TwitterIcon from 'images/twitter.inline.svg';
 import getBlogPostPath from 'utils/get-blog-post-path';
 
-const Sidebar = ({ readMorePosts }) => (
-  <aside className="absolute -right-24 top-0 h-full max-w-[360px] translate-x-full border-l border-l-gray-3 pt-8 pb-44 lg:-right-8 lg:max-w-[300px] lg:pb-28 md:hidden">
-    <div className="scrollbar-hidden sticky right-0 top-0 max-h-screen overflow-auto pt-8 pb-8 pl-8 lg:pl-6">
+const Sidebar = ({ readMorePosts, socialShareUrl }) => (
+  <aside className="absolute -right-12 top-0 h-full max-w-[344px] translate-x-full xl:-right-20 lg:-right-8 lg:max-w-[300px] md:relative md:right-0 md:mt-10 md:max-w-none md:translate-x-0">
+    <div className="scrollbar-hidden sticky right-0 top-4 max-h-screen overflow-auto rounded-2xl border border-gray-3 p-8 lg:p-6 md:relative md:top-0 md:max-h-full">
       <StaticImage
-        className="w-16 shrink-0 rounded-full"
+        className="h-auto w-16 shrink-0 rounded-full"
         imgClassName="rounded-full"
         src="../../../../images/alex-barashkov.jpg"
         layout="fixed"
@@ -20,7 +22,7 @@ const Sidebar = ({ readMorePosts }) => (
         alt="Alex Barashkov"
         loading="eager"
       />
-      <h2 className="mt-5 font-semibold">Alex Barashkov</h2>
+      <h2 className="mt-3.5 text-lg font-semibold">Alex Barashkov</h2>
       <p className="mt-2.5">
         CEO at Pixel Point. Software engineer with 10+ years of web development experience.
         Currently focused on React, Next.js, Gatsby.
@@ -33,15 +35,16 @@ const Sidebar = ({ readMorePosts }) => (
       >
         <TwitterIcon className="h-5" /> <span>Follow on Twitter</span>
       </Link>
-      <h2 className="mt-16 font-semibold md:mt-10">More from Pixel Point</h2>
-      <ul className="mt-7 space-y-7 md:mt-5 md:space-x-5">
+      <h2 className="mt-8 border-t border-t-gray-3 pt-8 text-lg font-semibold lg:mt-6 lg:pt-6">
+        More from Pixel Point
+      </h2>
+      <ul className="mt-5 space-y-6">
         {readMorePosts.map(({ slug, frontmatter: { title, smallCover: cover } }, index) => (
-          <li key={index}>
+          <li className="lg:last:hidden" key={index}>
             <Link
-              className="flex items-center space-x-3 transition-colors duration-200 hover:text-red"
+              className="flex items-center space-x-4 text-sm transition-colors duration-200 hover:text-red"
               to={getBlogPostPath(slug)}
             >
-              <h3 className="font-normal line-clamp-2 lg:text-sm">{title}</h3>
               <GatsbyImage
                 className="w-20 shrink-0 rounded-sm"
                 imgClassName="rounded-sm"
@@ -49,9 +52,33 @@ const Sidebar = ({ readMorePosts }) => (
                 loading="eager"
                 alt=""
               />
+              <h3 className="text-sm font-normal line-clamp-2">{title}</h3>
             </Link>
           </li>
         ))}
+      </ul>
+      <h2 className="mt-8 border-t border-t-gray-3 pt-8 text-sm font-normal lg:mt-6 lg:pt-6">
+        Share this article:
+      </h2>
+      <ul className="mt-3.5 flex space-x-4">
+        <li>
+          <TwitterShareButton
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-2 transition-colors duration-200 hover:bg-[#259df4] hover:text-white md:bg-[#259df4] md:text-white"
+            url={socialShareUrl}
+            resetButtonStyle={false}
+          >
+            <TwitterIcon className="h-5" />
+          </TwitterShareButton>
+        </li>
+        <li>
+          <LinkedinShareButton
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-2 transition-colors duration-200 hover:bg-[#3380cc] hover:text-white md:bg-[#3380cc] md:text-white"
+            url={socialShareUrl}
+            resetButtonStyle={false}
+          >
+            <LinkedinIcon className="h-4.5" />
+          </LinkedinShareButton>
+        </li>
       </ul>
     </div>
   </aside>
@@ -76,6 +103,7 @@ Sidebar.propTypes = {
       }).isRequired,
     }).isRequired
   ).isRequired,
+  socialShareUrl: PropTypes.string.isRequired,
 };
 
 export default Sidebar;

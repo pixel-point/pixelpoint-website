@@ -10,4 +10,8 @@
   .container-sm {
     @apply mx-auto max-w-[800px] md:mx-7 md:max-w-none sm:mx-4;
   }
+
+  .container-xs {
+    @apply mx-auto max-w-[696px] md:mx-7 md:max-w-none sm:mx-4;
+  }
 }
