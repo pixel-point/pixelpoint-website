@@ -1,5 +1,6 @@
 ---
 title: 'The Challenges of Building Own MacOS App'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

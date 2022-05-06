@@ -1,5 +1,6 @@
 ---
 title: 'Best practices for cache control settings for your website'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

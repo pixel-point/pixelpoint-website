@@ -1,5 +1,6 @@
 ---
 title: 'How to debug Node.js in a Docker container'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

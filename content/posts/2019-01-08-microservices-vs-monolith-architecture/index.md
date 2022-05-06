@@ -1,5 +1,6 @@
 ---
 title: 'Microservices vs. Monolith Architecture'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

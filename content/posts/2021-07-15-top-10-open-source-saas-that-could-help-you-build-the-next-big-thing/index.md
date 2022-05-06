@@ -1,5 +1,6 @@
 ---
 title: 'Top 10 open-source SaaS that could help you build the next big thing '
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

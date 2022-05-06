@@ -1,5 +1,6 @@
 ---
 title: 'Measuring Gatsby projects build time using paid plans of popular static website hosting platforms'
+author: Alex Barashkov
 cover: cover.jpg
 isFeatured: true
 ---
