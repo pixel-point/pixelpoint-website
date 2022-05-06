@@ -10,7 +10,7 @@ import TwitterIcon from 'images/twitter.inline.svg';
 import getBlogPostPath from 'utils/get-blog-post-path';
 
 const Sidebar = ({ readMorePosts, socialShareUrl }) => (
-  <aside className="absolute -right-12 top-0 h-full max-w-[344px] translate-x-full xl:-right-20 lg:-right-8 lg:max-w-[300px] md:relative md:right-0 md:mt-10 md:max-w-none md:translate-x-0">
+  <aside className="absolute -right-12 top-0 h-full max-w-[344px] translate-x-full xl:relative xl:right-0 xl:h-auto xl:translate-x-0 lg:max-w-[300px] md:mt-10 md:max-w-none">
     <div className="scrollbar-hidden sticky right-0 top-4 max-h-screen overflow-auto rounded-2xl border border-gray-3 p-8 md:relative md:top-0 md:max-h-full md:border-0 md:p-0">
       <StaticImage
         className="h-auto w-16 shrink-0 rounded-full"

@@ -26,9 +26,11 @@ const BlogPostTemplate = ({
   >
     <article className="safe-paddings pt-32 sm:pt-24">
       <div className="container">
-        <div className="relative mx-auto max-w-[696px] xl:mx-0 lg:max-w-[626px] md:max-w-none">
-          <Hero {...frontmatter} slug={slug} />
-          <Content content={body} />
+        <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
+          <div className="xl:max-w-[696px] lg:max-w-[626px] md:max-w-none">
+            <Hero {...frontmatter} slug={slug} />
+            <Content content={body} />
+          </div>
           <Sidebar readMorePosts={readMorePosts} socialShareUrl={location.href} />
         </div>
       </div>
