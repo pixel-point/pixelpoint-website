@@ -1,4 +1,4 @@
-import LINKS from 'constants/links.js';
+import LINKS from 'constants/links';
 
 export default {
   header: [

@@ -43,6 +43,7 @@ export const query = graphql`
           }
           title
           description
+          overview
           quote {
             text
             authorName
@@ -55,7 +56,7 @@ export const query = graphql`
           }
           cover {
             childImageSharp {
-              gatsbyImageData(width: 704)
+              gatsbyImageData(width: 712)
             }
           }
         }

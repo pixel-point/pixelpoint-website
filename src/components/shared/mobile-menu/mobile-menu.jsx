@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 
 import Link from 'components/shared/link';
-import MENUS from 'constants/menus.js';
+import LINKS from 'constants/links';
+import MENUS from 'constants/menus';
 import useClickOutside from 'hooks/use-click-outside';
 
 import ServicesWebDesignIcon from './images/services-web-design.inline.svg';
@@ -60,7 +61,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
         <li>
           <Link
             className="!flex py-5 !text-lg"
-            to="https://calendly.com/pixel-point/introduction"
+            to={LINKS.bookCall}
             size="lg-only"
             theme="arrow-red"
           >

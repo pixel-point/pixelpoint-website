@@ -1,8 +1,8 @@
 import React from 'react';
 
 import Link from 'components/shared/link';
-import LINKS from 'constants/links.js';
-import MENUS from 'constants/menus.js';
+import LINKS from 'constants/links';
+import MENUS from 'constants/menus';
 import Logo from 'images/logo.inline.svg';
 
 const Footer = () => (
@@ -43,7 +43,7 @@ const Footer = () => (
       </nav>
       <Link
         className="hidden sm:mt-10 sm:inline-flex"
-        to="mailto:info@pixelpoint.io"
+        to={LINKS.email}
         size="base"
         theme="underline-red"
       >

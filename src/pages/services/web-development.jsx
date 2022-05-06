@@ -11,7 +11,7 @@ import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 import ServicesCTA from 'components/shared/services-cta';
-import LINKS from 'constants/links.js';
+import LINKS from 'constants/links';
 import SEO_DATA from 'constants/seo-data';
 
 const servicesCTA = {

@@ -8,7 +8,7 @@ githubRepoName: drone
 quote:
   text: You guys revived my faith in open source! Drone has finally obtained a proper brand image and I have dozens of positive feedback from our users about new look and feel of the product itself. Bravo!
   authorName: Brad Rydzewski
-  authorPosition: CEO of Drone
+  authorPosition: CEO
   authorPhoto: author-photo.jpg
 services:
   - Brand Identity
@@ -25,12 +25,12 @@ stack:
   - SWR
   - Netlify
 keynotes:
+  - Github Stars increase from 8k to 25k
+  - Drone got acquired by Harness Inc
   - Designed & built a modern landing page
   - Performed a full-fledged product redesign
   - Developed front-end of the product
   - Bouncing rate dropped down to 29%
-  - Github Stars increase from 8k to 24.5k
-  - Drone got acquired by Harness Inc
 isOpenSource: true
 position: 4
 ---
