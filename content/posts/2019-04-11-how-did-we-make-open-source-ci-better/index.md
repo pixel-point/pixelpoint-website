@@ -1,5 +1,6 @@
 ---
 title: 'How did we make open source CI better?'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

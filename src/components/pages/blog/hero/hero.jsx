@@ -5,7 +5,7 @@ import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
-import LINKS from 'constants/links.js';
+import LINKS from 'constants/links';
 import QuoteIcon from 'images/quote.inline.svg';
 import TwitterIcon from 'images/twitter.inline.svg';
 

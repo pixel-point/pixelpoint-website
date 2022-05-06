@@ -1,5 +1,6 @@
 ---
 title: 'Speed up your development with this new VS Code extension'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

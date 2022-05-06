@@ -1,5 +1,6 @@
 ---
 title: 'Getting started with open-source Drone CI'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

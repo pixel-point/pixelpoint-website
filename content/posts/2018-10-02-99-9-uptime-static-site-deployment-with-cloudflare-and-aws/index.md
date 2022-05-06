@@ -1,5 +1,6 @@
 ---
 title: '99.9% uptime static site deployment with Cloudflare and AWS S3'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

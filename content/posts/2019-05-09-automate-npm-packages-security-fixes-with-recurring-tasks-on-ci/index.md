@@ -1,5 +1,6 @@
 ---
 title: 'Automate NPM packages security fixes with recurring tasks on CI'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

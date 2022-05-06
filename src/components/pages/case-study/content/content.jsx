@@ -44,7 +44,7 @@ const Content = ({
           >
             Visit {title}
           </Link>
-          {title !== 'Cilium' && (
+          {quote && (
             <figure className="mt-12">
               <QuoteIcon className="w-10 lg:w-8 sm:h-5" aria-hidden />
               <blockquote className="mt-4 text-2xl lg:text-xl">
@@ -163,7 +163,7 @@ Content.propTypes = {
         gatsbyImageData: PropTypes.object.isRequired,
       }).isRequired,
     }).isRequired,
-  }).isRequired,
+  }),
   text: PropTypes.node.isRequired,
   services: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   stack: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
@@ -172,6 +172,7 @@ Content.propTypes = {
 Content.defaultProps = {
   githubUsername: null,
   githubRepoName: null,
+  quote: null,
 };
 
 export default Content;

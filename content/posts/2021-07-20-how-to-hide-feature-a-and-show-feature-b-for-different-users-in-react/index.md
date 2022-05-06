@@ -1,5 +1,6 @@
 ---
 title: 'How to hide Feature A and show Feature B for different users in React'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

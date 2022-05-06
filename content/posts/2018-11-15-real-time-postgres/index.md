@@ -1,5 +1,6 @@
 ---
 title: 'Real time + Postgres = ?'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

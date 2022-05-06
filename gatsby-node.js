@@ -4,6 +4,7 @@ const get = require('lodash.get');
 
 const { BLOG_BASE_PATH } = require('./src/constants/blog');
 const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
+const POST_AUTHORS = require('./src/constants/post-authors');
 const getBlogPostPath = require('./src/utils/get-blog-post-path');
 
 // We have this variable in order to decide whether to render draft posts or not
@@ -12,17 +13,13 @@ const getBlogPostPath = require('./src/utils/get-blog-post-path');
 // We have an array structure here in order to use it in the filter using the "in" operator
 const DRAFT_FILTER = process.env.NODE_ENV === 'production' ? [false] : [true, false];
 
-const POST_REQUIRED_FIELDS = ['title', 'cover'];
+const POST_REQUIRED_FIELDS = ['title', 'author', 'cover'];
 
 const CASE_STUDY_REQUIRED_FIELDS = [
   'logo',
   'title',
   'description',
   'websiteUrl',
-  'quote.text',
-  'quote.authorName',
-  'quote.authorPosition',
-  'quote.authorPhoto',
   'services',
   'stack',
   'keynotes',
@@ -56,6 +53,7 @@ async function createBlogPosts({ graphql, actions }) {
           }
           frontmatter {
             title
+            author
             cover {
               publicURL
             }
@@ -84,6 +82,16 @@ async function createBlogPosts({ graphql, actions }) {
         throw new Error(`Post "${slug}" does not have field "${fieldName}"!`);
       }
     });
+
+    if (!Object.keys(POST_AUTHORS).includes(frontmatter.author)) {
+      throw new Error(
+        `Post "${slug}" has unknown author "${
+          frontmatter.author
+        }"!\nAvailable authors: ${Object.keys(POST_AUTHORS).join(
+          ', '
+        )}.\nPlease check authors in "src/constants/post-authors.js"`
+      );
+    }
 
     actions.createPage({
       path: getBlogPostPath(slug),

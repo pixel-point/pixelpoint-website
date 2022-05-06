@@ -1,5 +1,6 @@
 ---
 title: 'Hey Mom, I will not stop playing online games!'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

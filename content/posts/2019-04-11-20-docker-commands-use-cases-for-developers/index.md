@@ -1,5 +1,6 @@
 ---
 title: '20 Docker commands use cases for developers'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 

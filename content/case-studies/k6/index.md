@@ -8,7 +8,7 @@ githubRepoName: k6
 quote:
   text: My special thanks to the Pixel Point team! The crocodile animation, fantastic design and attention to detail definitely helped to make this acquisition happen. It was one of the first things pointed out [by Grafana] in our initial acquisition discussions. Our website and look-and-feel was miles ahead of competition.
   authorName: Pavel Suwala
-  authorPosition: CTO of Grafana k6
+  authorPosition: CTO
   authorPhoto: author-photo.jpg
 services:
   - Brand Identity
@@ -28,12 +28,12 @@ stack:
   - Hotjar Analytics
   - AWS
 keynotes:
+  - Github Stars increase from 4k to 16k
+  - k6 got acquired by Grafana Labs
   - Reimagined brand identity
   - Built powerful custom mdx-based blog & docs platforms
   - Provided long-term design & development support
   - Median user visit time increased tenfold
-  - Github Stars increase from 4k to 15.5k
-  - k6 got acquired by Grafana Labs
 isOpenSource: true
 position: 5
 ---

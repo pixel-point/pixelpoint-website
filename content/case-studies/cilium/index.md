@@ -5,11 +5,6 @@ description: eBPF-based Networking, Observability, and Security
 websiteUrl: https://cilium.io
 githubUsername: cilium
 githubRepoName: cilium
-quote:
-  text: Pixel Point know how to make a website look good and function - and they always go the extra mile with customer service and support. We are extremely happy with the result! Many thanks to you, guys!
-  authorName: Thomas Graf
-  authorPosition: Co-Founder & CTO of Isovalent, Cilium
-  authorPhoto: author-photo.jpg
 services:
   - Brand Identity
   - Motion Design

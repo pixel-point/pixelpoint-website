@@ -1,5 +1,6 @@
 ---
 title: 'Kubernetes port forwarding simple like never before'
+author: Alex Barashkov
 cover: cover.jpg
 ---
 
