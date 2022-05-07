@@ -1,0 +1,9 @@
+@layer components {
+  .sidebar-posts-item {
+    @media (max-height: 900px) {
+      &:nth-of-type(1n + 3) {
+        @apply hidden md:block;
+      }
+    }
+  }
+}

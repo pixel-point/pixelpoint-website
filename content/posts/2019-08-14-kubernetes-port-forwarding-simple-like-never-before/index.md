@@ -28,7 +28,7 @@ It’s nice to have a built-in functionality in kubectl, but it could be ok if y
 
 ## Kube Forwarder is the solution
 
-Kube Forwarder is an open-source ![Kubernetes port-forwarding app](https://kube-forwarder.pixelpoint.io/) built on Electron and available for macOS, Windows, and Linux.
+Kube Forwarder is an open-source [Kubernetes port-forwarding app](https://kube-forwarder.pixelpoint.io/) built on Electron and available for macOS, Windows, and Linux.
 
 ![Kube Forwarder](picture1.gif)
 
