@@ -16,20 +16,25 @@ const PostsList = ({ items }) => (
       <h1 className="text-4xl font-semibold leading-snug lg:text-[32px] sm:text-2xl">
         Sharing Pixel Point <span className="text-red">Collective experience:</span>
       </h1>
-      <ul className="mt-16 flex space-x-6 border-b border-b-gray-4">
+      <ul className="mt-16 flex space-x-6 border-b border-b-gray-4 lg:mt-14 md:mt-12 sm:mt-11">
         {['All', ...BLOG_CATEGORIES].map((category, index) => (
           <li key={index}>
             <Link
-              className={clsx('block pb-3 transition-colors duration-200 hover:text-red')}
-              activeClassName="relative font-semibold text-red after:absolute after:-bottom-px after:left-0 after:h-0.5 after:w-full after:bg-red"
+              className={clsx(
+                'relative mb-3 block text-sm font-normal transition-colors duration-200 hover:text-red'
+              )}
+              activeClassName="!font-semibold text-red after:absolute after:-bottom-[13px] after:left-0 after:h-0.5 after:w-full after:bg-red"
               to={getBlogPath(category === 'All' ? undefined : category)}
             >
-              {category}
+              <span className="invisible font-semibold opacity-0">{category}</span>
+              <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                {category}
+              </span>
             </Link>
           </li>
         ))}
       </ul>
-      <div className="grid-gap-x mt-28 space-y-20 lg:mt-24 md:mt-20 md:space-y-16 sm:mt-16 sm:space-y-10">
+      <div className="grid-gap-x mt-20 space-y-20 lg:mt-16 lg:space-y-16 md:mt-14 md:space-y-14">
         {items.map(
           ({ slug, frontmatter: { title, shortDescription, category, author, cover } }, index) => (
             <article key={index}>
@@ -91,8 +96,9 @@ PostsList.propTypes = {
       slug: PropTypes.string.isRequired,
       frontmatter: PropTypes.exact({
         title: PropTypes.string.isRequired,
-        author: PropTypes.oneOf(Object.keys(POST_AUTHORS)).isRequired,
         shortDescription: PropTypes.string.isRequired,
+        category: PropTypes.oneOf(BLOG_CATEGORIES).isRequired,
+        author: PropTypes.oneOf(Object.keys(POST_AUTHORS)).isRequired,
         cover: PropTypes.exact({
           childImageSharp: PropTypes.exact({
             gatsbyImageData: PropTypes.object.isRequired,

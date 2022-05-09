@@ -46,6 +46,7 @@ Layout.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
     ogImage: PropTypes.string,
+    canonicalUrl: PropTypes.string,
   }),
   headerTheme: PropTypes.oneOf(['black', 'white']).isRequired,
   children: PropTypes.node.isRequired,
