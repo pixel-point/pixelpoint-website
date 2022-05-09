@@ -16,7 +16,7 @@ const PostsList = ({ items }) => (
       <h1 className="text-4xl font-semibold leading-snug lg:text-[32px] sm:text-2xl">
         Sharing Pixel Point <span className="text-red">Collective experience:</span>
       </h1>
-      <ul className="mt-16 flex space-x-6 border-b border-b-gray-4 lg:mt-14 md:mt-12 sm:mt-11">
+      <ul className="scrollbar-hidden mt-16 flex space-x-6 overflow-auto border-b border-b-gray-4 lg:mt-14 md:mt-12 sm:mt-11">
         {['All', ...BLOG_CATEGORIES].map((category, index) => (
           <li key={index}>
             <Link
