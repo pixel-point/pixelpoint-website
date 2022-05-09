@@ -3,6 +3,7 @@ title: 'Don’t mess up your grid like Medium'
 shortDescription: Even big companies make mistakes. See how Medium messed up with basic design principles after they had updated their grid layout.
 author: Vlad Kamelsky
 cover: cover.jpg
+category: Development
 ---
 
 When we first created covers for our Medium articles, we noticed that on different pages, they are cropped with a lot of different aspect ratios.

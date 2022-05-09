@@ -3,6 +3,7 @@ title: 'Real time + Postgres = ?'
 author: Alex Barashkov
 shortDescription: There are so many ways of handling real-time updates that there will always be discussions about which way is better. Can we stop it with Hasura?
 cover: cover.jpg
+category: Development
 ---
 
 Real time updates are a part of almost every modern web and mobile application, with uses in everything from banking apps to news feeds. There are so many ways of handling real times updates that there will always be discussions about which way is better.

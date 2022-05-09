@@ -3,6 +3,7 @@ title: 'Handoffs Guide for Pixel Perfect Design. Part II.'
 shortDescription: The further conversation on matters of pixel-perfect design - grid, responsive design, animations
 author: Vlad Kamelsky
 cover: cover.jpg
+category: Design
 ---
 
 ## Grid

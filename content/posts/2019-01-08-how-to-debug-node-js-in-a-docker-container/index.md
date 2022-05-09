@@ -3,6 +3,7 @@ title: 'How to debug Node.js in a Docker container'
 author: Alex Barashkov
 shortDescription: Painful, but manageable. A few detailed cases of getting inside the container with Node app running.
 cover: cover.jpg
+category: Development
 ---
 
 More and more teams are moving their development environments to Docker containers. It brings a lot of advantages, such as a unified environment shared between all devs, a faster onboarding process for new members, and predictable deployments. For example, in my previous article [“Microservices vs Monolith architecture”](/blog/microservices-vs-monolith-architecture), I made the point that with microservices you have to use Docker, because otherwise you’re launching multiple microservices on a local machine and development becomes a huge pain. When you have even 5–10 microservices, you run them through your terminal one by one and have to make sure that you have all dependencies, db, elasticsearch, etc., installed. Alternatively, you can get it running with one command using docker-compose, a much better approach.

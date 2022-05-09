@@ -1,7 +1,9 @@
 ---
 title: 'Taking automated web page screenshots with Puppeteer and Sharp'
+shortDescription: Short description
 author: Alex Barashkov
 cover: cover.jpg
+category: Development
 ---
 
 Recently I've been working on an automation task for one of our internal services, trying to make retina quality full-page screenshots of a website. It should've been a trivial problem, but apparently, there are still no web browser testing/automation libraries in 2022 that can help with it.

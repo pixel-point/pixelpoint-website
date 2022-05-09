@@ -3,6 +3,7 @@ title: 'How did we make open source CI better?'
 author: Alex Barashkov
 shortDescription: Our story of UI/UX design and front-end development for the open-source CI platform called Drone CI
 cover: cover.jpg
+category: Development
 ---
 
 In this article, we talk about Drone CI, a very powerful, lightweight, docker-based, multi-pipeline, multi-platform, open-source CI/CD tool. Drone launched in 2012 and, like many other open source tools, was made by and for developers, so lacked a user-friendly interface.

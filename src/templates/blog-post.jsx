@@ -50,8 +50,9 @@ export const query = graphql`
       body
       frontmatter {
         title
-        author
         shortDescription
+        category
+        author
         cover {
           childImageSharp {
             gatsbyImageData(width: 696)

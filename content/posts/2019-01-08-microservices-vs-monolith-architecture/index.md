@@ -3,6 +3,7 @@ title: 'Microservices vs. Monolith Architecture'
 author: Alex Barashkov
 shortDescription: Let’s compare microservices and monolith architectures, figure out their cons and pros, and under what conditions it is appropriate to use one or another.
 cover: cover.jpg
+category: Development
 ---
 
 The evolution of technologies has changed the way we build the architecture of applications. Docker, Cloud services, and Container Orchestration services brought us ability to develop distributed, more scalable, and reliable solutions. In this article, we will compare microservices and monolith architecture, discuss what teams and projects should use what type of architecture, and explore their advantages and disadvantages.

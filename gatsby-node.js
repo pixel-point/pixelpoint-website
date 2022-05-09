@@ -2,9 +2,10 @@ const path = require('path');
 
 const get = require('lodash.get');
 
-const { BLOG_BASE_PATH } = require('./src/constants/blog');
+const { BLOG_CATEGORIES } = require('./src/constants/blog');
 const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
 const POST_AUTHORS = require('./src/constants/post-authors');
+const getBlogPath = require('./src/utils/get-blog-path');
 const getBlogPostPath = require('./src/utils/get-blog-post-path');
 
 // We have this variable in order to decide whether to render draft posts or not
@@ -13,7 +14,7 @@ const getBlogPostPath = require('./src/utils/get-blog-post-path');
 // We have an array structure here in order to use it in the filter using the "in" operator
 const DRAFT_FILTER = process.env.NODE_ENV === 'production' ? [false] : [true, false];
 
-const POST_REQUIRED_FIELDS = ['title', 'author', 'shortDescription', 'cover'];
+const POST_REQUIRED_FIELDS = ['title', 'shortDescription', 'category', 'author', 'cover'];
 
 const CASE_STUDY_REQUIRED_FIELDS = [
   'logo',
@@ -32,11 +33,22 @@ async function createBlogPage({ actions }) {
   const { createPage } = actions;
 
   createPage({
-    path: BLOG_BASE_PATH,
+    path: getBlogPath(),
     component: path.resolve('./src/templates/blog.jsx'),
     context: {
       draftFilter: DRAFT_FILTER,
     },
+  });
+
+  BLOG_CATEGORIES.forEach((category) => {
+    actions.createPage({
+      path: getBlogPath(category),
+      component: path.resolve('./src/templates/blog.jsx'),
+      context: {
+        category,
+        draftFilter: DRAFT_FILTER,
+      },
+    });
   });
 }
 
@@ -57,6 +69,7 @@ async function createBlogPosts({ graphql, actions }) {
             cover {
               publicURL
             }
+            category
           }
         }
       }
@@ -83,6 +96,16 @@ async function createBlogPosts({ graphql, actions }) {
         }"!\nAvailable authors: ${Object.keys(POST_AUTHORS).join(
           ', '
         )}.\nPlease check authors in "src/constants/post-authors.js"`
+      );
+    }
+
+    if (!BLOG_CATEGORIES.includes(frontmatter.category)) {
+      throw new Error(
+        `Post "${slug}" has unknown category "${
+          frontmatter.category
+        }"!\nAvailable categories: ${Object.keys(BLOG_CATEGORIES).join(
+          ', '
+        )}.\nPlease check categories in "src/constants/blog.js"`
       );
     }
 

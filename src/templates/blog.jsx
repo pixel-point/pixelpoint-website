@@ -21,17 +21,22 @@ const BlogTemplate = ({
 );
 
 export const query = graphql`
-  query ($draftFilter: [Boolean]!) {
+  query ($category: String, $draftFilter: [Boolean]!) {
     allMdx(
-      filter: { fileAbsolutePath: { regex: "/posts/" }, fields: { isDraft: { in: $draftFilter } } }
+      filter: {
+        fileAbsolutePath: { regex: "/posts/" }
+        fields: { isDraft: { in: $draftFilter } }
+        frontmatter: { category: { eq: $category } }
+      }
       sort: { order: DESC, fields: slug }
     ) {
       nodes {
         slug
         frontmatter {
           title
-          author
           shortDescription
+          category
+          author
           cover {
             childImageSharp {
               gatsbyImageData(width: 488)
