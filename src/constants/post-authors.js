@@ -10,8 +10,7 @@ module.exports = {
   'Kirill Bolotsky': {
     name: 'Kirill Bolotsky',
     photo: '/images/post-authors/kirill-bolotsky.jpg',
-    description:
-      'COO at Pixel Point and software engineer with 10+ years of web development experience. Currently focused on React, Next.js, Gatsby.',
+    description: 'COO at Pixel Point. Also busy with front-end, devrel and tech copywriting. ',
   },
   'Vlad Kamelsky': {
     name: 'Vlad Kamelsky',

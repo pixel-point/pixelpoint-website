@@ -46,9 +46,11 @@ const Quote = ({ authorName, children }) => (
     <blockquote className="mt-4 text-2xl sm:text-xl">
       <p className="my-0 before:hidden after:hidden">{children}</p>
     </blockquote>
-    <figcaption className="mt-5 flex items-center">
-      <span className="text-base font-normal">{authorName}</span>
-    </figcaption>
+    {authorName && (
+      <figcaption className="mt-5 flex items-center">
+        <span className="text-base font-normal">{authorName}</span>
+      </figcaption>
+    )}
   </figure>
 );
 
