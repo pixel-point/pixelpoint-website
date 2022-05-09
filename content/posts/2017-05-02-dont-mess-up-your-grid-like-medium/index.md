@@ -1,7 +1,7 @@
 ---
 title: 'Don’t mess up your grid like Medium'
-author: Alex Barashkov
 shortDescription: Even big companies make mistakes. See how Medium messed up with basic design principles after they had updated their grid layout.
+author: Vlad Kamelsky
 cover: cover.jpg
 ---
 

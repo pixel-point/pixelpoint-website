@@ -20,7 +20,7 @@ const CaseStudies = ({ items }) => (
               key={index}
             >
               <h1 className="sr-only">{`${title} case study`}</h1>
-              <div className="lg:max-w-[436px] md:max-w-none">
+              <div className="lg:max-w-[436px] md:mt-11 md:max-w-none sm:mt-8">
                 <Link className="inline-block" to={`${CASE_STUDIES_BASE_PATH}${slug}`}>
                   <img
                     className="invert lg:translate-x-[-10%] lg:scale-[0.8]"
@@ -65,7 +65,7 @@ const CaseStudies = ({ items }) => (
                 </Link>
               </div>
               <Link
-                className="md:mt-11 sm:mt-8"
+                className="md:order-first"
                 to={`${CASE_STUDIES_BASE_PATH}${slug}`}
                 aria-label={`${title} case study`}
               >

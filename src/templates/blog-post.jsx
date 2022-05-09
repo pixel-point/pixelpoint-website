@@ -2,10 +2,9 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
-import Author from 'components/pages/blog-post/author';
 import Content from 'components/pages/blog-post/content';
 import Hero from 'components/pages/blog-post/hero';
-import SocialShare from 'components/pages/blog-post/social-share';
+import Sidebar from 'components/pages/blog-post/sidebar';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
@@ -13,6 +12,7 @@ import SEO_DATA from 'constants/seo-data';
 const BlogPostTemplate = ({
   data: {
     mdx: { slug, body, frontmatter },
+    allMdx: { nodes: readMorePosts },
   },
   location,
 }) => (
@@ -25,13 +25,20 @@ const BlogPostTemplate = ({
     headerTheme="black"
   >
     <article className="safe-paddings pt-32 sm:pt-24">
-      <div className="container-xs relative">
-        <Hero {...frontmatter} slug={slug} />
-        <Content content={body} />
-        <SocialShare url={location.href} />
+      <div className="container">
+        <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
+          <div className="xl:max-w-[696px] lg:max-w-[626px] md:max-w-none">
+            <Hero {...frontmatter} slug={slug} />
+            <Content content={body} />
+          </div>
+          <Sidebar
+            author={frontmatter.author}
+            readMorePosts={readMorePosts}
+            socialShareUrl={location.href}
+          />
+        </div>
       </div>
     </article>
-    <Author author={frontmatter.author} />
     <CTA withTopMargin />
   </Layout>
 );
@@ -61,6 +68,28 @@ export const query = graphql`
               quality: 90
             ) {
               src
+            }
+          }
+        }
+      }
+    }
+    allMdx(
+      filter: { fileAbsolutePath: { regex: "/posts/" }, id: { ne: $id } }
+      limit: 4
+      sort: { order: DESC, fields: slug }
+    ) {
+      nodes {
+        slug
+        frontmatter {
+          title
+          mediumCover: cover {
+            childImageSharp {
+              gatsbyImageData(width: 384)
+            }
+          }
+          smallCover: cover {
+            childImageSharp {
+              gatsbyImageData(width: 80, layout: FIXED)
             }
           }
         }
