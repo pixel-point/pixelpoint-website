@@ -1,9 +1,9 @@
 ---
 title: 'Deploy rails application with Mina, Nginx and Puma'
 author: Alex Barashkov
-summary: Guide for Rube on Rails developers who want to know how to deploy apps with Mina, Nginx and Puma.
+summary: Guide for Ruby on Rails developers who want to know how to deploy apps with Mina, Nginx and Puma.
 cover: cover.jpg
-category: Misc
+category: Development
 ---
 
 ## What is Mina?
