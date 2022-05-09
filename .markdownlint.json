@@ -2,5 +2,6 @@
   "line-length": false,
   "no-duplicate-heading": false,
   "no-inline-html": false,
-  "ol-prefix": false
+  "ol-prefix": false,
+  "no-trailing-punctuation": false
 }
