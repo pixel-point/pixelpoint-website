@@ -31,7 +31,11 @@ const BlogPostTemplate = ({
             <Hero {...frontmatter} slug={slug} />
             <Content content={body} />
           </div>
-          <Sidebar readMorePosts={readMorePosts} socialShareUrl={location.href} />
+          <Sidebar
+            author={frontmatter.author}
+            readMorePosts={readMorePosts}
+            socialShareUrl={location.href}
+          />
         </div>
       </div>
     </article>
