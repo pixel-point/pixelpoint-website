@@ -2,6 +2,7 @@
 title: 'Handoffs Guide for Pixel Perfect Design. Part I.'
 author: Vlad Kamelsky
 cover: cover.jpg
+summary: 'Best practices for delivering pixel-perfect design: tools, image optimization, handling SVG and more.'
 ---
 
 I’ve had the opportunity to collaborate with many UI/UX designers throughout my career, and I’ve noticed one very interesting thing about how they work: They don’t use established guides to complete projects. If you are a new developer at a company, team members can send you links to a GitFlow or GitHubFlow, and you will learn everything you need to know about repository management in 10 minutes. As developers, we can add to a project linters and everyone will follow that code’s style guide. But what can you give your designer to ensure that they deliver everything you want? We at Pixel Point wrote this handoffs guide for just that purpose.

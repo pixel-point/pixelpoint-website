@@ -2,6 +2,7 @@
 title: 'Handoffs Guide for Pixel Perfect Design. Part III.'
 author: Alex Barashkov
 cover: cover.jpg
+summary: 'The final part of the talk on the handoff process of pixel-perfect design: UI kits, export, component states, typography.'
 ---
 
 ## UI kits

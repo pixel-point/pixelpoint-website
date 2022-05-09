@@ -2,6 +2,7 @@
 title: 'How to hide Feature A and show Feature B for different users in React'
 author: Alex Barashkov
 cover: cover.jpg
+summary: Get familiar with Flagsmith, a feature flag service, and the way it can help introduce new functionality to your users.
 ---
 
 ## Overview

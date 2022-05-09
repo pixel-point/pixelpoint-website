@@ -2,6 +2,7 @@
 title: 'Automate NPM packages security fixes with recurring tasks on CI'
 author: Alex Barashkov
 cover: cover.jpg
+summary: Writing a pipeline using Drone CI for npm audit and npm fix commands with automatic creation of fix PR on GitHub.
 ---
 
 When developing on Node.js, our team uses a lot open source NPM packages. Each of them has their own benefits and drawbacks that they bring to your project. In this article, we will discuss:

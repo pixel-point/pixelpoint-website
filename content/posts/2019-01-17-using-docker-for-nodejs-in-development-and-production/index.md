@@ -2,6 +2,7 @@
 title: 'Using Docker for Node.js in Development and Production'
 author: Alex Barashkov
 cover: cover.jpg
+summary: The differences between Node.js apps for development and production along with Docker tips and tricks showcase.
 ---
 
 My current primary tech stack is Node.js/Javascript and, like many teams, I moved our development and production environments in to Docker containers. However, when I started to learn Docker, I realized that most articles focused on development or production environments and could find nothing about how should you organize your Docker configuration to be flexible for both cases.

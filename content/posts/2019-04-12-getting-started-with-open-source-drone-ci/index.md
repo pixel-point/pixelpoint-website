@@ -2,6 +2,7 @@
 title: 'Getting started with open-source Drone CI'
 author: Alex Barashkov
 cover: cover.jpg
+summary: Learn the basics of the most popular open-source CI/CD solution, from installation to creation of the first pipeline.
 ---
 
 If you are building your side project or startup and want to avoid spending too much money on popular commercial solutions like Travic CI (which costs $69/month), you can use your own self-hosted Drone CI on your laptop, AWS free tier, or any other servers.

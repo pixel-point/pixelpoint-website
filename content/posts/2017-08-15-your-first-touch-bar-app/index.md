@@ -2,6 +2,7 @@
 title: 'Probably, your first useful Touch Bar app'
 author: Vlad Kamelsky
 cover: cover.jpg
+summary: Stay on mute when you want with Pixel Point’s Touch Bar app - Mute Me.
 ---
 
 Working with other companies, we always dreamed of devoting some of our time to the realization of our own ideas. But commercial projects were always our top priorities, and there wasn’t much time for passion projects. Now that we have our own business, [Pixel Point](https://pixelpoint.io/), we try to leave enough time for short-term projects that we find especially interesting. It lifts the spirit of our team and allows us to accrue new knowledge so that we can embody our ideals in all of our professional endeavors.

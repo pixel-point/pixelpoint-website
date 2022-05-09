@@ -2,6 +2,7 @@
 title: 'Taking automated web page screenshots with Puppeteer and Sharp'
 author: Alex Barashkov
 cover: cover.jpg
+summary: A step-by-step tutorial on how to create perfect high-resolution web page screenshots automatically. No fuss, it just works.
 isFeatured: true
 ---
 

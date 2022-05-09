@@ -2,6 +2,7 @@
 title: 'Tips and tricks for scalable CI/CD flow'
 author: Alex Barashkov
 cover: cover.jpg
+summary: When you plan a project, you don’t always know how large it's going to grow eventually. It’s crucial, therefore, to follow the guidelines that ensure the robustness of your CI/CD flow throughout the project lifespan.
 ---
 
 When you plan a project, you don’t always know how big it will be by the end. It’s crucial, therefore, to follow guidelines that make the development process as smooth as possible. One especially useful tool for this is a Continuous Integration/Delivery flow, or CI/CD flow.

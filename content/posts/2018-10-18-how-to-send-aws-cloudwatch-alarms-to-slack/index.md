@@ -2,6 +2,7 @@
 title: 'How to send AWS CloudWatch Alarms to Slack'
 author: Alex Barashkov
 cover: cover.jpg
+summary: The secrets you should know to set up the alarms you need in five minutes with AWS CloudWatch.
 ---
 
 Alarm and monitoring systems are a key part of mature products and applications. If you worry about your customers, it’s better to be notified when something goes wrong then be in the dark. If you host your infrastructure on AWS, the only one way to get the full metrics of your used services is to use CloudWatch. AWS CloudWatch doesn’t only give you access to metrics, however, it also creates alarms for specific cases. But, if you worked with AWS before you no doubt noticed that the interface and certain functions are a far cry from “user friendly,” which means that sending a notification with alarms to Slack not a trivial task.

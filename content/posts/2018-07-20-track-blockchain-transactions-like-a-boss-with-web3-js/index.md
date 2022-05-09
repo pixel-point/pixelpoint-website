@@ -2,6 +2,7 @@
 title: 'Track blockchain transactions with web3.js'
 author: Dmitry Semenovsky
 cover: cover.jpg
+summary: Deep dive into transaction tracking with web3.js, examples of functions for ETH and ERC20 tokens.
 ---
 
 The number of dApps and tokens on the market is rapidly growing, with annual increases of over 1000 of new distributed applications, 500 new tokens, and online services built around both of these. There are a lot of fascinating features and benefits that blockchain technology brings into our lives. Nevertheless, the underlying idea is always the same; a transaction should be posted into a blockchain and mined in order to transfer crypto funds or execute any other function of a smart-contract.

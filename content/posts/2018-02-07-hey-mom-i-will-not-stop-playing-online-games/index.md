@@ -2,6 +2,7 @@
 title: 'Hey Mom, I will not stop playing online games!'
 author: Alex Barashkov
 cover: cover.jpg
+summary: Games can be helpful, expose the real world people behaviour and teach you something.
 ---
 
 If you’re going to play the game, you’ve got to learn to play it right or how games can improve your skills in the real world. There are a lot of avid gamers in the world, but many people still think that playing games is a bad habit or a waste of time. But the story of my gaming experiences shows that some valuable lessons can be learned from various games.

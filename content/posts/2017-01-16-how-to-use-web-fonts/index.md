@@ -2,6 +2,7 @@
 title: 'How to use web fonts?'
 author: Alex Barashkov
 cover: cover.jpg
+summary: Four different techniques to help you handle web fonts.
 ---
 
 ## Introduction

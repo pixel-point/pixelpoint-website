@@ -2,6 +2,7 @@
 title: '20 Docker commands use cases for developers'
 author: Alex Barashkov
 cover: cover.jpg
+summary: The most popular docker commands you'll find useful in development. Illustrative GIF's included.
 ---
 
 Technology is most effective when you know how to work with it; bear this in mind when you work with Docker. Teams adopting Docker for the first time typically do so on the recommendation of Devops. Devops cannot always explain, however, how the new team should use it without risking the benefits of their existing system.
