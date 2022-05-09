@@ -1,6 +1,6 @@
 ---
 title: 'Handoffs Guide for Pixel Perfect Design. Part II.'
-author: Alex Barashkov
+author: Vlad Kamelsky
 cover: cover.jpg
 ---
 

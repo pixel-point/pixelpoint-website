@@ -1,6 +1,6 @@
 ---
 title: 'Track blockchain transactions with web3.js'
-author: Alex Barashkov
+author: Dmitry Semenovsky
 cover: cover.jpg
 ---
 

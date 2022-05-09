@@ -1,6 +1,6 @@
 ---
 title: 'Hear me, my young Padawan. Or, UI/UX talks'
-author: Alex Barashkov
+author: Vlad Kamelsky
 cover: cover.jpg
 ---
 

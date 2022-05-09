@@ -1,6 +1,6 @@
 ---
 title: 'Crypto classified ads analytics research'
-author: Alex Barashkov
+author: Vlad Kamelsky
 cover: cover.jpg
 ---
 
