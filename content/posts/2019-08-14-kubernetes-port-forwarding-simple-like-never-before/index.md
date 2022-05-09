@@ -1,7 +1,9 @@
 ---
 title: 'Kubernetes port forwarding simple like never before'
 author: Alex Barashkov
+summary: We designed, developed, and open-sourced port forwarding app to ease the pointing of services from Kubernetes cluster to a local machine.
 cover: cover.jpg
+category: Development
 ---
 
 Probably you know that Kubernetes has built-in port forwarding functionality in their CLI. Port forwarding mostly used for the purpose of getting access to internal cluster resources and debugging.

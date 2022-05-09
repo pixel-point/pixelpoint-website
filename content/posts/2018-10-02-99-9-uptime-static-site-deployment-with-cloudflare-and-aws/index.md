@@ -1,7 +1,9 @@
 ---
 title: '99.9% uptime static site deployment with Cloudflare and AWS S3'
 author: Alex Barashkov
+summary: A non-copypasted, easy-to-understand, and minimalistic tutorial that actually works.
 cover: cover.jpg
+category: Development
 ---
 
 Welcome to our simple guide for those of you looking for 99.9% uptime and an almost free deployment solution for your static websites, without having to maintain and configure your own server. In this article, we will do it with Cloudflare as a CDN service and AWS S3 as file storage.

@@ -2,9 +2,10 @@ const path = require('path');
 
 const get = require('lodash.get');
 
-const { BLOG_BASE_PATH } = require('./src/constants/blog');
+const { BLOG_CATEGORIES, BLOG_POSTS_PER_PAGE } = require('./src/constants/blog');
 const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
 const POST_AUTHORS = require('./src/constants/post-authors');
+const getBlogPath = require('./src/utils/get-blog-path');
 const getBlogPostPath = require('./src/utils/get-blog-post-path');
 
 // We have this variable in order to decide whether to render draft posts or not
@@ -13,7 +14,7 @@ const getBlogPostPath = require('./src/utils/get-blog-post-path');
 // We have an array structure here in order to use it in the filter using the "in" operator
 const DRAFT_FILTER = process.env.NODE_ENV === 'production' ? [false] : [true, false];
 
-const POST_REQUIRED_FIELDS = ['title', 'author', 'cover'];
+const POST_REQUIRED_FIELDS = ['title', 'summary', 'category', 'author', 'cover'];
 
 const CASE_STUDY_REQUIRED_FIELDS = [
   'logo',
@@ -28,15 +29,69 @@ const CASE_STUDY_REQUIRED_FIELDS = [
 const FEATURED_CASE_STUDY_REQUIRED_FIELDS = ['cover'];
 const OPEN_SOURCE_CASE_STUDY_REQUIRED_FIELDS = ['githubUsername', 'githubRepoName'];
 
-async function createBlogPage({ actions }) {
+async function createBlogPages({ graphql, actions }) {
   const { createPage } = actions;
 
-  createPage({
-    path: BLOG_BASE_PATH,
-    component: path.resolve('./src/templates/blog.jsx'),
-    context: {
-      draftFilter: DRAFT_FILTER,
-    },
+  const result = await graphql(
+    `
+      query ($draftFilter: [Boolean]!) {
+        allMdx(
+          filter: {
+            fileAbsolutePath: { regex: "/posts/" }
+            fields: { isDraft: { in: $draftFilter } }
+          }
+        ) {
+          nodes {
+            frontmatter {
+              category
+            }
+          }
+          totalCount
+        }
+      }
+    `,
+    { draftFilter: DRAFT_FILTER }
+  );
+
+  if (result.errors) throw new Error(result.errors);
+
+  const pageCount = Math.ceil(result.data.allMdx.totalCount / BLOG_POSTS_PER_PAGE);
+
+  Array.from({ length: pageCount }).forEach((_, index) => {
+    createPage({
+      path: getBlogPath({ pageNumber: index + 1 }),
+      component: path.resolve('./src/templates/blog.jsx'),
+      context: {
+        currentPageIndex: index,
+        pageCount,
+        limit: BLOG_POSTS_PER_PAGE,
+        skip: index * BLOG_POSTS_PER_PAGE,
+        draftFilter: DRAFT_FILTER,
+      },
+    });
+  });
+
+  BLOG_CATEGORIES.forEach((category) => {
+    const postsForCategory = result.data.allMdx.nodes.filter(
+      ({ frontmatter }) => frontmatter.category === category
+    );
+
+    const pageCount = Math.ceil(postsForCategory.length / BLOG_POSTS_PER_PAGE);
+
+    Array.from({ length: pageCount }).forEach((_, index) => {
+      createPage({
+        path: getBlogPath({ pageNumber: index + 1, category }),
+        component: path.resolve('./src/templates/blog.jsx'),
+        context: {
+          category,
+          currentPageIndex: index,
+          pageCount,
+          limit: BLOG_POSTS_PER_PAGE,
+          skip: index * BLOG_POSTS_PER_PAGE,
+          draftFilter: DRAFT_FILTER,
+        },
+      });
+    });
   });
 }
 
@@ -49,14 +104,15 @@ async function createBlogPosts({ graphql, actions }) {
           slug
           fields {
             isDraft
-            isFeatured
           }
           frontmatter {
             title
             author
+            summary
             cover {
               publicURL
             }
+            category
           }
         }
       }
@@ -64,13 +120,6 @@ async function createBlogPosts({ graphql, actions }) {
   `);
 
   if (result.errors) throw new Error(result.errors);
-
-  const featuredPosts = result.data.allMdx.nodes.filter(({ fields: { isFeatured } }) => isFeatured);
-  if (featuredPosts.length !== 2) {
-    throw new Error(
-      `Amount of posts should always be 2, not more, not less! Current amount: ${featuredPosts.length}`
-    );
-  }
 
   result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
     // Do not create a post in production if it's draft
@@ -90,6 +139,16 @@ async function createBlogPosts({ graphql, actions }) {
         }"!\nAvailable authors: ${Object.keys(POST_AUTHORS).join(
           ', '
         )}.\nPlease check authors in "src/constants/post-authors.js"`
+      );
+    }
+
+    if (!BLOG_CATEGORIES.includes(frontmatter.category)) {
+      throw new Error(
+        `Post "${slug}" has unknown category "${
+          frontmatter.category
+        }"!\nAvailable categories: ${Object.keys(BLOG_CATEGORIES).join(
+          ', '
+        )}.\nPlease check categories in "src/constants/blog.js"`
       );
     }
 
@@ -217,7 +276,7 @@ exports.onCreateNode = ({ node, actions }) => {
 };
 
 exports.createPages = async (options) => {
-  await createBlogPage(options);
+  await createBlogPages(options);
   await createBlogPosts(options);
   await createCaseStudiesPage(options);
   await createCaseStudies(options);

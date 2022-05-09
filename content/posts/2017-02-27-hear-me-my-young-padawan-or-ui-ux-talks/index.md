@@ -1,7 +1,9 @@
 ---
 title: 'Hear me, my young Padawan. Or, UI/UX talks'
+summary: Some thoughts about the role of a designer in the projects, what differs UI and UX parts, and a little bit more.
 author: Vlad Kamelsky
 cover: cover.jpg
+category: Design
 ---
 
 Fact: right now, the profession of UI/UX design is one of the most trendy and expensive in IT. Many people seek highly paid work in this sphere, but don’t have the necessary foundational experience — only a strong portfolio. This is why it is often difficult to determine whether a candidate is an expert, or just someone with beautiful pictures.

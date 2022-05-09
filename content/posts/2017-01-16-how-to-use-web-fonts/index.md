@@ -1,7 +1,9 @@
 ---
 title: 'How to use web fonts?'
 author: Alex Barashkov
+summary: Different techniques that helps use web fonts properly.
 cover: cover.jpg
+category: Development
 ---
 
 ## Introduction

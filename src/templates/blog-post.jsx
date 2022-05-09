@@ -11,7 +11,7 @@ import SEO_DATA from 'constants/seo-data';
 
 const BlogPostTemplate = ({
   data: {
-    mdx: { slug, excerpt, body, frontmatter },
+    mdx: { slug, body, frontmatter },
     allMdx: { nodes: readMorePosts },
   },
   location,
@@ -19,8 +19,8 @@ const BlogPostTemplate = ({
   <Layout
     seo={SEO_DATA.blogPost({
       title: frontmatter.title,
-      description: excerpt,
-      ogImage: frontmatter.ogImage.childImageSharp.fixed.src,
+      description: frontmatter.summary,
+      ogImage: frontmatter.ogImage.childImageSharp.gatsbyImageData.images.fallback.src,
     })}
     headerTheme="black"
   >
@@ -47,10 +47,11 @@ export const query = graphql`
   query ($id: String!) {
     mdx(id: { eq: $id }) {
       slug
-      excerpt(pruneLength: 160)
       body
       frontmatter {
         title
+        summary
+        category
         author
         cover {
           childImageSharp {
@@ -59,16 +60,7 @@ export const query = graphql`
         }
         ogImage: cover {
           childImageSharp {
-            fixed(
-              width: 1200
-              height: 630
-              toFormat: JPG
-              cropFocus: CENTER
-              fit: COVER
-              quality: 90
-            ) {
-              src
-            }
+            gatsbyImageData(layout: FIXED, quality: 90, width: 1200, height: 630, formats: JPG)
           }
         }
       }

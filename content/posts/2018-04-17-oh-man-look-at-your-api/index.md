@@ -1,7 +1,9 @@
 ---
 title: 'Oh Man, Look at Your API!'
+summary: Tips for building a great API that any developer might find useful in his daily job.
 author: Alexey Kuznetsov
 cover: cover.jpg
+category: Development
 ---
 
 Here’s my small effort to make the world a better place. It could be useful for those of us on the way to building your own super duper API or who have the patience to improve on an existing one. These tips are based on my own painful experience with APIs I’ve worked with. Some API made me hate them, others trained my intuition or even helped me developed something like a kind of paranormal ability. Still others made me break down with hysterical laughter. As you can see there’s a lot to go over, so let’s get started!

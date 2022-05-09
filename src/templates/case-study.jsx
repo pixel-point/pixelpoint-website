@@ -29,7 +29,10 @@ const CaseStudyTemplate = ({
 
   return (
     <Layout
-      seo={SEO_DATA.blogPost({ title: frontmatter.title, description: frontmatter.description })}
+      seo={SEO_DATA.blogPost({
+        title: frontmatter.title,
+        description: frontmatter.description,
+      })}
       headerTheme="white"
     >
       <Content {...content} />

@@ -1,8 +1,9 @@
 ---
 title: 'Self-hosting Plausible Analytics on Kubernetes'
+summary: Plausible Analytics is a solid alternative to the dreaded GA. Let's self-host it on K8s and enjoy the metrics.
 author: Kirill Bolotsky
 cover: cover.jpg
-isFeatured: true
+category: Development
 ---
 
 Have you ever had this thought that Google Analytics has turned into an alien ship control board that no mere human can handle? And you or your client probably don’t need all of those features made possible by a 50kb JS script overhead? Well, I had, that’s why a few days ago I’ve taken a short tour of the web analytic services market, checking what other options I have.

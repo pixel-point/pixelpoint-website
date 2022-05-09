@@ -1,7 +1,9 @@
 ---
 title: 'Crypto classified ads analytics research'
+summary: We built crypto-currency-based classified ads marketplace. In this article we reveal the whole story, from research to implementation.
 author: Vlad Kamelsky
 cover: cover.jpg
+category: Development
 ---
 
 ## USA is the leader in crypto classified ads — worldwide analytics research

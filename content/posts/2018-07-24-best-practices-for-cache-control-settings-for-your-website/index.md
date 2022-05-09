@@ -1,7 +1,9 @@
 ---
 title: 'Best practices for cache control settings for your website'
 author: Alex Barashkov
+summary: Techniques and settings to help you keep your website up-to-date for all users after every deployment.
 cover: cover.jpg
+category: Development
 ---
 
 You may have noticed that, sometimes, when accessing a site for a second time, it does not look as expected and some styles are broken, making everything look weird. Usually, the cause of this problem is poorly defined cache control policies that prevent you from receiving the latest changes after the most recent deployment. In this article, I will show you the right cache settings and techniques to help you keep your website up to date for all users after every deployment.
