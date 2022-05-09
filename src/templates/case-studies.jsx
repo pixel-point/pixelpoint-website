@@ -3,7 +3,6 @@ import { graphql } from 'gatsby';
 import React from 'react';
 
 import CaseStudies from 'components/pages/case-studies/case-studies';
-import Hero from 'components/pages/case-studies/hero';
 import SharedCaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
@@ -14,8 +13,7 @@ const CaseStudiesPage = ({
     allMdx: { nodes },
   },
 }) => (
-  <Layout seo={SEO_DATA.caseStudies} headerTheme="white">
-    <Hero />
+  <Layout seo={SEO_DATA.caseStudies} headerTheme="black">
     <CaseStudies items={nodes} />
     <SharedCaseStudies
       title="Some more of our recent projects to read about:"
