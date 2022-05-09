@@ -16,14 +16,14 @@ const PostsList = ({ activeCategory, items }) => (
       <h1 className="text-4xl font-semibold leading-snug lg:text-[32px] sm:text-2xl">
         Sharing Pixel Point <span className="text-red">Collective experience:</span>
       </h1>
-      <ul className="scrollbar-hidden mt-16 flex space-x-6 overflow-auto border-b border-b-gray-4 lg:mt-14 md:mt-12 sm:mt-11">
+      <ul className="scrollbar-hidden relative mt-16 flex space-x-6 overflow-auto pb-px after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-gray-4 lg:mt-14 md:mt-12 sm:mt-11">
         {['All', ...BLOG_CATEGORIES].map((category, index) => (
           <li key={index}>
             <Link
               className={clsx(
                 'relative mb-3 block text-sm font-normal transition-colors duration-200 hover:text-red',
                 ((!activeCategory && category === 'All') || activeCategory === category) &&
-                  '!font-semibold text-red after:absolute after:-bottom-[13px] after:left-0 after:h-0.5 after:w-full after:bg-red'
+                  '!font-semibold text-red after:absolute after:-bottom-[13px] after:left-0 after:z-10 after:h-0.5 after:w-full after:bg-red'
               )}
               to={getBlogPath({ category: category === 'All' ? undefined : category })}
             >
