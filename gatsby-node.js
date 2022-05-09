@@ -1,5 +1,7 @@
 const path = require('path');
 
+const fetch = require(`node-fetch`);
+
 const get = require('lodash.get');
 
 const { BLOG_CATEGORIES, BLOG_POSTS_PER_PAGE } = require('./src/constants/blog');
@@ -273,6 +275,41 @@ exports.onCreateNode = ({ node, actions }) => {
       value: node.frontmatter.isOpenSource || false,
     });
   }
+};
+
+// Add custom field 'stars' to Mdx nodes
+// Fetching them from a GitHub repo
+
+exports.createResolvers = ({ createResolvers }) => {
+  const resolvers = {
+    Mdx: {
+      stars: {
+        type: 'Int',
+        resolve: async (source) => {
+          const { githubUsername, githubRepoName } = source.frontmatter;
+          if (
+            source.fileAbsolutePath.includes('/case-studies/') &&
+            githubUsername &&
+            githubRepoName
+          ) {
+            try {
+              const response = await fetch(
+                `https://api.github.com/repos/${githubUsername}/${githubRepoName}`
+              );
+              const json = await response.json();
+              return json.stargazers_count;
+            } catch (e) {
+              throw new Error(
+                `Failed to fetch GitHub stars for ${githubUsername}/${githubRepoName}`
+              );
+            }
+          }
+          return null;
+        },
+      },
+    },
+  };
+  createResolvers(resolvers);
 };
 
 exports.createPages = async (options) => {
