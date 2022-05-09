@@ -1,6 +1,6 @@
 ---
 title: 'Handoffs Guide for Pixel Perfect Design. Part I.'
-shortDescription: 'Best practices for delivering pixel-perfect design: tools, image optimization, handling SVG and more'
+shortDescription: 'Best practices for delivering pixel-perfect design: tools, image optimization, handling SVG and more.'
 author: Vlad Kamelsky
 cover: cover.jpg
 category: Design
