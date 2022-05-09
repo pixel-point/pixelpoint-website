@@ -17,7 +17,8 @@ stack:
   - Gatsby
   - TailwindCSS
   - MDX
-  - Netlify
+  - Cloudflare Pages
+  - Formspark
 keynotes:
   - Designed & developed a modern landing page
   - Built custom MDX-based documentation portal
