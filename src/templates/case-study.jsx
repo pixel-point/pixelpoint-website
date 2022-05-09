@@ -29,7 +29,11 @@ const CaseStudyTemplate = ({
 
   return (
     <Layout
-      seo={SEO_DATA.blogPost({ title: frontmatter.title, description: frontmatter.description })}
+      seo={SEO_DATA.blogPost({
+        title: frontmatter.title,
+        description: frontmatter.description,
+        ogImage: frontmatter.ogImage.childImageSharp.gatsbyImageData.images.fallback.src,
+      })}
       headerTheme="white"
     >
       <Content {...content} />
@@ -70,6 +74,11 @@ export const query = graphql`
         services
         stack
         keynotes
+        ogImage: cover {
+          childImageSharp {
+            gatsbyImageData(layout: FIXED, quality: 90, width: 1200, height: 630, formats: JPG)
+          }
+        }
       }
     }
   }
