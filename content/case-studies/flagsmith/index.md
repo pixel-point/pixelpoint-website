@@ -6,7 +6,7 @@ websiteUrl: https://flagsmith.com
 githubUsername: Flagsmith
 githubRepoName: flagsmith
 quote:
-  text: It's been an absolute pleasure working with Alex and the team at PixelPoint on both our website and our GitHub presence. We constantly receive complements on the quality of the design and illustration, and it has made a significant impact on our business as a whole. 10/10 would install Figma again
+  text: It's been an absolute pleasure working with Alex and the team at Pixel Point on both our website and our GitHub presence. We constantly receive complements on the quality of the design and illustration, and it has made a significant impact on our business as a whole. 10/10 would install Figma again
   authorName: Ben Rometsch
   authorPosition: CEO
   authorPhoto: author-photo.jpg
