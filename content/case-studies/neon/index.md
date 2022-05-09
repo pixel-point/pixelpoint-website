@@ -17,7 +17,6 @@ stack:
   - Gatsby
   - TailwindCSS
   - MDX
-  - Formspark
   - Netlify
 keynotes:
   - Designed & developed a modern landing page
