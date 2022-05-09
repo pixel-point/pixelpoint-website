@@ -12,7 +12,7 @@ const Hero = ({ title, category, cover, slug }) => (
     <div className="flex items-center">
       <Link
         className="text-sm font-normal text-red transition-colors duration-200 hover:text-blue"
-        to={getBlogPath(category)}
+        to={getBlogPath({ category })}
       >
         {category}
       </Link>

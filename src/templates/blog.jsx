@@ -2,6 +2,7 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
+import Pagination from 'components/pages/blog/pagination';
 import PostsList from 'components/pages/blog/posts-list';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
@@ -12,16 +13,24 @@ const BlogTemplate = ({
   data: {
     allMdx: { nodes: items },
   },
+  pageContext: { currentPageIndex, pageCount, category },
 }) => (
   <Layout seo={SEO_DATA.blog} headerTheme="black">
-    <PostsList items={items} />
+    <PostsList activeCategory={category} items={items} />
+    {pageCount > 1 && (
+      <Pagination
+        activeCategory={category}
+        currentPageIndex={currentPageIndex}
+        pageCount={pageCount}
+      />
+    )}
     <CaseStudies title="Our team loves Open Source. We designed and developed many projects in this space." />
     <CTA withTopMargin />
   </Layout>
 );
 
 export const query = graphql`
-  query ($category: String, $draftFilter: [Boolean]!) {
+  query ($category: String, $draftFilter: [Boolean]!, $limit: Int!, $skip: Int!) {
     allMdx(
       filter: {
         fileAbsolutePath: { regex: "/posts/" }
@@ -29,6 +38,8 @@ export const query = graphql`
         frontmatter: { category: { eq: $category } }
       }
       sort: { order: DESC, fields: slug }
+      limit: $limit
+      skip: $skip
     ) {
       nodes {
         slug

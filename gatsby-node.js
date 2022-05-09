@@ -2,7 +2,7 @@ const path = require('path');
 
 const get = require('lodash.get');
 
-const { BLOG_CATEGORIES } = require('./src/constants/blog');
+const { BLOG_CATEGORIES, BLOG_POSTS_PER_PAGE } = require('./src/constants/blog');
 const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
 const POST_AUTHORS = require('./src/constants/post-authors');
 const getBlogPath = require('./src/utils/get-blog-path');
@@ -29,25 +29,68 @@ const CASE_STUDY_REQUIRED_FIELDS = [
 const FEATURED_CASE_STUDY_REQUIRED_FIELDS = ['cover'];
 const OPEN_SOURCE_CASE_STUDY_REQUIRED_FIELDS = ['githubUsername', 'githubRepoName'];
 
-async function createBlogPage({ actions }) {
+async function createBlogPages({ graphql, actions }) {
   const { createPage } = actions;
 
-  createPage({
-    path: getBlogPath(),
-    component: path.resolve('./src/templates/blog.jsx'),
-    context: {
-      draftFilter: DRAFT_FILTER,
-    },
+  const result = await graphql(
+    `
+      query ($draftFilter: [Boolean]!) {
+        allMdx(
+          filter: {
+            fileAbsolutePath: { regex: "/posts/" }
+            fields: { isDraft: { in: $draftFilter } }
+          }
+        ) {
+          nodes {
+            frontmatter {
+              category
+            }
+          }
+          totalCount
+        }
+      }
+    `,
+    { draftFilter: DRAFT_FILTER }
+  );
+
+  if (result.errors) throw new Error(result.errors);
+
+  const pageCount = Math.ceil(result.data.allMdx.totalCount / BLOG_POSTS_PER_PAGE);
+
+  Array.from({ length: pageCount }).forEach((_, index) => {
+    createPage({
+      path: getBlogPath({ pageNumber: index + 1 }),
+      component: path.resolve('./src/templates/blog.jsx'),
+      context: {
+        currentPageIndex: index,
+        pageCount,
+        limit: BLOG_POSTS_PER_PAGE,
+        skip: index * BLOG_POSTS_PER_PAGE,
+        draftFilter: DRAFT_FILTER,
+      },
+    });
   });
 
   BLOG_CATEGORIES.forEach((category) => {
-    actions.createPage({
-      path: getBlogPath(category),
-      component: path.resolve('./src/templates/blog.jsx'),
-      context: {
-        category,
-        draftFilter: DRAFT_FILTER,
-      },
+    const postsForCategory = result.data.allMdx.nodes.filter(
+      ({ frontmatter }) => frontmatter.category === category
+    );
+
+    const pageCount = Math.ceil(postsForCategory.length / BLOG_POSTS_PER_PAGE);
+
+    Array.from({ length: pageCount }).forEach((_, index) => {
+      createPage({
+        path: getBlogPath({ pageNumber: index + 1, category }),
+        component: path.resolve('./src/templates/blog.jsx'),
+        context: {
+          category,
+          currentPageIndex: index,
+          pageCount,
+          limit: BLOG_POSTS_PER_PAGE,
+          skip: index * BLOG_POSTS_PER_PAGE,
+          draftFilter: DRAFT_FILTER,
+        },
+      });
     });
   });
 }
@@ -233,7 +276,7 @@ exports.onCreateNode = ({ node, actions }) => {
 };
 
 exports.createPages = async (options) => {
-  await createBlogPage(options);
+  await createBlogPages(options);
   await createBlogPosts(options);
   await createCaseStudiesPage(options);
   await createCaseStudies(options);
