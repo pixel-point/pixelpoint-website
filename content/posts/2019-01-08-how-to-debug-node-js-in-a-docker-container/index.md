@@ -1,7 +1,7 @@
 ---
 title: 'How to debug Node.js in a Docker container'
 author: Alex Barashkov
-shortDescription: Painful, but manageable. A few detailed cases of getting inside the container with Node app running.
+summary: Painful, but manageable. A few detailed cases of getting inside the container with Node app running.
 cover: cover.jpg
 category: Development
 ---

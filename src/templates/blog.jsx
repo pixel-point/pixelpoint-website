@@ -34,7 +34,7 @@ export const query = graphql`
         slug
         frontmatter {
           title
-          shortDescription
+          summary
           category
           author
           cover {

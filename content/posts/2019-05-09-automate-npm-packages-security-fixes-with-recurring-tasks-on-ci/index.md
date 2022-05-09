@@ -1,7 +1,7 @@
 ---
 title: 'Automate NPM packages security fixes with recurring tasks on CI'
 author: Alex Barashkov
-shortDescription: Writing a pipeline using Drone CI for npm audit and npm fix commands with automatic creation of fix PR on GitHub.
+summary: Writing a pipeline using Drone CI for npm audit and npm fix commands with automatic creation of fix PR on GitHub.
 cover: cover.jpg
 category: Development
 ---

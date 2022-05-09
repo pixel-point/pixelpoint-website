@@ -1,7 +1,7 @@
 ---
 title: 'Speed up your development with this new VS Code extension'
 author: Alex Barashkov
-shortDescription: My friend and I recently have developed a VS Code extension called Snipsnap. We see it as a solution to the existing problem with code snippets collections.
+summary: My friend and I recently have developed a VS Code extension called Snipsnap. We see it as a solution to the existing problem with code snippets collections.
 cover: cover.jpg
 category: Development
 ---

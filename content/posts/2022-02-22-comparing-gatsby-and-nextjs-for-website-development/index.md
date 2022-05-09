@@ -1,7 +1,7 @@
 ---
 title: 'Comparing Gatsby and Next.js for website development'
 author: Alex Barashkov
-shortDescription: Diving into the hot topics of comparing the speed of development, editorial experience, maintainability, scalability, and customizations of the two most popular React-based frameworks.
+summary: Diving into the hot topics of comparing the speed of development, editorial experience, maintainability, scalability, and customizations of the two most popular React-based frameworks.
 cover: cover.jpg
 category: Development
 ---

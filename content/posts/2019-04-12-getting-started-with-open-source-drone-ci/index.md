@@ -1,7 +1,7 @@
 ---
 title: 'Getting started with open-source Drone CI'
 author: Alex Barashkov
-shortDescription: Learn the basics of the most popular open-source CI/CD solution, from installation to creation of the first pipeline.
+summary: Learn the basics of the most popular open-source CI/CD solution, from installation to creation of the first pipeline.
 cover: cover.jpg
 category: Development
 ---

@@ -1,7 +1,7 @@
 ---
 title: 'Why I HATE your FAKE redesign'
 author: Alex Barashkov
-shortDescription: I’m tired of seeing new (and frankly stupid) redesign news of Facebook, Skype, and Twitter popping up on my newsfeed. Why not make something useful?
+summary: I’m tired of seeing new (and frankly stupid) redesign news of Facebook, Skype, and Twitter popping up on my newsfeed. Why not make something useful?
 cover: cover.jpg
 category: Development
 ---

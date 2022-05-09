@@ -1,7 +1,7 @@
 ---
 title: 'Hey Mom, I will not stop playing online games!'
 author: Alex Barashkov
-shortDescription: Games can be helpful, expose the real world people behaviour and teach you something.
+summary: Games can be helpful, expose the real world people behaviour and teach you something.
 cover: cover.jpg
 category: Development
 ---

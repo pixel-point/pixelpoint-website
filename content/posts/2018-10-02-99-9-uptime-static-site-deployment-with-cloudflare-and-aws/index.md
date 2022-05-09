@@ -1,7 +1,7 @@
 ---
 title: '99.9% uptime static site deployment with Cloudflare and AWS S3'
 author: Alex Barashkov
-shortDescription: A non-copypasted, easy-to-understand, and minimalistic tutorial that actually works.
+summary: A non-copypasted, easy-to-understand, and minimalistic tutorial that actually works.
 cover: cover.jpg
 category: Development
 ---

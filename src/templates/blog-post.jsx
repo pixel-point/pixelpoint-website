@@ -19,7 +19,7 @@ const BlogPostTemplate = ({
   <Layout
     seo={SEO_DATA.blogPost({
       title: frontmatter.title,
-      description: frontmatter.shortDescription,
+      description: frontmatter.summary,
       ogImage: frontmatter.ogImage.childImageSharp.fixed.src,
     })}
     headerTheme="black"
@@ -50,7 +50,7 @@ export const query = graphql`
       body
       frontmatter {
         title
-        shortDescription
+        summary
         category
         author
         cover {

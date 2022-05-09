@@ -1,7 +1,7 @@
 ---
 title: 'The Challenges of Building Own MacOS App'
 author: Alex Barashkov
-shortDescription: It was quite a challenge to build our macOS app, Mutify, which gives you the ability to mute/unmute your mic from the Touch Bar. See what issues we faced.
+summary: It was quite a challenge to build our macOS app, Mutify, which gives you the ability to mute/unmute your mic from the Touch Bar. See what issues we faced.
 cover: cover.jpg
 category: Development
 ---

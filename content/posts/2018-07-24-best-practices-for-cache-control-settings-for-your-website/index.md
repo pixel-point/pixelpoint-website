@@ -1,7 +1,7 @@
 ---
 title: 'Best practices for cache control settings for your website'
 author: Alex Barashkov
-shortDescription: Techniques and settings to help you keep your website up-to-date for all users after every deployment.
+summary: Techniques and settings to help you keep your website up-to-date for all users after every deployment.
 cover: cover.jpg
 category: Development
 ---

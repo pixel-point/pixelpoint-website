@@ -1,6 +1,6 @@
 ---
 title: 'Oh Man, Look at Your API!'
-shortDescription: Tips for building a great API that any developer might find useful in his daily job.
+summary: Tips for building a great API that any developer might find useful in his daily job.
 author: Alexey Kuznetsov
 cover: cover.jpg
 category: Development

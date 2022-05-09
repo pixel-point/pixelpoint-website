@@ -1,7 +1,7 @@
 ---
 title: 'Measuring Gatsby projects build time using paid plans of popular static website hosting platforms'
 author: Alex Barashkov
-shortDescription: Vercel, Netlify, Gatsby Cloud, Cloudflare Pages, or AWS Amplify - which platform for building static websites is the fastest?..
+summary: Vercel, Netlify, Gatsby Cloud, Cloudflare Pages, or AWS Amplify - which platform for building static websites is the fastest?..
 cover: cover.jpg
 category: Development
 ---

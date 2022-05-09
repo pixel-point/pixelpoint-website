@@ -1,6 +1,6 @@
 ---
 title: 'Track blockchain transactions with web3.js'
-shortDescription: Deep dive into transaction tracking with web3.js, examples of functions for ETH and ERC20 tokens.
+summary: Deep dive into transaction tracking with web3.js, examples of functions for ETH and ERC20 tokens.
 author: Dmitry Semenovsky
 cover: cover.jpg
 category: Development

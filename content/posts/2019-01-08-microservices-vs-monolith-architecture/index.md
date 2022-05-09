@@ -1,7 +1,7 @@
 ---
 title: 'Microservices vs. Monolith Architecture'
 author: Alex Barashkov
-shortDescription: Let’s compare microservices and monolith architectures, figure out their cons and pros, and under what conditions it is appropriate to use one or another.
+summary: Let’s compare microservices and monolith architectures, figure out their cons and pros, and under what conditions it is appropriate to use one or another.
 cover: cover.jpg
 category: Development
 ---

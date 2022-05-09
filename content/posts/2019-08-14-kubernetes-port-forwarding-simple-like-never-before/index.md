@@ -1,7 +1,7 @@
 ---
 title: 'Kubernetes port forwarding simple like never before'
 author: Alex Barashkov
-shortDescription: We designed, developed, and open-sourced port forwarding app to ease the pointing of services from Kubernetes cluster to a local machine.
+summary: We designed, developed, and open-sourced port forwarding app to ease the pointing of services from Kubernetes cluster to a local machine.
 cover: cover.jpg
 category: Development
 ---

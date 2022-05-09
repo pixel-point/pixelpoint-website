@@ -14,7 +14,7 @@ const getBlogPostPath = require('./src/utils/get-blog-post-path');
 // We have an array structure here in order to use it in the filter using the "in" operator
 const DRAFT_FILTER = process.env.NODE_ENV === 'production' ? [false] : [true, false];
 
-const POST_REQUIRED_FIELDS = ['title', 'shortDescription', 'category', 'author', 'cover'];
+const POST_REQUIRED_FIELDS = ['title', 'summary', 'category', 'author', 'cover'];
 
 const CASE_STUDY_REQUIRED_FIELDS = [
   'logo',
@@ -65,7 +65,7 @@ async function createBlogPosts({ graphql, actions }) {
           frontmatter {
             title
             author
-            shortDescription
+            summary
             cover {
               publicURL
             }
