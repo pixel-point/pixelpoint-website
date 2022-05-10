@@ -4,7 +4,6 @@ import React from 'react';
 import { LinkedinShareButton, TwitterShareButton } from 'react-share';
 
 import Link from 'components/shared/link';
-import LINKS from 'constants/links.js';
 import POST_AUTHORS from 'constants/post-authors';
 import LinkedinIcon from 'images/linkedin.inline.svg';
 import TwitterIcon from 'images/twitter.inline.svg';
@@ -26,7 +25,7 @@ const Sidebar = ({ author, readMorePosts, socialShareUrl }) => (
       {POST_AUTHORS[author].twitterUrl && (
         <Link
           className="mt-5 inline-flex items-center space-x-3 rounded-full bg-[#259df4] py-2.5 pl-3.5 pr-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#1781cf]"
-          to={LINKS.twitter}
+          to={POST_AUTHORS[author].twitterUrl}
           target="_blank"
           rel="noopener noreferrer"
         >

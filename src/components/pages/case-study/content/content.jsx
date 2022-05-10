@@ -37,7 +37,7 @@ const Content = ({
           size="base"
           theme="arrow-red"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener"
         >
           Visit {title}
         </Link>

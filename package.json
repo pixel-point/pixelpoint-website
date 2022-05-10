@@ -35,6 +35,7 @@
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.3.1",
     "clsx": "^1.1.1",
+    "emoji-regex": "^10.1.0",
     "framer-motion": "^6.2.4",
     "gatsby": "^4.6.2",
     "gatsby-plugin-image": "^2.6.0",
@@ -79,6 +80,7 @@
     "gatsby-remark-images": "^6.7.0",
     "gatsby-remark-prismjs": "^6.7.0",
     "gatsby-source-filesystem": "^4.6.0",
+    "gatsby-source-twitter": "^4.0.1",
     "gatsby-transformer-sharp": "^4.6.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.3",

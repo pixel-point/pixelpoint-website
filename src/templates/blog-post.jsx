@@ -6,6 +6,7 @@ import Content from 'components/pages/blog-post/content';
 import Hero from 'components/pages/blog-post/hero';
 import Sidebar from 'components/pages/blog-post/sidebar';
 import CTA from 'components/shared/cta';
+import HighlightedTweets from 'components/shared/highlighted-tweets';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
 
@@ -39,7 +40,8 @@ const BlogPostTemplate = ({
         </div>
       </div>
     </article>
-    <CTA withTopMargin />
+    <HighlightedTweets withTopMargin />
+    <CTA />
   </Layout>
 );
 
