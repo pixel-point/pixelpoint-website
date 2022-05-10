@@ -1,8 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 
-const fetch = require(`node-fetch`);
-
 const get = require('lodash.get');
+const fetch = require('node-fetch');
 
 const { BLOG_CATEGORIES, BLOG_POSTS_PER_PAGE } = require('./src/constants/blog');
 const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
@@ -98,6 +98,8 @@ async function createBlogPages({ graphql, actions }) {
 }
 
 async function createBlogPosts({ graphql, actions }) {
+  const { createPage } = actions;
+
   const result = await graphql(`
     {
       allMdx(filter: { fileAbsolutePath: { regex: "/posts/" } }) {
@@ -154,7 +156,7 @@ async function createBlogPosts({ graphql, actions }) {
       );
     }
 
-    actions.createPage({
+    createPage({
       path: getBlogPostPath(slug),
       component: path.resolve('./src/templates/blog-post.jsx'),
       context: { id },
@@ -175,6 +177,8 @@ async function createCaseStudiesPage({ actions }) {
 }
 
 async function createCaseStudies({ graphql, actions }) {
+  const { createPage } = actions;
+
   const result = await graphql(`
     {
       allMdx(filter: { fileAbsolutePath: { regex: "/case-studies/" } }) {
@@ -245,7 +249,7 @@ async function createCaseStudies({ graphql, actions }) {
       });
     }
 
-    actions.createPage({
+    createPage({
       path: `${CASE_STUDIES_BASE_PATH}${slug}`,
       component: path.resolve('./src/templates/case-study.jsx'),
       context: { id },
@@ -277,18 +281,17 @@ exports.onCreateNode = ({ node, actions }) => {
   }
 };
 
-// Add custom field 'stars' to Mdx nodes
-// Fetching them from a GitHub repo
-
 exports.createResolvers = ({ createResolvers }) => {
-  const resolvers = {
+  createResolvers({
     Mdx: {
-      stars: {
-        type: 'Int',
-        resolve: async (source) => {
-          const { githubUsername, githubRepoName } = source.frontmatter;
+      githubStars: {
+        type: 'String',
+        resolve: async ({ frontmatter, fileAbsolutePath }) => {
+          const { name, githubUsername, githubRepoName, isOpenSource } = frontmatter;
+
           if (
-            source.fileAbsolutePath.includes('/case-studies/') &&
+            fileAbsolutePath.includes('/case-studies/') &&
+            isOpenSource &&
             githubUsername &&
             githubRepoName
           ) {
@@ -296,20 +299,19 @@ exports.createResolvers = ({ createResolvers }) => {
               const response = await fetch(
                 `https://api.github.com/repos/${githubUsername}/${githubRepoName}`
               );
-              const json = await response.json();
-              return json.stargazers_count;
+              const { stargazers_count } = await response.json();
+
+              return new Intl.NumberFormat('en-US').format(stargazers_count);
             } catch (e) {
-              throw new Error(
-                `Failed to fetch GitHub stars for ${githubUsername}/${githubRepoName}`
-              );
+              throw new Error(`Failed to fetch GitHub stars for case study "${name}"`);
             }
           }
+
           return null;
         },
       },
     },
-  };
-  createResolvers(resolvers);
+  });
 };
 
 exports.createPages = async (options) => {
