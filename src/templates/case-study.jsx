@@ -11,7 +11,7 @@ import SEO_DATA from 'constants/seo-data';
 
 const CaseStudyTemplate = ({
   data: {
-    mdx: { body, slug, frontmatter },
+    mdx: { body, slug, frontmatter, githubStars },
   },
 }) => {
   const content = {
@@ -25,6 +25,7 @@ const CaseStudyTemplate = ({
     text: body,
     services: frontmatter.services,
     stack: frontmatter.stack,
+    githubStars,
   };
 
   return (
@@ -74,6 +75,7 @@ export const query = graphql`
         stack
         keynotes
       }
+      githubStars
     }
   }
 `;

@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 
 const get = require('lodash.get');
+const fetch = require('node-fetch');
 
 const { BLOG_CATEGORIES, BLOG_POSTS_PER_PAGE } = require('./src/constants/blog');
 const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
@@ -96,6 +98,8 @@ async function createBlogPages({ graphql, actions }) {
 }
 
 async function createBlogPosts({ graphql, actions }) {
+  const { createPage } = actions;
+
   const result = await graphql(`
     {
       allMdx(filter: { fileAbsolutePath: { regex: "/posts/" } }) {
@@ -152,7 +156,7 @@ async function createBlogPosts({ graphql, actions }) {
       );
     }
 
-    actions.createPage({
+    createPage({
       path: getBlogPostPath(slug),
       component: path.resolve('./src/templates/blog-post.jsx'),
       context: { id },
@@ -173,6 +177,8 @@ async function createCaseStudiesPage({ actions }) {
 }
 
 async function createCaseStudies({ graphql, actions }) {
+  const { createPage } = actions;
+
   const result = await graphql(`
     {
       allMdx(filter: { fileAbsolutePath: { regex: "/case-studies/" } }) {
@@ -243,7 +249,7 @@ async function createCaseStudies({ graphql, actions }) {
       });
     }
 
-    actions.createPage({
+    createPage({
       path: `${CASE_STUDIES_BASE_PATH}${slug}`,
       component: path.resolve('./src/templates/case-study.jsx'),
       context: { id },
@@ -273,6 +279,39 @@ exports.onCreateNode = ({ node, actions }) => {
       value: node.frontmatter.isOpenSource || false,
     });
   }
+};
+
+exports.createResolvers = ({ createResolvers }) => {
+  createResolvers({
+    Mdx: {
+      githubStars: {
+        type: 'String',
+        resolve: async ({ frontmatter, fileAbsolutePath }) => {
+          const { name, githubUsername, githubRepoName, isOpenSource } = frontmatter;
+
+          if (
+            fileAbsolutePath.includes('/case-studies/') &&
+            isOpenSource &&
+            githubUsername &&
+            githubRepoName
+          ) {
+            try {
+              const response = await fetch(
+                `https://api.github.com/repos/${githubUsername}/${githubRepoName}`
+              );
+              const { stargazers_count } = await response.json();
+
+              return new Intl.NumberFormat('en-US').format(stargazers_count);
+            } catch (e) {
+              throw new Error(`Failed to fetch GitHub stars for case study "${name}"`);
+            }
+          }
+
+          return null;
+        },
+      },
+    },
+  });
 };
 
 exports.createPages = async (options) => {

@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -7,16 +6,13 @@ import { useRive, Layout, Fit, Alignment } from 'rive-react';
 import Link from 'components/shared/link';
 import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
 import LINKS from 'constants/links';
-import useGithubRepoStars from 'hooks/use-github-repo-stars';
 import GithubLogo from 'images/github.inline.svg';
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min)) + Math.ceil(min));
 }
 
-const Card = ({ logo, title, description, githubUsername, githubRepoName, slug }) => {
-  const githubStars = useGithubRepoStars(githubUsername, githubRepoName);
-
+const Card = ({ logo, title, description, slug, githubStars }) => {
   const { RiveComponent, rive } = useRive({
     src: '/animations/shared/case-studies-card.riv',
     autoplay: false,
@@ -44,13 +40,8 @@ const Card = ({ logo, title, description, githubUsername, githubRepoName, slug }
           loading="lazy"
           alt={`${title} logo`}
         />
-        {githubUsername && githubRepoName && (
-          <div
-            className={clsx(
-              'invisible absolute top-3 left-3 z-10 flex items-center opacity-0 transition-[opacity,visibility] duration-200 lg:top-2.5 lg:left-2.5 md:top-3 md:left-3',
-              githubStars && '!visible !opacity-100'
-            )}
-          >
+        {githubStars && (
+          <div className="absolute top-3 left-3 z-10 flex items-center lg:top-2.5 lg:left-2.5 md:top-3 md:left-3">
             <GithubLogo className="h-[26px] text-white" />
             <p
               className="ml-2 text-xs font-semibold text-white"
@@ -76,9 +67,12 @@ Card.propTypes = {
   }).isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  githubUsername: PropTypes.string.isRequired,
-  githubRepoName: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
+  githubStars: PropTypes.string,
+};
+
+Card.defaultProps = {
+  githubStars: null,
 };
 
 const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => {
@@ -106,6 +100,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
             isOpenSource
             isFeatured
           }
+          githubStars
         }
       }
     }
@@ -137,9 +132,9 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
           )}
         </h2>
         <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-14 lg:gap-y-14 md:mt-11 md:grid-cols-2 md:gap-y-11 sm:mt-10 sm:block sm:space-y-10">
-          {itemsToRender.map(({ slug, frontmatter }, index) => (
+          {itemsToRender.map(({ slug, frontmatter, githubStars }, index) => (
             <li key={index}>
-              <Card {...frontmatter} slug={slug} />
+              <Card {...frontmatter} slug={slug} githubStars={githubStars} />
             </li>
           ))}
         </ul>
