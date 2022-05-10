@@ -314,6 +314,16 @@ exports.createResolvers = ({ createResolvers }) => {
   });
 };
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  const typeDefs = `
+    type Mdx implements Node { 
+      author: AuthorsJson @link(by: "name", from: "frontmatter.author")
+    }
+  `;
+  createTypes(typeDefs);
+};
+
 exports.createPages = async (options) => {
   await createBlogPages(options);
   await createBlogPosts(options);
