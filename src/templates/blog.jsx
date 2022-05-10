@@ -2,10 +2,13 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 
+import Categories from 'components/pages/blog/categories';
+import Hero from 'components/pages/blog/hero';
 import Pagination from 'components/pages/blog/pagination';
 import PostsList from 'components/pages/blog/posts-list';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
+import HighlightedTweets from 'components/shared/highlighted-tweets';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
 
@@ -14,20 +17,29 @@ const BlogTemplate = ({
     allMdx: { nodes: items },
   },
   pageContext: { currentPageIndex, pageCount, category },
-}) => (
-  <Layout seo={SEO_DATA.blog} headerTheme="black">
-    <PostsList activeCategory={category} items={items} />
-    {pageCount > 1 && (
-      <Pagination
-        activeCategory={category}
-        currentPageIndex={currentPageIndex}
-        pageCount={pageCount}
-      />
-    )}
-    <CaseStudies title="Our team loves Open Source. We designed and developed many projects in this space." />
-    <CTA withTopMargin />
-  </Layout>
-);
+}) => {
+  const itemsPart1 = items.slice(0, Math.ceil(items.length / 2));
+  const itemsPart2 = items.slice(Math.ceil(items.length / 2));
+
+  return (
+    <Layout seo={SEO_DATA.blog} headerTheme="black">
+      <Hero />
+      <Categories activeCategory={category} />
+      <PostsList items={itemsPart1} />
+      <HighlightedTweets className="my-28 lg:my-24 md:my-20 sm:my-16" />
+      <PostsList items={itemsPart2} />
+      {pageCount > 1 && (
+        <Pagination
+          activeCategory={category}
+          currentPageIndex={currentPageIndex}
+          pageCount={pageCount}
+        />
+      )}
+      <CaseStudies title="Our team loves Open Source. We designed and developed many projects in this space." />
+      <CTA withTopMargin />
+    </Layout>
+  );
+};
 
 export const query = graphql`
   query ($category: String, $draftFilter: [Boolean]!, $limit: Int!, $skip: Int!) {

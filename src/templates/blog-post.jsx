@@ -40,7 +40,7 @@ const BlogPostTemplate = ({
         </div>
       </div>
     </article>
-    <HighlightedTweets withTopMargin />
+    <HighlightedTweets className="mt-52 lg:mt-36 md:mt-28 sm:mt-20" />
     <CTA />
   </Layout>
 );

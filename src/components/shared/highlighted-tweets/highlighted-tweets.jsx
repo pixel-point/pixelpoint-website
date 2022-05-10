@@ -72,7 +72,7 @@ function handleTextFormatting(text, { userMentions, urls }) {
   return formattedText;
 }
 
-const HighlightedTweets = ({ withTopMargin }) => {
+const HighlightedTweets = ({ className }) => {
   const {
     allTwitterStatusesLookupAlexBarashkov: { nodes: items },
   } = useStaticQuery(graphql`
@@ -97,6 +97,18 @@ const HighlightedTweets = ({ withTopMargin }) => {
               url
             }
           }
+          extended_entities {
+            media {
+              type
+              video_info {
+                variants {
+                  bitrate
+                  content_type
+                  url
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -109,10 +121,7 @@ const HighlightedTweets = ({ withTopMargin }) => {
 
   return (
     <section
-      className={clsx(
-        'safe-paddings bg-gray-2 py-28 lg:py-24 md:py-20 sm:py-16',
-        withTopMargin && 'mt-52 lg:mt-36 md:mt-28 sm:mt-20'
-      )}
+      className={clsx('safe-paddings bg-gray-2 pt-28 lg:pt-24 md:pt-20 sm:pt-16', className)}
     >
       <div className="container flex items-center justify-between sm:block">
         <h2 className="text-4xl md:text-[32px] sm:text-2xl">Highlighted tweets</h2>
@@ -136,15 +145,17 @@ const HighlightedTweets = ({ withTopMargin }) => {
           </Link>
         </div>
       </div>
-      <ul className="scrollbar-hidden mt-10 flex snap-x items-start space-x-8 overflow-auto px-[calc((100vw-1216px)/2)] lg:px-10 md:space-x-5 md:px-7 sm:mt-7 sm:px-4">
+      <ul className="scrollbar-hidden flex snap-x items-start space-x-8 overflow-auto px-[calc((100vw-1216px)/2)] pt-10 pb-28 lg:space-x-7 lg:px-10 lg:pb-24 md:space-x-5 md:px-7 md:pb-20 sm:px-4 sm:pt-7 sm:pb-16">
         {sortedItems.map(
           (
             {
+              id_str,
               full_text,
               display_text_range,
               retweet_count,
               favorite_count,
               entities: { media, user_mentions, urls },
+              extended_entities,
             },
             index
           ) => {
@@ -155,31 +166,67 @@ const HighlightedTweets = ({ withTopMargin }) => {
               urls,
             });
 
+            let mediaType;
+            let mediaUrl;
+
+            if (
+              extended_entities &&
+              extended_entities.media &&
+              extended_entities.media.length > 0 &&
+              extended_entities.media[0].type === 'video'
+            ) {
+              mediaType = 'video';
+              const videoWithHighestBitrate = extended_entities.media[0].video_info.variants
+                .filter(({ content_type }) => content_type === 'video/mp4')
+                .sort((a, b) => b.bitrate - a.bitrate)[0];
+              mediaUrl = videoWithHighestBitrate.url;
+            } else if (media && media.length > 0 && media[0].type === 'photo') {
+              mediaType = 'photo';
+              mediaUrl = media[0].media_url_https;
+            }
+
             return (
               <li
-                className="with-link-twitter max-w-[384px] shrink-0 snap-center overflow-hidden rounded-xl border border-gray-4 bg-white sm:max-w-[328px]"
+                className="max-w-[384px] shrink-0 snap-center overflow-hidden rounded-xl border border-gray-4 bg-white md:max-w-[346px] sm:max-w-[328px]"
                 style={{ boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.08)' }}
                 key={index}
               >
-                <p
-                  className="whitespace-pre-line p-5 md:p-4"
-                  dangerouslySetInnerHTML={{ __html: textWithFormatting }}
-                />
-                {media && media.length > 0 && media[0].type === 'photo' && (
-                  <img src={media[0].media_url_https} alt="" />
-                )}
-                <ul className="flex items-center justify-between p-5 text-xs font-normal md:p-4">
-                  <li className="flex items-center space-x-1.5">
-                    <ChatIcon className="h-4.5" /> <span>0</span>
-                  </li>
-                  <li className="flex items-center space-x-1.5">
-                    <RetweetIcon className="h-4.5" /> <span>{retweet_count}</span>
-                  </li>
-                  <li className="flex items-center space-x-1.5">
-                    <HeartIcon className="h-4.5" />{' '}
-                    <span className="text-red">{favorite_count}</span>
-                  </li>
-                </ul>
+                <Link
+                  className="with-link-twitter block"
+                  to={`https://twitter.com/alex_barashkov/status/${id_str}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <p
+                    className="whitespace-pre-line p-5 md:p-4"
+                    dangerouslySetInnerHTML={{ __html: textWithFormatting }}
+                  />
+                  {mediaType === 'video' && mediaUrl && (
+                    <video
+                      className="w-full"
+                      poster={media[0].media_url_https}
+                      controls
+                      autoPlay
+                      playsInline
+                      muted
+                    >
+                      <source src={mediaUrl} type="video/mp4" />
+                    </video>
+                  )}
+                  {mediaType === 'photo' && mediaUrl && <img src={mediaUrl} alt="" />}
+                  <ul className="flex items-center justify-between p-5 text-xs font-normal md:p-4">
+                    <li className="flex items-center space-x-1.5">
+                      <ChatIcon className="h-4.5" /> <span>0</span>
+                    </li>
+                    <li className="flex items-center space-x-1.5">
+                      <RetweetIcon className="h-4.5" /> <span>{retweet_count}</span>
+                    </li>
+                    <li className="flex items-center space-x-1.5">
+                      <HeartIcon className="h-4.5" />{' '}
+                      <span className="text-red">{favorite_count}</span>
+                    </li>
+                  </ul>
+                </Link>
               </li>
             );
           }
@@ -190,11 +237,11 @@ const HighlightedTweets = ({ withTopMargin }) => {
 };
 
 HighlightedTweets.propTypes = {
-  withTopMargin: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 HighlightedTweets.defaultProps = {
-  withTopMargin: false,
+  className: null,
 };
 
 export default HighlightedTweets;

@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -6,36 +5,13 @@ import React from 'react';
 import Link from 'components/shared/link';
 import { BLOG_CATEGORIES } from 'constants/blog';
 import POST_AUTHORS from 'constants/post-authors';
-import getBlogPath from 'utils/get-blog-path';
 import getBlogPostDateFromSlug from 'utils/get-blog-post-date-from-slug';
 import getBlogPostPath from 'utils/get-blog-post-path';
 
-const PostsList = ({ activeCategory, items }) => (
-  <section className="safe-paddings pt-32 sm:pt-24">
+const PostsList = ({ items }) => (
+  <section className="safe-paddings mt-20 lg:mt-16 md:mt-14">
     <div className="container-md">
-      <h1 className="text-4xl font-semibold leading-snug lg:text-[32px] sm:text-2xl">
-        Sharing Pixel Point <span className="text-red">Collective experience:</span>
-      </h1>
-      <ul className="scrollbar-hidden relative mt-16 flex space-x-6 overflow-auto pb-px after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-gray-4 lg:mt-14 md:mt-12 sm:mt-11">
-        {['All', ...BLOG_CATEGORIES].map((category, index) => (
-          <li key={index}>
-            <Link
-              className={clsx(
-                'relative mb-3 block text-sm font-normal transition-colors duration-200 hover:text-red',
-                ((!activeCategory && category === 'All') || activeCategory === category) &&
-                  '!font-semibold text-red after:absolute after:-bottom-[13px] after:left-0 after:z-10 after:h-0.5 after:w-full after:bg-red'
-              )}
-              to={getBlogPath({ category: category === 'All' ? undefined : category })}
-            >
-              <span className="invisible font-semibold opacity-0">{category}</span>
-              <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                {category}
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className="grid-gap-x mt-20 space-y-20 lg:mt-16 lg:space-y-16 md:mt-14 md:space-y-14">
+      <div className="grid-gap-x space-y-20 lg:space-y-16 md:space-y-14">
         {items.map(({ slug, frontmatter: { title, summary, category, author, cover } }, index) => (
           <article key={index}>
             <Link className="with-nested-link-red-hover block" to={getBlogPostPath(slug)}>
@@ -77,6 +53,7 @@ const PostsList = ({ activeCategory, items }) => (
                   imgClassName="rounded-xl"
                   image={getImage(cover)}
                   alt=""
+                  aria-hidden
                 />
               </div>
             </Link>
@@ -88,7 +65,6 @@ const PostsList = ({ activeCategory, items }) => (
 );
 
 PostsList.propTypes = {
-  activeCategory: PropTypes.oneOf(BLOG_CATEGORIES),
   items: PropTypes.arrayOf(
     PropTypes.exact({
       slug: PropTypes.string.isRequired,
@@ -105,10 +81,6 @@ PostsList.propTypes = {
       }).isRequired,
     })
   ).isRequired,
-};
-
-PostsList.defaultProps = {
-  activeCategory: null,
 };
 
 export default PostsList;
