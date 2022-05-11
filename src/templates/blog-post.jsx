@@ -11,7 +11,7 @@ import SEO_DATA from 'constants/seo-data';
 
 const BlogPostTemplate = ({
   data: {
-    mdx: { slug, body, frontmatter },
+    mdx: { slug, body, author, frontmatter },
     allMdx: { nodes: readMorePosts },
   },
   location,
@@ -31,11 +31,7 @@ const BlogPostTemplate = ({
             <Hero {...frontmatter} slug={slug} />
             <Content content={body} />
           </div>
-          <Sidebar
-            author={frontmatter.author}
-            readMorePosts={readMorePosts}
-            socialShareUrl={location.href}
-          />
+          <Sidebar author={author} readMorePosts={readMorePosts} socialShareUrl={location.href} />
         </div>
       </div>
     </article>
@@ -48,11 +44,20 @@ export const query = graphql`
     mdx(id: { eq: $id }) {
       slug
       body
+      author {
+        name
+        photo {
+          childImageSharp {
+            gatsbyImageData(width: 64, layout: FIXED)
+          }
+        }
+        description
+        twitterUrl
+      }
       frontmatter {
         title
         summary
         category
-        author
         cover {
           childImageSharp {
             gatsbyImageData(width: 696)

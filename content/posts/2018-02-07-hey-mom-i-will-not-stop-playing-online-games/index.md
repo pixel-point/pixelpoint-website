@@ -32,7 +32,7 @@ Be active in the games and don’t be afraid take responsibility for others. Whe
 
 _Real world skills:_ This experience teaches you the principles of human management more effectively just reading boring books. It’s also an ideal way to practice and keep your skills sharp. If you can succeed in leading up to 300 people, you can survive with management of any small department, project, or business.
 
-![GATSBY_EMPTY_ALT](games1.jpeg)
+![GATSBY_EMPTY_ALT](games1.jpg)
 
 ## Company growing problems
 
