@@ -15,6 +15,7 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-react-helmet',
+    'gatsby-transformer-json',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -34,6 +35,13 @@ module.exports = {
       options: {
         name: 'case-studies',
         path: `${__dirname}/content/case-studies`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'post-authors',
+        path: `${__dirname}/content/posts/post-authors.json`,
       },
     },
     'gatsby-plugin-image',

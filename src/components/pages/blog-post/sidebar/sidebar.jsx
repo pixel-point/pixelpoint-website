@@ -4,7 +4,6 @@ import React from 'react';
 import { LinkedinShareButton, TwitterShareButton } from 'react-share';
 
 import Link from 'components/shared/link';
-import POST_AUTHORS from 'constants/post-authors';
 import LinkedinIcon from 'images/linkedin.inline.svg';
 import TwitterIcon from 'images/twitter.inline.svg';
 import getBlogPostPath from 'utils/get-blog-post-path';
@@ -12,20 +11,19 @@ import getBlogPostPath from 'utils/get-blog-post-path';
 const Sidebar = ({ author, readMorePosts, socialShareUrl }) => (
   <aside className="absolute -right-12 top-0 h-full max-w-[344px] translate-x-full xl:relative xl:right-0 xl:h-auto xl:translate-x-0 lg:max-w-[300px] md:mt-10 md:max-w-none">
     <div className="scrollbar-hidden sticky right-0 top-4 max-h-screen overflow-auto rounded-2xl border border-gray-3 p-8 md:relative md:top-0 md:max-h-full md:border-0 md:p-0">
-      <img
-        className="h-auto w-16 shrink-0 rounded-full"
-        src={POST_AUTHORS[author].photo}
-        height={64}
-        width={64}
-        alt={POST_AUTHORS[author].name}
+      <GatsbyImage
+        className="w-16 shrink-0 rounded-full"
+        imgClassName="rounded-full"
+        image={getImage(author.photo)}
+        alt={author.name}
         loading="eager"
       />
-      <h2 className="mt-3.5 text-lg font-semibold">{POST_AUTHORS[author].name}</h2>
-      <p className="mt-2.5">{POST_AUTHORS[author].description}</p>
-      {POST_AUTHORS[author].twitterUrl && (
+      <h2 className="mt-3.5 text-lg font-semibold">{author.name}</h2>
+      <p className="mt-2.5">{author.description}</p>
+      {author.twitterUrl && (
         <Link
           className="mt-5 inline-flex items-center space-x-3 rounded-full bg-[#259df4] py-2.5 pl-3.5 pr-5 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[#1781cf]"
-          to={POST_AUTHORS[author].twitterUrl}
+          to={author.twitterUrl}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -82,7 +80,16 @@ const Sidebar = ({ author, readMorePosts, socialShareUrl }) => (
 );
 
 Sidebar.propTypes = {
-  author: PropTypes.oneOf(Object.keys(POST_AUTHORS)).isRequired,
+  author: PropTypes.exact({
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.exact({
+      childImageSharp: PropTypes.exact({
+        gatsbyImageData: PropTypes.object.isRequired,
+      }).isRequired,
+    }).isRequired,
+    description: PropTypes.string.isRequired,
+    twitterUrl: PropTypes.string,
+  }).isRequired,
   readMorePosts: PropTypes.arrayOf(
     PropTypes.shape({
       slug: PropTypes.string.isRequired,

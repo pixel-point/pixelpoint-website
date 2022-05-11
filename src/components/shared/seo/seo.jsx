@@ -35,7 +35,6 @@ const SEO = ({ title, description, ogImage, canonicalUrl }) => {
       {/* Open Graph */}
       <meta property="og:title" content={title || siteTitle} />
       <meta property="og:description" content={description || siteDescription} />
-      <meta property="og:url" content={siteUrl} />
       <meta property="og:image" content={siteUrl + (ogImage || siteImage)} />
       <meta property="og:type" content="website" />
       {/* Twitter */}

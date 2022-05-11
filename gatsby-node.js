@@ -6,7 +6,6 @@ const fetch = require('node-fetch');
 
 const { BLOG_CATEGORIES, BLOG_POSTS_PER_PAGE } = require('./src/constants/blog');
 const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
-const POST_AUTHORS = require('./src/constants/post-authors');
 const getBlogPath = require('./src/utils/get-blog-path');
 const getBlogPostPath = require('./src/utils/get-blog-post-path');
 
@@ -135,16 +134,6 @@ async function createBlogPosts({ graphql, actions }) {
         throw new Error(`Post "${slug}" does not have field "${fieldName}"!`);
       }
     });
-
-    if (!Object.keys(POST_AUTHORS).includes(frontmatter.author)) {
-      throw new Error(
-        `Post "${slug}" has unknown author "${
-          frontmatter.author
-        }"!\nAvailable authors: ${Object.keys(POST_AUTHORS).join(
-          ', '
-        )}.\nPlease check authors in "src/constants/post-authors.js"`
-      );
-    }
 
     if (!BLOG_CATEGORIES.includes(frontmatter.category)) {
       throw new Error(
@@ -312,6 +301,15 @@ exports.createResolvers = ({ createResolvers }) => {
       },
     },
   });
+};
+
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions;
+  createTypes(`
+    type Mdx implements Node { 
+      author: PostAuthorsJson @link(by: "name", from: "frontmatter.author")
+    }
+  `);
 };
 
 exports.createPages = async (options) => {

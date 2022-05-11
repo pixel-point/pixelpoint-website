@@ -129,7 +129,10 @@ const HighlightedTweets = ({ className }) => {
           <StaticImage
             className="w-12 rounded-full"
             imgClassName="rounded-full"
-            src="../../../images/alex-barashkov.jpg"
+            layout="fixed"
+            width={48}
+            height={48}
+            src="../../../images/post-authors/alex-barashkov.jpg"
             alt="Alex Barashkov"
           />
           <span className="font-normal">
@@ -202,14 +205,7 @@ const HighlightedTweets = ({ className }) => {
                     dangerouslySetInnerHTML={{ __html: textWithFormatting }}
                   />
                   {mediaType === 'video' && mediaUrl && (
-                    <video
-                      className="w-full"
-                      poster={media[0].media_url_https}
-                      controls
-                      autoPlay
-                      playsInline
-                      muted
-                    >
+                    <video className="w-full" poster={media[0].media_url_https} controls muted>
                       <source src={mediaUrl} type="video/mp4" />
                     </video>
                   )}

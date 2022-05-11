@@ -4,7 +4,6 @@ import React from 'react';
 
 import Link from 'components/shared/link';
 import { BLOG_CATEGORIES } from 'constants/blog';
-import POST_AUTHORS from 'constants/post-authors';
 import getBlogPostDateFromSlug from 'utils/get-blog-post-date-from-slug';
 import getBlogPostPath from 'utils/get-blog-post-path';
 
@@ -12,7 +11,7 @@ const PostsList = ({ items }) => (
   <section className="safe-paddings mt-20 lg:mt-16 md:mt-14">
     <div className="container-md">
       <div className="grid-gap-x space-y-20 lg:space-y-16 md:space-y-14">
-        {items.map(({ slug, frontmatter: { title, summary, category, author, cover } }, index) => (
+        {items.map(({ slug, author, frontmatter: { title, summary, category, cover } }, index) => (
           <article key={index}>
             <Link className="with-nested-link-red-hover block" to={getBlogPostPath(slug)}>
               <div className="flex items-center">
@@ -26,13 +25,12 @@ const PostsList = ({ items }) => (
                   {title}
                 </h1>
                 <div className="flex items-center space-x-2.5 md:space-x-0">
-                  <span className="text-sm font-normal md:ml-2.5">{POST_AUTHORS[author].name}</span>
-                  <img
-                    className="h-auto w-9 rounded-full md:order-first"
-                    src={POST_AUTHORS[author].photo}
-                    height={36}
-                    width={36}
-                    alt={POST_AUTHORS[author].name}
+                  <span className="text-sm font-normal md:ml-2.5">{author.name}</span>
+                  <GatsbyImage
+                    className="w-9 rounded-full md:order-first"
+                    imgClassName="rounded-full"
+                    image={getImage(author.photo)}
+                    alt={author.name}
                   />
                 </div>
               </div>
@@ -68,11 +66,18 @@ PostsList.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.exact({
       slug: PropTypes.string.isRequired,
+      author: PropTypes.exact({
+        name: PropTypes.string.isRequired,
+        photo: PropTypes.exact({
+          childImageSharp: PropTypes.exact({
+            gatsbyImageData: PropTypes.object.isRequired,
+          }).isRequired,
+        }).isRequired,
+      }).isRequired,
       frontmatter: PropTypes.exact({
         title: PropTypes.string.isRequired,
         summary: PropTypes.string.isRequired,
         category: PropTypes.oneOf(BLOG_CATEGORIES).isRequired,
-        author: PropTypes.oneOf(Object.keys(POST_AUTHORS)).isRequired,
         cover: PropTypes.exact({
           childImageSharp: PropTypes.exact({
             gatsbyImageData: PropTypes.object.isRequired,

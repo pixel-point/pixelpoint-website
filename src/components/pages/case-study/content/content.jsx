@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MDXProvider } from '@mdx-js/react';
-import clsx from 'clsx';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import PropTypes from 'prop-types';
@@ -71,15 +70,13 @@ const Content = ({
             />
             {githubUsername && githubRepoName && githubStars && (
               <Link
-                className="inline-flex items-center rounded-full border border-white p-2 pr-4 transition-colors duration-200 hover:border-red sm:p-1.5 sm:pr-3.5"
+                className="inline-flex items-center rounded-full border border-white p-2 pr-4 text-white transition-colors duration-200 hover:border-blue hover:text-blue sm:p-1.5 sm:pr-3.5"
                 to={getGithubRepoLink(githubUsername, githubRepoName)}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <GithubLogo className="h-7 text-white sm:h-6" aria-hidden />
-                <span className="ml-2 text-xs font-semibold text-white sm:ml-1.5">
-                  {githubStars}
-                </span>
+                <GithubLogo className="h-7 sm:h-6" aria-hidden />
+                <span className="ml-2 text-xs font-semibold sm:ml-1.5">{githubStars}</span>
               </Link>
             )}
           </div>
@@ -108,18 +105,15 @@ const Content = ({
       </div>
       <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7 lg:col-start-9 lg:rounded-xl md:hidden">
         <img src={logo} alt={title} loading="eager" />
-        {githubUsername && githubRepoName && (
+        {githubUsername && githubRepoName && githubStars && (
           <Link
-            className={clsx(
-              'invisible mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4 opacity-0 transition-[opacity,visibility,border-color] duration-200 hover:border-red',
-              githubStars && '!visible !opacity-100'
-            )}
+            className="mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4 text-white transition-colors duration-200 hover:border-blue hover:text-blue"
             to={getGithubRepoLink(githubUsername, githubRepoName)}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <GithubLogo className="h-7 text-white" aria-hidden />
-            <span className="ml-2 text-xs font-semibold text-white">{githubStars}</span>
+            <GithubLogo className="h-7" aria-hidden />
+            <span className="ml-2 text-xs font-semibold">{githubStars}</span>
           </Link>
         )}
         {[
