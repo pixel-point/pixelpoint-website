@@ -43,11 +43,18 @@ export const query = graphql`
     ) {
       nodes {
         slug
+        author {
+          name
+          photo {
+            childImageSharp {
+              gatsbyImageData(width: 36, layout: FIXED)
+            }
+          }
+        }
         frontmatter {
           title
           summary
           category
-          author
           cover {
             childImageSharp {
               gatsbyImageData(width: 488)

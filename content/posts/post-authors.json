@@ -1,28 +1,28 @@
 [
   {
     "name": "Alex Barashkov",
-    "image": "../../src/images/post-authors/alex-barashkov.jpg",
+    "photo": "../../src/images/post-authors/alex-barashkov.jpg",
     "description": "CEO at Pixel Point and software engineer with 10+ years of web development experience. Currently focused on React, Next.js, Gatsby.",
     "twitterUrl": "https://twitter.com/alex_barashkov"
   },
   {
     "name": "Kirill Bolotsky",
-    "image": "../../src/images/post-authors/kirill-bolotsky.jpg",
+    "photo": "../../src/images/post-authors/kirill-bolotsky.jpg",
     "description": "COO at Pixel Point. Also busy with front-end, devrel and tech copywriting."
   },
   {
     "name": "Vlad Kamelsky",
-    "image": "../../src/images/post-authors/vlad-kamelsky.jpg",
+    "photo": "../../src/images/post-authors/vlad-kamelsky.jpg",
     "description": "CDO at Pixel Point and Product Strategy, UI/UX designer."
   },
   {
     "name": "Alexey Kuznetsov",
-    "image": "../../src/images/post-authors/alexey-kuznetsov.jpg",
+    "photo": "../../src/images/post-authors/alexey-kuznetsov.jpg",
     "description": "Friend of Pixel Point and senior software engineer experienced in Ruby and Javascript development."
   },
   {
     "name": "Dmitry Semenovsky",
-    "image": "../../src/images/post-authors/dmitry-semenovsky.jpg",
+    "photo": "../../src/images/post-authors/dmitry-semenovsky.jpg",
     "description": "Friend of Pixel Point and innovator revolutionizing digital signatures and document authentication."
   }
 ]
