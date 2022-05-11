@@ -38,8 +38,8 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'authors',
-        path: `${__dirname}/content/authors`,
+        name: 'post-authors',
+        path: `${__dirname}/content/posts/post-authors.json`,
       },
     },
     'gatsby-plugin-image',

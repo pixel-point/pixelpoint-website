@@ -316,12 +316,11 @@ exports.createResolvers = ({ createResolvers }) => {
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
-  const typeDefs = `
+  createTypes(`
     type Mdx implements Node { 
-      author: AuthorsJson @link(by: "name", from: "frontmatter.author")
+      author: PostAuthorsJson @link(by: "name", from: "frontmatter.author")
     }
-  `;
-  createTypes(typeDefs);
+  `);
 };
 
 exports.createPages = async (options) => {
