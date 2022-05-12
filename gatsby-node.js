@@ -270,13 +270,13 @@ exports.onCreateNode = ({ node, actions }) => {
   }
 };
 
-exports.createResolvers = ({ createResolvers }) => {
+exports.createResolvers = ({ createResolvers, cache }) => {
   createResolvers({
     Mdx: {
       githubStars: {
         type: 'String',
         resolve: async ({ frontmatter, fileAbsolutePath }) => {
-          const { name, githubUsername, githubRepoName, isOpenSource } = frontmatter;
+          const { githubUsername, githubRepoName, isOpenSource } = frontmatter;
 
           if (
             fileAbsolutePath.includes('/case-studies/') &&
@@ -285,14 +285,32 @@ exports.createResolvers = ({ createResolvers }) => {
             githubRepoName
           ) {
             try {
-              const response = await fetch(
-                `https://api.github.com/repos/${githubUsername}/${githubRepoName}`
-              );
-              const { stargazers_count } = await response.json();
+              let stars;
+              // Set expiration time as 24 hours in milliseconds
+              const expirationTime = 24 * 60 * 60 * 1000;
+              const cacheKey = `stars-${githubUsername}-${githubRepoName}`;
+              const cacheStarsData = await cache.get(cacheKey);
+              // Use cache if it is not expired
+              if (cacheStarsData && cacheStarsData.created > Date.now() - expirationTime) {
+                stars = cacheStarsData.stars;
+              } else {
+                const response = await fetch(
+                  `https://api.github.com/repos/${githubUsername}/${githubRepoName}`
+                );
+                const { stargazers_count } = await response.json();
+                stars = new Intl.NumberFormat('en-US').format(stargazers_count);
+                await cache.set(cacheKey, {
+                  stars,
+                  created: Date.now(),
+                });
+              }
 
-              return new Intl.NumberFormat('en-US').format(stargazers_count);
-            } catch (e) {
-              throw new Error(`Failed to fetch GitHub stars for case study "${name}"`);
+              return stars;
+            } catch (error) {
+              console.log(error);
+              throw new Error(
+                `Failed to fetch GitHub stars for case study "${githubUsername}/${githubRepoName}"`
+              );
             }
           }
 
