@@ -24,9 +24,9 @@ keynotes:
   - Filled up platforms with integrations necessary for business
   - Established a clear editing workflow for marketing team
 cover: cover.jpg
-isOpenSource: true
+isOpenSource: false
 isFeatured: true
-position: 8
+position: 7
 ---
 
 Isovalent is the enterprise [Cilium](https://pixelpoint.io/case-studies/cilium) edition, which enables cloud native networking, security, and observability.
