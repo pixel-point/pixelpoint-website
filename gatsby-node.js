@@ -285,6 +285,9 @@ exports.createResolvers = ({ createResolvers }) => {
             githubRepoName
           ) {
             try {
+              // Use setTimeout to avoid hitting GitHub API rate limit with a random delay with interval from 500ms to 1500ms
+              await new Promise((resolve) => setTimeout(resolve, Math.random() * 3000 + 500));
+
               const response = await fetch(
                 `https://api.github.com/repos/${githubUsername}/${githubRepoName}`
               );
