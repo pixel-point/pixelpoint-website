@@ -3,10 +3,12 @@ logo: logo.svg
 title: Parca
 description: Open Source infrastructure-wide continuous profiling
 websiteUrl: https://www.parca.dev/
+githubUsername: parca-dev
+githubRepoName: parca
 quote:
   text: Working with Pixel Point was incredible because they bring in an incredibly strong design team, and they made a great effort to understand the product in depth to tailor everything perfectly. I could not recommend working with them highly enough!
   authorName: Frederic Branczyk
-  authorPosition: CEO & Founder
+  authorPosition: CEO and Founder
   authorPhoto: author-photo.jpg
 services:
   - Web Development
