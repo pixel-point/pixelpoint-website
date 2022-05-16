@@ -50,7 +50,7 @@ This code will be invoked on each Node creation, so it’s good to filter nodes 
 
 ![GATSBY_EMPTY_ALT](./screenshot-1.png)
 
-For better performance, we can use a more granular approach by overriding the original field with a custom resolver. This method requires some more knowledge. We will need to know the exact Graphql type we want to modify. To know the exact name of the type, we can run Gatsby with a special flag `GATSBY_GRAPHQL_IDE=playground npm start`. This way we will see GraphQL Playground instead of GraphqiQL IDE on `[http://localhost/__graphql](http://localhost/__graphql)`, and we can get the required information there.
+For better performance, we can use a more granular approach by overriding the original field with a custom resolver. This method requires some more knowledge. We will need to know the exact Graphql type we want to modify. To know the exact name of the type, we can run Gatsby with a special flag `GATSBY_GRAPHQL_IDE=playground npm start`. This way we will see GraphQL Playground instead of GraphqiQL IDE on `http://localhost/__graphql`, and we can get the required information there.
 
 ![GATSBY_EMPTY_ALT](./screenshot-2.png)
 
