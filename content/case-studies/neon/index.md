@@ -6,7 +6,7 @@ websiteUrl: https://neon.tech
 githubUsername: neondatabase
 githubRepoName: neon
 quote:
-  text: While building a developer-oriented product, we struggled to explain our needs to design agencies until we started with Pixel Point. Unlike others, PixelPoint quickly understood our product and target audience. PixelPoint delivered exceptional results in a short timeframe and became an extension of our dev and product teams, contributing to many areas without any communication bureaucracy
+  text: While building a developer-oriented product, we struggled to explain our needs to design agencies until we started with Pixel Point. Unlike others, Pixel Point quickly understood our product and target audience. Pixel Point delivered exceptional results in a short timeframe and became an extension of our dev and product teams, contributing to many areas without any communication bureaucracy
   authorName: Stas Kelvich
   authorPosition: Co-Founder
   authorPhoto: author-photo.jpg
