@@ -10,7 +10,7 @@ quote:
   authorName: Stas Kelvich
   authorPosition: Co-Founder
   authorPhoto: author-photo.jpg
-overview: It all began in 2021, when a group of PostreSQL contributors and technologists, united under the brand name Neon, set up on a mission to create an OS cloud-native database as a service available for every developer. They reached out asking for help establishing a brand image, and we eagerly joined the team.
+overview: It all began in 2021, when a group of PostgreSQL contributors and technologists, united under the brand name Neon, set up on a mission to create an OS cloud-native database as a service available for every developer. They reached out asking for help establishing a brand image, and we eagerly joined the team.
 services:
   - Motion Design
   - Web Design
