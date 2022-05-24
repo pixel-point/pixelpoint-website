@@ -12,8 +12,8 @@ import ServicesWebDesignIcon from './images/services-web-design.inline.svg';
 import ServicesWebDevelopmentIcon from './images/services-web-development.inline.svg';
 
 const icons = {
-  webDevelopment: ServicesWebDesignIcon,
-  webDesign: ServicesWebDevelopmentIcon,
+  webDevelopment: ServicesWebDevelopmentIcon,
+  webDesign: ServicesWebDesignIcon,
 };
 
 const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
