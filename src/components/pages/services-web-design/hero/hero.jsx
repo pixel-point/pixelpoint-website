@@ -6,7 +6,7 @@ const Hero = () => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({ triggerOnce: true });
 
   const { RiveComponent, rive } = useRive({
-    src: '/animations/pages/services-web-design/hero-new.riv',
+    src: '/animations/pages/services-web-design/hero.riv',
     autoplay: false,
     layout: new Layout({
       fit: Fit.FitWidth,
