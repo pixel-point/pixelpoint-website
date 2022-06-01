@@ -2,13 +2,11 @@ import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
-import ImagePlaceholder from 'components/shared/image-placeholder';
-
 const Hero = () => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({ triggerOnce: true });
 
   const { RiveComponent, rive } = useRive({
-    src: '/animations/pages/services-web-design/hero.riv',
+    src: '/animations/pages/services-web-design/hero-new.riv',
     autoplay: false,
     layout: new Layout({
       fit: Fit.FitWidth,
@@ -21,23 +19,14 @@ const Hero = () => {
   }, [isAnimationWrapperInView, rive]);
 
   return (
-    <section className="safe-paddings overflow-hidden bg-black pt-32 text-center text-white sm:pt-24">
-      <div className="container">
-        <h1 className="with-text-highlight-red relative z-10 mx-auto max-w-[660px] text-center text-6xl font-normal leading-snug lg:max-w-[570px] lg:text-[42px] md:max-w-[440px] md:text-4xl sm:max-w-[290px] sm:text-2xl">
-          Get your idea shaped into <span>Astonishing</span> website
-        </h1>
+    <section className="safe-paddings relative h-screen overflow-hidden bg-black">
+      <div className="container h-full">
+        <h1 className="sr-only">Magnetize new users with astonishing design</h1>
         <div
-          className="mt-[-366px] flex justify-center 2xl:mt-[-20vw] lg:mt-[-22vw] lg:block md:mt-[-20vw] sm:mt-[-18vw]"
+          className="absolute top-1/2 left-1/2 h-full w-full min-w-[1024px] max-w-[1920px] -translate-x-1/2 -translate-y-1/2 sm:min-w-[768px]"
           ref={animationWrapperRef}
         >
-          <ImagePlaceholder
-            className="min-w-[1550px] 2xl:min-w-[calc(100vw-256px)] lg:min-w-0"
-            width={1550}
-            height={1004}
-            aria-hidden
-          >
-            <RiveComponent />
-          </ImagePlaceholder>
+          <RiveComponent />
         </div>
       </div>
     </section>
