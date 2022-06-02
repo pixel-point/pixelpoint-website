@@ -22,7 +22,7 @@ const servicesCTA = {
 };
 
 const ServicesWebDevelopmentPage = () => (
-  <Layout seo={SEO_DATA.servicesWebDesign} headerTheme="white">
+  <Layout seo={SEO_DATA.servicesWebDesign} headerClassName="sm:bg-black" headerTheme="white">
     <Hero />
     <InHouseTeam />
     <Benefits />
