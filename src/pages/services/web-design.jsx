@@ -10,7 +10,7 @@ import WillTweet from 'components/pages/services-web-design/will-tweet';
 import Blog from 'components/shared/blog';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
-import GatsbyAwards from 'components/shared/gatsby-awards';
+// import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
 import ServicesCTA from 'components/shared/services-cta';
 import LINKS from 'constants/links';
@@ -33,7 +33,7 @@ const ServicesWebDevelopmentPage = () => (
     <CreativeMarketing />
     <CaseStudies title="There are plenty of companies we made design for." />
     <Blog />
-    <GatsbyAwards theme="black" withTopMargin />
+    {/* <GatsbyAwards theme="black" withTopMargin /> */}
     <ServicesCTA {...servicesCTA} />
     <CTA />
   </Layout>
