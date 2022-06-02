@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRive, Layout, Fit, Alignment } from 'rive-react';
@@ -15,7 +16,7 @@ const Hero = () => {
   });
 
   useEffect(() => {
-    if (isAnimationWrapperInView && rive) rive.play();
+    if (isAnimationWrapperInView && rive?.readyForPlaying) rive.play();
   }, [isAnimationWrapperInView, rive]);
 
   return (
@@ -23,7 +24,10 @@ const Hero = () => {
       <div className="container h-full">
         <h1 className="sr-only">Magnetize new users with astonishing design</h1>
         <div
-          className="absolute top-1/2 left-1/2 h-full w-full min-w-[1024px] max-w-[1920px] -translate-x-1/2 -translate-y-1/2 sm:min-w-[768px]"
+          className={clsx(
+            'invisible absolute top-1/2 left-1/2 h-full w-full min-w-[1024px] max-w-[1920px] -translate-x-1/2 -translate-y-1/2 opacity-0 sm:min-w-[768px]',
+            rive?.readyForPlaying && '!visible !opacity-100'
+          )}
           ref={animationWrapperRef}
         >
           <RiveComponent />
