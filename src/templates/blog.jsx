@@ -26,7 +26,7 @@ const BlogTemplate = ({
       />
     )}
     <CaseStudies title="Our team loves Open Source. We designed and developed many projects in this space." />
-    <GatsbyAwards theme="black" />
+    <GatsbyAwards theme="black" withTopMargin />
     <CTA withTopMargin />
   </Layout>
 );

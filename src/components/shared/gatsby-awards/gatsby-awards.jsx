@@ -5,12 +5,13 @@ import React from 'react';
 import FinalistBestAgency from './images/finalist-best-agency.inline.svg';
 import FinalistBestSiteDesign from './images/finalist-best-site-design.inline.svg';
 
-const GatsbyAwards = ({ className, theme }) => (
+const GatsbyAwards = ({ className, theme, withTopMargin }) => (
   <section
     className={clsx(
-      'safe-paddings mt-40 lg:mt-32 sm:mt-20',
+      'safe-paddings',
       theme === 'black' && 'text-black',
       theme === 'white' && 'text-white',
+      withTopMargin && 'mt-40 lg:mt-32 sm:mt-20',
       className
     )}
   >
@@ -39,10 +40,12 @@ const GatsbyAwards = ({ className, theme }) => (
 GatsbyAwards.propTypes = {
   className: PropTypes.string,
   theme: PropTypes.oneOf(['black', 'white']).isRequired,
+  withTopMargin: PropTypes.bool,
 };
 
 GatsbyAwards.defaultProps = {
   className: null,
+  withTopMargin: false,
 };
 
 export default GatsbyAwards;

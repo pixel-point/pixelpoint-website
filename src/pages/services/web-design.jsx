@@ -33,7 +33,7 @@ const ServicesWebDevelopmentPage = () => (
     <CreativeMarketing />
     <CaseStudies title="There are plenty of companies we made design for." />
     <Blog />
-    <GatsbyAwards theme="black" />
+    <GatsbyAwards theme="black" withTopMargin />
     <ServicesCTA {...servicesCTA} />
     <CTA />
   </Layout>

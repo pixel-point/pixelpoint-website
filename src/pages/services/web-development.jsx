@@ -34,7 +34,7 @@ const ServicesWebDevelopmentPage = () => (
       itemsType="open-source"
     />
     <Blog />
-    <GatsbyAwards theme="black" />
+    <GatsbyAwards theme="black" withTopMargin />
     <ServicesCTA {...servicesCTA} />
     <CTA />
   </Layout>

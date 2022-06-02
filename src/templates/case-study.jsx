@@ -45,7 +45,7 @@ const CaseStudyTemplate = ({
         activeItemSlug={slug}
       />
       <Blog />
-      <GatsbyAwards theme="black" />
+      <GatsbyAwards theme="black" withTopMargin />
       <CTA withTopMargin />
     </Layout>
   );

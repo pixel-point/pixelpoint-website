@@ -23,7 +23,7 @@ const CaseStudiesPage = ({
       withoutTitleLink
     />
     <Blog />
-    <GatsbyAwards theme="black" />
+    <GatsbyAwards theme="black" withTopMargin />
     <CTA withTopMargin />
   </Layout>
 );
