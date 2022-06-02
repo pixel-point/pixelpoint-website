@@ -4,8 +4,10 @@ import React from 'react';
 
 import Content from 'components/pages/case-study/content';
 import Keynotes from 'components/pages/case-study/keynotes';
+import Blog from 'components/shared/blog';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
+import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
 
@@ -42,6 +44,8 @@ const CaseStudyTemplate = ({
         title="We provided design & development services for many more projects."
         activeItemSlug={slug}
       />
+      <Blog />
+      <GatsbyAwards theme="black" />
       <CTA withTopMargin />
     </Layout>
   );
