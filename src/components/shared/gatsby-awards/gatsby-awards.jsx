@@ -21,7 +21,7 @@ const GatsbyAwards = ({ className, theme, withTopMargin }) => (
       </h2>
       <ul className="mt-14 flex items-center justify-center lg:mt-10 sm:mt-8 sm:block sm:space-y-8">
         <li>
-          <FinalistBestAgency className="h-18 lg:h-14 md:h-10 sm:mx-auto" />
+          <FinalistBestAgency className="h-18 max-w-full lg:h-14 md:h-10 sm:mx-auto" />
         </li>
         <li
           className={clsx(
@@ -30,7 +30,7 @@ const GatsbyAwards = ({ className, theme, withTopMargin }) => (
             theme === 'white' && 'border-l-gray-8'
           )}
         >
-          <FinalistBestSiteDesign className="h-18 lg:h-14 md:h-10 sm:mx-auto" />
+          <FinalistBestSiteDesign className="h-18 max-w-full lg:h-14 md:h-10 sm:mx-auto" />
         </li>
       </ul>
     </div>

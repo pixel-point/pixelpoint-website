@@ -35,9 +35,13 @@ const benefits = {
 const AboutUsPage = () => (
   <Layout headerTheme="white">
     <Hero />
-    <GatsbyAwards className="bg-black pt-32" theme="white" />
+    <GatsbyAwards className="bg-black pt-32 sm:pt-24" theme="white" />
     <Foundation />
-    <ItemsList className="bg-black pt-52 text-white lg:pt-36 md:pt-32 sm:pt-20" {...benefits} />
+    <ItemsList
+      className="bg-black pt-52 text-white lg:pt-36 md:pt-32 sm:pt-20"
+      {...benefits}
+      isTitleFullWidth
+    />
     <Values />
     <Projects />
     <CaseStudies

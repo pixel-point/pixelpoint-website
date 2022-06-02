@@ -2,11 +2,14 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ItemsList = ({ className, title, items }) => (
+const ItemsList = ({ className, title, items, isTitleFullWidth }) => (
   <section className={clsx('safe-paddings', className)}>
     <div className="container">
       <h2
-        className="max-w-[740px] text-4xl font-normal leading-snug lg:max-w-[690px] lg:text-[32px] sm:text-2xl"
+        className={clsx(
+          'text-4xl font-normal leading-snug lg:max-w-[690px] lg:text-[32px] sm:text-2xl',
+          !isTitleFullWidth && 'max-w-[740px]'
+        )}
         dangerouslySetInnerHTML={{ __html: title }}
       />
       <ul className="grid-gap-x mt-16 grid grid-cols-3 lg:mt-14 md:mt-11 md:block md:space-y-11 sm:mt-10 sm:space-y-10">
@@ -39,10 +42,12 @@ ItemsList.propTypes = {
       description: PropTypes.string.isRequired,
     })
   ).isRequired,
+  isTitleFullWidth: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {
   className: null,
+  isTitleFullWidth: false,
 };
 
 export default ItemsList;
