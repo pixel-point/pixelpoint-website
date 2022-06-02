@@ -45,7 +45,7 @@ const InHouseTeam = () => {
   }, [isContentInView, titleControls, descriptionControls, isIllustrationInView, rive]);
 
   return (
-    <section className="safe-paddings bg-black pt-80 lg:pt-52 md:pt-40 sm:pt-28">
+    <section className="safe-paddings bg-black pt-32 lg:pt-24 md:pt-20 sm:pt-14">
       <div className="container grid-gap-x grid grid-cols-12 items-center md:block">
         <div className="col-span-6 text-white" ref={contentRef}>
           <TitleAnimation
