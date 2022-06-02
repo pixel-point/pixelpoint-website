@@ -3,8 +3,10 @@ import { graphql } from 'gatsby';
 import React from 'react';
 
 import CaseStudies from 'components/pages/case-studies/case-studies';
+import Blog from 'components/shared/blog';
 import SharedCaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
+import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
 
@@ -20,6 +22,8 @@ const CaseStudiesPage = ({
       itemsType="not-featured"
       withoutTitleLink
     />
+    <Blog />
+    <GatsbyAwards theme="black" withTopMargin />
     <CTA withTopMargin />
   </Layout>
 );

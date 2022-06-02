@@ -10,7 +10,7 @@ import getBlogPostPath from 'utils/get-blog-post-path';
 
 const Sidebar = ({ author, readMorePosts, socialShareUrl }) => (
   <aside className="absolute -right-12 top-0 h-full max-w-[344px] translate-x-full xl:relative xl:right-0 xl:h-auto xl:translate-x-0 lg:max-w-[300px] md:mt-10 md:max-w-none">
-    <div className="scrollbar-hidden sticky right-0 top-4 max-h-screen overflow-auto rounded-2xl border border-gray-3 p-8 md:relative md:top-0 md:max-h-full md:border-0 md:p-0">
+    <div className="scrollbar-hidden sticky right-0 top-4 max-h-screen overflow-auto rounded-2xl bg-gray-2 p-8 md:relative md:top-0 md:max-h-full md:bg-transparent md:p-0">
       <GatsbyImage
         className="w-16 shrink-0 rounded-full"
         imgClassName="rounded-full"
@@ -30,7 +30,7 @@ const Sidebar = ({ author, readMorePosts, socialShareUrl }) => (
           <TwitterIcon className="h-5" /> <span>Follow on Twitter</span>
         </Link>
       )}
-      <h2 className="mt-8 border-t border-t-gray-3 pt-8 text-lg font-semibold">
+      <h2 className="mt-8 border-t border-t-gray-4 pt-8 text-lg font-semibold">
         More from Pixel Point
       </h2>
       <ul className="mt-5 space-y-6">
@@ -52,24 +52,26 @@ const Sidebar = ({ author, readMorePosts, socialShareUrl }) => (
           </li>
         ))}
       </ul>
-      <h2 className="mt-8 border-t border-t-gray-3 pt-8 text-sm font-normal">
+      <h2 className="mt-8 border-t border-t-gray-4 pt-8 text-sm font-normal">
         Share this article:
       </h2>
       <ul className="mt-3.5 flex space-x-4">
         <li>
           <TwitterShareButton
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-2 transition-colors duration-200 hover:bg-[#259df4] hover:text-white md:bg-[#259df4] md:text-white"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-gray-8 transition-colors duration-200 hover:bg-[#259df4] hover:text-white md:bg-[#259df4] md:text-white"
             url={socialShareUrl}
             resetButtonStyle={false}
+            style={{ boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.08)' }}
           >
             <TwitterIcon className="h-5" />
           </TwitterShareButton>
         </li>
         <li>
           <LinkedinShareButton
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-gray-2 transition-colors duration-200 hover:bg-[#3380cc] hover:text-white md:bg-[#3380cc] md:text-white"
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-gray-8 transition-colors duration-200 hover:bg-[#3380cc] hover:text-white md:bg-[#3380cc] md:text-white"
             url={socialShareUrl}
             resetButtonStyle={false}
+            style={{ boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.08)' }}
           >
             <LinkedinIcon className="h-4.5" />
           </LinkedinShareButton>

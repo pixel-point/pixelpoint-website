@@ -60,7 +60,7 @@ const Content = ({
             </figcaption>
           </figure>
         )}
-        <div className="mt-12 hidden rounded-xl border border-gray-8 p-7 md:block sm:px-5 sm:pt-4 sm:pb-6">
+        <div className="mt-12 hidden rounded-xl bg-gray-9 p-7 md:block sm:px-5 sm:pt-4 sm:pb-6">
           <div className="flex items-center justify-between">
             <img
               className="sm:translate-x-[-15%] sm:scale-[0.7]"
@@ -103,7 +103,7 @@ const Content = ({
           </MDXProvider>
         </div>
       </div>
-      <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7 lg:col-start-9 lg:rounded-xl md:hidden">
+      <div className="col-start-10 col-end-13 rounded-2xl bg-gray-9 p-7 lg:col-start-9 lg:rounded-xl md:hidden">
         <img src={logo} alt={title} loading="eager" />
         {githubUsername && githubRepoName && githubStars && (
           <Link

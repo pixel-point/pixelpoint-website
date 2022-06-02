@@ -6,6 +6,7 @@ import Pagination from 'components/pages/blog/pagination';
 import PostsList from 'components/pages/blog/posts-list';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
+import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
 
@@ -25,6 +26,7 @@ const BlogTemplate = ({
       />
     )}
     <CaseStudies title="Our team loves Open Source. We designed and developed many projects in this space." />
+    <GatsbyAwards theme="black" withTopMargin />
     <CTA withTopMargin />
   </Layout>
 );

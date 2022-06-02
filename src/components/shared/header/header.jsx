@@ -16,8 +16,11 @@ const icons = {
   webDesign: ServicesWebDesignIcon,
 };
 
-const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
-  <header className="safe-paddings absolute top-0 left-0 right-0 z-50 w-full" ref={ref}>
+const Header = forwardRef(({ className, theme, isMobileMenuOpen, onBurgerClick }, ref) => (
+  <header
+    className={clsx('safe-paddings absolute top-0 left-0 right-0 z-50 w-full', className)}
+    ref={ref}
+  >
     <div className="container-lg flex h-[88px] items-center justify-between sm:h-18">
       <Link to="/">
         <span className="sr-only">Pixel Point</span>
@@ -110,12 +113,14 @@ const Header = forwardRef(({ theme, isMobileMenuOpen, onBurgerClick }, ref) => (
 ));
 
 Header.propTypes = {
+  className: PropTypes.string,
   theme: PropTypes.oneOf(['white', 'black']).isRequired,
   isMobileMenuOpen: PropTypes.bool,
   onBurgerClick: PropTypes.func.isRequired,
 };
 
 Header.defaultProps = {
+  className: null,
   isMobileMenuOpen: false,
 };
 
