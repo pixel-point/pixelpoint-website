@@ -75,7 +75,7 @@ const CaseStudies = ({ items }) => (
                   image={getImage(cover)}
                   alt={`${title} website`}
                   loading="lazy"
-                  style={{ filter: 'drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.1))' }}
+                  style={{ filter: 'drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.1))' }}
                 />
               </Link>
             </article>
