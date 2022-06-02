@@ -1,0 +1,3 @@
+{
+  "reject": "react, react-dom, @mdx-js/mdx, @mdx-js/react"
+}

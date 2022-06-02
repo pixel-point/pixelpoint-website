@@ -7,7 +7,7 @@ import Workflow from 'components/pages/home/workflow';
 import Blog from 'components/shared/blog';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
-import GatsbyAwards from 'components/shared/gatsby-awards';
+// import GatsbyAwards from 'components/shared/gatsby-awards';
 import ItemsList from 'components/shared/items-list';
 import Layout from 'components/shared/layout';
 
@@ -41,7 +41,7 @@ const HomePage = () => (
     <Services />
     <CaseStudies title=" Our team loves Open Source. We designed and developed many projects in this space." />
     <Blog />
-    <GatsbyAwards theme="black" withTopMargin />
+    {/* <GatsbyAwards theme="black" withTopMargin /> */}
     <CTA withTopMargin />
   </Layout>
 );

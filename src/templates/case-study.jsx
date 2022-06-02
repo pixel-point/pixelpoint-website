@@ -7,7 +7,7 @@ import Keynotes from 'components/pages/case-study/keynotes';
 import Blog from 'components/shared/blog';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
-import GatsbyAwards from 'components/shared/gatsby-awards';
+// import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
 import SEO_DATA from 'constants/seo-data';
 
@@ -45,7 +45,7 @@ const CaseStudyTemplate = ({
         activeItemSlug={slug}
       />
       <Blog />
-      <GatsbyAwards theme="black" withTopMargin />
+      {/* <GatsbyAwards theme="black" withTopMargin /> */}
       <CTA withTopMargin />
     </Layout>
   );
