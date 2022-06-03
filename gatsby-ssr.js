@@ -1,4 +1,5 @@
-/* eslint-disable react/react-in-jsx-scope */
+import React from 'react';
+
 const SITE_DOMAIN = 'pixelpoint.io';
 const PLAUSIBLE_DOMAIN = 'plausible.pixelpoint.io';
 const SCRIPT_URI = '/js/plausible.js';
@@ -12,6 +13,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
     };
 
     return setHeadComponents([
+      // eslint-disable-next-line react/jsx-filename-extension
       <link key="plausible-preconnect" rel="preconnect" href={`https://${PLAUSIBLE_DOMAIN}`} />,
       <script key="plausible-script" defer {...scriptProps} />,
       // See: https://plausible.io/docs/custom-event-goals#1-trigger-custom-events-with-javascript-on-your-site
