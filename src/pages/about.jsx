@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Foundation from 'components/pages/about-us/foundation';
-import Hero from 'components/pages/about-us/hero';
-import Projects from 'components/pages/about-us/projects';
-import Values from 'components/pages/about-us/values';
+import Foundation from 'components/pages/about/foundation';
+import Hero from 'components/pages/about/hero';
+import Projects from 'components/pages/about/projects';
+import Values from 'components/pages/about/values';
 import Blog from 'components/shared/blog';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';

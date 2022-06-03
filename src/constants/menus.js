@@ -31,6 +31,10 @@ export default {
       text: 'Blog',
       to: LINKS.blog,
     },
+    {
+      text: 'About us',
+      to: LINKS.about,
+    },
   ],
   footer: [
     [
