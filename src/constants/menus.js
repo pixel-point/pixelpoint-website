@@ -85,6 +85,10 @@ export default {
       to: LINKS.caseStudies,
     },
     {
+      text: 'About us',
+      to: LINKS.about,
+    },
+    {
       text: 'Blog',
       to: LINKS.blog,
     },
