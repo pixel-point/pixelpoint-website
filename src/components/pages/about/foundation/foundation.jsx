@@ -21,7 +21,7 @@ const Foundation = () => (
           className="col-span-full rounded-[20px] lg:rounded-xl sm:rounded-lg"
           imgClassName="rounded-[20px] lg:rounded-xl sm:rounded-lg"
           src="./images/france.jpg"
-          alt="View of the Hôtel Dieu and La Grave"
+          alt="Albi, France"
           width={592}
           height={224}
           loading="lazy"
