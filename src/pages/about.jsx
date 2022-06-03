@@ -5,7 +5,6 @@ import Hero from 'components/pages/about/hero';
 import Projects from 'components/pages/about/projects';
 import Values from 'components/pages/about/values';
 import Blog from 'components/shared/blog';
-import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 import GatsbyAwards from 'components/shared/gatsby-awards';
 import ItemsList from 'components/shared/items-list';
@@ -15,19 +14,19 @@ const benefits = {
   title: 'Unlock design process with benefits you wouldn’t want to lose:',
   items: [
     {
-      title: 'Professional team',
+      title: 'Professional in-house team',
       description:
-        'Strong technical background that helps us naturally translate the technological complexity of your project to visually appealing and clear graphics.',
+        'Skillful web, graphic, and motion designers along with prominent software engineers who do care about their work',
     },
     {
       title: 'Communication-oriented',
       description:
-        'Communication is the key to any successful relationship. At Pixel Point we answer in a matter of hours, eagerly joining requirements discussions and deliver constant updates, making our work as transparent as it possible.',
+        'We answer in a matter of hours, eagerly joining requirements discussions and deliver constant updates, making our work as transparent as it possible.',
     },
     {
-      title: 'Lorem auctor imperdiet.',
+      title: 'Context-aware',
       description:
-        'Talented web, graphic and motion designers and software engineers who are passionate about their work',
+        'Strong technical background helps us naturally translate the technological complexity of your project to visually appealing and clear graphics.',
     },
   ],
 };
@@ -40,14 +39,10 @@ const AboutUsPage = () => (
     <ItemsList
       className="bg-black pt-52 text-white lg:pt-36 md:pt-32 sm:pt-20"
       {...benefits}
-      isTitleFullWidth
+      title="Over the years we've gained the extensive expertise and tuned our work processes"
     />
     <Values />
     <Projects />
-    <CaseStudies
-      title="We provide design & development services for popular <span>Open Source</span> projects:"
-      withoutTitleLink
-    />
     <Blog />
     <CTA withTopMargin />
   </Layout>

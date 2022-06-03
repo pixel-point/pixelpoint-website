@@ -8,7 +8,7 @@ const Foundation = () => (
     <div className="container grid grid-cols-12 items-center gap-x-8 md:grid-cols-1 md:gap-y-11 md:gap-x-0 sm:gap-y-8">
       <div className="col-span-5 md:col-span-full">
         <h2 className="max-w-[488px] text-6xl font-normal leading-snug lg:text-[42px] md:text-4xl sm:text-2xl">
-          Foundation
+          The Foundation
         </h2>
         <p className="mt-5 max-w-[488px] text-lg leading-normal md:mt-3 sm:mt-2.5 sm:text-base">
           Creative web agency Pixel Point has been founded in 2017 and operating since at the

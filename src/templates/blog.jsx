@@ -4,7 +4,6 @@ import React from 'react';
 
 import Pagination from 'components/pages/blog/pagination';
 import PostsList from 'components/pages/blog/posts-list';
-import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 // import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
@@ -25,7 +24,6 @@ const BlogTemplate = ({
         pageCount={pageCount}
       />
     )}
-    <CaseStudies title="Our team loves Open Source. We designed and developed many projects in this space." />
     {/* <GatsbyAwards theme="black" withTopMargin /> */}
     <CTA withTopMargin />
   </Layout>
