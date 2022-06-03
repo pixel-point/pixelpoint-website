@@ -14,7 +14,6 @@
 @import '../components/pages/services-web-development/tailwindcss/tailwindcss.css';
 @import '../components/pages/blog-post/content/content.css';
 @import '../components/pages/blog-post/sidebar/sidebar.css';
-@import '../components/pages/services-web-design/hero/hero.css';
 
 /* Utilities */
 @import './hide-br.css';

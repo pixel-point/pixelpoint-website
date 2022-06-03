@@ -1,6 +1,0 @@
-@layer components {
-  .hero-wrapper {
-    height: 100vh;
-    max-height: -webkit-fill-available;
-  }
-}

@@ -1,4 +1,8 @@
 @layer base {
+  :root {
+    --real-browser-height: 100%;
+  }
+
   body {
     @apply min-w-[320px] font-sans font-light leading-normal text-black antialiased;
     -webkit-tap-highlight-color: transparent;
