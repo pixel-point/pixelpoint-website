@@ -35,8 +35,8 @@ const styles = {
     },
     black: {
       wrapper: {
-        base: 'text-black font-normal',
-        hover: 'hover:text-red',
+        base: 'text-black font-normal dark:text-white',
+        hover: 'hover:text-red dark:hover:text-red',
       },
     },
     'underline-red': {

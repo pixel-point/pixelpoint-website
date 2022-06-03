@@ -1,12 +1,11 @@
-import * as React from 'react';
-
-const SITE_DOMAIN = `pixelpoint.io`;
-const PLAUSIBLE_DOMAIN = `plausible.pixelpoint.io`;
-const SCRIPT_URI = `/js/plausible.js`;
+/* eslint-disable react/react-in-jsx-scope */
+const SITE_DOMAIN = 'pixelpoint.io';
+const PLAUSIBLE_DOMAIN = 'plausible.pixelpoint.io';
+const SCRIPT_URI = '/js/plausible.js';
 
 // eslint-disable-next-line import/prefer-default-export
 export const onRenderBody = ({ setHeadComponents }) => {
-  if (process.env.NODE_ENV === `production`) {
+  if (process.env.NODE_ENV === 'production') {
     const scriptProps = {
       'data-domain': SITE_DOMAIN,
       src: `https://${PLAUSIBLE_DOMAIN}${SCRIPT_URI}`,
@@ -26,5 +25,6 @@ export const onRenderBody = ({ setHeadComponents }) => {
       />,
     ]);
   }
+
   return null;
 };

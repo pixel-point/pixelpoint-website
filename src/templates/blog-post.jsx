@@ -23,6 +23,7 @@ const BlogPostTemplate = ({
       ogImage: frontmatter.ogImage.childImageSharp.gatsbyImageData.images.fallback.src,
     })}
     headerTheme="black"
+    headerShowThemeButton
   >
     <article className="safe-paddings pt-32 sm:pt-24">
       <div className="container">

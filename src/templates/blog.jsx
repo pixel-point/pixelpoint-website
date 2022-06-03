@@ -16,7 +16,7 @@ const BlogTemplate = ({
   },
   pageContext: { currentPageIndex, pageCount, category },
 }) => (
-  <Layout seo={SEO_DATA.blog} headerTheme="black">
+  <Layout seo={SEO_DATA.blog} headerTheme="black" headerShowThemeButton>
     <PostsList activeCategory={category} items={items} />
     {pageCount > 1 && (
       <Pagination
