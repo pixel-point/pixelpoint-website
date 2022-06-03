@@ -11,16 +11,16 @@ const Hero = () => (
         Half a decade we’ve been on a mission to help our clients’ companies reveal their full
         potential by designing and building outstanding world-class marketing websites.
       </p>
-    </div>
-    <div className="flex flex-col items-center">
-      <StaticImage
-        className="mt-32 text-center md:mt-24 sm:mt-20 sm:w-[125%] xs:mt-16 xs:w-[150%]"
-        src="./images/team-members.png"
-        alt="Pixel Point team members"
-        width={1216}
-        height={800}
-        loading="eager"
-      />
+      <div className="flex flex-col items-center">
+        <StaticImage
+          className="mt-32 text-center md:mt-24 sm:mt-20 sm:w-[125%] xs:mt-16 xs:w-[150%]"
+          src="./images/team-members.png"
+          alt="Pixel Point team members"
+          width={1216}
+          height={800}
+          loading="eager"
+        />
+      </div>
     </div>
   </section>
 );
