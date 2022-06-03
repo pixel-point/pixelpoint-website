@@ -1,6 +1,6 @@
 @layer base {
   :root {
-    --real-browser-height: 100%;
+    --real-browser-height: 100vh;
   }
 
   body {
