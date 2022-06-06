@@ -28,6 +28,10 @@ export default {
       to: LINKS.caseStudies,
     },
     {
+      text: 'About us',
+      to: LINKS.about,
+    },
+    {
       text: 'Blog',
       to: LINKS.blog,
     },
@@ -36,9 +40,10 @@ export default {
     [
       { text: 'Web design', to: LINKS.webDesign },
       { text: 'Web development', to: LINKS.webDevelopment },
+      { text: 'Case studies', to: LINKS.caseStudies },
     ],
     [
-      { text: 'Case studies', to: LINKS.caseStudies },
+      { text: 'About us', to: LINKS.about },
       { text: 'Blog', to: LINKS.blog },
     ],
     [
@@ -53,6 +58,7 @@ export default {
       { text: 'Case studies', to: LINKS.caseStudies },
     ],
     [
+      { text: 'About us', to: LINKS.about },
       { text: 'Blog', to: LINKS.blog },
       { text: 'Github', to: LINKS.github },
       { text: 'Twitter', to: LINKS.twitter },
@@ -77,6 +83,10 @@ export default {
     {
       text: 'Case studies',
       to: LINKS.caseStudies,
+    },
+    {
+      text: 'About us',
+      to: LINKS.about,
     },
     {
       text: 'Blog',
