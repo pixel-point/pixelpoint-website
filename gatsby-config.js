@@ -3,6 +3,7 @@
 require('dotenv').config();
 
 module.exports = {
+  trailingSlash: 'always',
   flags: { DEV_SSR: process.env.GATSBY_DEV_SSR || false },
   siteMetadata: {
     siteTitle: 'Pixel Point — Web Design and Development',
