@@ -8,7 +8,7 @@ export default {
     title: 'Web Development — Pixel Point',
   },
   about: {
-    title: 'About us - Pixel Point',
+    title: 'About Us - Pixel Point',
   },
   blog: {
     title: 'Our Blog — Pixel Point',
