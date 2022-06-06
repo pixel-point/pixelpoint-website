@@ -9,17 +9,17 @@ import ThumbsupIcon from './images/thumbs-up.inline.svg';
 
 const items = [
   { icon: ChestKingIcon, description: 'Great is not enough, we aim for WOW' },
-  { icon: ThumbsupIcon, description: 'There is work beyond the Notion board' },
   {
     icon: InfoIcon,
     description: 'Continuous Information Delivery is the oxygen of a distributed company',
   },
+  { icon: ThumbsupIcon, description: 'There is work beyond the Notion board' },
   { icon: FireIcon, description: 'Think big, move fast and enjoy the ride' },
-  { icon: HeartIcon, description: 'Help each other thrive and reap the benefits' },
   {
     icon: BrainIcon,
     description: 'Mistakes are invitations to evolve and adapt',
   },
+  { icon: HeartIcon, description: 'Help each other thrive and reap the benefits' },
 ];
 
 const Values = () => (

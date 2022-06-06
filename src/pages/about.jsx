@@ -17,7 +17,7 @@ const benefits = {
     {
       title: 'Professional in-house team',
       description:
-        'Skillful web, graphic, and motion designers along with prominent software engineers who do care about their work',
+        'Skillful web, graphic, and motion designers along with prominent software engineers who do care about their work.',
     },
     {
       title: 'Communication-oriented',

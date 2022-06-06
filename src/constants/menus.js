@@ -47,7 +47,7 @@ export default {
       { text: 'Blog', to: LINKS.blog },
     ],
     [
-      { text: 'Github', to: LINKS.github },
+      { text: 'GitHub', to: LINKS.github },
       { text: 'Twitter', to: LINKS.twitter },
     ],
   ],
@@ -60,7 +60,7 @@ export default {
     [
       { text: 'About us', to: LINKS.about },
       { text: 'Blog', to: LINKS.blog },
-      { text: 'Github', to: LINKS.github },
+      { text: 'GitHub', to: LINKS.github },
       { text: 'Twitter', to: LINKS.twitter },
     ],
   ],
