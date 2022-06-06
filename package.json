@@ -39,6 +39,7 @@
     "clsx": "^1.1.1",
     "framer-motion": "^6.3.6",
     "gatsby": "^4.15.2",
+    "gatsby-plugin-gatsby-cloud": "^4.15.0",
     "gatsby-plugin-image": "^2.15.1",
     "gatsby-plugin-mdx": "^3.15.1",
     "lodash.get": "^4.4.2",
