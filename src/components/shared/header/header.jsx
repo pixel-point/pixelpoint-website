@@ -45,7 +45,7 @@ const Header = forwardRef(({ className, theme, isMobileMenuOpen, onBurgerClick }
               )}
               key={index}
             >
-              <Link className="group-hover:text-red" to={to} size="base" theme={theme}>
+              <Link className="capitalize group-hover:text-red" to={to} size="base" theme={theme}>
                 {text}
               </Link>
 
@@ -67,7 +67,9 @@ const Header = forwardRef(({ className, theme, isMobileMenuOpen, onBurgerClick }
                           <Link className="with-nested-link-red-hover flex space-x-5" to={to}>
                             <Icon className="h-14 shrink-0" />
                             <div>
-                              <span className="text-2xl font-normal leading-snug">{text}</span>
+                              <span className="text-2xl font-normal capitalize leading-snug">
+                                {text}
+                              </span>
                               <p className="mt-2.5 text-base">{description}</p>
                               <Link
                                 className="nested-link-red mt-4"
