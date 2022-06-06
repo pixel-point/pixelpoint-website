@@ -9,6 +9,7 @@ import CTA from 'components/shared/cta';
 import GatsbyAwards from 'components/shared/gatsby-awards';
 import ItemsList from 'components/shared/items-list';
 import Layout from 'components/shared/layout';
+import SEO_DATA from 'constants/seo-data';
 
 const benefits = {
   title: 'Unlock design process with benefits you wouldn’t want to lose:',
@@ -32,7 +33,7 @@ const benefits = {
 };
 
 const AboutUsPage = () => (
-  <Layout headerTheme="white">
+  <Layout seo={SEO_DATA.about} headerTheme="white">
     <Hero />
     <GatsbyAwards className="bg-black pt-32 sm:pt-24" theme="white" />
     <Foundation />
