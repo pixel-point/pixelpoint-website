@@ -138,7 +138,8 @@
     }
 
     iframe,
-    video {
+    video,
+    embedVideo-container {
       @apply mx-auto max-w-full;
     }
   }
