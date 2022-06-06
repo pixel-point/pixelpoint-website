@@ -137,9 +137,19 @@
       @apply break-words rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-[#d41153] md:px-1 md:py-px md:text-sm;
     }
 
+    .embedVideo-container {
+      /* 56.25% is 16:9 ratio
+      this code makes an iframe responsive 
+      https://stackoverflow.com/a/29784327 */
+      @apply relative my-5 h-0 pb-[56.25%];
+
+      iframe {
+        @apply absolute top-0 left-0 h-full w-full;
+      }
+    }
+
     iframe,
-    video,
-    embedVideo-container {
+    video {
       @apply mx-auto max-w-full;
     }
   }
