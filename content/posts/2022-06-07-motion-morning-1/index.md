@@ -40,7 +40,7 @@ If you are confused these commercials with some AAA-grade newest Pixar film, I g
 
 And here is their take on Microsoft 365 commercial:
 
-`video: [Microsoft 365()]https://vimeo.com/527891762)`
+`video: [Microsoft 365](https://vimeo.com/527891762)`
 
 It loses a bit to the similar work of Not Real studio above, but I find it quite fascinating comparing their unique style and vision working on promo for the same product.
 
