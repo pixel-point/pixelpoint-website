@@ -23,6 +23,7 @@ const Heading =
 const Paragraph = ({ children }) => {
   // We have this check in order NOT to wrap specified elements into <p> tag
   if (
+    children?.props?.mdxType === 'undefined' ||
     children?.props?.mdxType === 'img' ||
     children?.props?.mdxType === 'figure' ||
     children?.props?.className === 'gatsby-resp-image-wrapper' ||
