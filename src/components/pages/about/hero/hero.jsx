@@ -14,10 +14,11 @@ const Hero = () => (
       <div className="flex flex-col items-center">
         <StaticImage
           className="mt-32 text-center md:mt-24 sm:mt-20 sm:w-[125%] xs:mt-16 xs:w-[150%]"
-          src="./images/team-members.png"
+          src="./images/team-members.jpg"
           alt="Pixel Point team members"
           width={1216}
           height={800}
+          quality={90}
           loading="eager"
         />
       </div>
