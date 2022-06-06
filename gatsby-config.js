@@ -115,6 +115,7 @@ module.exports = {
       options: {
         headers: {
           '/fonts/*': ['Cache-Control: public, max-age=31536000, immutable'],
+          '/animations/*': ['Cache-Control: public, max-age=31536000, immutable'],
         },
       },
     },

@@ -72,7 +72,6 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "gatsby-alias-imports": "^1.0.6",
     "gatsby-plugin-manifest": "^4.15.1",
-    "gatsby-plugin-netlify": "^5.0.0",
     "gatsby-plugin-postcss": "^5.15.0",
     "gatsby-plugin-react-helmet": "^5.15.0",
     "gatsby-plugin-sharp": "^4.15.1",
