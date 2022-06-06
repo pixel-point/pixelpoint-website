@@ -30,17 +30,17 @@ Not Real can surprise you with their 2D animation skills as well. Next on the qu
 
 [Buck](http://www.buck.co/) is one of the largest creative studios in the world, with offices in the USA, Netherlands, and Australia. They have around 600+ designers and animators all over the world - that means tons of resources for diligent work on, for example, very detailed character animations:
 
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-30-motion-morning-1/7.mp4" width="640" height="444" controls></video>
+<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-30-motion-morning-1/7.mp4" width="800" height="555" controls></video>
 
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-30-motion-morning-1/14.mp4" width="640" height="444" controls></video>
+<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-30-motion-morning-1/14.mp4" width="800" height="555" controls></video>
 
 If you are confused these commercials with some AAA-grade newest Pixar film, I get it 😉 To contrast it out, I'd suggest watching some tech commercials. For example, there is this quite old IBM animation with the crazy good data metaphor for Cloud Data Services I'm still quite impressed with:
 
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-30-motion-morning-1/1.mp4" width="640" height="444" controls></video>
+<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-30-motion-morning-1/1.mp4" width="800" height="555" controls></video>
 
 And here is their take on Microsoft 365 commercial:
 
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-30-motion-morning-1/2.mp4" width="640" height="444" controls></video>
+<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-30-motion-morning-1/2.mp4" width="800" height="555" controls></video>
 
 It loses a bit to the similar work of Not Real studio above, but I find it quite fascinating comparing their unique style and vision working on promo for the same product.
 

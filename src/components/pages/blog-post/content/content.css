@@ -152,5 +152,9 @@
     video {
       @apply mx-auto max-w-full;
     }
+
+    video {
+      @apply my-5;
+    }
   }
 }
