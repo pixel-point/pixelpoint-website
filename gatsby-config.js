@@ -97,6 +97,7 @@ module.exports = {
             options: {
               width: 800,
               loadingStrategy: 'lazy',
+              containerClass: 'embedVideo-container',
             },
           },
           'gatsby-remark-copy-linked-files',
@@ -110,12 +111,6 @@ module.exports = {
               linkImagesToOriginal: false,
               backgroundColor: 'white',
               disableBgImageOnAlpha: true,
-            },
-          },
-          {
-            resolve: 'gatsby-remark-prismjs',
-            options: {
-              noInlineHighlight: true,
             },
           },
         ],
