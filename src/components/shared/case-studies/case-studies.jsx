@@ -123,8 +123,8 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
   return (
     <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
       <div className="container">
-        <h2 className="with-text-highlight-red max-w-[950px] text-4xl font-normal leading-snug lg:text-[32px] sm:text-2xl">
-          {title}{' '}
+        <h2 className="max-w-[950px] text-4xl font-normal leading-snug lg:text-[32px] sm:text-2xl">
+          <span className="with-text-highlight-red" dangerouslySetInnerHTML={{ __html: title }} />{' '}
           {!withoutTitleLink && (
             <Link to={LINKS.caseStudies} size="4xl" theme="arrow-red">
               See all cases

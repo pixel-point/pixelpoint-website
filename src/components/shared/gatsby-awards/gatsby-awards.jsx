@@ -5,6 +5,8 @@ import React from 'react';
 import FinalistBestAgency from './images/finalist-best-agency.inline.svg';
 import FinalistBestSiteDesign from './images/finalist-best-site-design.inline.svg';
 
+const title = 'Proud finalists of the Gatsby Agency Awards 2021';
+
 const GatsbyAwards = ({ className, theme, withTopMargin }) => (
   <section
     className={clsx(
@@ -16,12 +18,10 @@ const GatsbyAwards = ({ className, theme, withTopMargin }) => (
     )}
   >
     <div className="container">
-      <h2 className="text-center text-2xl font-normal sm:text-xl">
-        Unlock design process with benefits you wouldn’t want to lose:
-      </h2>
+      <h2 className="text-center text-2xl font-normal sm:text-xl">{title}</h2>
       <ul className="mt-14 flex items-center justify-center lg:mt-10 sm:mt-8 sm:block sm:space-y-8">
         <li>
-          <FinalistBestAgency className="h-18 lg:h-14 md:h-10 sm:mx-auto" />
+          <FinalistBestAgency className="h-18 max-w-full lg:h-14 md:h-10 sm:mx-auto" />
         </li>
         <li
           className={clsx(
@@ -30,7 +30,7 @@ const GatsbyAwards = ({ className, theme, withTopMargin }) => (
             theme === 'white' && 'border-l-gray-8'
           )}
         >
-          <FinalistBestSiteDesign className="h-18 lg:h-14 md:h-10 sm:mx-auto" />
+          <FinalistBestSiteDesign className="h-18 max-w-full lg:h-14 md:h-10 sm:mx-auto" />
         </li>
       </ul>
     </div>

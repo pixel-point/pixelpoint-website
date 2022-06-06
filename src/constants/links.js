@@ -3,6 +3,7 @@ export default {
   webDevelopment: '/services/web-development/',
   caseStudies: '/case-studies/',
   blog: '/blog/',
+  about: '/about/',
   github: 'https://github.com/pixel-point',
   twitter: 'https://twitter.com/alex_barashkov',
   email: 'mailto:info@pixelpoint.io',
