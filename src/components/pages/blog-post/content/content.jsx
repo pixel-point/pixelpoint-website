@@ -23,9 +23,11 @@ const Heading =
 const Paragraph = ({ children }) => {
   // We have this check in order NOT to wrap specified elements into <p> tag
   if (
+    children?.props?.mdxType === 'undefined' ||
     children?.props?.mdxType === 'img' ||
     children?.props?.mdxType === 'figure' ||
-    children?.props?.className === 'gatsby-resp-image-wrapper'
+    children?.props?.className === 'gatsby-resp-image-wrapper' ||
+    children?.props?.className === 'embedVideo-container'
   ) {
     return children;
   }
@@ -64,6 +66,9 @@ const components = {
   h3: Heading('h3'),
   p: Paragraph,
   Quote,
+  // this code prevents the creation of an additional video iframe wrapper in mdx
+  undefined: (obj) =>
+    obj?.children.filter((child) => typeof child === 'object') || obj?.props?.children,
 };
 
 const Content = ({ className, content }) => (

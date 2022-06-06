@@ -93,6 +93,14 @@ module.exports = {
       options: {
         extensions: ['.mdx', '.md'],
         gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-embed-video',
+            options: {
+              width: 800,
+              loadingStrategy: 'lazy',
+              containerClass: 'embedVideo-container',
+            },
+          },
           'gatsby-remark-copy-linked-files',
           {
             resolve: 'gatsby-remark-images',
@@ -106,7 +114,6 @@ module.exports = {
               disableBgImageOnAlpha: true,
             },
           },
-          'gatsby-remark-prismjs',
         ],
       },
     },
