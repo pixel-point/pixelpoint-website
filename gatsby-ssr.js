@@ -12,7 +12,7 @@ export const onRenderBody = ({ setHeadComponents, setPreBodyComponents }) => {
       src: `https://${PLAUSIBLE_DOMAIN}${SCRIPT_URI}`,
     };
 
-    return setHeadComponents([
+    setHeadComponents([
       // eslint-disable-next-line react/jsx-filename-extension
       <link key="plausible-preconnect" rel="preconnect" href={`https://${PLAUSIBLE_DOMAIN}`} />,
       <script key="plausible-script" defer {...scriptProps} />,
