@@ -30,26 +30,26 @@ export const onRenderBody = ({ setHeadComponents, setPreBodyComponents }) => {
 
   const ThemeSet = () => {
     const codeToRunOnClient = `
-    let preferredTheme;
-    try {
-      preferredTheme = localStorage.getItem('theme');
-    } catch (e) {}
+    (function() {
+      let preferredTheme;
+      try {
+        preferredTheme = localStorage.getItem('theme');
+      } catch (e) {}
 
-    if (preferredTheme === 'dark') {
-      localStorage.theme = 'dark';
-      document.documentElement.classList.add('dark');
-    }
-    
-    const userPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (preferredTheme === 'dark') {
+        localStorage.theme = 'dark';
+        document.documentElement.classList.add('dark');
+      }
+      
+      const userPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (userPrefersDark === true) {
-      localStorage.theme = 'dark';
-      document.documentElement.classList.add('dark');
-    }
+      if (userPrefersDark === true) {
+        localStorage.theme = 'dark';
+        document.documentElement.classList.add('dark');
+      }
+    })();
     `;
     return <script dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />;
   };
   setPreBodyComponents(<ThemeSet />);
-
-  return null;
 };
