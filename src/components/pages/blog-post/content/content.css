@@ -28,7 +28,8 @@
 
     ul,
     ol,
-    p {
+    p,
+    video {
       @apply my-5 sm:my-4;
     }
 
@@ -151,10 +152,6 @@
     iframe,
     video {
       @apply mx-auto max-w-full;
-    }
-
-    video {
-      @apply my-5;
     }
   }
 }
