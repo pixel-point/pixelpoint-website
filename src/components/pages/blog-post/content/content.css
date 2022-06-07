@@ -28,7 +28,9 @@
 
     ul,
     ol,
-    p {
+    p,
+    video,
+    .embedVideo-container {
       @apply my-5 sm:my-4;
     }
 
@@ -141,7 +143,7 @@
       /* 56.25% is 16:9 ratio
       this code makes an iframe responsive 
       https://stackoverflow.com/a/29784327 */
-      @apply relative my-5 h-0 pb-[56.25%];
+      @apply relative h-0 pb-[56.25%];
 
       iframe {
         @apply absolute top-0 left-0 h-full w-full;
@@ -151,10 +153,6 @@
     iframe,
     video {
       @apply mx-auto max-w-full;
-    }
-
-    video {
-      @apply my-5;
     }
   }
 }
