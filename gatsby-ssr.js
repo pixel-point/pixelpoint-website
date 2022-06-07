@@ -5,7 +5,7 @@ const PLAUSIBLE_DOMAIN = 'plausible.pixelpoint.io';
 const SCRIPT_URI = '/js/plausible.js';
 
 // eslint-disable-next-line import/prefer-default-export
-export const onRenderBody = ({ setHeadComponents }) => {
+export const onRenderBody = ({ setHeadComponents, setPreBodyComponents }) => {
   if (process.env.NODE_ENV === 'production') {
     const scriptProps = {
       'data-domain': SITE_DOMAIN,
@@ -28,7 +28,7 @@ export const onRenderBody = ({ setHeadComponents }) => {
     ]);
   }
 
-  setHeadComponents([
+  setPreBodyComponents([
     <script
       dangerouslySetInnerHTML={{
         __html: `
