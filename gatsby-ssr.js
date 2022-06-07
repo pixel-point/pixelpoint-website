@@ -28,5 +28,26 @@ export const onRenderBody = ({ setHeadComponents }) => {
     ]);
   }
 
+  setHeadComponents([
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+(function() {
+  if (window.location.pathname.startsWith('/blog')) {
+    const isDarkModeSetInLocalStorage = typeof localStorage !== 'undefined' && localStorage.theme === 'dark';
+    const isSystemModeDark = !('theme' in localStorage) && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (isDarkModeSetInLocalStorage || isSystemModeDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+})()`,
+      }}
+      key="theme-picker"
+    />,
+  ]);
+
   return null;
 };
