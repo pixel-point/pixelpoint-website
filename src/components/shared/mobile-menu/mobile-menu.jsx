@@ -33,10 +33,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
         {MENUS.mobile.map(({ text, to, items }, index) => (
           <li className={clsx('border-b border-b-gray-3', items?.length > 0 && 'pb-5')} key={index}>
             <Link
-              className={clsx(
-                'block text-lg font-normal capitalize leading-none',
-                !items && 'py-5'
-              )}
+              className={clsx('block text-lg font-normal leading-none', !items && 'py-5')}
               to={to}
             >
               {text}
@@ -49,7 +46,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
 
                   return (
                     <li key={index}>
-                      <Link className="flex items-center space-x-3.5 capitalize" to={to}>
+                      <Link className="flex items-center space-x-3.5" to={to}>
                         <Icon className="h-12 shrink-0" />
                         <span className="text-lg font-semibold">{text}</span>
                       </Link>

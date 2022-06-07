@@ -7,7 +7,7 @@ export default {
       items: [
         {
           iconName: 'webDesign',
-          text: 'Web design',
+          text: 'Web Design',
           description:
             'Get a stunning-looking website made by in-house team of motion, graphic, and web designers.',
           linkText: 'Read more',
@@ -15,7 +15,7 @@ export default {
         },
         {
           iconName: 'webDevelopment',
-          text: 'Web development',
+          text: 'Web Development',
           description:
             'Have a JAMStack powered web platform built with React, 3rd parties & integrations at your disposal',
           linkText: 'Read more',
@@ -24,11 +24,11 @@ export default {
       ],
     },
     {
-      text: 'Case studies',
+      text: 'Case Studies',
       to: LINKS.caseStudies,
     },
     {
-      text: 'About us',
+      text: 'About Us',
       to: LINKS.about,
     },
     {
@@ -38,12 +38,12 @@ export default {
   ],
   footer: [
     [
-      { text: 'Web design', to: LINKS.webDesign },
-      { text: 'Web development', to: LINKS.webDevelopment },
-      { text: 'Case studies', to: LINKS.caseStudies },
+      { text: 'Web Design', to: LINKS.webDesign },
+      { text: 'Web Development', to: LINKS.webDevelopment },
+      { text: 'Case Studies', to: LINKS.caseStudies },
     ],
     [
-      { text: 'About us', to: LINKS.about },
+      { text: 'About Us', to: LINKS.about },
       { text: 'Blog', to: LINKS.blog },
     ],
     [
@@ -53,12 +53,12 @@ export default {
   ],
   footerSm: [
     [
-      { text: 'Web design', to: LINKS.webDesign },
-      { text: 'Web development', to: LINKS.webDevelopment },
-      { text: 'Case studies', to: LINKS.caseStudies },
+      { text: 'Web Design', to: LINKS.webDesign },
+      { text: 'Web Development', to: LINKS.webDevelopment },
+      { text: 'Case Studies', to: LINKS.caseStudies },
     ],
     [
-      { text: 'About us', to: LINKS.about },
+      { text: 'About Us', to: LINKS.about },
       { text: 'Blog', to: LINKS.blog },
       { text: 'GitHub', to: LINKS.github },
       { text: 'Twitter', to: LINKS.twitter },
@@ -70,22 +70,22 @@ export default {
       items: [
         {
           iconName: 'webDesign',
-          text: 'Web design',
+          text: 'Web Design',
           to: LINKS.webDesign,
         },
         {
           iconName: 'webDevelopment',
-          text: 'Web development',
+          text: 'Web Development',
           to: LINKS.webDevelopment,
         },
       ],
     },
     {
-      text: 'Case studies',
+      text: 'Case Studies',
       to: LINKS.caseStudies,
     },
     {
-      text: 'About us',
+      text: 'About Us',
       to: LINKS.about,
     },
     {
