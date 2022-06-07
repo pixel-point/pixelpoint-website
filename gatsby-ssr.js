@@ -5,7 +5,7 @@ const PLAUSIBLE_DOMAIN = 'plausible.pixelpoint.io';
 const SCRIPT_URI = '/js/plausible.js';
 
 // eslint-disable-next-line import/prefer-default-export
-export const onRenderBody = ({ setHeadComponents, setPreBodyComponents }) => {
+export const onRenderBody = ({ setHeadComponents }) => {
   if (process.env.NODE_ENV === 'production') {
     const scriptProps = {
       'data-domain': SITE_DOMAIN,
@@ -28,28 +28,5 @@ export const onRenderBody = ({ setHeadComponents, setPreBodyComponents }) => {
     ]);
   }
 
-  const ThemeSet = () => {
-    const codeToRunOnClient = `
-    (function() {
-      let preferredTheme;
-      try {
-        preferredTheme = localStorage.getItem('theme');
-      } catch (e) {}
-
-      if (preferredTheme === 'dark') {
-        localStorage.theme = 'dark';
-        document.documentElement.classList.add('dark');
-      }
-      
-      const userPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-      if (userPrefersDark === true) {
-        localStorage.theme = 'dark';
-        document.documentElement.classList.add('dark');
-      }
-    })();
-    `;
-    return <script dangerouslySetInnerHTML={{ __html: codeToRunOnClient }} />;
-  };
-  setPreBodyComponents(<ThemeSet />);
+  return null;
 };

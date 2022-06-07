@@ -86,7 +86,7 @@
       .token.atrule,
       .token.attr-value,
       .token.keyword {
-        @apply text-[#0f2cbd] dark:text-[#7187F4];
+        @apply text-[#0f2cbd] dark:text-[#7187f4];
       }
 
       .token.function,
@@ -99,7 +99,7 @@
       .token.url,
       .language-css .token.string,
       .style .token.string {
-        @apply text-[#7e428a] dark:text-[#9D53AC];
+        @apply text-[#7e428a] dark:text-[#9d53ac];
       }
 
       .token.property,
@@ -109,7 +109,7 @@
       .token.constant,
       .token.symbol,
       .token.deleted {
-        @apply text-[#82174c] dark:text-[#AD1F66];
+        @apply text-[#82174c] dark:text-[#ad1f66];
       }
 
       .token.selector,
