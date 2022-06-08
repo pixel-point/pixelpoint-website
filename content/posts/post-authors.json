@@ -28,6 +28,7 @@
   {
     "name": "Ekaterina Martynko",
     "photo": "../../src/images/post-authors/ekaterina-martynko.jpg",
-    "description": "An aspiring front-end developer at Pixel Point. Writes articles to answer her own questions."
+    "description": "An aspiring front-end developer at Pixel Point. Writes articles to answer her own questions.",
+    "twitterUrl": "https://twitter.com/k8isdead"
   }
 ]
