@@ -8,10 +8,10 @@ const ANIMATION_DURATION = 0.2;
 const Burger = ({ className, theme, isToggled, onClick }) => (
   <motion.button
     className={clsx(
-      'relative h-5 w-7',
+      'relative h-5 w-7 dark:text-white',
       theme === 'white' && 'text-white',
       theme === 'black' && 'text-black',
-      isToggled && 'text-black',
+      isToggled && 'text-black dark:text-black',
       className
     )}
     type="button"

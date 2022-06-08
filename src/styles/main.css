@@ -16,6 +16,7 @@
 @import '../components/pages/blog-post/sidebar/sidebar.css';
 
 /* Utilities */
+@import './disable-transition.css';
 @import './hide-br.css';
 @import './remove-autocomplete-styles.css';
 @import './safe-paddings.css';

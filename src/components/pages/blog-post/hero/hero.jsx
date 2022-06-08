@@ -16,7 +16,7 @@ const Hero = ({ title, category, cover, slug }) => (
       >
         {category}
       </Link>
-      <span className="relative ml-3 pl-3 text-sm font-normal text-gray-7 before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gray-4">
+      <span className="relative ml-3 pl-3 text-sm font-normal text-gray-7 before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gray-4 dark:before:bg-gray-8">
         {getBlogPostDateFromSlug(slug)}
       </span>
     </div>

@@ -99,12 +99,12 @@
     }
 
     pre {
-      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-1 px-6 py-4 text-base text-black md:px-4 md:py-3 md:text-sm;
+      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-1 px-6 py-4 text-base text-black dark:bg-gray-9 dark:text-white md:px-4 md:py-3 md:text-sm;
 
       .token.atrule,
       .token.attr-value,
       .token.keyword {
-        @apply text-[#0f2cbd];
+        @apply text-[#0f2cbd] dark:text-[#7187f4];
       }
 
       .token.function,
@@ -117,7 +117,7 @@
       .token.url,
       .language-css .token.string,
       .style .token.string {
-        @apply text-[#7e428a];
+        @apply text-[#7e428a] dark:text-[#9d53ac];
       }
 
       .token.property,
@@ -127,7 +127,7 @@
       .token.constant,
       .token.symbol,
       .token.deleted {
-        @apply text-[#82174c];
+        @apply text-[#82174c] dark:text-[#ad1f66];
       }
 
       .token.selector,
@@ -136,7 +136,7 @@
       .token.char,
       .token.builtin,
       .token.inserted {
-        @apply text-[#00994c];
+        @apply text-[#00994c] dark:text-[#00cc66];
       }
 
       .token.punctuation {
@@ -152,7 +152,7 @@
     }
 
     :not(pre) > code {
-      @apply break-words rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-[#d41153] md:px-1 md:py-px md:text-sm;
+      @apply break-words rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-red dark:bg-gray-9 md:px-1 md:py-px md:text-sm;
     }
 
     .embedVideo-container {
