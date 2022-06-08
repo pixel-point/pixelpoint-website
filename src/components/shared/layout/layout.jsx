@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Footer from 'components/shared/footer';
 import Header from 'components/shared/header';
@@ -18,6 +18,10 @@ const Layout = ({ seo, headerClassName, headerTheme, children }) => {
   const handleHeaderBurgerClick = () => {
     setIsMobileMenuOpen((isMobileMenuOpen) => !isMobileMenuOpen);
   };
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--real-browser-height', `${window.innerHeight}px`);
+  }, []);
 
   return (
     <>
