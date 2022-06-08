@@ -10,7 +10,7 @@ import getBlogPostPath from 'utils/get-blog-post-path';
 
 const Sidebar = ({ author, readMorePosts, socialShareUrl }) => (
   <aside className="absolute -right-12 top-0 h-full max-w-[344px] translate-x-full xl:relative xl:right-0 xl:h-auto xl:translate-x-0 lg:max-w-[300px] md:mt-10 md:max-w-none">
-    <div className="scrollbar-hidden sticky right-0 top-4 max-h-screen overflow-auto rounded-2xl bg-gray-1 p-8 dark:bg-black md:relative md:top-0 md:max-h-full md:bg-transparent md:p-0 dark:md:bg-transparent">
+    <div className="scrollbar-hidden sticky right-0 top-4 max-h-screen overflow-auto rounded-2xl bg-gray-2 p-8 dark:bg-black md:relative md:top-0 md:max-h-full md:bg-transparent md:p-0 dark:md:bg-transparent">
       <GatsbyImage
         className="w-16 shrink-0 rounded-full"
         imgClassName="rounded-full"
