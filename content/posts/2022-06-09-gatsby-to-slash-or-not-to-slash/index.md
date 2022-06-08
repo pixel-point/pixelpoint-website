@@ -8,7 +8,7 @@ category: Development
 
 Like most junior web developers out there, I had little to no idea what a trailing slash is. Of course, I was using them in projects, but it was more like following common sense (or even sixth sense) than really understanding the concept.
 
-> Trailing slash is like an oxford comma: if you hadn't researched the question on purpose, chances are, you're just following your intuition when putting one here and there.
+<Quote>Trailing slash is like an oxford comma: if you hadn't researched the question on purpose, chances are, you're just following your intuition when putting one here and there.</Quote>
 
 A trailing slash is a forward slash character placed at the end of a URL. The general convention (supported by [Web Standards](https://developers.google.com/search/blog/2010/04/to-slash-or-not-to-slash)) is that if an URL ends in a trailing slash, it points to a directory; otherwise, it points to a file.
 
