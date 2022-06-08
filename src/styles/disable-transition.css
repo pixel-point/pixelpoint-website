@@ -1,6 +1,8 @@
 @layer utilities {
   .disable-transition {
-    * {
+    *,
+    *:before,
+    *:after {
       @apply !transition-none;
     }
   }

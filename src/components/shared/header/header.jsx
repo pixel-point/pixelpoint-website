@@ -69,13 +69,13 @@ const Header = forwardRef(
                 <li
                   className={clsx(
                     items?.length > 0 &&
-                      'group relative cursor-pointer pr-2.5 after:absolute after:top-2 after:right-0 after:h-0 after:w-0 after:border-[3px] after:border-b-0 after:transition-colors after:duration-200 after:hover:border-t-red  dark:after:border-black dark:after:border-t-white dark:after:hover:border-t-red',
+                      'group relative cursor-pointer pr-2.5 after:absolute after:top-2 after:right-0 after:h-0 after:w-0 after:border-[3px] after:border-b-0 after:transition-colors after:duration-200 after:hover:border-t-red dark:after:border-transparent dark:after:border-t-white dark:after:hover:border-t-red',
                     items?.length > 0 &&
                       theme === 'white' &&
-                      'after:border-black after:border-t-white',
+                      'after:border-transparent after:border-t-white',
                     items?.length > 0 &&
                       theme === 'black' &&
-                      'after:border-white after:border-t-black',
+                      'after:border-transparent after:border-t-black',
                     showThemeButton &&
                       index === 0 &&
                       '!ml-6 border-l border-l-gray-4 pl-6 dark:border-l-gray-8'
