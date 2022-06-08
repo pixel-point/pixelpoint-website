@@ -120,7 +120,7 @@
       .token.char,
       .token.builtin,
       .token.inserted {
-        @apply text-[#00994c] dark:text-green;
+        @apply text-[#00994c] dark:text-[#00cc66];
       }
 
       .token.punctuation {
@@ -136,7 +136,7 @@
     }
 
     :not(pre) > code {
-      @apply break-words rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-[#d41153] dark:bg-red dark:bg-opacity-10 dark:text-red md:px-1 md:py-px md:text-sm;
+      @apply break-words rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-red dark:bg-gray-9 md:px-1 md:py-px md:text-sm;
     }
 
     .embedVideo-container {
