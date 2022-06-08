@@ -24,5 +24,10 @@
     "name": "Dmitry Semenovsky",
     "photo": "../../src/images/post-authors/dmitry-semenovsky.jpg",
     "description": "Friend of Pixel Point and innovator revolutionizing digital signatures and document authentication."
+  },
+  {
+    "name": "Ekaterina Martynko",
+    "photo": "../../src/images/post-authors/ekaterina-martynko.jpg",
+    "description": "An aspiring front-end developer at Pixel Point. Writes articles to answer her own questions."
   }
 ]
