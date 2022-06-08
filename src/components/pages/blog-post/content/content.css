@@ -28,7 +28,9 @@
 
     ul,
     ol,
-    p {
+    p,
+    video,
+    .embedVideo-container {
       @apply my-5 sm:my-4;
     }
 
@@ -135,6 +137,17 @@
 
     :not(pre) > code {
       @apply break-words rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-[#d41153] dark:bg-red dark:bg-opacity-10 dark:text-red md:px-1 md:py-px md:text-sm;
+    }
+
+    .embedVideo-container {
+      /* 56.25% is 16:9 ratio
+      this code makes an iframe responsive 
+      https://stackoverflow.com/a/29784327 */
+      @apply relative h-0 pb-[56.25%];
+
+      iframe {
+        @apply absolute top-0 left-0 h-full w-full;
+      }
     }
 
     iframe,

@@ -3,6 +3,7 @@
 require('dotenv').config();
 
 module.exports = {
+  trailingSlash: 'always',
   flags: { DEV_SSR: process.env.GATSBY_DEV_SSR || false },
   siteMetadata: {
     siteTitle: 'Pixel Point — Web Design and Development',
@@ -92,6 +93,14 @@ module.exports = {
       options: {
         extensions: ['.mdx', '.md'],
         gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-embed-video',
+            options: {
+              width: 800,
+              loadingStrategy: 'lazy',
+              containerClass: 'embedVideo-container',
+            },
+          },
           'gatsby-remark-copy-linked-files',
           {
             resolve: 'gatsby-remark-images',
@@ -105,15 +114,15 @@ module.exports = {
               disableBgImageOnAlpha: true,
             },
           },
-          'gatsby-remark-prismjs',
         ],
       },
     },
     {
-      resolve: 'gatsby-plugin-netlify',
+      resolve: 'gatsby-plugin-gatsby-cloud',
       options: {
         headers: {
           '/fonts/*': ['Cache-Control: public, max-age=31536000, immutable'],
+          '/animations/*': ['Cache-Control: public, max-age=31536000, immutable'],
         },
       },
     },

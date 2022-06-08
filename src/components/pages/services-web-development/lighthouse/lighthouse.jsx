@@ -60,7 +60,7 @@ Value.propTypes = {
 };
 
 const Lighthouse = () => {
-  const [itemsWrapperRef, isItemsWrapperInView] = useInView({ triggerOnce: true, threshold: 0.8 });
+  const [itemsWrapperRef, isItemsWrapperInView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   const itemsWrapperControls = useAnimation();
 
