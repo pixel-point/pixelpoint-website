@@ -114,6 +114,7 @@ module.exports = {
               disableBgImageOnAlpha: true,
             },
           },
+          'gatsby-remark-prismjs',
         ],
       },
     },
