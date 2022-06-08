@@ -36,7 +36,7 @@ Here is an example of the trailing slash misuse that shows you how two pages —
 
 Another example: in the video below, you can see a bad UX scenario, when a host adds a trailing slash, and then a front-end router of a SPA removes it, so the user gets an URL that changes and much confusion.
 
-<video src="/video.mp4" width="800" height="555" controls muted></video>
+<video src="/video.mp4" width="800" height="555" autoplay muted></video>
 
 So in order to be understood properly by a web crawler, you need to specify your intentions either by using canonical URLs or redirects. Then you can have as many identical pages as you want.
 
@@ -148,17 +148,17 @@ The table below shows how Gatsby Cloud (and also Gatsby itself within `gatsby de
 
 The example page is at the <https://example.io/blog/index.html>.
 
-| trailingSlash value | Requested URL    | Redirect code | Rendered URL |
-| ------------------- | ---------------- | ------------- | ------------ |
-| ignore              | /blog            | none          | /blog        |
-| ignore              | /blog/           | none          | /blog/       |
-| ignore              | /blog/index.html | none          | blog/        |
-| always              | /blog            | 301           | /blog/       |
-| always              | /blog/           | none          | /blog/       |
-| always              | /blog/index.html | none          | /blog/       |
-| never               | /blog            | none          | /blog        |
-| never               | /blog/           | 301           | /blog        |
-| never               | /blog/index.html | none          | /blog        |
+| `trailingSlash` value | Requested URL    | Redirect code | Rendered URL |
+| --------------------- | ---------------- | ------------- | ------------ |
+| ignore                | /blog            | none          | /blog        |
+| ignore                | /blog/           | none          | /blog/       |
+| ignore                | /blog/index.html | none          | blog/        |
+| always                | /blog            | 301           | /blog/       |
+| always                | /blog/           | none          | /blog/       |
+| always                | /blog/index.html | none          | /blog/       |
+| never                 | /blog            | none          | /blog        |
+| never                 | /blog/           | 301           | /blog        |
+| never                 | /blog/index.html | none          | /blog        |
 
 Please note that this config option only affects the client-side behavior, and the actual server-side behavior still depends on the hosting provider or your web server configuration!
 

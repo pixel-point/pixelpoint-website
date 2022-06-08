@@ -66,6 +66,11 @@ const components = {
   h3: Heading('h3'),
   p: Paragraph,
   Quote,
+  table: (props) => (
+    <div className="table-wrapper">
+      <table {...props} />
+    </div>
+  ),
   // this code prevents the creation of an additional video iframe wrapper in mdx
   undefined: (obj) =>
     obj?.children.filter((child) => typeof child === 'object') || obj?.props?.children,
