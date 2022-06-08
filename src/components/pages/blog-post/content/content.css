@@ -90,11 +90,11 @@
       @apply w-full border-hidden text-base md:min-w-[500px];
 
       th {
-        @apply border-y border-gray-4 py-2 text-left font-medium;
+        @apply border-y border-gray-4 py-2 text-left font-medium dark:border-gray-8;
       }
 
       td {
-        @apply border-y border-gray-4 py-2;
+        @apply border-y border-gray-4 py-2 dark:border-gray-8;
       }
     }
 
