@@ -13,8 +13,12 @@ export const onRouteUpdate = ({ location }) => {
   const isSystemModeDark = !('theme' in localStorage) && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   if (isBlog && (isDarkModeSetInLocalStorage || isSystemModeDark)) {
+    document.documentElement.classList.add('disable-transition');
     document.documentElement.classList.add('dark');
+    setTimeout(() => document.documentElement.classList.remove('disable-transition'), 0);
   } else {
+    document.documentElement.classList.add('disable-transition');
     document.documentElement.classList.remove('dark');
+    setTimeout(() => document.documentElement.classList.remove('disable-transition'), 0);
   }
 };

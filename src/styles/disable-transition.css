@@ -1,0 +1,7 @@
+@layer utilities {
+  .disable-transition {
+    * {
+      @apply !transition-none;
+    }
+  }
+}

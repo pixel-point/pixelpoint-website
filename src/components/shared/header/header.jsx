@@ -23,10 +23,14 @@ const Header = forwardRef(
     const handleThemeButtonClick = () => {
       if (document.documentElement.classList.contains('dark') || localStorage.theme === 'dark') {
         localStorage.theme = 'light';
+        document.documentElement.classList.add('disable-transition');
         document.documentElement.classList.remove('dark');
+        setTimeout(() => document.documentElement.classList.remove('disable-transition'), 0);
       } else {
         localStorage.theme = 'dark';
+        document.documentElement.classList.add('disable-transition');
         document.documentElement.classList.add('dark');
+        setTimeout(() => document.documentElement.classList.remove('disable-transition'), 0);
       }
     };
 
