@@ -6,10 +6,6 @@ import Header from 'components/shared/header';
 import MobileMenu from 'components/shared/mobile-menu';
 import SEO from 'components/shared/seo';
 
-function setRealBrowserHeight() {
-  document.documentElement.style.setProperty('--real-browser-height', `${window.innerHeight}px`);
-}
-
 const Layout = ({ seo, headerClassName, headerTheme, children }) => {
   const headerRef = useRef(null);
 
@@ -24,13 +20,7 @@ const Layout = ({ seo, headerClassName, headerTheme, children }) => {
   };
 
   useEffect(() => {
-    setRealBrowserHeight();
-
-    if (typeof window !== 'undefined') window.addEventListener('resize', setRealBrowserHeight);
-
-    return () => {
-      if (typeof window !== 'undefined') window.removeEventListener('resize', setRealBrowserHeight);
-    };
+    document.documentElement.style.setProperty('--real-browser-height', `${window.innerHeight}px`);
   }, []);
 
   return (
