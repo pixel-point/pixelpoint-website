@@ -121,7 +121,10 @@ const HighlightedTweets = ({ className }) => {
 
   return (
     <section
-      className={clsx('safe-paddings bg-gray-2 pt-28 lg:pt-24 md:pt-20 sm:pt-16', className)}
+      className={clsx(
+        'safe-paddings bg-gray-2 pt-28 dark:bg-black lg:pt-24 md:pt-20 sm:pt-16',
+        className
+      )}
     >
       <div className="container flex items-center justify-between sm:block">
         <h2 className="text-4xl md:text-[32px] sm:text-2xl">Highlighted tweets</h2>
@@ -190,7 +193,7 @@ const HighlightedTweets = ({ className }) => {
 
             return (
               <li
-                className="max-w-[384px] shrink-0 snap-center overflow-hidden rounded-xl border border-gray-4 bg-white md:max-w-[346px] sm:max-w-[328px]"
+                className="max-w-[384px] shrink-0 snap-center overflow-hidden rounded-xl border border-gray-4 bg-white dark:border-gray-8 dark:bg-gray-9 md:max-w-[346px] sm:max-w-[328px]"
                 style={{ boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.08)' }}
                 key={index}
               >
