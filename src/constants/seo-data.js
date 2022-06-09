@@ -7,6 +7,9 @@ export default {
   servicesWebDevelopment: {
     title: 'Web Development — Pixel Point',
   },
+  about: {
+    title: 'About Us - Pixel Point',
+  },
   blog: {
     title: 'Our Blog — Pixel Point',
     canonicalUrl: process.env.GATSBY_DEFAULT_SITE_URL + BLOG_BASE_PATH,

@@ -5,7 +5,12 @@ description: Serverless OS alternative to AWS Aurora Postgres
 websiteUrl: https://neon.tech
 githubUsername: neondatabase
 githubRepoName: neon
-overview: It all began in 2021, when a group of PostreSQL contributors and technologists, united under the brand name Neon, set up on a mission to create an OS cloud-native database as a service available for every developer. They reached out asking for help establishing a brand image, and we eagerly joined the team.
+quote:
+  text: While building a developer-oriented product, we struggled to explain our needs to design agencies until we started with Pixel Point. Unlike others, Pixel Point quickly understood our product and target audience. Pixel Point delivered exceptional results in a short timeframe and became an extension of our dev and product teams, contributing to many areas without any communication bureaucracy
+  authorName: Stas Kelvich
+  authorPosition: Co-Founder
+  authorPhoto: author-photo.jpg
+overview: It all began in 2021, when a group of PostgreSQL contributors and technologists, united under the brand name Neon, set up on a mission to create an OS cloud-native database as a service available for every developer. They reached out asking for help establishing a brand image, and we eagerly joined the team.
 services:
   - Motion Design
   - Web Design

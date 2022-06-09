@@ -2,6 +2,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
+  darkMode: 'class',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   corePlugins: {
     container: false,
@@ -55,6 +56,7 @@ module.exports = {
         7: '#666666',
         8: '#333333',
         9: '#1a1a1a',
+        10: '#0d0d0d',
       },
     }),
     extend: {

@@ -7,9 +7,9 @@ import { BLOG_CATEGORIES } from 'constants/blog';
 import getBlogPath from 'utils/get-blog-path';
 
 const Categories = ({ activeCategory }) => (
-  <section className="safe-paddings mt-16 lg:mt-14 md:mt-12 sm:mt-11">
+  <div className="safe-paddings mt-16 lg:mt-14 md:mt-12 sm:mt-11">
     <div className="container-md">
-      <ul className="scrollbar-hidden relative flex space-x-6 overflow-auto pb-px after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-gray-4">
+      <ul className="scrollbar-hidden relative mt-16 flex space-x-6 overflow-auto pb-px after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-gray-4 dark:after:bg-gray-8 lg:mt-14 md:mt-12 sm:mt-11">
         {['All', ...BLOG_CATEGORIES].map((category, index) => (
           <li key={index}>
             <Link
@@ -29,7 +29,7 @@ const Categories = ({ activeCategory }) => (
         ))}
       </ul>
     </div>
-  </section>
+  </div>
 );
 
 Categories.propTypes = {

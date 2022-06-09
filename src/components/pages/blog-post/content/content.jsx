@@ -23,9 +23,11 @@ const Heading =
 const Paragraph = ({ children }) => {
   // We have this check in order NOT to wrap specified elements into <p> tag
   if (
+    children?.props?.mdxType === 'undefined' ||
     children?.props?.mdxType === 'img' ||
     children?.props?.mdxType === 'figure' ||
-    children?.props?.className === 'gatsby-resp-image-wrapper'
+    children?.props?.className === 'gatsby-resp-image-wrapper' ||
+    children?.props?.className === 'embedVideo-container'
   ) {
     return children;
   }
@@ -39,7 +41,7 @@ Paragraph.propTypes = {
 
 const Quote = ({ authorName, children }) => (
   <figure
-    className="rounded-2xl p-7 lg:rounded-xl"
+    className="rounded-2xl p-7 dark:!bg-black dark:!bg-none lg:rounded-xl"
     style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
   >
     <QuoteIcon className="w-10 sm:w-8" aria-hidden />
@@ -55,8 +57,12 @@ const Quote = ({ authorName, children }) => (
 );
 
 Quote.propTypes = {
-  authorName: PropTypes.string.isRequired,
+  authorName: PropTypes.string,
   children: PropTypes.node.isRequired,
+};
+
+Quote.defaultProps = {
+  authorName: null,
 };
 
 const components = {
@@ -64,6 +70,14 @@ const components = {
   h3: Heading('h3'),
   p: Paragraph,
   Quote,
+  table: (props) => (
+    <div className="table-wrapper">
+      <table {...props} />
+    </div>
+  ),
+  // this code prevents the creation of an additional video iframe wrapper in mdx
+  undefined: (obj) =>
+    obj?.children.filter((child) => typeof child === 'object') || obj?.props?.children,
 };
 
 const Content = ({ className, content }) => (

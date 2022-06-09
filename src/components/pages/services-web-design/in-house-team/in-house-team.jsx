@@ -1,5 +1,5 @@
 import { useAnimation, motion } from 'framer-motion';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
@@ -20,14 +20,10 @@ const descriptionVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.3 } },
 };
-
-const InHouseTeam = () => {
-  const [contentRef, isContentInView] = useInView({ triggerOnce: true, threshold: 0.8 });
-  const [illustrationRef, isIllustrationInView] = useInView({ triggerOnce: true, threshold: 0.8 });
-
-  const titleControls = useAnimation();
-  const descriptionControls = useAnimation();
-
+// TODO: Create a proper wrapper to lazy load rive
+// Dirty fix just until we fix the size of the animation
+// eslint-disable-next-line react/prop-types
+const Animation = ({ isPlaying }) => {
   const { RiveComponent, rive } = useRive({
     src: '/animations/pages/services-web-design/in-house-team.riv',
     autoplay: false,
@@ -36,16 +32,30 @@ const InHouseTeam = () => {
       alignment: Alignment.Center,
     }),
   });
+  useEffect(() => {
+    if (isPlaying && rive) {
+      rive.play();
+    }
+  }, [isPlaying, rive]);
+  return <RiveComponent />;
+};
+
+const InHouseTeam = () => {
+  const [contentRef, isContentInView] = useInView({ triggerOnce: true, threshold: 0.8 });
+  const [illustrationRef, isIllustrationInView] = useInView({ triggerOnce: true, threshold: 0.8 });
+  const [isPlaying, setIsPlaying] = useState(false);
+  const titleControls = useAnimation();
+  const descriptionControls = useAnimation();
 
   useEffect(() => {
     if (isContentInView) {
       titleControls.start('animate').then(() => descriptionControls.start('animate'));
     }
-    if (isIllustrationInView && rive) rive.play();
-  }, [isContentInView, titleControls, descriptionControls, isIllustrationInView, rive]);
+    if (isIllustrationInView) setIsPlaying(true);
+  }, [isContentInView, titleControls, descriptionControls, isIllustrationInView]);
 
   return (
-    <section className="safe-paddings bg-black pt-80 lg:pt-52 md:pt-40 sm:pt-28">
+    <section className="safe-paddings bg-black pt-32 lg:pt-24 md:pt-20 sm:pt-14">
       <div className="container grid-gap-x grid grid-cols-12 items-center md:block">
         <div className="col-span-6 text-white" ref={contentRef}>
           <TitleAnimation
@@ -73,7 +83,7 @@ const InHouseTeam = () => {
             width={592}
             height={679}
           >
-            <RiveComponent />
+            {isPlaying && <Animation isPlaying={isPlaying} />}
           </ImagePlaceholder>
         </div>
       </div>

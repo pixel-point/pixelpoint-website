@@ -1,8 +1,7 @@
+import clsx from 'clsx';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRive, Layout, Fit, Alignment } from 'rive-react';
-
-import ImagePlaceholder from 'components/shared/image-placeholder';
 
 const Hero = () => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({ triggerOnce: true });
@@ -17,27 +16,21 @@ const Hero = () => {
   });
 
   useEffect(() => {
-    if (isAnimationWrapperInView && rive) rive.play();
+    if (isAnimationWrapperInView && rive?.readyForPlaying) rive.play();
   }, [isAnimationWrapperInView, rive]);
 
   return (
-    <section className="safe-paddings overflow-hidden bg-black pt-32 text-center text-white sm:pt-24">
-      <div className="container">
-        <h1 className="with-text-highlight-red relative z-10 mx-auto max-w-[660px] text-center text-6xl font-normal leading-snug lg:max-w-[570px] lg:text-[42px] md:max-w-[440px] md:text-4xl sm:max-w-[290px] sm:text-2xl">
-          Get your idea shaped into <span>Astonishing</span> website
-        </h1>
+    <section className="safe-paddings relative h-[var(--real-browser-height)] overflow-hidden bg-black">
+      <div className="container h-full">
+        <h1 className="sr-only">Magnetize new users with astonishing design</h1>
         <div
-          className="mt-[-366px] flex justify-center 2xl:mt-[-20vw] lg:mt-[-22vw] lg:block md:mt-[-20vw] sm:mt-[-18vw]"
+          className={clsx(
+            'invisible absolute top-1/2 left-1/2 h-full w-full min-w-[1024px] max-w-[1920px] -translate-x-1/2 -translate-y-1/2 opacity-0 sm:w-[325vw] sm:max-w-[1440px]',
+            rive?.readyForPlaying && '!visible !opacity-100'
+          )}
           ref={animationWrapperRef}
         >
-          <ImagePlaceholder
-            className="min-w-[1550px] 2xl:min-w-[calc(100vw-256px)] lg:min-w-0"
-            width={1550}
-            height={1004}
-            aria-hidden
-          >
-            <RiveComponent />
-          </ImagePlaceholder>
+          <RiveComponent />
         </div>
       </div>
     </section>
