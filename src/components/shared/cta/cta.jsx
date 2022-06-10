@@ -15,7 +15,7 @@ const CTA = ({ className, withTopMargin }) => {
   });
 
   const { RiveComponent, rive } = useRive({
-    src: '/animations/shared/cta.riv',
+    src: '/animations/shared/cta-10-06-2022.riv',
     autoplay: false,
     layout: new Layout({
       fit: Fit.FitWidth,
