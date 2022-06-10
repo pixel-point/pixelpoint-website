@@ -41,7 +41,7 @@ Paragraph.propTypes = {
 
 const Quote = ({ authorName, children }) => (
   <figure
-    className="rounded-2xl p-7 dark:!bg-black dark:!bg-none lg:rounded-xl"
+    className="rounded-2xl p-7 dark:!bg-gray-9 dark:!bg-none lg:rounded-xl"
     style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
   >
     <QuoteIcon className="w-10 sm:w-8" aria-hidden />
