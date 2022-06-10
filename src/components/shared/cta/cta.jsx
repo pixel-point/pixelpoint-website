@@ -11,7 +11,7 @@ import LINKS from 'constants/links';
 const CTA = ({ className, withTopMargin }) => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({
     triggerOnce: true,
-    threshold: 0.8,
+    threshold: 0.5,
   });
 
   const { RiveComponent, rive } = useRive({
