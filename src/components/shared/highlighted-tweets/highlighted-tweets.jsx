@@ -160,7 +160,7 @@ const HighlightedTweets = ({ className }) => {
               mediaType = 'video';
               const videoWithHighestBitrate = media[0].variants
                 .filter(({ content_type }) => content_type === 'video/mp4')
-                .sort((a, b) => b.bitrate - a.bitrate)[0];
+                .sort((a, b) => b.bit_rate - a.bit_rate)[0];
               mediaUrl = videoWithHighestBitrate.url;
             } else if (media && media.length > 0 && media[0].type === 'photo') {
               mediaType = 'photo';
