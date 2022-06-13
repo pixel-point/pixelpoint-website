@@ -107,6 +107,7 @@ const Tailwindcss = () => {
               src="./images/illustration-photo.jpg"
               loading="lazy"
               alt=""
+              aria-hidden
             />
             <div className="bg-white px-7 py-5 lg:px-4.5 lg:py-4 md:px-7 sm:p-4">
               <div className="max-w-[240px] text-xl font-bold leading-snug lg:max-w-[230px] lg:text-lg md:max-w-[240px] md:text-xl sm:max-w-none sm:text-base">

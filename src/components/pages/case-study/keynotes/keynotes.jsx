@@ -101,13 +101,13 @@ const Keynotes = ({ items, iconsName }) => (
 
     <div className="mt-32 flex justify-center lg:mt-28 md:mt-24 sm:hidden" aria-hidden>
       <ImagePlaceholder className="mx-2" width={1270} height={134}>
-        <img src={illustration} alt="" loading="lazy" />
+        <img src={illustration} alt="" loading="lazy" aria-hidden />
       </ImagePlaceholder>
     </div>
 
     <div className="mt-11 hidden justify-center sm:flex" aria-hidden>
       <ImagePlaceholder className="mx-1 w-full max-w-[414px]" width={466} height={90}>
-        <img src={illustrationSm} alt="" loading="lazy" />
+        <img src={illustrationSm} alt="" loading="lazy" aria-hidden />
       </ImagePlaceholder>
     </div>
   </section>
