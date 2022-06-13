@@ -32,7 +32,7 @@ const Card = ({ logo, title, description, slug, githubStars }) => {
       to={`${CASE_STUDIES_BASE_PATH}${slug}`}
       onMouseEnter={handleMouseEnter}
     >
-      <h1 className="sr-only">{`${title} case study`}</h1>
+      <h3 className="sr-only">{`${title} case study`}</h3>
       <div className="relative flex min-h-[200px] items-center justify-center overflow-hidden rounded-2xl bg-black lg:min-h-[154px] lg:rounded-xl md:min-h-[180px] sm:min-h-[170px]">
         <img
           className="relative z-10 lg:scale-[0.85] md:scale-100 sm:scale-[0.9]"
