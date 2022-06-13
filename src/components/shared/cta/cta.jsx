@@ -11,11 +11,11 @@ import LINKS from 'constants/links';
 const CTA = ({ className, withTopMargin }) => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({
     triggerOnce: true,
-    threshold: 0.8,
+    threshold: 0.5,
   });
 
   const { RiveComponent, rive } = useRive({
-    src: '/animations/shared/cta.riv',
+    src: '/animations/shared/cta-10-06-2022.riv',
     autoplay: false,
     layout: new Layout({
       fit: Fit.FitWidth,

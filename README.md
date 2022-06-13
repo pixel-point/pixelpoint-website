@@ -6,9 +6,6 @@
 <a href="https://twitter.com/intent/follow?screen_name=alex_barashkov">
   <img alt="Follow on Twitter" src="https://img.shields.io/twitter/follow/alex_barashkov?color=%23ee2b6c&label=Follow%20Pixel%20Point%20on%20Twitter&labelColor=black&logoColor=%23ee2b6c&style=for-the-badge" />
 </a>
-<a href="https://app.netlify.com/sites/pixelpoint-website/deploys" alt="Netlify Status">
-  <img src="https://img.shields.io/netlify/d25e0926-7706-4f32-b200-3231fdff5e79?label=Netlify%20build&labelColor=black&style=for-the-badge" />
-</a>
 </p>
 
 <p align="center">
