@@ -184,7 +184,13 @@ const HighlightedTweets = ({ className }) => {
                     dangerouslySetInnerHTML={{ __html: textWithFormatting }}
                   />
                   {mediaType === 'video' && mediaUrl && (
-                    <video className="w-full" poster={media[0].preview_image_url} controls muted>
+                    <video
+                      className="w-full"
+                      poster={media[0].preview_image_url}
+                      controls
+                      autoPlay
+                      muted
+                    >
                       <source src={mediaUrl} type="video/mp4" />
                     </video>
                   )}
