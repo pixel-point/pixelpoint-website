@@ -190,6 +190,7 @@ const HighlightedTweets = ({ className }) => {
                       controls
                       autoPlay
                       muted
+                      playsInline
                     >
                       <source src={mediaUrl} type="video/mp4" />
                     </video>
