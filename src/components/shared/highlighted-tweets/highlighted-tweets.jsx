@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import clsx from 'clsx';
-import emojiRegex from 'emoji-regex';
 import { graphql, useStaticQuery } from 'gatsby';
 import { StaticImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
@@ -15,34 +14,17 @@ import ChatIcon from './images/chat.inline.svg';
 import HeartIcon from './images/heart.inline.svg';
 import RetweetIcon from './images/retweet.inline.svg';
 
-function getCorrectIndice(text, indice) {
-  const slice = text.slice(0, indice);
-  const emoji = slice.match(emojiRegex());
-  const emojiCount = emoji?.length;
-  const emojiStringLength = emoji?.join('')?.length;
-  const emojiExtraLength = emojiStringLength - emojiCount;
+function handleMentions(text, mentions) {
+  let textWithMentions = text;
 
-  return emojiExtraLength ? indice + emojiExtraLength : indice;
-}
-
-function getCorrectDisplayText(text, display_text_range) {
-  return text.slice(
-    getCorrectIndice(text, display_text_range[0]),
-    getCorrectIndice(text, display_text_range[1])
-  );
-}
-
-function handleUserMentions(text, userMentions) {
-  let textWithUserMentions = text;
-
-  userMentions.forEach(({ screen_name }) => {
-    textWithUserMentions = textWithUserMentions.replace(
-      `@${screen_name}`,
-      `<a href="https://twitter.com/${screen_name}" target="_blank" rel="noopener noreferrer">@${screen_name}</a>`
+  mentions.forEach(({ username }) => {
+    textWithMentions = textWithMentions.replace(
+      `@${username}`,
+      `<a href="https://twitter.com/${username}" target="_blank" rel="noopener noreferrer">@${username}</a>`
     );
   });
 
-  return textWithUserMentions;
+  return textWithMentions;
 }
 
 function handleUrls(text, urls) {
@@ -58,11 +40,11 @@ function handleUrls(text, urls) {
   return textWithUrls;
 }
 
-function handleTextFormatting(text, { userMentions, urls }) {
+function handleTextFormatting(text, { mentions, urls }) {
   let formattedText = text;
 
-  if (userMentions && userMentions.length > 0) {
-    formattedText = handleUserMentions(formattedText, userMentions);
+  if (mentions && mentions.length > 0) {
+    formattedText = handleMentions(formattedText, mentions);
   }
 
   if (urls && urls.length > 0) {
@@ -74,40 +56,40 @@ function handleTextFormatting(text, { userMentions, urls }) {
 
 const HighlightedTweets = ({ className }) => {
   const {
-    allTwitterStatusesLookupAlexBarashkov: { nodes: items },
+    allHighlightedTweet: { nodes: items },
   } = useStaticQuery(graphql`
     query {
-      allTwitterStatusesLookupAlexBarashkov {
+      allHighlightedTweet {
         nodes {
-          id_str
-          full_text
-          display_text_range
-          retweet_count
-          favorite_count
+          tweet_id
+          text
           entities {
-            media {
-              type
-              media_url_https
-            }
-            user_mentions {
-              screen_name
+            mentions {
+              start
+              end
+              username
             }
             urls {
+              start
+              end
               display_url
               url
             }
           }
-          extended_entities {
-            media {
-              type
-              video_info {
-                variants {
-                  bitrate
-                  content_type
-                  url
-                }
-              }
+          media {
+            type
+            url
+            preview_image_url
+            variants {
+              content_type
+              bit_rate
+              url
             }
+          }
+          public_metrics {
+            like_count
+            reply_count
+            retweet_count
           }
         }
       }
@@ -115,8 +97,8 @@ const HighlightedTweets = ({ className }) => {
   `);
 
   // We have to sort on our own because sort in a graphql query is not working for some reason =/
-  const sortedItems = highlightedTweets.map((tweetId) =>
-    items.find(({ id_str }) => id_str === tweetId)
+  const sortedItems = Object.keys(highlightedTweets).map((tweetId) =>
+    items.find(({ tweet_id }) => tweet_id === tweetId)
   );
 
   return (
@@ -155,40 +137,34 @@ const HighlightedTweets = ({ className }) => {
         {sortedItems.map(
           (
             {
-              id_str,
-              full_text,
-              display_text_range,
-              retweet_count,
-              favorite_count,
-              entities: { media, user_mentions, urls },
-              extended_entities,
+              tweet_id,
+              text,
+              entities: { mentions, urls },
+              media,
+              public_metrics: { like_count, reply_count, retweet_count },
             },
             index
           ) => {
-            const displayText = getCorrectDisplayText(full_text, display_text_range);
-
-            const textWithFormatting = handleTextFormatting(displayText, {
-              userMentions: user_mentions,
-              urls,
-            });
+            const textWithFormatting = handleTextFormatting(
+              text.slice(
+                highlightedTweets[tweet_id].display_text_range[0],
+                highlightedTweets[tweet_id].display_text_range[1]
+              ),
+              { mentions, urls }
+            );
 
             let mediaType;
             let mediaUrl;
 
-            if (
-              extended_entities &&
-              extended_entities.media &&
-              extended_entities.media.length > 0 &&
-              extended_entities.media[0].type === 'video'
-            ) {
+            if (media && media.length > 0 && media[0].type === 'video') {
               mediaType = 'video';
-              const videoWithHighestBitrate = extended_entities.media[0].video_info.variants
+              const videoWithHighestBitrate = media[0].variants
                 .filter(({ content_type }) => content_type === 'video/mp4')
                 .sort((a, b) => b.bitrate - a.bitrate)[0];
               mediaUrl = videoWithHighestBitrate.url;
             } else if (media && media.length > 0 && media[0].type === 'photo') {
               mediaType = 'photo';
-              mediaUrl = media[0].media_url_https;
+              mediaUrl = media[0].url;
             }
 
             return (
@@ -199,7 +175,7 @@ const HighlightedTweets = ({ className }) => {
               >
                 <Link
                   className="with-link-twitter block"
-                  to={`https://twitter.com/alex_barashkov/status/${id_str}`}
+                  to={`https://twitter.com/alex_barashkov/status/${tweet_id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -208,21 +184,23 @@ const HighlightedTweets = ({ className }) => {
                     dangerouslySetInnerHTML={{ __html: textWithFormatting }}
                   />
                   {mediaType === 'video' && mediaUrl && (
-                    <video className="w-full" poster={media[0].media_url_https} controls muted>
+                    <video className="w-full" poster={media[0].preview_image_url} controls muted>
                       <source src={mediaUrl} type="video/mp4" />
                     </video>
                   )}
-                  {mediaType === 'photo' && mediaUrl && <img src={mediaUrl} alt="" />}
+                  {mediaType === 'photo' && mediaUrl && <img src={mediaUrl} alt="" aria-hidden />}
+                  {highlightedTweets[tweet_id].link_preview_url && (
+                    <img src={highlightedTweets[tweet_id].link_preview_url} alt="" aria-hidden />
+                  )}
                   <ul className="flex items-center justify-between p-5 text-xs font-normal md:p-4">
                     <li className="flex items-center space-x-1.5">
-                      <ChatIcon className="h-4.5" /> <span>0</span>
+                      <ChatIcon className="h-4.5" /> <span>{reply_count}</span>
                     </li>
                     <li className="flex items-center space-x-1.5">
                       <RetweetIcon className="h-4.5" /> <span>{retweet_count}</span>
                     </li>
                     <li className="flex items-center space-x-1.5">
-                      <HeartIcon className="h-4.5" />{' '}
-                      <span className="text-red">{favorite_count}</span>
+                      <HeartIcon className="h-4.5" /> <span className="text-red">{like_count}</span>
                     </li>
                   </ul>
                 </Link>

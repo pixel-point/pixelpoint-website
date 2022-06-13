@@ -2,8 +2,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
 
-const highlightedTweets = require('./src/constants/highlighted-tweets');
-
 module.exports = {
   trailingSlash: 'always',
   flags: { DEV_SSR: process.env.GATSBY_DEV_SSR || false },
@@ -118,25 +116,6 @@ module.exports = {
           },
           'gatsby-remark-prismjs',
         ],
-      },
-    },
-    {
-      resolve: 'gatsby-source-twitter',
-      options: {
-        credentials: {
-          consumer_key: process.env.TWITTER_CONSUMER_KEY,
-          consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-          bearer_token: process.env.TWITTER_BEARER_TOKEN,
-        },
-        queries: {
-          alex_barashkov: {
-            endpoint: 'statuses/lookup',
-            params: {
-              id: highlightedTweets.join(','),
-              tweet_mode: 'extended',
-            },
-          },
-        },
       },
     },
     {

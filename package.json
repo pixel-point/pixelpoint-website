@@ -37,7 +37,6 @@
     "@mdx-js/react": "1.6.22",
     "@tailwindcss/line-clamp": "^0.4.0",
     "clsx": "^1.1.1",
-    "emoji-regex": "^10.1.0",
     "framer-motion": "^6.3.6",
     "gatsby": "^4.15.2",
     "gatsby-plugin-gatsby-cloud": "^4.15.0",
@@ -83,15 +82,16 @@
     "gatsby-remark-images": "^6.15.1",
     "gatsby-remark-prismjs": "^6.15.0",
     "gatsby-source-filesystem": "^4.15.0",
-    "gatsby-source-twitter": "^4.0.1",
     "gatsby-transformer-json": "^4.15.0",
     "gatsby-transformer-sharp": "^4.15.1",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.0",
     "markdownlint-cli": "^0.31.1",
+    "md5": "^2.3.0",
     "postcss": "^8.4.14",
     "postcss-import": "^14.1.0",
     "prettier": "^2.6.2",
-    "prettier-plugin-tailwindcss": "^0.1.11"
+    "prettier-plugin-tailwindcss": "^0.1.11",
+    "twitter-v2": "^1.1.0"
   }
 }
