@@ -1,5 +1,3 @@
-import { BLOG_BASE_PATH } from './blog';
-
 export default {
   servicesWebDesign: {
     title: 'Web Design — Pixel Point',
@@ -12,7 +10,6 @@ export default {
   },
   blog: {
     title: 'Our Blog — Pixel Point',
-    canonicalUrl: process.env.GATSBY_DEFAULT_SITE_URL + BLOG_BASE_PATH,
   },
   blogPost: ({ title, description, ogImage }) => ({
     title: `${title} — Pixel Point`,

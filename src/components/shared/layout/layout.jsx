@@ -52,7 +52,6 @@ Layout.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
     ogImage: PropTypes.string,
-    canonicalUrl: PropTypes.string,
   }),
   headerClassName: PropTypes.string,
   headerTheme: PropTypes.oneOf(['black', 'white']).isRequired,
