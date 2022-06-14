@@ -54,7 +54,7 @@ const Services = () => {
         </div>
         <div className="mt-14 hidden md:block sm:mt-8" aria-hidden>
           <ImagePlaceholder width={1544} height={658}>
-            <img src={lgIllustration1} width={1544} height={658} alt="" aria-hidden />
+            <img src={lgIllustration1} width={1544} height={658} alt="" />
           </ImagePlaceholder>
         </div>
         <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px] lg:max-w-[406px] lg:pt-[200px] lg:pb-[200px] md:mt-36 md:max-w-none md:py-0 sm:mt-20">
