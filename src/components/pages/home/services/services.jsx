@@ -75,7 +75,7 @@ const Services = () => {
             height={437}
             aria-hidden
           >
-            <img src={lgIllustration2} width={540} height={437} alt="" aria-hidden />
+            <img src={lgIllustration2} width={540} height={437} alt="" />
           </ImagePlaceholder>
         </div>
         <div className="absolute top-0 right-[-260px] h-[2050px] w-[1090px] lg:right-[-152px] lg:h-[1366px] lg:w-[726px] md:hidden">
