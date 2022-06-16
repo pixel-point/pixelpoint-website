@@ -186,18 +186,24 @@ const HighlightedTweets = ({ className }) => {
                   {mediaType === 'video' && mediaUrl && (
                     <video
                       className="w-full"
+                      preload="none"
                       poster={media[0].preview_image_url}
                       controls
-                      autoPlay
                       muted
-                      playsInline
                     >
                       <source src={mediaUrl} type="video/mp4" />
                     </video>
                   )}
-                  {mediaType === 'photo' && mediaUrl && <img src={mediaUrl} alt="" aria-hidden />}
+                  {mediaType === 'photo' && mediaUrl && (
+                    <img src={mediaUrl} loading="lazy" alt="" aria-hidden />
+                  )}
                   {highlightedTweets[tweet_id].link_preview_url && (
-                    <img src={highlightedTweets[tweet_id].link_preview_url} alt="" aria-hidden />
+                    <img
+                      src={highlightedTweets[tweet_id].link_preview_url}
+                      loading="lazy"
+                      alt=""
+                      aria-hidden
+                    />
                   )}
                   <ul className="flex items-center justify-between p-5 text-xs font-normal md:p-4">
                     <li className="flex items-center space-x-1.5">
