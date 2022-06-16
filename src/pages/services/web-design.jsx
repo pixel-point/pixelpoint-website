@@ -10,6 +10,7 @@ import WillTweet from 'components/pages/services-web-design/will-tweet';
 import Blog from 'components/shared/blog';
 import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
+import HighlightedTweets from 'components/shared/highlighted-tweets';
 // import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
 import ServicesCTA from 'components/shared/services-cta';
@@ -28,6 +29,7 @@ const ServicesWebDevelopmentPage = () => (
     <InHouseTeam />
     <Benefits />
     <WillTweet />
+    <HighlightedTweets className="mt-40 lg:mt-32 sm:mt-20" />
     <WellThought />
     <GuideAndEngage />
     <CreativeMarketing />
