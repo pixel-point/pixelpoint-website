@@ -218,15 +218,17 @@ const HighlightedTweets = ({ className }) => {
                   </ul>
                 </Link>
                 {mediaType === 'video' && mediaUrl && (
-                  <video
-                    className="absolute bottom-[58px] left-0 right-0 w-full md:bottom-[50px]"
-                    preload="none"
-                    poster={media[0].preview_image_url}
-                    controls
-                    muted
-                  >
-                    <source src={mediaUrl} type="video/mp4" />
-                  </video>
+                  <div className="absolute bottom-[58px] left-0 right-0 md:bottom-[50px]">
+                    <video
+                      className="w-full"
+                      preload="none"
+                      poster={media[0].preview_image_url}
+                      controls
+                      muted
+                    >
+                      <source src={mediaUrl} type="video/mp4" />
+                    </video>
+                  </div>
                 )}
               </li>
             );
