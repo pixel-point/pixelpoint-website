@@ -2,7 +2,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 
 const WellThought = () => (
-  <section className="safe-paddings mt-40 lg:mt-32 sm:mt-20">
+  <section className="safe-paddings mt-52 lg:mt-36 md:mt-32 sm:mt-20">
     <div className="container">
       <h2 className="with-text-highlight-red mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug lg:max-w-[580px] lg:text-[42px] md:max-w-[550px] md:text-4xl sm:text-2xl">
         Ensure user comfort with a <span>Well-thought</span> product design
