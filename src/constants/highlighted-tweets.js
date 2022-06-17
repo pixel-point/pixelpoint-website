@@ -22,7 +22,7 @@ module.exports = {
       '/images/components/shared/highlighted-tweets/1488475565845843974-link-preview.png',
   },
   '1461375333496758281': {
-    display_text_range: [0, 999],
+    display_text_range: [0, 235],
     link_preview_url:
       '/images/components/shared/highlighted-tweets/1461375333496758281-link-preview.jpeg',
   },
