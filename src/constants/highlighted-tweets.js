@@ -14,16 +14,16 @@ module.exports = {
   '1496140897356034050': {
     display_text_range: [0, 110],
     link_preview_url:
-      'https://pbs.twimg.com/card_img/1534269585721069581/FstJHoZj?format=jpg&name=medium',
+      '/images/components/shared/highlighted-tweets/1496140897356034050-link-preview.jpeg',
   },
   '1488475565845843974': {
     display_text_range: [0, 196],
     link_preview_url:
-      'https://pbs.twimg.com/card_img/1534169628762841094/LW1kjUCL?format=png&name=medium',
+      '/images/components/shared/highlighted-tweets/1488475565845843974-link-preview.png',
   },
   '1461375333496758281': {
     display_text_range: [0, 999],
     link_preview_url:
-      'https://pbs.twimg.com/card_img/1534809431136948225/FOIy_vqj?format=jpg&name=medium',
+      '/images/components/shared/highlighted-tweets/1461375333496758281-link-preview.jpeg',
   },
 };
