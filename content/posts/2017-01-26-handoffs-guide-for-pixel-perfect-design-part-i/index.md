@@ -26,7 +26,7 @@ Photoshop has a lot of useful plugins to expedite your work process, but we reco
 
 ### Use a dash notation for your assets
 
-Google recommends this for all files, including HTML, PDF, and .jpg. Here is a Google WebMasters [video about it](youtu.be/AQcSFsQyct8). While it’s possible to rename everything on backend side, it’s best to keep names consistent.
+Google recommends this for all files, including HTML, PDF, and .jpg. Here is a Google WebMasters [video about it](https://youtu.be/AQcSFsQyct8). While it’s possible to rename everything on backend side, it’s best to keep names consistent.
 
 - Use only Latin characters.
 - Don’t use spaces.
