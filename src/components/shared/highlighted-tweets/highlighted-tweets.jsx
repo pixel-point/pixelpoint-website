@@ -5,6 +5,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
 import highlightedTweets from 'constants/highlighted-tweets';
 import LINKS from 'constants/links';
@@ -77,6 +78,8 @@ const HighlightedTweets = ({ className }) => {
             }
           }
           media {
+            height
+            width
             type
             url
             preview_image_url
@@ -184,15 +187,7 @@ const HighlightedTweets = ({ className }) => {
                     dangerouslySetInnerHTML={{ __html: textWithFormatting }}
                   />
                   {mediaType === 'video' && mediaUrl && (
-                    <video
-                      className="invisible w-full opacity-0"
-                      preload="none"
-                      poster={media[0].preview_image_url}
-                      controls
-                      muted
-                    >
-                      <source src={mediaUrl} type="video/mp4" />
-                    </video>
+                    <ImagePlaceholder height={media[0].height} width={media[0].width} />
                   )}
                   {mediaType === 'photo' && mediaUrl && (
                     <img src={mediaUrl} loading="lazy" alt="" aria-hidden />
@@ -218,17 +213,15 @@ const HighlightedTweets = ({ className }) => {
                   </ul>
                 </Link>
                 {mediaType === 'video' && mediaUrl && (
-                  <div className="absolute bottom-[58px] left-0 right-0 md:bottom-[50px]">
-                    <video
-                      className="w-full"
-                      preload="none"
-                      poster={media[0].preview_image_url}
-                      controls
-                      muted
-                    >
-                      <source src={mediaUrl} type="video/mp4" />
-                    </video>
-                  </div>
+                  <video
+                    className="absolute bottom-[58px] left-0 right-0 w-full md:bottom-[50px]"
+                    preload="none"
+                    poster={media[0].preview_image_url}
+                    controls
+                    muted
+                  >
+                    <source src={mediaUrl} type="video/mp4" />
+                  </video>
                 )}
               </li>
             );

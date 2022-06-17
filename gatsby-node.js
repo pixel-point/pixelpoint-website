@@ -366,7 +366,7 @@ exports.sourceNodes = async ({ actions, createContentDigest }) => {
     const { data, includes } = await fetch(
       `https://api.twitter.com/2/tweets?ids=${Object.keys(highlightedTweets).join(
         ','
-      )}&tweet.fields=entities,public_metrics&expansions=attachments.media_keys,entities.mentions.username&media.fields=media_key,preview_image_url,type,url,variants`,
+      )}&tweet.fields=entities,public_metrics&expansions=attachments.media_keys,entities.mentions.username&media.fields=height,media_key,preview_image_url,type,url,width,variants`,
       {
         headers: {
           Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
