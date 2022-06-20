@@ -1,6 +1,6 @@
 ---
 title: 'Motion Morning #3: The deep perception'
-summary: Let's train our motion taste buds to the deep perception by taking a closer look at the work of just a single studio, but with extraordinary skills in various animation styles.
+summary: Let's train our motion taste buds for deep perception by taking a closer look at the work of just a single studio, but with extraordinary skills in various animation styles.
 author: Vlad Kamelsky
 cover: cover.jpg
 category: Design
@@ -10,7 +10,7 @@ Hey folks, it's Vlad again with the third episode of Motion Morning! Last Monday
 
 ## Meet the ManvsMachine!
 
-[ManvsMachine](https://mvsm.com/) is are multidimensional creative studio specialised in the fields of design, film, and visual arts. They have two studios, one in Los Angeles, and another one in London. The guys have some real motion Houdinies as staff members and, quite predictably, have a solid portfolio showcasing their work around the world's most famous brands like Nike, Google, and Pepsi.
+[ManvsMachine](https://mvsm.com/) is are multidimensional creative studio specialized in the fields of design, film, and visual arts. They have two studios, one in Los Angeles, and another one in London. The guys have some real motion Houdinies as staff members and, quite predictably, have a solid portfolio showcasing their work around the world's most famous brands like Nike, Google, and Pepsi.
 
 <video src="
 https://pixel-point-website.s3.amazonaws.com/posts/2022-06-20-motion-morning-3/1.mp4" width="800" height="555" controls></video>
@@ -18,7 +18,7 @@ https://pixel-point-website.s3.amazonaws.com/posts/2022-06-20-motion-morning-3/1
 <video src="
 https://pixel-point-website.s3.amazonaws.com/posts/2022-06-20-motion-morning-3/2.mp4" width="800" height="555" controls></video>
 
-ManvsMachine appears to be smaller than BUCK studio, but the quality of their work is nonetheless exceptional. Apple clearly fancies them; they even granted the permission to publish MM's take on MacBook commercials and collaborated on a full-fledged marketing company for iMac Pro
+ManvsMachine appears to be smaller than BUCK studio, but the quality of their work is nonetheless exceptional. Apple clearly fancies them; they even granted the permission to publish MM's take on MacBook commercials and collaborated on a full-fledged marketing company for iMac Pro.
 
 <video src="
 https://pixel-point-website.s3.amazonaws.com/posts/2022-06-20-motion-morning-3/3.mp4" width="800" height="555" controls></video>
