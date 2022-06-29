@@ -141,5 +141,11 @@
     video {
       @apply mx-auto max-w-full;
     }
+
+    video {
+      /* Extra hack to remove grey border artifact on Safari */
+      /* https://stackoverflow.com/questions/52508598/html5-video-element-on-iphone-has-border */
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
+    }
   }
 }
