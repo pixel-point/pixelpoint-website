@@ -17,8 +17,8 @@ This topic can be confusing, so it's important to learn the difference. Think of
 Now that it is clear, the next important thing to learn is that not every codec is suitable for every video format. For `WebM`, it's `VP8` and `VP9`, while in `mp4` could be almost anything.
 
 <video autoplay playsinline muted loop width="800" height="600">
-<source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/apple.mp4" />
-<source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/apple.webm" />
+<source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/apple.mp4" />
+<source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/apple.webm" />
 </video>
 
 For example, the video above from Apple's new Macbook Air site uses `mp4` format, but if we look deeper, it uses the `H264` codec. `H264` is very popular but much less optimized than `VP9` or `H265`.
