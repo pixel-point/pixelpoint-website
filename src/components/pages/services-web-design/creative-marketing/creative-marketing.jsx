@@ -41,7 +41,7 @@ const CreativeMarketing = () => (
           <StaticImage
             className="md:max-w-[468px]"
             src="./images/swag.png"
-            alt=""
+            alt="Upscope Swag"
             loading="lazy"
             aria-hidden
           />
@@ -62,7 +62,7 @@ const CreativeMarketing = () => (
             <StaticImage
               className="md:mx-auto md:!block md:max-w-[468px]"
               src="./images/technical-diagram.jpg"
-              alt=""
+              alt="Browserless diagrams"
               loading="lazy"
               aria-hidden
             />

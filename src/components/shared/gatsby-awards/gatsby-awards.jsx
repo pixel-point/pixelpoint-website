@@ -10,7 +10,7 @@ const title = 'Proud finalists of the Gatsby Agency Awards 2021';
 const GatsbyAwards = ({ className, theme, withTopMargin }) => (
   <section
     className={clsx(
-      'safe-paddings',
+      'safe-paddings dark:text-white',
       theme === 'black' && 'text-black',
       theme === 'white' && 'text-white',
       withTopMargin && 'mt-40 lg:mt-32 sm:mt-20',
@@ -25,7 +25,7 @@ const GatsbyAwards = ({ className, theme, withTopMargin }) => (
         </li>
         <li
           className={clsx(
-            'ml-14 border-l pl-14 lg:ml-10 lg:pl-10 sm:ml-0 sm:border-0 sm:pl-0',
+            'ml-14 border-l pl-14 dark:border-l-gray-8 lg:ml-10 lg:pl-10 sm:ml-0 sm:border-0 sm:pl-0',
             theme === 'black' && 'border-l-gray-4',
             theme === 'white' && 'border-l-gray-8'
           )}

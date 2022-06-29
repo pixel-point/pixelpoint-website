@@ -23,7 +23,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
   return (
     <nav
       className={clsx(
-        'invisible absolute left-1.5 top-1.5 right-1.5 z-40 hidden rounded-xl border border-gray-3 bg-white px-6 pt-24 pb-5 opacity-0 transition-[opacity,visibility] duration-200 md:block sm:pt-20',
+        'invisible absolute left-1.5 top-1.5 right-1.5 z-40 hidden rounded-xl border border-gray-3 bg-white px-6 pt-24 pb-5 opacity-0 transition-[opacity,visibility] duration-200 dark:text-black md:block sm:pt-20',
         isOpen && '!visible !opacity-100'
       )}
       style={{ boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)' }}
@@ -33,10 +33,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
         {MENUS.mobile.map(({ text, to, items }, index) => (
           <li className={clsx('border-b border-b-gray-3', items?.length > 0 && 'pb-5')} key={index}>
             <Link
-              className={clsx(
-                'block text-lg font-normal capitalize leading-none',
-                !items && 'py-5'
-              )}
+              className={clsx('block text-lg font-normal leading-none', !items && 'py-5')}
               to={to}
             >
               {text}
@@ -49,7 +46,7 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
 
                   return (
                     <li key={index}>
-                      <Link className="flex items-center space-x-3.5 capitalize" to={to}>
+                      <Link className="flex items-center space-x-3.5" to={to}>
                         <Icon className="h-12 shrink-0" />
                         <span className="text-lg font-semibold">{text}</span>
                       </Link>

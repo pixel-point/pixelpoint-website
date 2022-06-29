@@ -22,7 +22,7 @@ const Footer = () => (
           <ul className="space-y-8 sm:hidden" key={index}>
             {links.map(({ to, text }, index) => (
               <li className="text-[0px]" key={index}>
-                <Link className="capitalize" to={to} size="base" theme="white">
+                <Link to={to} size="base" theme="white">
                   {text}
                 </Link>
               </li>
@@ -33,7 +33,7 @@ const Footer = () => (
           <ul className="hidden space-y-6 sm:block" key={index}>
             {links.map(({ to, text }, index) => (
               <li className="text-[0px]" key={index}>
-                <Link className="capitalize" to={to} size="base" theme="white">
+                <Link to={to} size="base" theme="white">
                   {text}
                 </Link>
               </li>

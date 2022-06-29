@@ -20,7 +20,7 @@ const Hero = () => {
   }, [isAnimationWrapperInView, rive]);
 
   return (
-    <section className="safe-paddings relative h-screen overflow-hidden bg-black">
+    <section className="safe-paddings relative h-[var(--real-browser-height)] overflow-hidden bg-black">
       <div className="container h-full">
         <h1 className="sr-only">Magnetize new users with astonishing design</h1>
         <div

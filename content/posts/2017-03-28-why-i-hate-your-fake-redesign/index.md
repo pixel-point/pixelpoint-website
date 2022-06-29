@@ -65,28 +65,28 @@ How do you make the world a better place and get real experience?
 
 Charitable foundations all over the world are trying to help people, but very often have terrible websites. I would guess that they’d love free design help, so offer your services! This is also a great way to improve your karma. :)
 
-[](http://www.nastenka.ru/)
+- <http://www.nastenka.ru/>
 
-[](http://www.cancersurvivorsfund.org/)
+- <http://www.cancersurvivorsfund.org/>
 
-[](https://paradisecharity.org/)
+- <https://paradisecharity.org/>
 
-[](http://rachelfriends.org/previews/rachelplus-en/)
+- <http://rachelfriends.org/previews/rachelplus-en/>
 
 Don’t like that approach? You can also pick the websites of famous attractions and offer to help them. They have a lot of visitors every day, but often don’t have great sites.
 
-[](http://www.galleriaborghese.it/en)
+- <http://www.galleriaborghese.it/en>
 
-[](http://www.stage-entertainment.fr/theatre-mogador)
+- <http://www.stage-entertainment.fr/theatre>
 
-[](http://www.patrimonionacional.es/)
+- <http://www.patrimonionacional.es/>
 
 Want to try designing for ecommerce sites? Let’s Google “flower delivery Paris” and pick a few poorly designed examples:
 
-[](http://www.parisfloristandgifts.com/)
+- <http://www.parisfloristandgifts.com/>
 
-[](https://www.arenaflowers.com/international/france)
+- <https://www.arenaflowers.com/international/france>
 
-[](http://www.interflora.fr/)
+- <http://www.interflora.fr/>
 
 Don’t hesitate to message site owners or ask your friends, maybe they need your help. You will find a real project and get real experience. With this method, you will improve your communication skills, get valuable new contacts, and learn about analytics and client preferences firsthand.

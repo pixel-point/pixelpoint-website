@@ -60,7 +60,7 @@ const Content = ({
             </figcaption>
           </figure>
         )}
-        <div className="mt-12 hidden rounded-xl bg-gray-9 p-7 md:block sm:px-5 sm:pt-4 sm:pb-6">
+        <div className="mt-12 hidden rounded-xl border border-gray-8 p-7 md:block sm:px-5 sm:pt-4 sm:pb-6">
           <div className="flex items-center justify-between">
             <img
               className="sm:translate-x-[-15%] sm:scale-[0.7]"
@@ -80,7 +80,7 @@ const Content = ({
               </Link>
             )}
           </div>
-          <div className="mt-6 flex md:mt-7 md:space-x-4 md:border-t md:border-t-gray-9 md:pt-7 sm:mt-4 sm:block sm:space-x-0 sm:space-y-6 sm:pt-6">
+          <div className="mt-6 flex md:mt-7 md:space-x-4 md:border-t md:border-t-gray-8 md:pt-7 sm:mt-4 sm:block sm:space-x-0 sm:space-y-6 sm:pt-6">
             {[
               { title: 'Provided services', items: services },
               { title: 'Technology stack', items: stack },
@@ -103,7 +103,7 @@ const Content = ({
           </MDXProvider>
         </div>
       </div>
-      <div className="col-start-10 col-end-13 rounded-2xl bg-gray-9 p-7 lg:col-start-9 lg:rounded-xl md:hidden">
+      <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7 lg:col-start-9 lg:rounded-xl md:hidden">
         <img src={logo} alt={title} loading="eager" />
         {githubUsername && githubRepoName && githubStars && (
           <Link

@@ -15,7 +15,7 @@ const PostsList = ({ activeCategory, items }) => (
       <h1 className="text-4xl font-semibold leading-snug lg:text-[32px] sm:text-2xl">
         Sharing Pixel Point <span className="text-red">Collective experience:</span>
       </h1>
-      <ul className="scrollbar-hidden relative mt-16 flex space-x-6 overflow-auto pb-px after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-gray-4 lg:mt-14 md:mt-12 sm:mt-7">
+      <ul className="scrollbar-hidden relative mt-16 flex space-x-6 overflow-auto pb-px after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-gray-4 dark:after:bg-gray-8 lg:mt-14 md:mt-12 sm:mt-11">
         {['All', ...BLOG_CATEGORIES].map((category, index) => (
           <li key={index}>
             <Link
@@ -40,7 +40,7 @@ const PostsList = ({ activeCategory, items }) => (
             <Link className="with-nested-link-red-hover block" to={getBlogPostPath(slug)}>
               <div className="flex items-center">
                 <span className="text-sm font-normal text-red">{category}</span>
-                <span className="relative ml-3 pl-3 text-sm font-normal text-gray-7 before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gray-4">
+                <span className="relative ml-3 pl-3 text-sm font-normal text-gray-7 before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gray-4 dark:before:bg-gray-8">
                   {getBlogPostDateFromSlug(slug)}
                 </span>
               </div>

@@ -28,7 +28,9 @@
 
     ul,
     ol,
-    p {
+    p,
+    video,
+    .embedVideo-container {
       @apply my-5 sm:my-4;
     }
 
@@ -80,13 +82,29 @@
       }
     }
 
+    .table-wrapper {
+      @apply md:overflow-x-auto;
+    }
+
+    table {
+      @apply w-full border-hidden text-base md:min-w-[500px];
+
+      th {
+        @apply border-y border-gray-4 py-2 text-left font-medium dark:border-gray-8;
+      }
+
+      td {
+        @apply border-y border-gray-4 py-2 dark:border-gray-8;
+      }
+    }
+
     pre {
-      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-1 px-6 py-4 text-base text-black md:px-4 md:py-3 md:text-sm;
+      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-1 px-6 py-4 text-base text-black dark:bg-gray-9 dark:text-white md:px-4 md:py-3 md:text-sm;
 
       .token.atrule,
       .token.attr-value,
       .token.keyword {
-        @apply text-[#0f2cbd];
+        @apply text-[#0f2cbd] dark:text-[#7187f4];
       }
 
       .token.function,
@@ -99,7 +117,7 @@
       .token.url,
       .language-css .token.string,
       .style .token.string {
-        @apply text-[#7e428a];
+        @apply text-[#7e428a] dark:text-[#9d53ac];
       }
 
       .token.property,
@@ -109,7 +127,7 @@
       .token.constant,
       .token.symbol,
       .token.deleted {
-        @apply text-[#82174c];
+        @apply text-[#82174c] dark:text-[#ad1f66];
       }
 
       .token.selector,
@@ -118,7 +136,7 @@
       .token.char,
       .token.builtin,
       .token.inserted {
-        @apply text-[#00994c];
+        @apply text-[#00994c] dark:text-[#00cc66];
       }
 
       .token.punctuation {
@@ -134,7 +152,18 @@
     }
 
     :not(pre) > code {
-      @apply break-words rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-[#d41153] md:px-1 md:py-px md:text-sm;
+      @apply break-words rounded-sm bg-gray-1 px-1.5 py-0.5 text-base text-red dark:bg-gray-9 md:px-1 md:py-px md:text-sm;
+    }
+
+    .embedVideo-container {
+      /* 56.25% is 16:9 ratio
+      this code makes an iframe responsive 
+      https://stackoverflow.com/a/29784327 */
+      @apply relative h-0 pb-[56.25%];
+
+      iframe {
+        @apply absolute top-0 left-0 h-full w-full;
+      }
     }
 
     iframe,
