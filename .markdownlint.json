@@ -3,5 +3,6 @@
   "no-duplicate-heading": false,
   "no-inline-html": false,
   "ol-prefix": false,
-  "no-trailing-punctuation": false
+  "no-trailing-punctuation": false,
+  "no-emphasis-as-header": false
 }
