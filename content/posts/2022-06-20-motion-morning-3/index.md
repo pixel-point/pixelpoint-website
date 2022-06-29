@@ -13,7 +13,7 @@ Hey folks, it's Vlad again with the third episode of Motion Morning! Last Monday
 [ManvsMachine](https://mvsm.com/) is are multidimensional creative studio specialized in the fields of design, film, and visual arts. They have two studios, one in Los Angeles, and another one in London. The guys have some real motion Houdinies as staff members and, quite predictably, have a solid portfolio showcasing their work around the world's most famous brands like Nike, Google, and Pepsi.
 
 <video src="
-https://pixel-point-website.s3.amazonaws.com/posts/2022-06-20-motion-morning-3/1.mp4" width="800" height="555" controls></video>
+https://pixel-point-website.s3.amazonaws.com/posts/2022-06-20-motion-morning-3/1.mp4" playsinline width="800" height="555" controls></video>
 
 <video src="
 https://pixel-point-website.s3.amazonaws.com/posts/2022-06-20-motion-morning-3/2.mp4" width="800" height="555" controls></video>

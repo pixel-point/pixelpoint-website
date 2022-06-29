@@ -10,7 +10,7 @@ Modern web development every year applies new standards for performance. Framewo
 
 However, there is still a solution. Modern video codecs can deliver excellent quality while preserving a very reasonable size. Using video for animation with proper optimization is always better than GIF and sometimes outperforms native implementations. In this article, we will learn about codecs like `VP9` and `H265`, and how we can optimize video using `ffmpeg` tool.
 
-### There are formats and there are codecs
+## There are formats and there are codecs
 
 This topic can be confusing, so it's important to learn the difference. Think of video format as a container that defines file structure for carrying video and audio streams. Video and audio streams inside these containers are multimedia data encoded with codec. Some popular examples of video formats are `mp4`, `WebM`, or `MKV`. Famous codecs are `H264`, `H265`, and `VP8/9`.
 
@@ -23,7 +23,7 @@ Now that it is clear, the next important thing to learn is that not every codec 
 
 For example, the video above from Apple's new Macbook Air site uses `mp4` format, but if we look deeper, it uses the `H264` codec. `H264` is very popular but much less optimized than `VP9` or `H265`.
 
-### WebM and VP9
+## WebM and VP9
 
 WebM is an open, royalty-free media file format designed for the web. It can carry video streams compressed with the `VP8` or `VP9` video codecs and audio streams compressed with the [Vorbis](https://xiph.org/vorbis/) or [Opus](https://www.opus-codec.org/) audio codecs.
 
@@ -33,7 +33,7 @@ It can save up to 20-50% in size compared with `H264` codecs retaining the same 
 
 Don’t be sad though, there is a solid alternative for iOS users.
 
-### MP4 and H265
+## MP4 and H265
 
 H265, a.k.a HEVC (High-Efficiency Video Coding), is a codec supported by Apple and shows the same 20-50% better efficiency than its `H264` older brother. It is not a royalty-free codec - perhaps, that is why the adoption rate is much less than of `WebM`'s.
 
@@ -41,11 +41,11 @@ H265, a.k.a HEVC (High-Efficiency Video Coding), is a codec supported by Apple a
 
 So, by clever combination of `webm` + `VP9` and `mp4` + `H265` for our videos, we can achieve 94% global coverage.
 
-### Video optimization tools
+## Video optimization tools
 
 There are two most popular tools for video optimization - [Handbrake](https://handbrake.fr/) and [ffmpeg](https://ffmpeg.org/). Handbrake has a GUI, and it makes it much easier to use; however, using ffmpeg is a more flexible option in case you want to render videos with alpha(transparent) channels or use hardware acceleration that speeds up compression a lot. Also, I find it much easier to share single ffmpeg commands across the team instead of showing where to click things in Handbrake.
 
-### Installation of ffmpeg
+## Installation of ffmpeg
 
 If you’re a macOS user, use brew to install it.
 
@@ -55,7 +55,7 @@ brew install ffmpeg
 
 For everyone else, you can follow instruction on the [site.](https://ffmpeg.org/download.html)
 
-### Basics of ffmpeg
+## Basics of ffmpeg
 
 ffmpeg is a CLI tool and it has a lot of options that is nice to know. You can use ffmpeg as a beginner just by running:
 
@@ -90,7 +90,7 @@ As I've previously mentioned, the original file resolution is 5000x2700, but we 
 
 If we run the command above, it compresses the video down to 542 KB.
 
-### Advanced tuning
+## Advanced tuning
 
 Additionally to the previously mentioned arguments, ffmpeg `VP9` and `H265` codecs accept `-crf` flag . It enables constant quality mode, which guarantees a certain perceptual quality level within the entire video by passing a number from 0-63(VP9) and 0-51(H265), where 0 is the best quality and the maximum number is the worst.
 
@@ -163,7 +163,7 @@ ffmpeg -i input.mp4 -movflags faststart -c:v libx265 -vf scale=3840:-2 -crf 32 -
 
 You’ve probably noticed that for `H265` we’ve passed `-crf 32` , when for `VP9` it has been `-crf 40`. Both values result in a very similar bitrate for both videos, just a syntax difference due to different accepted number range.
 
-### Pros and cons using `hevc_videotoolbox` library for `H265`
+## Pros and cons using `hevc_videotoolbox` library for `H265`
 
 `hevc_videotoolbox` is a macOS-specific library that gives native hardware acceleration for `H265` encoding. It is faster by two orders of magnitude than `libx265`, but has some drawbacks. It is less efficient in terms of optimization and does not have Constant Quality mode (`-crf`) and presets we used in the previous example. As an alternative to `-crf` it’s possible to use `-b:v`, which allows manually defining the bitrate of the video([read more](https://trac.ffmpeg.org/wiki/Encode/H.265)).
 
@@ -175,7 +175,7 @@ ffmpeg -i input.mp4 -movflags faststart -c:v hevc_videotoolbox -vf scale=3840:-2
 
 The one advantage of `hevc_videotoolbox` over `libx265` is that it supports encoding videos in `H265` with alpha channel.
 
-### Sharpening video
+## Sharpening video
 
 For some videos, you can try using the low resolution option, but on retina screens, it could lead to a blurry picture. Try to apply `unsharp` filter the way shown below to improve the perceiving quality while still having low resolution visually:
 
@@ -195,15 +195,15 @@ Without sharp
 
 ![GATSBY_EMPTY_ALT](./screenshot-5.jpg)
 
-### Alternatives to Constant Quality mode
+## Alternatives to Constant Quality mode
 
 ffmpeg has more video optimization settings available, such as Constrained Quality, Two-passes, Constant bitrate, and Lossless. But they either increase the encoding time significantly or require more tries to find the best bitrate setting to achieve similar results that you can do with Constant Quality (`crf`) mode.
 
-### Summary
+## Summary
 
 Video optimization for the web with ffmpeg in simple scenarios is pretty straightforward and requires just two commands to run:
 
-**WebM(VP9)**
+### WebM(VP9)
 
 ```jsx
 ffmpeg -i input.mp4 -c:v libvpx-vp9 -crf 40 -vf scale=3840:-2 -deadline best -an output.webm
@@ -216,7 +216,7 @@ ffmpeg -i input.mp4 -c:v libvpx-vp9 -crf 40 -vf scale=3840:-2 -deadline best -an
 - `-vf scale=3840:-2` define settings for scale filter
 - `-deadline best` manipulate the speed/quality ration of upcoming compressing
 
-**MP4(H265)**
+### MP4(H265)
 
 ```jsx
 ffmpeg -i input.mp4 -c:v libx265 -crf 32 -vf scale=3840:-2 -preset veryslow -tag:v hvc1 -movflags faststart -an output.mp4
