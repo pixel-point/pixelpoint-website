@@ -216,7 +216,7 @@ ffmpeg -i input.mp4 -c:v libvpx-vp9 -crf 40 -vf scale=3840:-2 -deadline best -an
 - `-vf scale=3840:-2` define settings for scale filter
 - `-deadline best` manipulate the speed/quality ration of upcoming compressing
 
-**MP4(H265**
+**MP4(H265)**
 
 ```jsx
 ffmpeg -i input.mp4 -c:v libx265 -crf 32 -vf scale=3840:-2 -preset veryslow -tag:v hvc1 -movflags faststart -an output.mp4
