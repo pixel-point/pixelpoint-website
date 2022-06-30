@@ -124,6 +124,7 @@ const HighlightedTweets = ({ className }) => {
             layout="fixed"
             width={48}
             height={48}
+            loading="lazy"
             src="../../../images/post-authors/alex-barashkov.jpg"
             alt="Alex Barashkov"
           />
