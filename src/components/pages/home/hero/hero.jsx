@@ -94,12 +94,12 @@ const Hero = () => {
   }, [isInitialAnimationCompleted, rive]);
 
   useEffect(() => {
-    if (isWrapperInView && currentAnimState !== 'fall') {
+    if (isWrapperInView) {
       firstSectionTitleControls.start('animate').then(() => {
         setIsInitialAnimationCompleted(true);
       });
     }
-  }, [isWrapperInView, rive, currentAnimState, firstSectionTitleControls]);
+  }, [isWrapperInView, firstSectionTitleControls]);
 
   useEffect(() => {
     if (currentAnimState === 'fall' && isSecondSectionInView)

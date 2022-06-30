@@ -58,7 +58,7 @@ const PostsList = ({ activeCategory, items }) => (
                   />
                 </div>
               </div>
-              <div className="mt-5 flex space-x-8 lg:space-x-7 md:mt-4 md:space-x-5 sm:flex-col sm:space-x-0">
+              <div className="mt-5 flex items-start space-x-8 lg:space-x-7 md:mt-4 md:space-x-5 sm:flex-col sm:space-x-0">
                 <div className="flex-1 sm:mt-4">
                   <p className="text-lg sm:text-base">{summary}</p>
                   <Link
@@ -71,7 +71,7 @@ const PostsList = ({ activeCategory, items }) => (
                   </Link>
                 </div>
                 <GatsbyImage
-                  className="flex-1 rounded-xl sm:order-first"
+                  className="rounded-xl md:max-w-[350px] sm:order-first sm:max-w-none"
                   imgClassName="rounded-xl"
                   image={getImage(cover)}
                   alt=""
