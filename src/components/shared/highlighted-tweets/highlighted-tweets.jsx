@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
 import highlightedTweets from 'constants/highlighted-tweets';
 import LINKS from 'constants/links';
@@ -57,7 +56,7 @@ function handleTextFormatting(text, { mentions, urls }) {
 }
 
 const HighlightedTweets = ({ className }) => {
-  const [sectionRef, isSectionInView] = useInView({ triggerOnce: true, rootMargin: '1000px 0px' });
+  const [sectionRef, isSectionInView] = useInView({ triggerOnce: true, rootMargin: '500px 0px' });
 
   const {
     allHighlightedTweet: { nodes: items },
@@ -177,7 +176,7 @@ const HighlightedTweets = ({ className }) => {
 
             return (
               <li
-                className="relative max-w-[384px] shrink-0 snap-center overflow-hidden rounded-xl border border-gray-4 bg-white dark:border-gray-8 dark:bg-gray-9 md:max-w-[346px] sm:max-w-[328px]"
+                className="max-w-[384px] shrink-0 snap-center overflow-hidden rounded-xl border border-gray-4 bg-white dark:border-gray-8 dark:bg-gray-9 md:max-w-[346px] sm:max-w-[328px]"
                 style={{ boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.08)' }}
                 key={index}
               >
@@ -191,8 +190,17 @@ const HighlightedTweets = ({ className }) => {
                     className="whitespace-pre-line p-5 md:p-4"
                     dangerouslySetInnerHTML={{ __html: textWithFormatting }}
                   />
-                  {mediaType === 'video' && mediaUrl && (
-                    <ImagePlaceholder height={media[0].height} width={media[0].width} />
+                  {mediaType === 'video' && mediaUrl && isSectionInView && (
+                    <video
+                      poster={media[0].preview_image_url}
+                      controls={false}
+                      muted
+                      autoPlay
+                      playsInline
+                      loop
+                    >
+                      <source src={mediaUrl} type="video/mp4" />
+                    </video>
                   )}
                   {mediaType === 'photo' && mediaUrl && (
                     <img src={mediaUrl} loading="lazy" alt="" aria-hidden />
@@ -217,19 +225,6 @@ const HighlightedTweets = ({ className }) => {
                     </li>
                   </ul>
                 </Link>
-                {mediaType === 'video' && mediaUrl && isSectionInView && (
-                  <video
-                    className="absolute bottom-[58px] left-0 right-0 w-full md:bottom-[50px]"
-                    preload="none"
-                    poster={media[0].preview_image_url}
-                    controls
-                    muted
-                    autoPlay
-                    playsInline
-                  >
-                    <source src={mediaUrl} type="video/mp4" />
-                  </video>
-                )}
               </li>
             );
           }
