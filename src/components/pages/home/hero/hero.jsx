@@ -76,6 +76,7 @@ const Hero = () => {
   const [containerHeight, setContainerHeight] = useState(0);
   const [firstSectionHeight, setFirstSectionHeight] = useState(0);
   const [currentAnimState, setCurrentAnimState] = useState('');
+  const [isInitialAnimationCompleted, setIsInitialAnimationCompleted] = useState(false);
 
   const fallState = useStateMachineInput(rive, STATE_MACHINE_NAME, INPUT_NAME);
 
@@ -87,12 +88,18 @@ const Hero = () => {
   }, []);
 
   useEffect(() => {
-    if (isWrapperInView && rive && currentAnimState !== 'fall') {
+    if (rive && isInitialAnimationCompleted) {
+      rive.play('State Machine');
+    }
+  }, [isInitialAnimationCompleted, rive]);
+
+  useEffect(() => {
+    if (isWrapperInView) {
       firstSectionTitleControls.start('animate').then(() => {
-        rive.play('State Machine');
+        setIsInitialAnimationCompleted(true);
       });
     }
-  }, [isWrapperInView, rive, currentAnimState, firstSectionTitleControls]);
+  }, [isWrapperInView, firstSectionTitleControls]);
 
   useEffect(() => {
     if (currentAnimState === 'fall' && isSecondSectionInView)

@@ -11,7 +11,7 @@ const WellThought = () => (
         className="mt-20 rounded-2xl lg:mt-14 lg:rounded-xl md:mt-11 sm:mt-6"
         imgClassName="rounded-2xl lg:rounded-xl"
         src="../well-thought/images/illustration.jpg"
-        alt=""
+        alt="Neon product design"
         loading="lazy"
         aria-hidden
       />

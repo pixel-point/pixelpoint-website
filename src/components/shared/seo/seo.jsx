@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const SEO = ({ title, description, ogImage, canonicalUrl }) => {
+const SEO = ({ title, description, ogImage }) => {
   const {
     site: {
       siteMetadata: { siteTitle, siteDescription, siteUrl, siteImage, siteLanguage },
@@ -39,8 +39,6 @@ const SEO = ({ title, description, ogImage, canonicalUrl }) => {
       <meta property="og:type" content="website" />
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      {/* Canonical */}
-      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     </Helmet>
   );
 };
@@ -49,14 +47,12 @@ SEO.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   ogImage: PropTypes.string,
-  canonicalUrl: PropTypes.string,
 };
 
 SEO.defaultProps = {
   title: null,
   description: null,
   ogImage: null,
-  canonicalUrl: null,
 };
 
 export default SEO;
