@@ -4,6 +4,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { StaticImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
@@ -56,6 +57,8 @@ function handleTextFormatting(text, { mentions, urls }) {
 }
 
 const HighlightedTweets = ({ className }) => {
+  const [sectionRef, isSectionInView] = useInView({ triggerOnce: true, rootMargin: '1000px 0px' });
+
   const {
     allHighlightedTweet: { nodes: items },
   } = useStaticQuery(graphql`
@@ -110,6 +113,7 @@ const HighlightedTweets = ({ className }) => {
         'safe-paddings bg-gray-2 pt-28 dark:bg-black lg:pt-24 md:pt-20 sm:pt-16',
         className
       )}
+      ref={sectionRef}
     >
       <div className="container flex items-center justify-between sm:block">
         <h2 className="text-4xl md:text-[32px] sm:text-2xl">Highlighted tweets</h2>
@@ -212,13 +216,15 @@ const HighlightedTweets = ({ className }) => {
                     </li>
                   </ul>
                 </Link>
-                {mediaType === 'video' && mediaUrl && (
+                {mediaType === 'video' && mediaUrl && isSectionInView && (
                   <video
                     className="absolute bottom-[58px] left-0 right-0 w-full md:bottom-[50px]"
                     preload="none"
                     poster={media[0].preview_image_url}
                     controls
                     muted
+                    autoPlay
+                    playsInline
                   >
                     <source src={mediaUrl} type="video/mp4" />
                   </video>
