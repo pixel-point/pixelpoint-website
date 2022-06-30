@@ -80,8 +80,6 @@ const HighlightedTweets = ({ className }) => {
             }
           }
           media {
-            height
-            width
             type
             url
             preview_image_url
@@ -202,10 +200,10 @@ const HighlightedTweets = ({ className }) => {
                       <source src={mediaUrl} type="video/mp4" />
                     </video>
                   )}
-                  {mediaType === 'photo' && mediaUrl && (
-                    <img src={mediaUrl} loading="lazy" alt="" aria-hidden />
+                  {mediaType === 'photo' && mediaUrl && isSectionInView && (
+                    <img src={mediaUrl} alt="" aria-hidden />
                   )}
-                  {highlightedTweets[tweet_id].link_preview_url && (
+                  {highlightedTweets[tweet_id].link_preview_url && isSectionInView && (
                     <img
                       src={highlightedTweets[tweet_id].link_preview_url}
                       loading="lazy"
