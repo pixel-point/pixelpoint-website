@@ -30,5 +30,10 @@
     "photo": "../../src/images/post-authors/ekaterina-martynko.jpg",
     "description": "An aspiring front-end developer at Pixel Point. Writes articles to answer her own questions.",
     "twitterUrl": "https://twitter.com/k8isdead"
+  },
+  {
+    "name": "Roman Evgrafov",
+    "photo": "../../src/images/post-authors/roman-evgrafov.jpg",
+    "description": "An ambitious motion designer and a friend of Pixel Point."
   }
 ]
