@@ -2,7 +2,7 @@
 logo: logo.svg
 title: Browserless
 description: Web browser automation tool
-websiteUrl: https://browserless.io
+websiteUrl: https://www.browserless.io/
 githubUsername: browserless
 githubRepoName: chrome
 quote:
