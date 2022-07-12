@@ -4,7 +4,7 @@ import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 
-const STATE_MACHINE_NAME = 'State Machine';
+const STATE_MACHINE_NAME = ['loop', 'intro'];
 
 const Hero = () => {
   const [wrapperRef, isWrapperView] = useInView({ triggerOnce: true });
@@ -18,9 +18,10 @@ const Hero = () => {
       alignment: Alignment.Center,
     }),
   });
-
   useEffect(() => {
-    if (isWrapperView && rive) rive.play();
+    if (isWrapperView && rive) {
+      rive.play();
+    }
   }, [isWrapperView, rive]);
 
   return (
