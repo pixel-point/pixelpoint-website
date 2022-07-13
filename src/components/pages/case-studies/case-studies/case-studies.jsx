@@ -24,9 +24,11 @@ const CaseStudies = ({ items }) => (
                 <Link className="inline-block" to={`${CASE_STUDIES_BASE_PATH}${slug}`}>
                   <img
                     className="invert lg:translate-x-[-10%] lg:scale-[0.8]"
-                    src={logo.publicURL}
+                    src={logo?.url.publicURL}
                     alt={`${title} logo`}
                     loading="lazy"
+                    width={logo?.width}
+                    height={logo?.height}
                   />
                 </Link>
                 <p className="mt-4 text-lg font-normal leading-snug lg:mt-3 lg:text-base sm:mt-2">
@@ -92,7 +94,11 @@ CaseStudies.propTypes = {
       slug: PropTypes.string.isRequired,
       frontmatter: PropTypes.exact({
         logo: PropTypes.exact({
-          publicURL: PropTypes.string.isRequired,
+          url: PropTypes.exact({
+            publicURL: PropTypes.string.isRequired,
+          }),
+          width: PropTypes.number,
+          height: PropTypes.number,
         }).isRequired,
         title: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,

@@ -179,7 +179,9 @@ async function createCaseStudies({ graphql, actions }) {
           }
           frontmatter {
             logo {
-              publicURL
+              url {
+                publicURL
+              }
             }
             title
             description

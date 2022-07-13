@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 202
+  height: 46
 title: Browserless
 description: Web browser automation tool
 websiteUrl: https://www.browserless.io/

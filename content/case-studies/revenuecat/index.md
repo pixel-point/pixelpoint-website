@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 180
+  height: 38
 title: RevenueCat
 description: Subscription Management for Mobile Apps
 websiteUrl: https://revenuecat.com

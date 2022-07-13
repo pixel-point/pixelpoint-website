@@ -41,7 +41,11 @@ export const query = graphql`
         slug
         frontmatter {
           logo {
-            publicURL
+            url {
+              publicURL
+            }
+            width
+            height
           }
           title
           description

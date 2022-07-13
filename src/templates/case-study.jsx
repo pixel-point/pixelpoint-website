@@ -17,7 +17,7 @@ const CaseStudyTemplate = ({
   },
 }) => {
   const content = {
-    logo: frontmatter.logo.publicURL,
+    logo: frontmatter.logo,
     title: frontmatter.title,
     description: frontmatter.description,
     websiteUrl: frontmatter.websiteUrl,
@@ -58,7 +58,11 @@ export const query = graphql`
       slug
       frontmatter {
         logo {
-          publicURL
+          url {
+            publicURL
+          }
+          width
+          height
         }
         title
         description

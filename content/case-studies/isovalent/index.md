@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 222
+  height: 44
 title: Isovalent
 description: Cloud native networking, security, and observability
 websiteUrl: https://isovalent.com

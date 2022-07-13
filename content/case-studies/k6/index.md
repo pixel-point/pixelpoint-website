@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 86
+  height: 76
 title: Grafana k6
 description: Load testing tool and cloud service
 websiteUrl: https://k6.io

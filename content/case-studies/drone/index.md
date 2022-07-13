@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 186
+  height: 44
 title: Drone
 description: Self-service continuous integration platform
 websiteUrl: https://drone.io

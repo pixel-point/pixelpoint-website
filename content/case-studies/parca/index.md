@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 121
+  height: 30
 title: Parca
 description: Open Source infrastructure-wide continuous profiling
 websiteUrl: https://www.parca.dev/

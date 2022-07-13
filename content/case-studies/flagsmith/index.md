@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 172
+  height: 36
 title: Flagsmith
 description: Feature flag & remote config service
 websiteUrl: https://flagsmith.com

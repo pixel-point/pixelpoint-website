@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 141
+  height: 44
 title: Novu
 description: The open-source notification infrastructure for developers
 websiteUrl: https://novu.co

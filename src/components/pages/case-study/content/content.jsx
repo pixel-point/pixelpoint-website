@@ -64,7 +64,9 @@ const Content = ({
           <div className="flex items-center justify-between">
             <img
               className="sm:translate-x-[-15%] sm:scale-[0.7]"
-              src={logo}
+              src={logo.url.publicURL}
+              width={logo.width}
+              height={logo.height}
               alt={title}
               loading="eager"
             />
@@ -104,7 +106,13 @@ const Content = ({
         </div>
       </div>
       <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7 lg:col-start-9 lg:rounded-xl md:hidden">
-        <img src={logo} alt={title} loading="eager" />
+        <img
+          src={logo.url.publicURL}
+          width={logo.width}
+          height={logo.height}
+          alt={title}
+          loading="eager"
+        />
         {githubUsername && githubRepoName && githubStars && (
           <Link
             className="mt-7 inline-flex items-center rounded-full border border-white p-2 pr-4 text-white transition-colors duration-200 hover:border-blue hover:text-blue"
@@ -135,7 +143,13 @@ const Content = ({
 );
 
 Content.propTypes = {
-  logo: PropTypes.string.isRequired,
+  logo: PropTypes.exact({
+    url: PropTypes.exact({
+      publicURL: PropTypes.string.isRequired,
+    }),
+    width: PropTypes.number,
+    height: PropTypes.number,
+  }).isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   websiteUrl: PropTypes.string.isRequired,

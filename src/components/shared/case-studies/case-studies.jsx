@@ -36,9 +36,11 @@ const Card = ({ logo, title, description, slug, githubStars }) => {
       <div className="relative flex min-h-[200px] items-center justify-center overflow-hidden rounded-2xl bg-black lg:min-h-[154px] lg:rounded-xl md:min-h-[180px] sm:min-h-[170px]">
         <img
           className="relative z-10 lg:scale-[0.85] md:scale-100 sm:scale-[0.9]"
-          src={logo.publicURL}
+          src={logo.url.publicURL}
           loading="lazy"
           alt={`${title} logo`}
+          height={logo.height}
+          width={logo.width}
         />
         {githubStars && (
           <div className="absolute top-3 left-3 z-10 flex items-center lg:top-2.5 lg:left-2.5 md:top-3 md:left-3">
@@ -63,7 +65,11 @@ const Card = ({ logo, title, description, slug, githubStars }) => {
 
 Card.propTypes = {
   logo: PropTypes.exact({
-    publicURL: PropTypes.string.isRequired,
+    url: PropTypes.exact({
+      publicURL: PropTypes.string.isRequired,
+    }),
+    width: PropTypes.number,
+    height: PropTypes.number,
   }).isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -91,7 +97,11 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
           }
           frontmatter {
             logo {
-              publicURL
+              url {
+                publicURL
+              }
+              width
+              height
             }
             title
             description
