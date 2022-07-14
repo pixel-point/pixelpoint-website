@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 156
+  height: 44
 title: Neon
 description: Serverless OS alternative to AWS Aurora Postgres
 websiteUrl: https://neon.tech

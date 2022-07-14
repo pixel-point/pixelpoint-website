@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 180
+  height: 58
 title: Cilium
 description: eBPF-based Networking, Observability, and Security
 websiteUrl: https://cilium.io
