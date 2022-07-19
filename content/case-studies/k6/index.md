@@ -35,7 +35,7 @@ keynotes:
   - Provided long-term design & development support
   - Median user visit time increased tenfold
 isOpenSource: true
-position: 5
+position: 6
 ---
 
 We met with the guys during their rebranding from Loadimpact to k6, and they clearly showed they were ready to hit it big on the competitive market.
