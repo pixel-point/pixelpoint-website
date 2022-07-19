@@ -1,31 +1,18 @@
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
-import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
 import LINKS from 'constants/links';
+
+import Animation from '../animation';
 
 const CTA = ({ className, withTopMargin }) => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({
     triggerOnce: true,
     threshold: 0.5,
   });
-
-  const { RiveComponent, rive } = useRive({
-    src: '/animations/shared/cta-10-06-2022.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
-
-  useEffect(() => {
-    if (isAnimationWrapperInView && rive) rive.play();
-  }, [isAnimationWrapperInView, rive]);
 
   return (
     <section
@@ -45,9 +32,13 @@ const CTA = ({ className, withTopMargin }) => {
           </Link>
         </div>
         <div className="sm:mt-4.5" ref={animationWrapperRef}>
-          <ImagePlaceholder className="sm:w-full" width={592} height={560}>
-            <RiveComponent />
-          </ImagePlaceholder>
+          <Animation
+            className="sm:w-full"
+            src="/animations/shared/cta-10-06-2022.riv"
+            isAnimationInView={isAnimationWrapperInView}
+            width={592}
+            height={560}
+          />
         </div>
       </div>
     </section>

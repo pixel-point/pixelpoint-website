@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
+import Animation from 'components/shared/animation';
 import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';
 import LINKS from 'constants/links';
@@ -11,21 +11,6 @@ import lgIllustration2 from './images/lg-illustration-2.svg';
 
 const Services = () => {
   const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, threshold: 0.3 });
-
-  const { RiveComponent, rive } = useRive({
-    src: '/animations/pages/home/services.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.TopCenter,
-    }),
-  });
-
-  useEffect(() => {
-    if (isWrapperInView && rive) {
-      rive.play();
-    }
-  }, [isWrapperInView, rive]);
 
   return (
     <section
@@ -79,7 +64,12 @@ const Services = () => {
           </ImagePlaceholder>
         </div>
         <div className="absolute top-0 right-[-260px] h-[2050px] w-[1090px] lg:right-[-152px] lg:h-[1366px] lg:w-[726px] md:hidden">
-          <RiveComponent />
+          <Animation
+            src="/animations/pages/home/services.riv"
+            isAnimationInView={isWrapperInView}
+            width={1090}
+            height={2050}
+          />
         </div>
       </div>
     </section>
