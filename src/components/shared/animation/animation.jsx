@@ -20,7 +20,7 @@ const Animation = ({ className, src, isAnimationInView, width, height }) => {
 
   return (
     <ImagePlaceholder className={className} width={width} height={height}>
-      {isAnimationInView && <RiveComponent />}
+      {isAnimationInView && <RiveComponent width={width} height={height} />}
     </ImagePlaceholder>
   );
 };
