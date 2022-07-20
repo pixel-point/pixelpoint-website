@@ -26,7 +26,6 @@ keynotes:
   - Enriched it with engaging 3D illustrations and animations
   - Ensured the highest Lighthouse performance score of 100 points
 cover: cover.jpg
-isOpenSource: true
 isFeatured: true
 position: 1
 ---
