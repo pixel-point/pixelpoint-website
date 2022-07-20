@@ -2,10 +2,12 @@
 const path = require('path');
 
 const get = require('lodash.get');
+const md5 = require('md5');
 const fetch = require('node-fetch');
 
 const { BLOG_CATEGORIES, BLOG_POSTS_PER_PAGE } = require('./src/constants/blog');
 const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
+const highlightedTweets = require('./src/constants/highlighted-tweets');
 const getBlogPath = require('./src/utils/get-blog-path');
 const getBlogPostPath = require('./src/utils/get-blog-post-path');
 
@@ -337,6 +339,70 @@ exports.createSchemaCustomization = ({ actions }) => {
       author: PostAuthorsJson @link(by: "name", from: "frontmatter.author")
     }
   `);
+};
+
+exports.sourceNodes = async ({ actions, createContentDigest }) => {
+  function generateNode(tweet, contentDigest, type) {
+    return {
+      ...tweet,
+      id: md5(tweet.id),
+      tweet_id: tweet.id,
+      children: [],
+      parent: `__SOURCE__`,
+      internal: {
+        type,
+        contentDigest,
+      },
+    };
+  }
+
+  const { createNode } = actions;
+
+  function createNodes(tweets, nodeType) {
+    tweets.forEach((tweet) => {
+      createNode(generateNode(tweet, createContentDigest(tweet), nodeType));
+    });
+  }
+
+  try {
+    const { data, includes } = await fetch(
+      `https://api.twitter.com/2/tweets?ids=${Object.keys(highlightedTweets).join(
+        ','
+      )}&tweet.fields=entities,public_metrics&expansions=attachments.media_keys,entities.mentions.username&media.fields=height,media_key,preview_image_url,type,url,width,variants`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
+        },
+      }
+    ).then((response) => response.json());
+
+    const nodeType = 'highlightedTweet';
+
+    const dataWithMedia = data.map((tweet) => {
+      const newTweet = { ...tweet };
+
+      if (tweet.attachments?.media_keys) {
+        const media = [];
+        tweet.attachments.media_keys.forEach((mediaKey) => {
+          media.push(includes.media.find((media) => media.media_key === mediaKey));
+        });
+        newTweet.media = media;
+      }
+
+      return newTweet;
+    });
+
+    if (dataWithMedia.length > 0) {
+      createNodes(dataWithMedia, nodeType);
+    } else {
+      throw new Error('Failed to fetch highlighted tweets');
+    }
+
+    return Promise.resolve();
+  } catch (error) {
+    console.log(error);
+    throw new Error('Failed to fetch highlighted tweets');
+  }
 };
 
 exports.createPages = async (options) => {
