@@ -3,8 +3,8 @@ logo: logo.svg
 title: Nayms
 description: A smart contract powered platform for on-chain insurance
 websiteUrl: https://nayms.com
-githubUsername: nayms
-githubRepoName: contracts
+githubUsername: //nayms
+githubRepoName: //contracts
 quote:
   text: The Pixel Point team totally surpassed our expectations when it came to both design and implementation for our new site. We’re looking to further work with their great team!
   authorName: Dan Roberts
