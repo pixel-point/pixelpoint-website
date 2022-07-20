@@ -1,5 +1,8 @@
 ---
-logo: logo.svg
+logo:
+  url: logo.svg
+  width: 128
+  height: 44
 title: Nayms
 description: A smart contract powered platform for on-chain insurance
 websiteUrl: https://nayms.com
