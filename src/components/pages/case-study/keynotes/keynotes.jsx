@@ -33,6 +33,9 @@ import K6Icon3 from './images/k6-icon-3.inline.svg';
 import K6Icon4 from './images/k6-icon-4.inline.svg';
 import K6Icon5 from './images/k6-icon-5.inline.svg';
 import K6Icon6 from './images/k6-icon-6.inline.svg';
+import NaymsIcon1 from './images/nayms-icon-1.inline.svg';
+import NaymsIcon2 from './images/nayms-icon-2.inline.svg';
+import NaymsIcon3 from './images/nayms-icon-3.inline.svg';
 import NeonIcon1 from './images/neon-icon-1.inline.svg';
 import NeonIcon2 from './images/neon-icon-2.inline.svg';
 import NeonIcon3 from './images/neon-icon-3.inline.svg';
@@ -64,6 +67,7 @@ const icons = {
   revenuecat: [RevenuecatIcon1, RevenuecatIcon2, RevenuecatIcon3],
   neon: [NeonIcon1, NeonIcon2, NeonIcon3],
   parca: [ParcaIcon1, ParcaIcon2, ParcaIcon3],
+  nayms: [NaymsIcon1, NaymsIcon2, NaymsIcon3],
 };
 
 const Keynotes = ({ items, iconsName }) => (
