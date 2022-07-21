@@ -1,26 +1,31 @@
 import { useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
+import { useInView } from 'react-intersection-observer';
+import { Layout, Fit, Alignment } from 'rive-react';
 
 import Link from 'components/shared/link';
 import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
 import LINKS from 'constants/links';
+import useRiveLazy from 'hooks/use-rive-lazy';
 import GithubLogo from 'images/github.inline.svg';
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min)) + Math.ceil(min));
 }
 
-const Card = ({ logo, title, description, slug, githubStars }) => {
-  const { RiveComponent, rive } = useRive({
-    src: '/animations/shared/case-studies-card.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitHeight,
-      alignment: Alignment.Center,
-    }),
-  });
+const Card = ({ logo, title, description, slug, githubStars, inView }) => {
+  const { RiveLazyComponent, rive } = useRiveLazy(
+    {
+      src: '/animations/shared/case-studies-card.riv',
+      autoplay: false,
+      layout: new Layout({
+        fit: Fit.FitHeight,
+        alignment: Alignment.Center,
+      }),
+    },
+    inView
+  );
 
   const handleMouseEnter = () => {
     if (rive && !rive.isPlaying) rive.play([`hover-${getRandomInt(1, 5)}`]);
@@ -53,7 +58,7 @@ const Card = ({ logo, title, description, slug, githubStars }) => {
             </p>
           </div>
         )}
-        <RiveComponent className="absolute top-0 left-0 right-0 bottom-0" />
+        <RiveLazyComponent className="absolute top-0 left-0 right-0 bottom-0" />
       </div>
       <p className="mt-2.5 text-lg font-normal leading-snug">{description}</p>
       <Link className="nested-link-red mt-2.5" size="base" theme="arrow-red" withoutHover>
@@ -75,6 +80,7 @@ Card.propTypes = {
   description: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   githubStars: PropTypes.string,
+  inView: PropTypes.bool.isRequired,
 };
 
 Card.defaultProps = {
@@ -116,6 +122,8 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
     }
   `);
 
+  const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, rootMargin: '500px' });
+
   const items = nodes
     .filter(({ fields: { isDraft } }) => {
       if (process.env.NODE_ENV === 'production') return !isDraft;
@@ -131,7 +139,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
   const itemsToRender = itemsType === 'open-source' ? items.slice(0, 6) : items;
 
   return (
-    <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20">
+    <section className="safe-paddings mt-52 lg:mt-36 md:mt-28 sm:mt-20" ref={wrapperRef}>
       <div className="container">
         <h2 className="max-w-[950px] text-4xl font-normal leading-snug lg:text-[32px] sm:text-2xl">
           <span className="with-text-highlight-red" dangerouslySetInnerHTML={{ __html: title }} />{' '}
@@ -144,7 +152,12 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
         <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-14 lg:gap-y-14 md:mt-11 md:grid-cols-2 md:gap-y-11 sm:mt-10 sm:block sm:space-y-10">
           {itemsToRender.map(({ slug, frontmatter, githubStars }, index) => (
             <li key={index}>
-              <Card {...frontmatter} slug={slug} githubStars={githubStars} />
+              <Card
+                {...frontmatter}
+                slug={slug}
+                githubStars={githubStars}
+                inView={isWrapperInView}
+              />
             </li>
           ))}
         </ul>

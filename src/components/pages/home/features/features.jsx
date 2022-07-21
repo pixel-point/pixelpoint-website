@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
+import { Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
+import useRiveLazy from 'hooks/use-rive-lazy';
 
 const items = [
   'Astonishingly looking</br> pixel-perfect UI',
@@ -15,60 +16,79 @@ const items = [
 
 const Features = () => {
   const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, threshold: 0.5 });
+  const [containerRef, isContainerInView] = useInView({ triggerOnce: true, rootMargin: '500px' });
 
-  const { RiveComponent: Icon1, rive: iconAnimation1 } = useRive({
-    src: '/animations/pages/home/features/1.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
+  const { RiveLazyComponent: Icon1, rive: iconAnimation1 } = useRiveLazy(
+    {
+      src: '/animations/pages/home/features/1.riv',
+      autoplay: false,
+      layout: new Layout({
+        fit: Fit.FitWidth,
+        alignment: Alignment.Center,
+      }),
+    },
+    isContainerInView
+  );
 
-  const { RiveComponent: Icon2, rive: iconAnimation2 } = useRive({
-    src: '/animations/pages/home/features/2.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
+  const { RiveLazyComponent: Icon2, rive: iconAnimation2 } = useRiveLazy(
+    {
+      src: '/animations/pages/home/features/2.riv',
+      autoplay: false,
+      layout: new Layout({
+        fit: Fit.FitWidth,
+        alignment: Alignment.Center,
+      }),
+    },
+    isContainerInView
+  );
 
-  const { RiveComponent: Icon3, rive: iconAnimation3 } = useRive({
-    src: '/animations/pages/home/features/3.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
+  const { RiveLazyComponent: Icon3, rive: iconAnimation3 } = useRiveLazy(
+    {
+      src: '/animations/pages/home/features/3.riv',
+      autoplay: false,
+      layout: new Layout({
+        fit: Fit.FitWidth,
+        alignment: Alignment.Center,
+      }),
+    },
+    isContainerInView
+  );
 
-  const { RiveComponent: Icon4, rive: iconAnimation4 } = useRive({
-    src: '/animations/pages/home/features/4.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
+  const { RiveLazyComponent: Icon4, rive: iconAnimation4 } = useRiveLazy(
+    {
+      src: '/animations/pages/home/features/4.riv',
+      autoplay: false,
+      layout: new Layout({
+        fit: Fit.FitWidth,
+        alignment: Alignment.Center,
+      }),
+    },
+    isContainerInView
+  );
 
-  const { RiveComponent: Icon5, rive: iconAnimation5 } = useRive({
-    src: '/animations/pages/home/features/5.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
+  const { RiveLazyComponent: Icon5, rive: iconAnimation5 } = useRiveLazy(
+    {
+      src: '/animations/pages/home/features/5.riv',
+      autoplay: false,
+      layout: new Layout({
+        fit: Fit.FitWidth,
+        alignment: Alignment.Center,
+      }),
+    },
+    isContainerInView
+  );
 
-  const { RiveComponent: Icon6, rive: iconAnimation6 } = useRive({
-    src: '/animations/pages/home/features/6.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
+  const { RiveLazyComponent: Icon6, rive: iconAnimation6 } = useRiveLazy(
+    {
+      src: '/animations/pages/home/features/6.riv',
+      autoplay: false,
+      layout: new Layout({
+        fit: Fit.FitWidth,
+        alignment: Alignment.Center,
+      }),
+    },
+    isContainerInView
+  );
 
   const icons = useMemo(
     () => [
@@ -128,7 +148,7 @@ const Features = () => {
 
   return (
     <section className="safe-paddings mt-52 lg:mt-36 sm:mt-20" ref={wrapperRef}>
-      <div className="container">
+      <div className="container" ref={containerRef}>
         <h2 className="max-w-[700px] text-4xl font-normal leading-snug lg:text-[32px] sm:max-w-[370px] sm:text-2xl">
           Here is what we have to offer for the next ideal marketing website of yours:
         </h2>
@@ -138,11 +158,9 @@ const Features = () => {
 
             return (
               <li className="sm:max-w-[150px]" key={index}>
-                {Icon && (
-                  <ImagePlaceholder className="w-20" width={80} height={62} aria-hidden>
-                    <Icon />
-                  </ImagePlaceholder>
-                )}
+                <ImagePlaceholder className="w-20" width={80} height={62}>
+                  <Icon width={80} height={62} />
+                </ImagePlaceholder>
                 <p
                   className="sm:hide-br mt-3 text-lg font-normal leading-snug lg:text-base"
                   dangerouslySetInnerHTML={{ __html: item }}
