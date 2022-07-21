@@ -1,10 +1,9 @@
 import { useAnimation, motion } from 'framer-motion';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import Animation from 'components/shared/animation';
 import TitleAnimation from 'components/shared/title-animation';
-
-import Animation from './animation';
 
 const titleItems = [
   { value: 'Developed' },
@@ -24,6 +23,12 @@ const CodeQuality = () => {
 
   const titleControls = useAnimation();
   const descriptionControls = useAnimation();
+
+  useEffect(() => {
+    if (isContentInView) {
+      titleControls.start('animate').then(() => descriptionControls.start('animate'));
+    }
+  }, [descriptionControls, isContentInView, titleControls]);
 
   return (
     <section className="safe-paddings bg-black py-80 lg:py-56 md:py-40 sm:py-24">
@@ -52,10 +57,7 @@ const CodeQuality = () => {
           ref={illustrationRef}
         >
           <Animation
-            isContentInView={isContentInView}
-            isIllustrationInView={isIllustrationInView}
-            titleControls={titleControls}
-            descriptionControls={descriptionControls}
+            isAnimationInView={isIllustrationInView}
             src="/animations/pages/services-web-development/code-quality.riv"
             width={592}
             height={518}
