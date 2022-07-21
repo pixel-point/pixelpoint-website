@@ -1,26 +1,23 @@
 import { useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
-import React from 'react';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
+import React, { useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import Link from 'components/shared/link';
 import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
 import LINKS from 'constants/links';
 import GithubLogo from 'images/github.inline.svg';
 
+import Animation from './animation';
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min)) + Math.ceil(min));
 }
 
 const Card = ({ logo, title, description, slug, githubStars }) => {
-  const { RiveComponent, rive } = useRive({
-    src: '/animations/shared/case-studies-card.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitHeight,
-      alignment: Alignment.Center,
-    }),
-  });
+  const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, threshold: 0.3 });
+
+  const [rive, setRive] = useState(null);
 
   const handleMouseEnter = () => {
     if (rive && !rive.isPlaying) rive.play([`hover-${getRandomInt(1, 5)}`]);
@@ -33,7 +30,10 @@ const Card = ({ logo, title, description, slug, githubStars }) => {
       onMouseEnter={handleMouseEnter}
     >
       <h3 className="sr-only">{`${title} case study`}</h3>
-      <div className="relative flex min-h-[200px] items-center justify-center overflow-hidden rounded-2xl bg-black lg:min-h-[154px] lg:rounded-xl md:min-h-[180px] sm:min-h-[170px]">
+      <div
+        className="relative flex min-h-[200px] items-center justify-center overflow-hidden rounded-2xl bg-black lg:min-h-[154px] lg:rounded-xl md:min-h-[180px] sm:min-h-[170px]"
+        ref={wrapperRef}
+      >
         <img
           className="relative z-10 lg:scale-[0.85] md:scale-100 sm:scale-[0.9]"
           src={logo.url.publicURL}
@@ -53,7 +53,15 @@ const Card = ({ logo, title, description, slug, githubStars }) => {
             </p>
           </div>
         )}
-        <RiveComponent className="absolute top-0 left-0 right-0 bottom-0" />
+        <div className="absolute top-0 left-0 right-0 bottom-0">
+          <Animation
+            src="/animations/shared/case-studies-card.riv"
+            isWrapperInView={isWrapperInView}
+            setRive={setRive}
+            width={384}
+            height={200}
+          />
+        </div>
       </div>
       <p className="mt-2.5 text-lg font-normal leading-snug">{description}</p>
       <Link className="nested-link-red mt-2.5" size="base" theme="arrow-red" withoutHover>

@@ -1,30 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
-import ImagePlaceholder from 'components/shared/image-placeholder';
+import Animation from 'components/shared/animation';
 
 const GuideAndEngage = () => {
   const [wrapperRef, isWrapperView] = useInView({ triggerOnce: true, threshold: 0.5 });
-
-  const { RiveComponent, rive } = useRive({
-    src: '/animations/pages/services-web-design/guide-and-engage.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
-
-  useEffect(() => {
-    if (rive) {
-      if (isWrapperView) {
-        rive.play();
-      } else {
-        rive.pause();
-      }
-    }
-  }, [isWrapperView, rive]);
 
   return (
     <section
@@ -35,14 +15,14 @@ const GuideAndEngage = () => {
         <h2 className="sm::text-2xl with-text-highlight-red mx-auto max-w-[950px] text-center text-6xl font-normal leading-snug lg:max-w-[690px] lg:text-[42px] md:max-w-[650px] md:text-4xl sm:text-2xl">
           <span>Guide and engage</span> your customers with sleek, on-point animations
         </h2>
-        <ImagePlaceholder
+        <Animation
           className="mt-20 lg:mt-14 md:mt-11 sm:mt-8"
+          src="/animations/pages/services-web-design/guide-and-engage.riv"
+          isAnimationInView={isWrapperView}
           width={1216}
           height={724}
           aria-hidden
-        >
-          <RiveComponent />
-        </ImagePlaceholder>
+        />
       </div>
     </section>
   );

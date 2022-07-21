@@ -1,9 +1,8 @@
 import { useAnimation, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
-import ImagePlaceholder from 'components/shared/image-placeholder';
+import Animation from 'components/shared/animation';
 import TitleAnimation from 'components/shared/title-animation';
 
 const titleItems = [
@@ -20,30 +19,10 @@ const descriptionVariants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.3 } },
 };
-// TODO: Create a proper wrapper to lazy load rive
-// Dirty fix just until we fix the size of the animation
-// eslint-disable-next-line react/prop-types
-const Animation = ({ isPlaying }) => {
-  const { RiveComponent, rive } = useRive({
-    src: '/animations/pages/services-web-design/in-house-team.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
-  useEffect(() => {
-    if (isPlaying && rive) {
-      rive.play();
-    }
-  }, [isPlaying, rive]);
-  return <RiveComponent />;
-};
 
 const InHouseTeam = () => {
   const [contentRef, isContentInView] = useInView({ triggerOnce: true, threshold: 0.8 });
   const [illustrationRef, isIllustrationInView] = useInView({ triggerOnce: true, threshold: 0.8 });
-  const [isPlaying, setIsPlaying] = useState(false);
   const titleControls = useAnimation();
   const descriptionControls = useAnimation();
 
@@ -51,8 +30,7 @@ const InHouseTeam = () => {
     if (isContentInView) {
       titleControls.start('animate').then(() => descriptionControls.start('animate'));
     }
-    if (isIllustrationInView) setIsPlaying(true);
-  }, [isContentInView, titleControls, descriptionControls, isIllustrationInView]);
+  }, [descriptionControls, isContentInView, titleControls]);
 
   return (
     <section className="safe-paddings bg-black pt-32 lg:pt-24 md:pt-20 sm:pt-14">
@@ -78,13 +56,13 @@ const InHouseTeam = () => {
           className="relative col-span-6 flex items-center justify-center md:mx-auto md:mt-11 md:max-w-[590px] sm:mt-8"
           ref={illustrationRef}
         >
-          <ImagePlaceholder
+          <Animation
+            isAnimationInView={isIllustrationInView}
+            src="/animations/pages/services-web-design/in-house-team.riv"
             className="mb-[-199px] lg:mb-[-153px] md:mb-[-196px] sm:mb-[-129px] xs:mb-[-97px]"
             width={592}
             height={679}
-          >
-            {isPlaying && <Animation isPlaying={isPlaying} />}
-          </ImagePlaceholder>
+          />
         </div>
       </div>
     </section>

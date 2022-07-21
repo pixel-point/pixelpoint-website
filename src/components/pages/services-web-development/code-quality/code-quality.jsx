@@ -1,10 +1,10 @@
 import { useAnimation, motion } from 'framer-motion';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
-import ImagePlaceholder from 'components/shared/image-placeholder';
 import TitleAnimation from 'components/shared/title-animation';
+
+import Animation from './animation';
 
 const titleItems = [
   { value: 'Developed' },
@@ -24,22 +24,6 @@ const CodeQuality = () => {
 
   const titleControls = useAnimation();
   const descriptionControls = useAnimation();
-
-  const { RiveComponent, rive } = useRive({
-    src: '/animations/pages/services-web-development/code-quality.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
-
-  useEffect(() => {
-    if (isContentInView) {
-      titleControls.start('animate').then(() => descriptionControls.start('animate'));
-    }
-    if (isIllustrationInView && rive) rive.play();
-  }, [isContentInView, titleControls, descriptionControls, isIllustrationInView, rive]);
 
   return (
     <section className="safe-paddings bg-black py-80 lg:py-56 md:py-40 sm:py-24">
@@ -67,9 +51,15 @@ const CodeQuality = () => {
           aria-label="Prettier, ESLint, Lighthouse CI, Webpack bundle with pre/post processing, MarkdownLint, Conventional commits"
           ref={illustrationRef}
         >
-          <ImagePlaceholder width={592} height={518}>
-            <RiveComponent />
-          </ImagePlaceholder>
+          <Animation
+            isContentInView={isContentInView}
+            isIllustrationInView={isIllustrationInView}
+            titleControls={titleControls}
+            descriptionControls={descriptionControls}
+            src="/animations/pages/services-web-development/code-quality.riv"
+            width={592}
+            height={518}
+          />
         </div>
       </div>
     </section>
