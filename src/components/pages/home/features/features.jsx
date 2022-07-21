@@ -1,130 +1,53 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
-import ImagePlaceholder from 'components/shared/image-placeholder';
+import Animation from './animation';
 
 const items = [
-  'Astonishingly looking</br> pixel-perfect UI',
-  'Dazzling illustrations</br> and animations',
-  'Obvious and clear way to</br> operate on your content',
-  'Robust release</br> management flow',
-  'Integrations, 3rd parties</br> and analytics set up',
-  'High-performing,</br> SEO & a11y friendly',
+  {
+    text: 'Astonishingly looking</br> pixel-perfect UI',
+    src: '/animations/pages/home/features/1.riv',
+  },
+  {
+    text: 'Dazzling illustrations</br> and animations',
+    src: '/animations/pages/home/features/2.riv',
+  },
+  {
+    text: 'Obvious and clear way to</br> operate on your content',
+    src: '/animations/pages/home/features/3.riv',
+  },
+  { text: 'Robust release</br> management flow', src: '/animations/pages/home/features/4.riv' },
+  {
+    text: 'Integrations, 3rd parties</br> and analytics set up',
+    src: '/animations/pages/home/features/5.riv',
+  },
+  {
+    text: 'High-performing,</br> SEO & a11y friendly',
+    src: '/animations/pages/home/features/6.riv',
+  },
 ];
 
 const Features = () => {
   const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, threshold: 0.5 });
+  const [icons, setIcons] = useState({});
 
-  const { RiveComponent: Icon1, rive: iconAnimation1 } = useRive({
-    src: '/animations/pages/home/features/1.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
+  const addIcon = useCallback((newIcon, index) => {
+    setIcons((current) => ({ ...current, [index]: newIcon }));
+  }, []);
 
-  const { RiveComponent: Icon2, rive: iconAnimation2 } = useRive({
-    src: '/animations/pages/home/features/2.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
-
-  const { RiveComponent: Icon3, rive: iconAnimation3 } = useRive({
-    src: '/animations/pages/home/features/3.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
-
-  const { RiveComponent: Icon4, rive: iconAnimation4 } = useRive({
-    src: '/animations/pages/home/features/4.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
-
-  const { RiveComponent: Icon5, rive: iconAnimation5 } = useRive({
-    src: '/animations/pages/home/features/5.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
-
-  const { RiveComponent: Icon6, rive: iconAnimation6 } = useRive({
-    src: '/animations/pages/home/features/6.riv',
-    autoplay: false,
-    layout: new Layout({
-      fit: Fit.FitWidth,
-      alignment: Alignment.Center,
-    }),
-  });
-
-  const icons = useMemo(
-    () => [
-      { component: Icon1, animation: iconAnimation1 },
-      { component: Icon2, animation: iconAnimation2 },
-      { component: Icon3, animation: iconAnimation3 },
-      { component: Icon4, animation: iconAnimation4 },
-      { component: Icon5, animation: iconAnimation5 },
-      { component: Icon6, animation: iconAnimation6 },
-    ],
-    [
-      Icon1,
-      Icon2,
-      Icon3,
-      Icon4,
-      Icon5,
-      Icon6,
-      iconAnimation1,
-      iconAnimation2,
-      iconAnimation3,
-      iconAnimation4,
-      iconAnimation5,
-      iconAnimation6,
-    ]
-  );
+  const allIcons = Object.entries(icons).map(([, value]) => value);
 
   useEffect(() => {
-    if (
-      isWrapperInView &&
-      iconAnimation1 &&
-      iconAnimation2 &&
-      iconAnimation3 &&
-      iconAnimation4 &&
-      iconAnimation5 &&
-      iconAnimation6
-    ) {
-      iconAnimation1.play(['Animations']);
-      iconAnimation1.on('stop', () => iconAnimation2.play(['Animations']));
-      iconAnimation2.on('stop', () => iconAnimation3.play(['Animations']));
-      iconAnimation3.on('stop', () => iconAnimation4.play(['Animations']));
-      iconAnimation4.on('stop', () => iconAnimation5.play(['Animations']));
-      iconAnimation5.on('stop', () => iconAnimation6.play(['Animations']));
-      iconAnimation6.on('stop', () => iconAnimation1.play(['Animations']));
+    if (allIcons.length === items.length && isWrapperInView) {
+      allIcons[0].play(['Animations']);
+      allIcons[0].on('stop', () => allIcons[1].play(['Animations']));
+      allIcons[1].on('stop', () => allIcons[2].play(['Animations']));
+      allIcons[2].on('stop', () => allIcons[3].play(['Animations']));
+      allIcons[3].on('stop', () => allIcons[4].play(['Animations']));
+      allIcons[4].on('stop', () => allIcons[5].play(['Animations']));
+      allIcons[5].on('stop', () => allIcons[0].play(['Animations']));
     }
-
-    return () => icons.forEach(({ animation }) => animation && animation.unsubscribeAll());
-  }, [
-    isWrapperInView,
-    iconAnimation1,
-    iconAnimation2,
-    iconAnimation3,
-    iconAnimation4,
-    iconAnimation5,
-    iconAnimation6,
-    icons,
-  ]);
+  }, [allIcons, isWrapperInView]);
 
   return (
     <section className="safe-paddings mt-52 lg:mt-36 sm:mt-20" ref={wrapperRef}>
@@ -133,23 +56,22 @@ const Features = () => {
           Here is what we have to offer for the next ideal marketing website of yours:
         </h2>
         <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-14 lg:gap-y-14 md:mt-11 md:gap-y-11 sm:mt-10 sm:grid-cols-2 sm:gap-y-10">
-          {items.map((item, index) => {
-            const Icon = icons[index].component;
-
-            return (
-              <li className="sm:max-w-[150px]" key={index}>
-                {Icon && (
-                  <ImagePlaceholder className="w-20" width={80} height={62} aria-hidden>
-                    <Icon />
-                  </ImagePlaceholder>
-                )}
-                <p
-                  className="sm:hide-br mt-3 text-lg font-normal leading-snug lg:text-base"
-                  dangerouslySetInnerHTML={{ __html: item }}
+          {items.map(({ text, src }, index) => (
+            <li className="sm:max-w-[150px]" key={index}>
+              {src && (
+                <Animation
+                  src={src}
+                  addIcon={addIcon}
+                  isWrapperInView={isWrapperInView}
+                  index={index + 1}
                 />
-              </li>
-            );
-          })}
+              )}
+              <p
+                className="sm:hide-br mt-3 text-lg font-normal leading-snug lg:text-base"
+                dangerouslySetInnerHTML={{ __html: text }}
+              />
+            </li>
+          ))}
         </ul>
       </div>
     </section>
