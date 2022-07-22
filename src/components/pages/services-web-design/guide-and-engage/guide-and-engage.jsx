@@ -6,6 +6,7 @@ import ImagePlaceholder from 'components/shared/image-placeholder';
 
 const GuideAndEngage = () => {
   const [wrapperRef, isWrapperView] = useInView({ triggerOnce: true, threshold: 0.5 });
+  const [containerRef, isContainerInView] = useInView({ triggerOnce: true, rootMargin: '500px' });
 
   const { RiveComponent, rive } = useRive({
     src: '/animations/pages/services-web-design/guide-and-engage.riv',
@@ -31,7 +32,7 @@ const GuideAndEngage = () => {
       className="safe-paddings mt-52 bg-black py-52 text-white lg:mt-36 lg:py-36 md:mt-32 md:py-28 sm:mt-20 sm:py-16"
       ref={wrapperRef}
     >
-      <div className="container">
+      <div className="container" ref={containerRef}>
         <h2 className="sm::text-2xl with-text-highlight-red mx-auto max-w-[950px] text-center text-6xl font-normal leading-snug lg:max-w-[690px] lg:text-[42px] md:max-w-[650px] md:text-4xl sm:text-2xl">
           <span>Guide and engage</span> your customers with sleek, on-point animations
         </h2>
@@ -41,7 +42,7 @@ const GuideAndEngage = () => {
           height={724}
           aria-hidden
         >
-          <RiveComponent />
+          {isContainerInView && <RiveComponent width={1216} height={724} />}
         </ImagePlaceholder>
       </div>
     </section>

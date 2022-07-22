@@ -11,7 +11,7 @@ import lgIllustration2 from './images/lg-illustration-2.svg';
 
 const Services = () => {
   const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, threshold: 0.3 });
-
+  const [containerRef, isContainerInView] = useInView({ triggerOnce: true, rootMargin: '500px' });
   const { RiveComponent, rive } = useRive({
     src: '/animations/pages/home/services.riv',
     autoplay: false,
@@ -32,7 +32,7 @@ const Services = () => {
       className="safe-paddings mt-52 overflow-hidden bg-black text-white lg:mt-36 md:pb-24 md:pt-20 sm:mt-20 sm:pb-20"
       ref={wrapperRef}
     >
-      <div className="container relative">
+      <div className="container relative" ref={containerRef}>
         <div className="flex max-w-[592px] items-center pt-[300px] lg:max-w-[458px] lg:pt-[200px] md:max-w-[430px] md:pt-0 sm:max-w-[350px]">
           <h2 className="text-6xl font-normal leading-snug lg:text-[42px] md:text-4xl sm:text-2xl">
             We’ll get you covered on what we can do best:
@@ -79,7 +79,7 @@ const Services = () => {
           </ImagePlaceholder>
         </div>
         <div className="absolute top-0 right-[-260px] h-[2050px] w-[1090px] lg:right-[-152px] lg:h-[1366px] lg:w-[726px] md:hidden">
-          <RiveComponent />
+          {isContainerInView && <RiveComponent />}
         </div>
       </div>
     </section>

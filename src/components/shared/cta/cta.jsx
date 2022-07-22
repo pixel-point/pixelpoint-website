@@ -9,6 +9,7 @@ import Link from 'components/shared/link';
 import LINKS from 'constants/links';
 
 const CTA = ({ className, withTopMargin }) => {
+  const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, rootMargin: '500px' });
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({
     triggerOnce: true,
     threshold: 0.5,
@@ -34,6 +35,7 @@ const CTA = ({ className, withTopMargin }) => {
         withTopMargin && 'mt-52 lg:mt-36 md:mt-28 sm:mt-20',
         className
       )}
+      ref={wrapperRef}
     >
       <div className="container grid-gap-x grid grid-cols-2 items-center sm:block">
         <div className="sm:text-center">
@@ -46,7 +48,7 @@ const CTA = ({ className, withTopMargin }) => {
         </div>
         <div className="sm:mt-4.5" ref={animationWrapperRef}>
           <ImagePlaceholder className="sm:w-full" width={592} height={560}>
-            <RiveComponent />
+            {isWrapperInView && <RiveComponent width={592} height={560} />}
           </ImagePlaceholder>
         </div>
       </div>

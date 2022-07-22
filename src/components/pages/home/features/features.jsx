@@ -15,6 +15,7 @@ const items = [
 
 const Features = () => {
   const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, threshold: 0.5 });
+  const [containerRef, isContainerInView] = useInView({ triggerOnce: true, rootMargin: '500px' });
 
   const { RiveComponent: Icon1, rive: iconAnimation1 } = useRive({
     src: '/animations/pages/home/features/1.riv',
@@ -128,7 +129,7 @@ const Features = () => {
 
   return (
     <section className="safe-paddings mt-52 lg:mt-36 sm:mt-20" ref={wrapperRef}>
-      <div className="container">
+      <div className="container" ref={containerRef}>
         <h2 className="max-w-[700px] text-4xl font-normal leading-snug lg:text-[32px] sm:max-w-[370px] sm:text-2xl">
           Here is what we have to offer for the next ideal marketing website of yours:
         </h2>
@@ -138,11 +139,10 @@ const Features = () => {
 
             return (
               <li className="sm:max-w-[150px]" key={index}>
-                {Icon && (
-                  <ImagePlaceholder className="w-20" width={80} height={62} aria-hidden>
-                    <Icon />
-                  </ImagePlaceholder>
-                )}
+                <ImagePlaceholder className="w-20" width={80} height={62} aria-hidden>
+                  {isContainerInView && <Icon />}
+                </ImagePlaceholder>
+
                 <p
                   className="sm:hide-br mt-3 text-lg font-normal leading-snug lg:text-base"
                   dangerouslySetInnerHTML={{ __html: item }}
