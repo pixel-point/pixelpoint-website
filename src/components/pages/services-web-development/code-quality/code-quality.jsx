@@ -19,6 +19,7 @@ const descriptionVariants = {
 };
 
 const CodeQuality = () => {
+  const [wrapperRef, isWrapperInView] = useInView({ triggerOnce: true, rootMargin: '500px' });
   const [contentRef, isContentInView] = useInView({ triggerOnce: true, threshold: 0.8 });
   const [illustrationRef, isIllustrationInView] = useInView({ triggerOnce: true, threshold: 0.8 });
 
@@ -42,7 +43,7 @@ const CodeQuality = () => {
   }, [isContentInView, titleControls, descriptionControls, isIllustrationInView, rive]);
 
   return (
-    <section className="safe-paddings bg-black py-80 lg:py-56 md:py-40 sm:py-24">
+    <section className="safe-paddings bg-black py-80 lg:py-56 md:py-40 sm:py-24" ref={wrapperRef}>
       <div className="container grid-gap-x grid grid-cols-12 items-center md:block">
         <div className="col-span-6 text-white" ref={contentRef}>
           <TitleAnimation
@@ -68,7 +69,7 @@ const CodeQuality = () => {
           ref={illustrationRef}
         >
           <ImagePlaceholder width={592} height={518}>
-            <RiveComponent />
+            {isWrapperInView && <RiveComponent width={592} height={518} />}
           </ImagePlaceholder>
         </div>
       </div>
