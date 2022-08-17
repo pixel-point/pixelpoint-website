@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
