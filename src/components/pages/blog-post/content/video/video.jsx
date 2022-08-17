@@ -46,40 +46,38 @@ const VideoWithCover = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <ImagePlaceholder className="relative my-5" width={Number(width)} height={Number(height)}>
-      {cover && (
-        <>
-          <video
-            style={{ margin: '0 auto' }}
-            className={clsx(
-              'absolute top-0 left-0 h-auto w-full cursor-pointer',
-              isVideoLoaded ? 'visible opacity-100' : 'hidden opacity-0'
-            )}
-            {...props}
-            onLoadedData={() => setIsVideoLoaded(true)}
-            onClick={() => setIsPlaying(true)}
-          />
+    cover && (
+      <>
+        <video
+          style={{ margin: '0 auto' }}
+          className={clsx(
+            'absolute top-0 left-0 h-auto w-full cursor-pointer',
+            isVideoLoaded ? 'visible opacity-100' : 'hidden opacity-0'
+          )}
+          {...props}
+          onLoadedData={() => setIsVideoLoaded(true)}
+          onClick={() => setIsPlaying(true)}
+        />
 
-          <img
-            className={clsx(
-              'pointer-events-none absolute top-0 left-0 h-auto w-full',
-              isPlaying && 'hidden opacity-0'
-            )}
-            src={cover}
-            width={width}
-            height={height}
-            alt=""
-            aria-hidden
-          />
-          <PlayButtonIcon
-            className={clsx(
-              'pointer-events-none absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg',
-              isPlaying && 'hidden opacity-0'
-            )}
-          />
-        </>
-      )}
-    </ImagePlaceholder>
+        <img
+          className={clsx(
+            'pointer-events-none absolute top-0 left-0 h-auto w-full',
+            isPlaying && 'hidden opacity-0'
+          )}
+          src={cover}
+          width={width}
+          height={height}
+          alt=""
+          aria-hidden
+        />
+        <PlayButtonIcon
+          className={clsx(
+            'pointer-events-none absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg',
+            isPlaying && 'hidden opacity-0'
+          )}
+        />
+      </>
+    )
   );
 };
 
@@ -95,25 +93,34 @@ VideoWithCover.defaultProps = {
 };
 
 const Video = (props) => {
-  const { autoPlay } = props;
+  const { autoPlay, width, height } = props;
   const [videoRef, inView] = useInView({
     rootMargin: '500px',
     triggerOnce: true,
   });
   return (
-    <div ref={videoRef}>
+    <ImagePlaceholder
+      className="relative my-5"
+      width={Number(width)}
+      height={Number(height)}
+      wrapperRef={videoRef}
+    >
       {!autoPlay && <VideoWithCover {...props} />}
-      {autoPlay && inView && <video {...props} />}
-    </div>
+      {autoPlay && inView && <video style={{ margin: '0 auto' }} {...props} />}
+    </ImagePlaceholder>
   );
 };
 
 Video.propTypes = {
   autoPlay: PropTypes.bool,
+  width: PropTypes.string,
+  height: PropTypes.string,
 };
 
 Video.defaultProps = {
   autoPlay: false,
+  width: null,
+  height: null,
 };
 
 export default Video;

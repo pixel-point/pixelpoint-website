@@ -16,7 +16,7 @@ This topic can be confusing, so it's important to learn the difference. Think of
 
 Now that it is clear, the next important thing to learn is that not every codec is suitable for every video format. For `WebM`, it's `VP8` and `VP9`, while in `mp4` could be almost anything.
 
-<video autoplay playsinline muted loop width="800" height="600">
+<video autoplay playsinline muted loop width="696" height="522">
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/apple.mp4" />
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/apple.webm" />
 </video>
@@ -69,7 +69,7 @@ For better visualization, I am going to show you how applying different options 
 
 The original file size of the video is ~ 26MB and has a 5000x2700 resolution.
 
-<video autoplay muted loop width="800" height="600">
+<video autoplay muted loop width="696" height="376">
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/hero-an-crf32-best-libx265-3840.mp4" />
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/hero-crf-40-3840.webm" />
 </video>
