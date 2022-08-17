@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 
@@ -95,7 +96,16 @@ VideoWithCover.defaultProps = {
 
 const Video = (props) => {
   const { autoPlay } = props;
-  return !autoPlay ? <VideoWithCover {...props} /> : <video preload="none" {...props} />;
+  const [videoRef, inView] = useInView({
+    rootMargin: '500px',
+    triggerOnce: true,
+  });
+  return (
+    <div ref={videoRef}>
+      {!autoPlay && <VideoWithCover {...props} />}
+      {autoPlay && inView && <video {...props} />}
+    </div>
+  );
 };
 
 Video.propTypes = {
