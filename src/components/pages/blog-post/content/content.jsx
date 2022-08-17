@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { MDXProvider } from '@mdx-js/react';
 import clsx from 'clsx';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
@@ -7,6 +6,8 @@ import React from 'react';
 import slugify from 'slugify';
 
 import QuoteIcon from 'images/quote.inline.svg';
+
+import Video from './video';
 
 const Heading =
   (Tag) =>
@@ -75,6 +76,8 @@ const components = {
       <table {...props} />
     </div>
   ),
+  video: Video,
+
   // this code prevents the creation of an additional video iframe wrapper in mdx
   undefined: (obj) =>
     obj?.children.filter((child) => typeof child === 'object') || obj?.props?.children,
