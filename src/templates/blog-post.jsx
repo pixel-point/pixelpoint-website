@@ -15,6 +15,7 @@ const BlogPostTemplate = ({
     allMdx: { nodes: readMorePosts },
   },
   location,
+  pageContext: { videoCovers },
 }) => (
   <Layout
     seo={SEO_DATA.blogPost({
@@ -30,7 +31,7 @@ const BlogPostTemplate = ({
         <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
           <div className="xl:max-w-[696px] lg:max-w-[626px] md:max-w-none">
             <Hero {...frontmatter} slug={slug} />
-            <Content content={body} />
+            <Content content={body} videoCovers={videoCovers} />
           </div>
           <Sidebar author={author} readMorePosts={readMorePosts} socialShareUrl={location.href} />
         </div>

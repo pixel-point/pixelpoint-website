@@ -119,6 +119,18 @@ async function createBlogPosts({ graphql, actions }) {
           }
         }
       }
+      allFile(
+        filter: { absolutePath: { regex: "/content/posts/" }, name: { regex: "/video-cover/" } }
+      ) {
+        nodes {
+          name
+          ext
+          childImageSharp {
+            gatsbyImageData(width: 970)
+          }
+          relativeDirectory
+        }
+      }
     }
   `);
 
@@ -145,10 +157,19 @@ async function createBlogPosts({ graphql, actions }) {
       );
     }
 
+    const allVideoCovers = result.data.allFile.nodes.reduce((acc, item) => {
+      const { name, ext, childImageSharp, relativeDirectory } = item;
+      const slug = `${relativeDirectory}/`;
+      if (!acc[slug]) {
+        acc[slug] = {};
+      }
+      acc[slug][name + ext] = { childImageSharp };
+      return acc;
+    }, {});
     createPage({
       path: getBlogPostPath(slug),
       component: path.resolve('./src/templates/blog-post.jsx'),
-      context: { id },
+      context: { id, videoCovers: allVideoCovers[slug] },
     });
   });
 }
