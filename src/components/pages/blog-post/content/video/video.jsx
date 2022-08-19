@@ -18,40 +18,36 @@ const VideoWithCover = (props) => {
   const coverName = poster?.split('/').pop();
   const coverData = videoCovers[coverName]?.childImageSharp;
 
+  const handleVideoClick = (e) => {
+    setIsPlaying(true);
+    if (isVideoLoaded) {
+      e.target.play();
+    }
+  };
+
   return (
     <>
       {inView && (
         <video
+          role="button"
+          tabIndex={0}
           style={{ margin: '0 auto' }}
           className={clsx(
             'absolute top-0 left-0 h-auto w-full cursor-pointer',
-            isVideoLoaded ? 'visible opacity-100' : 'hidden opacity-0'
+            isVideoLoaded ? 'opacity-100' : 'opacity-0'
           )}
           {...additionalProps}
           onLoadedData={() => setIsVideoLoaded(true)}
-          onClick={() => setIsPlaying(true)}
-          onTouchStart={(e) => {
-            setIsPlaying(true);
-            e.target.play();
-          }}
+          onClick={handleVideoClick}
+          onTouchStart={handleVideoClick}
         />
       )}
-      {coverData && (
+      {!isPlaying && (
         <>
-          <div
-            className={clsx(
-              'pointer-events-none absolute top-0 left-0 h-auto w-full',
-              isPlaying && 'hidden opacity-0'
-            )}
-          >
+          <div className="pointer-events-none absolute top-0 left-0 h-auto w-full">
             <GatsbyImage image={getImage(coverData)} alt="" aria-hidden />
           </div>
-          <PlayButtonIcon
-            className={clsx(
-              'pointer-events-none absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full drop-shadow-md',
-              isPlaying && 'hidden opacity-0'
-            )}
-          />
+          <PlayButtonIcon className="pointer-events-none absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full drop-shadow-md" />
         </>
       )}
     </>
