@@ -62,6 +62,7 @@ VideoWithCover.defaultProps = {
 
 const Video = (props) => {
   const { autoPlay, width, height } = props;
+  const { videoCovers, ...additionalProps } = props;
 
   const [wrapperRef, inView] = useInView({
     rootMargin: '500px',
@@ -77,7 +78,7 @@ const Video = (props) => {
     >
       {inView &&
         (autoPlay ? (
-          <video style={{ margin: '0 auto' }} {...props} />
+          <video style={{ margin: '0 auto' }} {...additionalProps} />
         ) : (
           <VideoWithCover {...props} />
         ))}
@@ -86,12 +87,14 @@ const Video = (props) => {
 };
 
 Video.propTypes = {
+  videoCovers: PropTypes.shape({}),
   autoPlay: PropTypes.bool,
   width: PropTypes.string,
   height: PropTypes.string,
 };
 
 Video.defaultProps = {
+  videoCovers: null,
   autoPlay: false,
   width: null,
   height: null,
