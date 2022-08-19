@@ -10,7 +10,7 @@ import ImagePlaceholder from 'components/shared/image-placeholder';
 import PlayButtonIcon from './images/play.inline.svg';
 
 const VideoWithCover = (props) => {
-  const { videoCovers, poster, ...additionalProps } = props;
+  const { videoCovers, poster, inView, ...additionalProps } = props;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -20,16 +20,22 @@ const VideoWithCover = (props) => {
 
   return (
     <>
-      <video
-        style={{ margin: '0 auto' }}
-        className={clsx(
-          'absolute top-0 left-0 h-auto w-full cursor-pointer',
-          isVideoLoaded ? 'visible opacity-100' : 'hidden opacity-0'
-        )}
-        {...additionalProps}
-        onLoadedData={() => setIsVideoLoaded(true)}
-        onClick={() => setIsPlaying(true)}
-      />
+      {inView && (
+        <video
+          style={{ margin: '0 auto' }}
+          className={clsx(
+            'absolute top-0 left-0 h-auto w-full cursor-pointer',
+            isVideoLoaded ? 'visible opacity-100' : 'hidden opacity-0'
+          )}
+          {...additionalProps}
+          onLoadedData={() => setIsVideoLoaded(true)}
+          onClick={() => setIsPlaying(true)}
+          onTouchStart={(e) => {
+            setIsPlaying(true);
+            e.target.play();
+          }}
+        />
+      )}
       {coverData && (
         <>
           <div
@@ -38,7 +44,7 @@ const VideoWithCover = (props) => {
               isPlaying && 'hidden opacity-0'
             )}
           >
-            <GatsbyImage image={getImage(coverData)} alt="Video cover" />
+            <GatsbyImage image={getImage(coverData)} alt="" aria-hidden />
           </div>
           <PlayButtonIcon
             className={clsx(
@@ -53,11 +59,13 @@ const VideoWithCover = (props) => {
 };
 
 VideoWithCover.propTypes = {
+  inView: PropTypes.bool,
   videoCovers: PropTypes.shape({}).isRequired,
   poster: PropTypes.string,
 };
 
 VideoWithCover.defaultProps = {
+  inView: false,
   poster: null,
 };
 
@@ -76,7 +84,7 @@ const Video = (props) => {
       height={Number(height)}
       wrapperRef={videoRef}
     >
-      {!autoPlay && <VideoWithCover {...props} />}
+      {!autoPlay && <VideoWithCover inView={inView} {...props} />}
 
       {autoPlay && inView && <video style={{ margin: '0 auto' }} {...props} />}
     </ImagePlaceholder>
