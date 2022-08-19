@@ -48,7 +48,7 @@ const VideoWithCover = (props) => {
           </div>
           <PlayButtonIcon
             className={clsx(
-              'pointer-events-none absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg',
+              'pointer-events-none absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full drop-shadow-md',
               isPlaying && 'hidden opacity-0'
             )}
           />
