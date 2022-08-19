@@ -18,13 +18,6 @@ const VideoWithCover = (props) => {
   const coverName = poster?.split('/').pop();
   const coverData = videoCovers[coverName]?.childImageSharp;
 
-  const handleVideoClick = (e) => {
-    setIsPlaying(true);
-    if (isVideoLoaded) {
-      e.target.play();
-    }
-  };
-
   return (
     <>
       <video
@@ -38,7 +31,6 @@ const VideoWithCover = (props) => {
         {...additionalProps}
         onLoadedData={() => setIsVideoLoaded(true)}
         onClick={() => setIsPlaying(true)}
-        onTouchStart={handleVideoClick}
       />
 
       {!isPlaying && (
