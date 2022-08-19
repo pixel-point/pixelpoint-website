@@ -10,7 +10,7 @@ import ImagePlaceholder from 'components/shared/image-placeholder';
 import PlayButtonIcon from './images/play.inline.svg';
 
 const VideoWithCover = (props) => {
-  const { videoCovers, poster, inView, ...additionalProps } = props;
+  const { videoCovers, poster, ...additionalProps } = props;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -27,21 +27,20 @@ const VideoWithCover = (props) => {
 
   return (
     <>
-      {inView && (
-        <video
-          role="button"
-          tabIndex={0}
-          style={{ margin: '0 auto' }}
-          className={clsx(
-            'absolute top-0 left-0 h-auto w-full cursor-pointer',
-            isVideoLoaded ? 'opacity-100' : 'opacity-0'
-          )}
-          {...additionalProps}
-          onLoadedData={() => setIsVideoLoaded(true)}
-          onClick={handleVideoClick}
-          onTouchStart={handleVideoClick}
-        />
-      )}
+      <video
+        role="button"
+        tabIndex={0}
+        style={{ margin: '0 auto' }}
+        className={clsx(
+          'absolute top-0 left-0 h-auto w-full cursor-pointer',
+          isVideoLoaded ? 'opacity-100' : 'opacity-0'
+        )}
+        {...additionalProps}
+        onLoadedData={() => setIsVideoLoaded(true)}
+        onClick={handleVideoClick}
+        onTouchStart={handleVideoClick}
+      />
+
       {!isPlaying && (
         <>
           <div className="pointer-events-none absolute top-0 left-0 h-auto w-full">
@@ -55,13 +54,11 @@ const VideoWithCover = (props) => {
 };
 
 VideoWithCover.propTypes = {
-  inView: PropTypes.bool,
   videoCovers: PropTypes.shape({}).isRequired,
   poster: PropTypes.string,
 };
 
 VideoWithCover.defaultProps = {
-  inView: false,
   poster: null,
 };
 
@@ -80,9 +77,12 @@ const Video = (props) => {
       height={Number(height)}
       wrapperRef={videoRef}
     >
-      {!autoPlay && <VideoWithCover inView={inView} {...props} />}
-
-      {autoPlay && inView && <video style={{ margin: '0 auto' }} {...props} />}
+      {inView &&
+        (autoPlay ? (
+          <video style={{ margin: '0 auto' }} {...props} />
+        ) : (
+          <VideoWithCover {...props} />
+        ))}
     </ImagePlaceholder>
   );
 };
