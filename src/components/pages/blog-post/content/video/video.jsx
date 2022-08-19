@@ -37,7 +37,7 @@ const VideoWithCover = (props) => {
         )}
         {...additionalProps}
         onLoadedData={() => setIsVideoLoaded(true)}
-        onClick={handleVideoClick}
+        onClick={() => setIsPlaying(true)}
         onTouchStart={handleVideoClick}
       />
 
