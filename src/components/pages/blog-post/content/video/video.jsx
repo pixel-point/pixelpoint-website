@@ -2,7 +2,7 @@
 import clsx from 'clsx';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
@@ -17,30 +17,36 @@ const VideoWithCover = (props) => {
 
   const coverName = poster?.split('/').pop();
   const coverData = videoCovers[coverName]?.childImageSharp;
+  const videoRef = useRef(null);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+    videoRef.current.play();
+  };
 
   return (
     <>
       <video
-        role="button"
-        tabIndex={0}
         style={{ margin: '0 auto' }}
         className={clsx(
           'absolute top-0 left-0 h-auto w-full cursor-pointer',
           isVideoLoaded ? 'opacity-100' : 'opacity-0'
         )}
-        {...additionalProps}
         onLoadedData={() => setIsVideoLoaded(true)}
-        onClick={() => setIsPlaying(true)}
+        {...additionalProps}
+        ref={videoRef}
       />
 
-      {!isPlaying && (
-        <>
-          <div className="pointer-events-none absolute top-0 left-0 h-auto w-full">
-            <GatsbyImage image={getImage(coverData)} alt="" aria-hidden />
-          </div>
-          <PlayButtonIcon className="pointer-events-none absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full drop-shadow-md" />
-        </>
-      )}
+      <div
+        role="button"
+        tabIndex={0}
+        className={clsx('absolute top-0 left-0 h-auto w-full', isPlaying && 'invisible opacity-0')}
+        onClick={handlePlay}
+        onKeyDown={handlePlay}
+      >
+        <GatsbyImage image={getImage(coverData)} alt="" aria-hidden />
+        <PlayButtonIcon className="absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full drop-shadow-md" />
+      </div>
     </>
   );
 };
@@ -57,7 +63,7 @@ VideoWithCover.defaultProps = {
 const Video = (props) => {
   const { autoPlay, width, height } = props;
 
-  const [videoRef, inView] = useInView({
+  const [wrapperRef, inView] = useInView({
     rootMargin: '500px',
     triggerOnce: true,
   });
@@ -67,7 +73,7 @@ const Video = (props) => {
       className="relative my-5"
       width={Number(width)}
       height={Number(height)}
-      wrapperRef={videoRef}
+      wrapperRef={wrapperRef}
     >
       {inView &&
         (autoPlay ? (
