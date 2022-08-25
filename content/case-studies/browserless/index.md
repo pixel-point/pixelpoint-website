@@ -4,7 +4,7 @@ logo:
   width: 202
   height: 46
 title: Browserless
-description: Web browser automation tool
+description: Open Source web browser automation tool
 websiteUrl: https://www.browserless.io/
 githubUsername: browserless
 githubRepoName: chrome
