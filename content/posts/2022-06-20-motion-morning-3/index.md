@@ -1,7 +1,7 @@
 ---
 title: 'Motion Morning #3: The deep perception'
 summary: Let's train our motion taste buds for deep perception by taking a closer look at the work of just a single studio, but with extraordinary skills in various animation styles.
-author: Vlad Kamelsky
+author: Alexey Tretyakov
 cover: cover.jpg
 category: Design
 ---
