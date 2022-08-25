@@ -35,5 +35,10 @@
     "name": "Roman Evgrafov",
     "photo": "../../src/images/post-authors/roman-evgrafov.jpg",
     "description": "An ambitious motion designer and a friend of Pixel Point."
+  },
+  {
+    "name": "Alexey Tretyakov",
+    "photo": "../../src/images/post-authors/alexey-tretyakov.jpg",
+    "description": "An ambitious designer at Pixel Point."
   }
 ]
