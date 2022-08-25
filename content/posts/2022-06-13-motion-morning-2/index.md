@@ -1,7 +1,7 @@
 ---
 title: 'Motion Morning #2: Anticipating the future with experiments'
 summary: In this episode of Motion Morning, we'll be descending into the experimental abyss that will shake your perception and serve as fertile soil for your new ideas. Breathe in!
-author: Vlad Kamelsky
+author: Alexey Tretyakov
 cover: cover.jpg
 category: Design
 ---

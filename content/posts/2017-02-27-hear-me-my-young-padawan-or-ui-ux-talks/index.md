@@ -1,7 +1,7 @@
 ---
 title: 'Hear me, my young Padawan. Or, UI/UX talks'
 summary: Some thoughts about the role of a designer in the projects, what differs UI and UX parts, and a little bit more.
-author: Vlad Kamelsky
+author: Alexey Tretyakov
 cover: cover.jpg
 category: Design
 ---
