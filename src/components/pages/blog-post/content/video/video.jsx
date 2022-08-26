@@ -6,6 +6,7 @@ import React, { useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
+import SpinnerIcon from 'images/spinner.inline.svg';
 
 import PlayButtonIcon from './images/play.inline.svg';
 
@@ -13,41 +14,46 @@ const VideoWithCover = (props) => {
   const { videoCovers, poster, ...additionalProps } = props;
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
+  const [showCover, setShowCover] = useState(true);
 
   const coverName = poster?.split('/').pop();
   const coverData = videoCovers[coverName]?.childImageSharp;
   const videoRef = useRef(null);
 
-  const handlePlay = () => {
-    setIsPlaying(true);
-    videoRef.current.play();
+  const handlePlay = async () => {
+    await setIsPlaying(true);
+    await setIsVideoLoading(true);
+    await videoRef.current.play();
+    await setShowCover(false);
   };
 
   return (
-    <>
-      <video
-        style={{ margin: '0 auto' }}
-        className={clsx(
-          'absolute top-0 left-0 h-auto w-full cursor-pointer',
-          isVideoLoaded ? 'opacity-100' : 'opacity-0'
-        )}
-        onLoadedData={() => setIsVideoLoaded(true)}
-        {...additionalProps}
-        ref={videoRef}
-      />
+    <div className="relative">
+      {isPlaying && (
+        <video
+          style={{ margin: '0 auto' }}
+          className="absolute top-0 left-0 h-auto w-full cursor-pointer"
+          {...additionalProps}
+          ref={videoRef}
+        />
+      )}
 
       <div
         role="button"
         tabIndex={0}
-        className={clsx('absolute top-0 left-0 h-auto w-full', isPlaying && 'invisible opacity-0')}
+        className={clsx('relative', !showCover && 'invisible opacity-0')}
         onClick={handlePlay}
         onKeyDown={handlePlay}
       >
         <GatsbyImage image={getImage(coverData)} alt="" aria-hidden />
-        <PlayButtonIcon className="absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full drop-shadow-md" />
+        {!isVideoLoading ? (
+          <PlayButtonIcon className="absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full drop-shadow-md" />
+        ) : (
+          <SpinnerIcon className="absolute top-1/2 left-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full mix-blend-difference" />
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
@@ -69,20 +75,17 @@ const Video = (props) => {
     triggerOnce: true,
   });
 
-  return (
+  return autoPlay ? (
     <ImagePlaceholder
       className="relative my-5"
       width={Number(width)}
       height={Number(height)}
       wrapperRef={wrapperRef}
     >
-      {inView &&
-        (autoPlay ? (
-          <video style={{ margin: '0 auto' }} {...additionalProps} />
-        ) : (
-          <VideoWithCover {...props} />
-        ))}
+      {inView && <video style={{ margin: '0 auto' }} {...additionalProps} />}
     </ImagePlaceholder>
+  ) : (
+    <VideoWithCover {...props} />
   );
 };
 
