@@ -24,18 +24,9 @@ const VideoWithCover = (props) => {
 
   const handlePlay = async () => {
     await setIsPlaying(true);
-    if (!isVideoLoaded) {
-      setIsVideoLoading(true);
-      await new Promise((resolve) => {
-        videoRef.current.addEventListener('loadeddata', () => {
-          setIsVideoLoading(false);
-          setIsVideoLoaded(true);
-          resolve();
-        });
-      });
-    }
+    await setIsVideoLoading(true);
     await videoRef.current.play();
-    setShowCover(false);
+    await setShowCover(false);
   };
 
   return (
@@ -47,6 +38,7 @@ const VideoWithCover = (props) => {
             'absolute top-0 left-0 h-auto w-full cursor-pointer',
             isVideoLoaded ? 'opacity-100' : 'opacity-0'
           )}
+          onLoadedData={() => setIsVideoLoaded(true)}
           {...additionalProps}
           ref={videoRef}
         />
