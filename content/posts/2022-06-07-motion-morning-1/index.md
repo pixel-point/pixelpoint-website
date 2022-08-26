@@ -1,14 +1,14 @@
 ---
 title: 'Motion Morning #1: In the pursue of visual experience'
 summary: Spark your creativity with the Pixel Point weekly digest on motion design!
-author: Vlad Kamelsky
+author: Alexey Tretyakov
 cover: cover.jpg
 category: Design
 ---
 
 Good motion morning, everyone!
 
-My name is Vlad Kamelsky, and I am the Head of Design at Pixel Point. We love supplying stunning visuals for our clients' marketing websites here in our agency. However, to achieve the best results, you need to learn from the best, and for this exact reason, we've started a weekly digest called Motion Morning. In this digest, we'll be exploring the outstanding pieces of work of the most famous studios out there. Join us on a journey to the immersive and entertaining world of motion design!
+My name is Alexey Tretyakov, and I am the Head of Design at Pixel Point. We love supplying stunning visuals for our clients' marketing websites here in our agency. However, to achieve the best results, you need to learn from the best, and for this exact reason, we've started a weekly digest called Motion Morning. In this digest, we'll be exploring the outstanding pieces of work of the most famous studios out there. Join us on a journey to the immersive and entertaining world of motion design!
 
 ## Not Real
 

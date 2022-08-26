@@ -1,7 +1,7 @@
 ---
 title: 'Crypto classified ads analytics research'
 summary: We built crypto-currency-based classified ads marketplace. In this article we reveal the whole story, from research to implementation.
-author: Vlad Kamelsky
+author: Alexey Tretyakov
 cover: cover.jpg
 category: Development
 ---

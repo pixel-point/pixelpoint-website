@@ -4,7 +4,7 @@ logo:
   width: 156
   height: 44
 title: Neon
-description: Serverless OS alternative to AWS Aurora Postgres
+description: Open Source serverless Postgres
 websiteUrl: https://neon.tech
 githubUsername: neondatabase
 githubRepoName: neon
@@ -34,7 +34,7 @@ keynotes:
 cover: cover.jpg
 isOpenSource: true
 isFeatured: true
-position: 10
+position: 9
 ---
 
 It all began in 2021, when a group of PostreSQL contributors and technologists set up on a mission to create an OS cloud-native database as a service available for every developer. They united under the brand name called Neon. We joined the team shortly after they had made a successful series A financing, with intention to help them establish a proper brand image.
