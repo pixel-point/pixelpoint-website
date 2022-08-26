@@ -15,6 +15,7 @@ const VideoWithCover = (props) => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoLoading, setIsVideoLoading] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [showCover, setShowCover] = useState(true);
 
   const coverName = poster?.split('/').pop();
@@ -29,13 +30,16 @@ const VideoWithCover = (props) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative my-5">
       {isPlaying && (
         <video
           style={{ margin: '0 auto' }}
-          className="absolute top-0 left-0 h-auto w-full cursor-pointer"
+          className={clsx('absolute top-0 left-0 h-auto w-full cursor-pointer', {
+            'opacity-100': isVideoLoaded,
+          })}
           {...additionalProps}
           ref={videoRef}
+          onLoadedData={() => setIsVideoLoaded(false)}
         />
       )}
 
