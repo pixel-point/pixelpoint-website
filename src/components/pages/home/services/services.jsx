@@ -54,7 +54,13 @@ const Services = () => {
         </div>
         <div className="mt-14 hidden md:block sm:mt-8" aria-hidden>
           <ImagePlaceholder width={1544} height={658}>
-            <img src={lgIllustration1} width={1544} height={658} alt="" />
+            <img
+              src={lgIllustration1}
+              width={1544}
+              height={658}
+              loading="lazy"
+              alt="Service Illustration"
+            />
           </ImagePlaceholder>
         </div>
         <div className="flex max-w-[520px] flex-col justify-center pt-[400px] pb-[365px] lg:max-w-[406px] lg:pt-[200px] lg:pb-[200px] md:mt-36 md:max-w-none md:py-0 sm:mt-20">
@@ -75,7 +81,13 @@ const Services = () => {
             height={437}
             aria-hidden
           >
-            <img src={lgIllustration2} width={540} height={437} alt="" />
+            <img
+              src={lgIllustration2}
+              width={540}
+              height={437}
+              loading="lazy"
+              alt="Service Illustration"
+            />
           </ImagePlaceholder>
         </div>
         <div className="absolute top-0 right-[-260px] h-[2050px] w-[1090px] lg:right-[-152px] lg:h-[1366px] lg:w-[726px] md:hidden">
