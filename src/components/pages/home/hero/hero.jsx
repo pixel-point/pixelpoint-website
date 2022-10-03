@@ -152,7 +152,13 @@ const Hero = () => {
               height={380}
               aria-hidden
             >
-              <img src={lgIllustration1} width={468} height={380} alt="" />
+              <img
+                src={lgIllustration1}
+                width={468}
+                height={380}
+                loading="lazy"
+                alt="Hero Illustration"
+              />
             </ImagePlaceholder>
           </div>
           <div
@@ -172,7 +178,13 @@ const Hero = () => {
               height={700}
               aria-hidden
             >
-              <img src={lgIllustration2} width={590} height={700} alt="" />
+              <img
+                src={lgIllustration2}
+                width={590}
+                height={700}
+                loading="lazy"
+                alt="Hero Illustration"
+              />
             </ImagePlaceholder>
           </div>
           <div
@@ -192,7 +204,13 @@ const Hero = () => {
               height={766}
               aria-hidden
             >
-              <img src={lgIllustration3} width={590} height={766} alt="" />
+              <img
+                src={lgIllustration3}
+                width={590}
+                height={766}
+                loading="lazy"
+                alt="Hero Illustration"
+              />
             </ImagePlaceholder>
           </div>
         </div>
