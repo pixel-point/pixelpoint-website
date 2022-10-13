@@ -7,6 +7,7 @@ import PostsList from 'components/pages/blog/posts-list';
 import CTA from 'components/shared/cta';
 // import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
+import SEO from 'components/shared/seo/seo';
 import SEO_DATA from 'constants/seo-data';
 
 const BlogTemplate = ({
@@ -15,7 +16,7 @@ const BlogTemplate = ({
   },
   pageContext: { currentPageIndex, pageCount, category },
 }) => (
-  <Layout seo={SEO_DATA.blog} headerTheme="black" headerShowThemeButton>
+  <Layout headerTheme="black" headerShowThemeButton>
     <PostsList activeCategory={category} items={items} />
     {pageCount > 1 && (
       <Pagination
@@ -67,3 +68,7 @@ export const query = graphql`
 `;
 
 export default BlogTemplate;
+
+export const Head = () => (
+  <SEO title={SEO_DATA.blog.title} description={SEO_DATA.blog.description} />
+);

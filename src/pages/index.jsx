@@ -10,6 +10,7 @@ import CTA from 'components/shared/cta';
 // import GatsbyAwards from 'components/shared/gatsby-awards';
 import ItemsList from 'components/shared/items-list';
 import Layout from 'components/shared/layout';
+import SEO from 'components/shared/seo/seo';
 
 const advantages = {
   title: 'It doesn’t have to be like that. Work&nbsp;with&nbsp;Pixel Point to see the difference:',
@@ -47,3 +48,5 @@ const HomePage = () => (
 );
 
 export default HomePage;
+
+export const Head = () => <SEO />;

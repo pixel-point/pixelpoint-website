@@ -9,6 +9,7 @@ import CTA from 'components/shared/cta';
 import GatsbyAwards from 'components/shared/gatsby-awards';
 import ItemsList from 'components/shared/items-list';
 import Layout from 'components/shared/layout';
+import SEO from 'components/shared/seo/seo';
 import SEO_DATA from 'constants/seo-data';
 
 const benefits = {
@@ -33,7 +34,7 @@ const benefits = {
 };
 
 const AboutUsPage = () => (
-  <Layout seo={SEO_DATA.about} headerTheme="white">
+  <Layout headerTheme="white">
     <Hero />
     <GatsbyAwards className="bg-black pt-32 sm:pt-24" theme="white" />
     <Foundation />
@@ -50,3 +51,7 @@ const AboutUsPage = () => (
 );
 
 export default AboutUsPage;
+
+export const Head = () => (
+  <SEO title={SEO_DATA.about.title} description={SEO_DATA.about.description} />
+);

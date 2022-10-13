@@ -9,6 +9,7 @@ import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 // import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
+import SEO from 'components/shared/seo/seo';
 import SEO_DATA from 'constants/seo-data';
 
 const CaseStudyTemplate = ({
@@ -31,13 +32,7 @@ const CaseStudyTemplate = ({
   };
 
   return (
-    <Layout
-      seo={SEO_DATA.blogPost({
-        title: frontmatter.title,
-        description: frontmatter.description,
-      })}
-      headerTheme="white"
-    >
+    <Layout headerTheme="white">
       <Content {...content} />
       <Keynotes items={frontmatter.keynotes} iconsName={slug.slice(0, -1)} />
       <CaseStudies
@@ -89,3 +84,14 @@ export const query = graphql`
 `;
 
 export default CaseStudyTemplate;
+
+export const Head = ({
+  data: {
+    mdx: { frontmatter },
+  },
+}) => (
+  <SEO
+    title={SEO_DATA.caseStudy({ title: frontmatter.title }).title}
+    description={frontmatter.description}
+  />
+);

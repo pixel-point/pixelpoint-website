@@ -13,7 +13,6 @@ module.exports = {
     siteUrl: process.env.GATSBY_DEFAULT_SITE_URL || 'http://localhost:8000',
   },
   plugins: [
-    'gatsby-plugin-react-helmet',
     'gatsby-transformer-json',
     {
       resolve: 'gatsby-source-filesystem',
@@ -133,7 +132,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: process.env.GATSBY_DEFAULT_SITE_URL,
+        siteUrl: process.env.GATSBY_DEFAULT_SITE_URL || 'http://localhost:8000',
       },
     },
   ],

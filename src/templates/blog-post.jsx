@@ -7,6 +7,7 @@ import Hero from 'components/pages/blog-post/hero';
 import Sidebar from 'components/pages/blog-post/sidebar';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
+import SEO from 'components/shared/seo/seo';
 import SEO_DATA from 'constants/seo-data';
 
 const BlogPostTemplate = ({
@@ -97,3 +98,19 @@ export const query = graphql`
 `;
 
 export default BlogPostTemplate;
+
+export const Head = ({
+  data: {
+    mdx: { frontmatter },
+  },
+}) => (
+  <SEO
+    title={SEO_DATA.blogPost({ title: frontmatter.title }).title}
+    description={SEO_DATA.blogPost({ description: frontmatter.summary }).description}
+    ogImage={
+      SEO_DATA.blogPost({
+        ogImage: frontmatter.ogImage.childImageSharp.gatsbyImageData.images.fallback.src,
+      }).ogImage
+    }
+  />
+);
