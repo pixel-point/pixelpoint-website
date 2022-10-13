@@ -12,6 +12,8 @@ import lgIllustration3 from './images/lg-illustration-3.svg';
 
 const STATE_MACHINE_NAME = 'State Machine';
 const INPUT_NAME = 'Fall Trigger';
+const HEADER =
+  'Pixel Point creative web agency: design and development of JAMStack-based marketing websites';
 
 const firstSectionTitleItems = [
   { value: 'A' },
@@ -138,6 +140,7 @@ const Hero = () => {
     >
       <div className="container grid-gap-x relative grid grid-cols-2 md:block" ref={containerRef}>
         <div className="relative z-10 text-6xl font-normal leading-snug lg:text-[42px] md:mx-auto md:text-4xl sm:text-2xl">
+          <h1 className="absolute -top-[2000px] w-0">{HEADER}</h1>
           <div className="flex h-screen items-center md:block md:h-auto" ref={firstSectionRef}>
             <TitleAnimation
               className="md:max-w-[574px]"
