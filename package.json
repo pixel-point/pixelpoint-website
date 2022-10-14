@@ -88,6 +88,7 @@
     "husky": "^8.0.1",
     "lint-staged": "^13.0.0",
     "markdownlint-cli": "^0.31.1",
+    "md5": "^2.3.0",
     "postcss": "^8.4.14",
     "postcss-import": "^14.1.0",
     "prettier": "^2.6.2",
