@@ -20,13 +20,18 @@ const SEO = ({ title, description, ogImage, children }) => {
     }
   `);
 
+  const currentTitle = title ?? siteTitle;
+
+  const currentDescription = description ?? siteDescription;
+
   return (
     <>
+      <title>{currentTitle}</title>
       {/* General */}
-      <meta name="description" content={description || siteDescription} />
+      <meta name="description" content={currentDescription} />
       {/* Open Graph */}
-      <meta property="og:title" content={title || siteTitle} />
-      <meta property="og:description" content={description || siteDescription} />
+      <meta property="og:title" content={currentTitle} />
+      <meta property="og:description" content={currentDescription} />
       <meta property="og:image" content={siteUrl + (ogImage || siteImage)} />
       <meta property="og:type" content="website" />
       {/* Twitter */}
