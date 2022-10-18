@@ -43,9 +43,4 @@ const ServicesWebDevelopmentPage = () => (
 
 export default ServicesWebDevelopmentPage;
 
-export const Head = () => (
-  <SEO
-    title={SEO_DATA.servicesWebDevelopment.title}
-    description={SEO_DATA.servicesWebDevelopment.description}
-  />
-);
+export const Head = () => <SEO {...SEO_DATA.servicesWebDevelopment({ title, description })} />;

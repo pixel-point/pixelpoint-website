@@ -69,6 +69,4 @@ export const query = graphql`
 
 export default BlogTemplate;
 
-export const Head = () => (
-  <SEO title={SEO_DATA.blog.title} description={SEO_DATA.blog.description} />
-);
+export const Head = () => <SEO {...SEO_DATA.blog({ title, description })} />;

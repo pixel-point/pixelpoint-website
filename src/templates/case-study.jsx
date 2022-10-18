@@ -87,11 +87,8 @@ export default CaseStudyTemplate;
 
 export const Head = ({
   data: {
-    mdx: { frontmatter },
+    mdx: {
+      frontmatter: { title, description },
+    },
   },
-}) => (
-  <SEO
-    title={SEO_DATA.caseStudy({ title: frontmatter.title }).title}
-    description={frontmatter.description}
-  />
-);
+}) => <SEO {...SEO_DATA.caseStudy({ title, description })} />;

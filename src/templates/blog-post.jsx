@@ -17,15 +17,7 @@ const BlogPostTemplate = ({
   },
   location,
 }) => (
-  <Layout
-    seo={SEO_DATA.blogPost({
-      title: frontmatter.title,
-      description: frontmatter.summary,
-      ogImage: frontmatter.ogImage.childImageSharp.gatsbyImageData.images.fallback.src,
-    })}
-    headerTheme="black"
-    headerShowThemeButton
-  >
+  <Layout headerTheme="black" headerShowThemeButton>
     <article className="safe-paddings pt-32 sm:pt-24">
       <div className="container">
         <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
@@ -101,16 +93,8 @@ export default BlogPostTemplate;
 
 export const Head = ({
   data: {
-    mdx: { frontmatter },
+    mdx: {
+      frontmatter: { title, description, ogImage },
+    },
   },
-}) => (
-  <SEO
-    title={SEO_DATA.blogPost({ title: frontmatter.title }).title}
-    description={SEO_DATA.blogPost({ description: frontmatter.summary }).description}
-    ogImage={
-      SEO_DATA.blogPost({
-        ogImage: frontmatter.ogImage.childImageSharp.gatsbyImageData.images.fallback.src,
-      }).ogImage
-    }
-  />
-);
+}) => <SEO {...SEO_DATA.blogPost({ title, description, ogImage })} />;
