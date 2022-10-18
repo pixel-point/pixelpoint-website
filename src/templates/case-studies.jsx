@@ -74,4 +74,6 @@ export const query = graphql`
 
 export default CaseStudiesPage;
 
-export const Head = () => <SEO {...SEO_DATA.caseStudies({ title, description })} />;
+export const Head = () => (
+  <SEO title={SEO_DATA.caseStudies.title} description={SEO_DATA.caseStudies.description} />
+);
