@@ -94,13 +94,17 @@ export default BlogPostTemplate;
 export const Head = ({
   data: {
     mdx: {
-      frontmatter: { title, description, ogImage },
+      frontmatter: { title, summary },
     },
   },
 }) => (
   <SEO
     title={SEO_DATA.blogPost({ title }).title}
-    description={SEO_DATA.blogPost({ description }).description}
-    ogImage={SEO_DATA.blogPost({ ogImage }).ogImage}
+    description={SEO_DATA.blogPost({ summary }).description}
+    ogImage={
+      SEO_DATA.blogPost({
+        ogImage: frontmatter.ogImage.childImageSharp.gatsbyImageData.images.fallback.src,
+      }).ogImage
+    }
   />
 );
