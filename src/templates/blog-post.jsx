@@ -100,7 +100,7 @@ export const Head = ({
 }) => (
   <SEO
     title={SEO_DATA.blogPost({ title }).title}
-    description={description}
+    description={SEO_DATA.blogPost({ description }).description}
     ogImage={SEO_DATA.blogPost({ ogImage }).ogImage}
   />
 );
