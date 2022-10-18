@@ -23,7 +23,7 @@ const servicesCTA = {
 };
 
 const ServicesWebDevelopmentPage = () => (
-  <Layout seo={SEO_DATA.servicesWebDevelopment} headerTheme="white">
+  <Layout headerTheme="white">
     <Hero />
     <Frameworks />
     <Tailwindcss />
@@ -43,4 +43,4 @@ const ServicesWebDevelopmentPage = () => (
 
 export default ServicesWebDevelopmentPage;
 
-export const Head = () => <SEO {...SEO_DATA.servicesWebDevelopment({ title, description })} />;
+export const Head = () => <SEO {...SEO_DATA.servicesWebDevelopment} />;
