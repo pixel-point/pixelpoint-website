@@ -52,4 +52,4 @@ const AboutUsPage = () => (
 
 export default AboutUsPage;
 
-export const Head = () => <SEO {...SEO_DATA.about({ title, description })} />;
+export const Head = () => <SEO {...SEO_DATA.about} />;
