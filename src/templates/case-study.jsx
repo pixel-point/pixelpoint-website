@@ -91,4 +91,4 @@ export const Head = ({
       frontmatter: { title, description },
     },
   },
-}) => <SEO {...SEO_DATA.caseStudy({ title, description })} />;
+}) => <SEO title={SEO_DATA.caseStudy({ title }).title} description={description} />;

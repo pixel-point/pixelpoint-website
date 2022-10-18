@@ -97,4 +97,10 @@ export const Head = ({
       frontmatter: { title, description, ogImage },
     },
   },
-}) => <SEO {...SEO_DATA.blogPost({ title, description, ogImage })} />;
+}) => (
+  <SEO
+    title={SEO_DATA.blogPost({ title }).title}
+    description={description}
+    ogImage={SEO_DATA.blogPost({ ogImage }).ogImage}
+  />
+);
