@@ -12,8 +12,6 @@ Rive is a modern tool for creating well-performing interactive animations that y
 
 See a lot of fascinating examples in [Rive community library](https://rive.app/community/).
 
-<iframe style="border: none" width="800" height="500" src="https://rive.app/community/1714-4322-rives-animated-emojis/embed" allowfullscreen></iframe>
-
 ## What can we optimize?
 
 Rive tells us that all animations are already performing great, and **it’s true**. Just see this test from Rive team comparing Lottie and Rive.
