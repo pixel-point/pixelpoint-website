@@ -111,7 +111,7 @@ Since we already patched webpack to load WASM, now it’s very simple to preload
 ```jsx
 import riveWasmUrl from '@rive-app/canvas/rive.wasm';
 
-<link rel="preload" href={`${riveWasmUrl}`} as="fetch" crossOrigin="anonymous" />;
+<link rel="preload" href={riveWasmUrl} as="fetch" crossOrigin="anonymous" />;
 ```
 
 ### Preload .riv animation
