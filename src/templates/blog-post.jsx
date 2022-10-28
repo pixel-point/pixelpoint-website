@@ -9,6 +9,7 @@ import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 import SEO from 'components/shared/seo/seo';
 import SEO_DATA from 'constants/seo-data';
+import getSrc from 'gatsby-plugin-image';
 
 const BlogPostTemplate = ({
   data: {
@@ -93,16 +94,12 @@ export default BlogPostTemplate;
 
 export const Head = ({
   data: {
-    mdx: { frontmatter },
+    mdx: {
+      frontmatter: { title, summary, ogImage },
+    },
   },
-}) => (
-  <SEO
-    title={SEO_DATA.blogPost({ title: frontmatter.title }).title}
-    description={SEO_DATA.blogPost({ description: frontmatter.summary }).description}
-    ogImage={
-      SEO_DATA.blogPost({
-        ogImage: frontmatter.ogImage.childImageSharp.gatsbyImageData.images.fallback.src,
-      }).ogImage
-    }
-  />
-);
+}) => {
+  const ogImageUrl = getSrc(ogImage);
+
+  return <SEO {...SEO_DATA.blogPost({ title, description: summary, ogImage: ogImageUrl })} />;
+};
