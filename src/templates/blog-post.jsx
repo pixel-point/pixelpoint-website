@@ -100,7 +100,6 @@ export const Head = ({
   },
 }) => {
   const ogImageUrl = getSrc(ogImage);
-  console.log(ogImageUrl);
 
   return <SEO {...SEO_DATA.blogPost({ title, description: summary, ogImage: ogImageUrl })} />;
 };
