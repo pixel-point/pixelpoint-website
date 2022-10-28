@@ -9,7 +9,7 @@ import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 import SEO from 'components/shared/seo/seo';
 import SEO_DATA from 'constants/seo-data';
-import getSrc from 'gatsby-plugin-image';
+import { getSrc } from 'gatsby-plugin-image';
 
 const BlogPostTemplate = ({
   data: {
@@ -100,6 +100,7 @@ export const Head = ({
   },
 }) => {
   const ogImageUrl = getSrc(ogImage);
+  console.log(ogImageUrl);
 
   return <SEO {...SEO_DATA.blogPost({ title, description: summary, ogImage: ogImageUrl })} />;
 };
