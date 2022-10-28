@@ -4,6 +4,10 @@ summary: Learn how to replace data in the existing Graphql fields, add new ones 
 author: Alex Barashkov
 cover: cover.jpg
 category: Development
+tags:
+  - gatsby
+  - graphql
+  - api
 ---
 
 Gatsby has one big difference from other frameworks: it has a built-in Graphql data layer. Such a layer opens a lot of possibilities and is a key part of the big ecosystem of plugins. You can fetch data from CMS using Graphql, query images, query markdown based content with a help of a variety of plugins.

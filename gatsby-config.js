@@ -136,6 +136,22 @@ module.exports = {
         siteUrl: process.env.GATSBY_DEFAULT_SITE_URL,
       },
     },
-    `gatsby-plugin-mdx-embed`,
+    'gatsby-plugin-mdx-embed',
+    ...(process.env.NODE_ENV === 'production'
+      ? [
+          {
+            resolve: `gatsby-plugin-algolia-search`,
+            options: {
+              appId: process.env.GATSBY_ALGOLIA_APP_ID,
+              apiKey: process.env.ALGOLIA_ADMIN_KEY,
+              indexName: process.env.GATSBY_ALGOLIA_INDEX_NAME, // for all queries
+              // eslint-disable-next-line global-require
+              queries: require('./src/utils/algolia-queries'),
+              chunkSize: 10000, // default: 1000
+              enablePartialUpdates: true, // default: false
+            },
+          },
+        ]
+      : []),
   ],
 };

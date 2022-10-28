@@ -4,6 +4,12 @@ author: Alex Barashkov
 summary: Get familiar with Flagsmith, a feature flag service, and the way it can help introduce new functionality to your users.
 cover: cover.jpg
 category: Development
+tags:
+  - react
+  - users
+  - flagsmith
+  - next.js
+  - javascript
 ---
 
 ## Overview

@@ -4,6 +4,10 @@ summary: Trailing slash knowledge is important for any web developer; however, w
 author: Ekaterina Martynko
 cover: cover.jpg
 category: Development
+tags:
+  - gatsby
+  - slash
+  - trailing-slash
 ---
 
 Like most junior web developers out there, I had little to no idea what a trailing slash is. Of course, I was using them in projects, but it was more like following common sense (or even sixth sense) than really understanding the concept.

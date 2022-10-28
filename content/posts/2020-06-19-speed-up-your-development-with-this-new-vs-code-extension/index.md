@@ -4,6 +4,16 @@ author: Alex Barashkov
 summary: My friend and I recently have developed a VS Code extension called Snipsnap. We see it as a solution to the existing problem with code snippets collections.
 cover: cover.jpg
 category: Development
+tags:
+  - vscode
+  - extension
+  - snipsnap
+  - open-source
+  - react
+  - gatsby
+  - redux
+  - next.js
+  - vue
 ---
 
 My friend and I recently developed VS Code extension – [Snipsnap](https://github.com/snipsnapdev/snipsnap) - that aims to solve the existing problem with code snippets collections.

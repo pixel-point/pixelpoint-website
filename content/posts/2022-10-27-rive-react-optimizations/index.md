@@ -4,6 +4,11 @@ summary: Learn how to optimize Rive animations in React apps to speed up loading
 author: Alex Barashkov
 cover: cover.jpg
 category: Development
+tags:
+  - optimization
+  - react
+  - rive
+  - animation
 ---
 
 ## What is Rive?

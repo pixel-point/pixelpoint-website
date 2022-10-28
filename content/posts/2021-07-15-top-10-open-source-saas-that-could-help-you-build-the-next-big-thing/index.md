@@ -4,6 +4,18 @@ author: Alex Barashkov
 summary: An opinionated list of my favorite open source SaaS tools we use in Pixel Point to build projects.
 cover: cover.jpg
 category: Development
+tags:
+  - open-source
+  - saas
+  - graphql
+  - k6
+  - flagsmith
+  - sentry
+  - ci
+  - drone-ci
+  - hasura
+  - timescaledb
+  - supertokens
 ---
 
 I'm super happy that investors and big companies are finally happy to support Open Source projects. It was hard to imagine 10 years ago that there will be plenty of SaaS built based on open-source model.

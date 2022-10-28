@@ -12,7 +12,6 @@ import SEO_DATA from 'constants/seo-data';
 const BlogPostTemplate = ({
   data: {
     mdx: { slug, body, author, frontmatter },
-    allMdx: { nodes: readMorePosts },
   },
   location,
 }) => (
@@ -32,7 +31,13 @@ const BlogPostTemplate = ({
             <Hero {...frontmatter} slug={slug} />
             <Content content={body} />
           </div>
-          <Sidebar author={author} readMorePosts={readMorePosts} socialShareUrl={location.href} />
+          <Sidebar
+            slug={slug}
+            category={frontmatter.category}
+            tags={frontmatter.tags}
+            author={author}
+            socialShareUrl={location.href}
+          />
         </div>
       </div>
     </article>
@@ -59,6 +64,7 @@ export const query = graphql`
         title
         summary
         category
+        tags
         cover {
           childImageSharp {
             gatsbyImageData(width: 696)
@@ -67,28 +73,6 @@ export const query = graphql`
         ogImage: cover {
           childImageSharp {
             gatsbyImageData(layout: FIXED, quality: 90, width: 1200, height: 630, formats: JPG)
-          }
-        }
-      }
-    }
-    allMdx(
-      filter: { fileAbsolutePath: { regex: "/posts/" }, id: { ne: $id } }
-      limit: 4
-      sort: { order: DESC, fields: slug }
-    ) {
-      nodes {
-        slug
-        frontmatter {
-          title
-          mediumCover: cover {
-            childImageSharp {
-              gatsbyImageData(width: 384)
-            }
-          }
-          smallCover: cover {
-            childImageSharp {
-              gatsbyImageData(width: 80, layout: FIXED)
-            }
           }
         }
       }

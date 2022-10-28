@@ -4,6 +4,12 @@ author: Alex Barashkov
 summary: Diving into the hot topics of comparing the speed of development, editorial experience, maintainability, scalability, and customizations of the two most popular React-based frameworks.
 cover: cover.jpg
 category: Development
+tags:
+  - gatsby
+  - next.js
+  - website
+  - development
+  - optimization
 ---
 
 Gatsby and Next.js, from a first glance, could look pretty much the same. Both are React-based frameworks, do SSR, SSG, have big communities. We actively use both technologies in [our agency](https://pixelpoint.io/), but we think that they fit better for different use cases. I often get asked why we use Gatsby instead of Next.js for websites development? This article will explain it in detail.

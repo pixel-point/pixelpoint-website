@@ -4,6 +4,10 @@ summary: This year, at the beginning of March, they held GatsbyConf 2022, featur
 author: Kirill Bolotsky
 cover: cover.jpg
 category: Misc
+tags:
+  - gatsby
+  - agency
+  - awards
 ---
 
 We've been there working with GatsbyJS since the very beginning. We have witnessed its beta release, went to production with Gatsby v1.0, and learned tricks and caveats during migration all the way through to v4. We've contributed to the ecosystem, tweaking existing and creating our own community plugins, writing tutorials, opening issues, and translating documentation. It's been quite a ride and, for sure, a pleasant one.

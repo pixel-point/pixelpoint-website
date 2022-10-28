@@ -4,6 +4,13 @@ summary: Using video for animation with proper optimization is always better tha
 author: Alex Barashkov
 cover: cover.jpg
 category: Development
+tags:
+  - video
+  - vp9
+  - h265
+  - codecs
+  - gif
+  - optimization
 ---
 
 Modern web development every year applies new standards for performance. Frameworks compete by optimizing network requests, images, and code to achieve a blazing-fast loading experience. When it comes to images, almost every framework, headless CMS, or CDN offers built-in optimization options. Unfortunately, the same can't be said about videos.
