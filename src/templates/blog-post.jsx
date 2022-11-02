@@ -7,7 +7,9 @@ import Hero from 'components/pages/blog-post/hero';
 import Sidebar from 'components/pages/blog-post/sidebar';
 import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
+import SEO from 'components/shared/seo/seo';
 import SEO_DATA from 'constants/seo-data';
+import { getSrc } from 'gatsby-plugin-image';
 
 const BlogPostTemplate = ({
   data: {
@@ -16,15 +18,7 @@ const BlogPostTemplate = ({
   },
   location,
 }) => (
-  <Layout
-    seo={SEO_DATA.blogPost({
-      title: frontmatter.title,
-      description: frontmatter.summary,
-      ogImage: frontmatter.ogImage.childImageSharp.gatsbyImageData.images.fallback.src,
-    })}
-    headerTheme="black"
-    headerShowThemeButton
-  >
+  <Layout headerTheme="black" headerShowThemeButton>
     <article className="safe-paddings pt-32 sm:pt-24">
       <div className="container">
         <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
@@ -97,3 +91,15 @@ export const query = graphql`
 `;
 
 export default BlogPostTemplate;
+
+export const Head = ({
+  data: {
+    mdx: {
+      frontmatter: { title, summary, ogImage },
+    },
+  },
+}) => {
+  const ogImageUrl = getSrc(ogImage);
+
+  return <SEO {...SEO_DATA.blogPost({ title, description: summary, ogImage: ogImageUrl })} />;
+};

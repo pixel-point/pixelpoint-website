@@ -4,9 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Footer from 'components/shared/footer';
 import Header from 'components/shared/header';
 import MobileMenu from 'components/shared/mobile-menu';
-import SEO from 'components/shared/seo';
 
-const Layout = ({ seo, headerClassName, headerTheme, headerShowThemeButton, children }) => {
+const Layout = ({ headerClassName, headerTheme, headerShowThemeButton, children }) => {
   const headerRef = useRef(null);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,7 +24,6 @@ const Layout = ({ seo, headerClassName, headerTheme, headerShowThemeButton, chil
 
   return (
     <>
-      <SEO {...seo} />
       <div className="flex min-h-screen flex-col">
         <Header
           className={headerClassName}

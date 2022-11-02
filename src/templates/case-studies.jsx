@@ -8,6 +8,7 @@ import SharedCaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 // import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
+import SEO from 'components/shared/seo/seo';
 import SEO_DATA from 'constants/seo-data';
 
 const CaseStudiesPage = ({
@@ -15,7 +16,7 @@ const CaseStudiesPage = ({
     allMdx: { nodes },
   },
 }) => (
-  <Layout seo={SEO_DATA.caseStudies} headerTheme="black">
+  <Layout headerTheme="black">
     <CaseStudies items={nodes} />
     <SharedCaseStudies
       title="Some more of our recent projects to read about:"
@@ -72,3 +73,5 @@ export const query = graphql`
 `;
 
 export default CaseStudiesPage;
+
+export const Head = () => <SEO {...SEO_DATA.caseStudies} />;
