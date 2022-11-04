@@ -108,7 +108,7 @@ Sidebar.propTypes = {
       }).isRequired,
     }).isRequired
   ).isRequired,
-  socialShareUrl: PropTypes.string.isRequired,
+  socialShareUrl: PropTypes.string,
 };
 
 export default Sidebar;

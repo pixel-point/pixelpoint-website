@@ -40,5 +40,10 @@
     "name": "Alexey Tretyakov",
     "photo": "../../src/images/post-authors/alexey-tretyakov.jpg",
     "description": "An ambitious designer at Pixel Point."
+  },
+  {
+    "name": "Yaroslav Demidov",
+    "photo": "../../src/images/post-authors/yaroslav-demidov.jpg",
+    "description": "Motion Designer at Pixel Point"
   }
 ]
