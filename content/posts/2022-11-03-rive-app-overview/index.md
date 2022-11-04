@@ -118,4 +118,4 @@ Rive is an amazing and promising tool that already can cover plenty of motion de
 - If you have a lot of moving objects on the page, be careful. Performance is great but it has some limits anyway.
 - If you need elements that keep some physical properties, accelerating and slowing down correctly based on the weight of the object, AE will be a better choice for the development with a potential to be exported to Rice if necessary.
 
-Rive works great for everything else and can be used to create interactive web components, animating 2d characters, or making some mockups animations.
+Rive works great for everything else and can be used to create interactive web components, animating 2d characters, or making some mockup animations.
