@@ -1,0 +1,6 @@
+@layer utilities {
+  .remove-image-loading-visual {
+    color: transparent;
+    clip-path: inset(0.5px);
+  }
+}

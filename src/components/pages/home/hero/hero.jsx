@@ -153,6 +153,7 @@ const Hero = () => {
               aria-hidden
             >
               <img
+                className="remove-image-loading-visual"
                 src={lgIllustration1}
                 width={468}
                 height={380}
