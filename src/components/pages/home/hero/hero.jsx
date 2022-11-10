@@ -180,6 +180,7 @@ const Hero = () => {
               aria-hidden
             >
               <img
+                className="remove-image-loading-visual"
                 src={lgIllustration2}
                 width={590}
                 height={700}
@@ -206,6 +207,7 @@ const Hero = () => {
               aria-hidden
             >
               <img
+                className="remove-image-loading-visual"
                 src={lgIllustration3}
                 width={590}
                 height={766}
