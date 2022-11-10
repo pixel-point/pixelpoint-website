@@ -55,6 +55,7 @@ const Services = () => {
         <div className="mt-14 hidden md:block sm:mt-8" aria-hidden>
           <ImagePlaceholder width={1544} height={658}>
             <img
+              className="remove-image-loading-visual"
               src={lgIllustration1}
               width={1544}
               height={658}
@@ -82,6 +83,7 @@ const Services = () => {
             aria-hidden
           >
             <img
+              className="remove-image-loading-visual"
               src={lgIllustration2}
               width={540}
               height={437}
