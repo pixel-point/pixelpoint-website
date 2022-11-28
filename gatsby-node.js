@@ -119,6 +119,19 @@ async function createBlogPosts({ graphql, actions }) {
           }
         }
       }
+      # Query all video covers from all blog posts
+      allFile(
+        filter: { absolutePath: { regex: "/content/posts/" }, name: { regex: "/video-cover/" } }
+      ) {
+        nodes {
+          name
+          ext
+          childImageSharp {
+            gatsbyImageData(width: 970)
+          }
+          relativeDirectory
+        }
+      }
     }
   `);
 
@@ -144,11 +157,22 @@ async function createBlogPosts({ graphql, actions }) {
         )}.\nPlease check categories in "src/constants/blog.js"`
       );
     }
+    // Create an object containing all the video covers for all blog posts groped by post slug
+    const allVideoCovers = result.data.allFile.nodes.reduce((acc, item) => {
+      const { name, ext, childImageSharp, relativeDirectory } = item;
+      const slug = `${relativeDirectory}/`;
+      if (!acc[slug]) {
+        acc[slug] = {};
+      }
+      acc[slug][name + ext] = { childImageSharp };
+      return acc;
+    }, {});
 
+    // Create a page for each blog post and pass context with video covers only for the current post
     createPage({
       path: getBlogPostPath(slug),
       component: path.resolve('./src/templates/blog-post.jsx'),
-      context: { id },
+      context: { id, videoCovers: allVideoCovers[slug] },
     });
   });
 }

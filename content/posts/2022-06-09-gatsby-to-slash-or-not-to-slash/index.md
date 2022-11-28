@@ -36,7 +36,7 @@ Here is an example of the trailing slash misuse that shows you how two pages —
 
 Another example: in the video below, you can see a bad UX scenario, when a host adds a trailing slash, and then a front-end router of a SPA removes it, so the user gets an URL that changes and much confusion.
 
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-09-gatsby-to-slash-or-not-to-slash/video.mp4" width="800" height="555" autoplay muted loop playsinline></video>
+<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-09-gatsby-to-slash-or-not-to-slash/video.mp4" width="1280" height="168" autoplay muted loop playsinline></video>
 
 So in order to be understood properly by a web crawler, you need to specify your intentions either by using canonical URLs or redirects. Then you can have as many identical pages as you want.
 

@@ -23,25 +23,23 @@ const Layout = ({ headerClassName, headerTheme, headerShowThemeButton, children 
   }, []);
 
   return (
-    <>
-      <div className="flex min-h-screen flex-col">
-        <Header
-          className={headerClassName}
-          theme={headerTheme}
-          isMobileMenuOpen={isMobileMenuOpen}
-          ref={headerRef}
-          showThemeButton={headerShowThemeButton}
-          onBurgerClick={handleHeaderBurgerClick}
-        />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-        <MobileMenu
-          isOpen={isMobileMenuOpen}
-          headerRef={headerRef}
-          onOutsideClick={handleMobileMenuOutsideClick}
-        />
-      </div>
-    </>
+    <div className="flex min-h-screen flex-col">
+      <Header
+        className={headerClassName}
+        theme={headerTheme}
+        isMobileMenuOpen={isMobileMenuOpen}
+        ref={headerRef}
+        showThemeButton={headerShowThemeButton}
+        onBurgerClick={handleHeaderBurgerClick}
+      />
+      <main className="flex-grow">{children}</main>
+      <Footer />
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        headerRef={headerRef}
+        onOutsideClick={handleMobileMenuOutsideClick}
+      />
+    </div>
   );
 };
 

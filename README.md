@@ -207,6 +207,14 @@ To enable Prettier go to Preferences -> Settings -> type "Format". Then check th
 
 Reload VS Code and auto-format will work for you.
 
+## Tips & Tricks
+
+In order to generate a poster for a video you can use ffmpeg tool. Modify `00:00:01.000` timecode option to get a desired poster quality.
+
+```bash
+ffmpeg -i https://pixel-point-website.s3.amazonaws.com/posts/2022-06-20-motion-morning-3/9.mp4 -ss 00:00:01.000 -vframes 1 video-cover-1.jpg
+```
+
 ## Contribution
 
 Contribution is highly welcomed!
