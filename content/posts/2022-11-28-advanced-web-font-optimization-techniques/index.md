@@ -37,7 +37,7 @@ Using custom fonts that are not part of the OS has a tradeoff. Browsers do not k
 
 The difference can be huge, and layout shifts will become visible, especially on a slow connection.
 
-<video autoplay playsinline muted loop width="800" height="600">
+<video autoplay playsinline muted loop width="1920" height="1080">
 
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-28-advanced-web-font-optimization-techniques/without-fontpie-optimized.mp4" />
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-28-advanced-web-font-optimization-techniques/without-fontpie.webm" />
@@ -100,7 +100,7 @@ This CSS solution works like this: (1) we declare a new font face—Roboto, (2) 
 
 As you can see in the image, Times New Roman with metric adjustments now takes the same amount of space as the Usual font.
 
-<video autoplay playsinline muted loop width="800" height="600">
+<video autoplay playsinline muted loop width="1920" height="1080">
 
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-28-advanced-web-font-optimization-techniques/with-fontpie-optimized.mp4" />
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-28-advanced-web-font-optimization-techniques/with-fontpie.webm" />
