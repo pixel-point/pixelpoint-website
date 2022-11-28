@@ -1,6 +1,6 @@
 ---
-title: 'Advanced Web Font Optimization Techniques'
-summary: Make your site faster and create a better UX using web fonts by learning techniques like font fallback metric adjustments, custom subsetting, vertical baseline fixes.
+title: 'Advanced web font optimization techniques'
+summary: Make your site faster and create a better UX by learning web font advanced techniques like font fallback metric adjustments, custom subsetting, and vertical baseline fixes.
 author: Alex Barashkov
 cover: cover.jpg
 category: Development
