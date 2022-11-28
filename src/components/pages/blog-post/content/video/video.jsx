@@ -43,7 +43,6 @@ const VideoWithCover = (props) => {
     <div className="relative my-5">
       {isPlaying && (
         <video
-          style={{ margin: '0 auto' }}
           className={clsx(
             'absolute top-0 left-0 h-auto w-full cursor-pointer',
             isVideoLoaded ? 'opacity-100' : 'opacity-0'
