@@ -101,7 +101,10 @@ async function createBlogPosts({ graphql, actions }) {
 
   const result = await graphql(`
     {
-      allMdx(filter: { fileAbsolutePath: { regex: "/posts/" } }) {
+      allMdx(
+        filter: { fileAbsolutePath: { regex: "/posts/" } }
+        sort: { fields: fileAbsolutePath, order: DESC }
+      ) {
         nodes {
           id
           slug
