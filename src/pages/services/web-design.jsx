@@ -12,8 +12,8 @@ import CaseStudies from 'components/shared/case-studies';
 import CTA from 'components/shared/cta';
 // import GatsbyAwards from 'components/shared/gatsby-awards';
 import Layout from 'components/shared/layout';
-import ServicesCTA from 'components/shared/services-cta';
 import SEO from 'components/shared/seo/seo';
+import ServicesCTA from 'components/shared/services-cta';
 import LINKS from 'constants/links';
 import SEO_DATA from 'constants/seo-data';
 

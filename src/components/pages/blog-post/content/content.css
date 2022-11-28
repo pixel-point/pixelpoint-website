@@ -29,7 +29,7 @@
     ul,
     ol,
     p,
-    video,
+    > video,
     .embedVideo-container {
       @apply my-5 sm:my-4;
     }

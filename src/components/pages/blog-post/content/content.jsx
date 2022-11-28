@@ -8,6 +8,8 @@ import slugify from 'slugify';
 
 import QuoteIcon from 'images/quote.inline.svg';
 
+import Video from './video';
+
 const Heading =
   (Tag) =>
   // eslint-disable-next-line react/prop-types
@@ -65,7 +67,7 @@ Quote.defaultProps = {
   authorName: null,
 };
 
-const components = {
+const getComponents = (videoCovers) => ({
   h2: Heading('h2'),
   h3: Heading('h3'),
   p: Paragraph,
@@ -75,15 +77,16 @@ const components = {
       <table {...props} />
     </div>
   ),
+  video: (props) => <Video {...props} videoCovers={videoCovers} />,
   // this code prevents the creation of an additional video iframe wrapper in mdx
   undefined: (obj) =>
     obj?.children.filter((child) => typeof child === 'object') || obj?.props?.children,
-};
+});
 
-const Content = ({ className, content }) => (
+const Content = ({ className, content, videoCovers }) => (
   <div className="mt-10 md:mt-8">
     <div className={clsx('content', className)}>
-      <MDXProvider components={components}>
+      <MDXProvider components={getComponents(videoCovers)}>
         <MDXRenderer>{content}</MDXRenderer>
       </MDXProvider>
     </div>
@@ -93,10 +96,12 @@ const Content = ({ className, content }) => (
 Content.propTypes = {
   className: PropTypes.string,
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  videoCovers: PropTypes.shape({}),
 };
 
 Content.defaultProps = {
   className: null,
+  videoCovers: null,
 };
 
 export default Content;

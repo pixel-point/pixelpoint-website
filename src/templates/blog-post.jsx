@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { graphql } from 'gatsby';
+import { getSrc } from 'gatsby-plugin-image';
 import React from 'react';
 
 import Content from 'components/pages/blog-post/content';
@@ -9,7 +10,6 @@ import CTA from 'components/shared/cta';
 import Layout from 'components/shared/layout';
 import SEO from 'components/shared/seo/seo';
 import SEO_DATA from 'constants/seo-data';
-import { getSrc } from 'gatsby-plugin-image';
 
 const BlogPostTemplate = ({
   data: {
@@ -17,6 +17,7 @@ const BlogPostTemplate = ({
     allMdx: { nodes: readMorePosts },
   },
   location,
+  pageContext: { videoCovers },
 }) => (
   <Layout headerTheme="black" headerShowThemeButton>
     <article className="safe-paddings pt-32 sm:pt-24">
@@ -24,7 +25,7 @@ const BlogPostTemplate = ({
         <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
           <div className="xl:max-w-[696px] lg:max-w-[626px] md:max-w-none">
             <Hero {...frontmatter} slug={slug} />
-            <Content content={body} />
+            <Content content={body} videoCovers={videoCovers} />
           </div>
           <Sidebar author={author} readMorePosts={readMorePosts} socialShareUrl={location.href} />
         </div>
