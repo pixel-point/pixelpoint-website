@@ -17,7 +17,7 @@ module.exports = {
       xs: { max: '413px' },
     },
     fontFamily: {
-      sans: ['Usual', ...defaultTheme.fontFamily.sans],
+      sans: ['Usual', 'Usual Fallback', ...defaultTheme.fontFamily.sans],
       mono: ['IBM Plex Mono', ...defaultTheme.fontFamily.mono],
     },
     fontSize: {
