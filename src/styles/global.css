@@ -9,7 +9,6 @@
   }
 }
 
-/* TODO: Fix Gatsby bug with images being hidden,the issue is possible to catch only in production build */
-/* .gatsby-image-wrapper [data-main-image] {
+.gatsby-image-wrapper .loaded[data-main-image] {
   opacity: 1 !important;
-} */
+}
