@@ -72,11 +72,11 @@
     font-family: 'Usual Fallback';
     font-style: normal;
     font-weight: 600;
-    src: local('Arial');
-    ascent-override: 89.31%;
-    descent-override: 17.97%;
+    src: local('Arial Bold');
+    ascent-override: 96.63%;
+    descent-override: 19.44%;
     line-gap-override: 0%;
-    size-adjust: 111.29%;
+    size-adjust: 102.87%;
   }
 
   @font-face {
@@ -92,11 +92,11 @@
     font-family: 'Usual Fallback';
     font-style: normal;
     font-weight: 700;
-    src: local('Arial');
-    ascent-override: 87.26%;
-    descent-override: 17.56%;
+    src: local('Arial Bold');
+    ascent-override: 94.4%;
+    descent-override: 18.99%;
     line-gap-override: 0%;
-    size-adjust: 113.92%;
+    size-adjust: 105.29%;
   }
 
   @font-face {
