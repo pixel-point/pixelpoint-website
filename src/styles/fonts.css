@@ -106,4 +106,15 @@
     font-style: normal;
     font-display: block;
   }
+
+  @font-face {
+    font-family: 'IBM Plex Mono Fallback';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Courier New');
+    ascent-override: 112.01%;
+    descent-override: 27.07%;
+    line-gap-override: 0%;
+    size-adjust: 99.92%;
+  }
 }
