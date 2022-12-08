@@ -33,6 +33,12 @@ export const onRenderBody = ({ setHeadComponents, setPreBodyComponents, setHtmlA
       dangerouslySetInnerHTML={{
         __html: `
 (function() {
+  if(window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    plausible('User Color Mode', { props: { mode: 'dark' } });
+  }
+  else {
+    plausible('User Color Mode', { props: { mode: 'light' } });
+  }
   if (window.location.pathname.startsWith('/blog')) {
     const isDarkModeSetInLocalStorage = typeof localStorage !== 'undefined' && localStorage.theme === 'dark';
     const isSystemModeDark = !('theme' in localStorage) && typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches;
