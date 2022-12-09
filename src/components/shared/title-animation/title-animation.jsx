@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { motion } from 'framer-motion';
+import { m, LazyMotion, domAnimation } from 'framer-motion';
 import PropTypes from 'prop-types';
 import React, { Fragment, useMemo } from 'react';
 
@@ -77,15 +77,17 @@ const TitleAnimation = ({ className, tag: Tag, items, animationName, controls })
     <>
       <Tag className={clsx(animationName === 'first' && 'md:hidden', className)}>
         {itemsWithAnimationData.map(({ value, color, delay }, index) => (
-          <motion.span
-            initial="initial"
-            animate={controls}
-            variants={animations[animationName]}
-            custom={{ color, delay }}
-            key={index}
-          >
-            {value}{' '}
-          </motion.span>
+          <LazyMotion features={domAnimation}>
+            <m.span
+              initial="initial"
+              animate={controls}
+              variants={animations[animationName]}
+              custom={{ color, delay }}
+              key={index}
+            >
+              {value}{' '}
+            </m.span>
+          </LazyMotion>
         ))}
       </Tag>
       {animationName === 'first' && (
