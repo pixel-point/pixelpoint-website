@@ -75,9 +75,9 @@ const TitleAnimation = ({ className, tag: Tag, items, animationName, controls })
 
   return (
     <>
-      <Tag className={clsx(animationName === 'first' && 'md:hidden', className)}>
-        {itemsWithAnimationData.map(({ value, color, delay }, index) => (
-          <LazyMotion features={domAnimation}>
+      <LazyMotion features={domAnimation}>
+        <Tag className={clsx(animationName === 'first' && 'md:hidden', className)}>
+          {itemsWithAnimationData.map(({ value, color, delay }, index) => (
             <m.span
               initial="initial"
               animate={controls}
@@ -87,9 +87,9 @@ const TitleAnimation = ({ className, tag: Tag, items, animationName, controls })
             >
               {value}{' '}
             </m.span>
-          </LazyMotion>
-        ))}
-      </Tag>
+          ))}
+        </Tag>
+      </LazyMotion>
       {animationName === 'first' && (
         <Tag className={clsx('hidden md:block', className)}>
           {items.map(({ value }, index) => (
