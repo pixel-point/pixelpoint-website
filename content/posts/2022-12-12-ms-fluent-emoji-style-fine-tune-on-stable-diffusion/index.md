@@ -2,7 +2,7 @@
 title: '“MS fluent emoji” style fine-tune on Stable Diffusion'
 summary: ADD INFO.
 author: Alexey Shchipachev
-cover: screenshot-1.jpg
+cover: cover.jpg
 category: Design
 ---
 
