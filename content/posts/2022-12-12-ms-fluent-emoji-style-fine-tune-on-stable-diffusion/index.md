@@ -13,8 +13,8 @@ Text-to-image diffusion models represented significant progress in AI developmen
 
 Of course, it is possible to develop an original Promt template that will generate various images in a predictable style (for example, see [here](https://publicprompts.art/prompts-library/)). This is an interesting long journey in search of the "right" style, but it does not always lead to the desired result. This is because of the limited initial data set on which we train the neural network. In web design, there are many narrow topics, and default models are too general for these nuances. Even the seemingly simple task of selecting the appearance of a button for a landing page reveals the differences in how a web designer and a model see the world.
 
-![”Call to action rectangular button. Dribbble awards” Stabble Diffusion 1.5](./screenshot-3.jpg)
-![”Call to action rectangular button. Dribbble awards” Stabble Diffusion 1.5](./screenshot-4.jpg)
+!["Call to action rectangular button. Dribbble awards" Stabble Diffusion 1.5](./screenshot-3.jpg)
+!["Call to action rectangular button. Dribbble awards" Stabble Diffusion 1.5](./screenshot-4.jpg)
 
 Instead of developing a Promt, there is a simpler way to direct AI's wild imagination to a narrow area of a particular graphics task - Fine-tune retraining of the model on a small set of images. You can add a separate object to AI's vocabulary, such as your own face, as in the widely discussed [Lensa](https://apps.apple.com/app/id1436732536) app, or some object, or illustration style - whatever is the most important to us.
 
