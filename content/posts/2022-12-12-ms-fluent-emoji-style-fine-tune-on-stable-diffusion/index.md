@@ -1,31 +1,26 @@
 ---
-title: '“MS fluent emoji” style fine-tune on Stable Diffusion'
+title: '"MS fluent emoji" style fine-tune on Stable Diffusion'
 summary: Train a Stable Diffusion model with us to create new colorful 3D emojis using both text and image prompts!
 author: Alexey Shchipachev
 cover: cover.jpg
 category: Design
+draft: true
 ---
-
-![GATSBY_EMPTY_ALT](./screenshot-1-1.jpg)
-![GATSBY_EMPTY_ALT](./screenshot-2.png)
 
 Text-to-image diffusion models represented significant progress in AI development, so we are eager to apply them in real projects. The synthesized images will impress you with their "artistic" vision and photorealism. However, in our web design field, such images are still more like entertainment. They can become illustrations on a page only in rare particular cases. We want to have a more predictable result and develop a systematic, personalized approach to generate illustrations for the entire site in the same uniform style.
 
-Of course, it is possible to develop an original Promt template that will generate various images in a predictable style (for example, see [here](https://publicprompts.art/prompts-library/)). This is an interesting long journey in search of the "right" style, but it does not always lead to the desired result. This is because of the limited initial data set on which we train the neural network. In web design, there are many narrow topics, and default models are too general for these nuances. Even the seemingly simple task of selecting the appearance of a button for a landing page reveals the differences in how a web designer and a model see the world.
+Of course, it is possible to develop an original Prompt template that will generate various images in a predictable style (for example, see [here](https://publicprompts.art/prompts-library/)). This is an interesting long journey in search of the "right" style, but it does not always lead to the desired result. This is because of the limited initial data set on which we train the neural network. In web design, there are many narrow topics, and default models are too general for these nuances. Even the seemingly simple task of selecting the appearance of a button for a landing page reveals the differences in how a web designer and a model see the world.
 
-!["Call to action rectangular button. Dribbble awards" Stabble Diffusion 1.5](./screenshot-3.jpg)
-!["Call to action rectangular button. Dribbble awards" Stabble Diffusion 1.5](./screenshot-4.jpg)
+Instead of developing a Prompt, there is a simpler way to direct AI's wild imagination to a narrow area of a particular graphics task - Fine-tune retraining of the model on a small set of images. You can add a separate object to AI's vocabulary, such as your own face, as in the widely discussed [Lensa](https://apps.apple.com/app/id1436732536) app, or some object, or illustration style - whatever is the most important to us.
 
-Instead of developing a Promt, there is a simpler way to direct AI's wild imagination to a narrow area of a particular graphics task - Fine-tune retraining of the model on a small set of images. You can add a separate object to AI's vocabulary, such as your own face, as in the widely discussed [Lensa](https://apps.apple.com/app/id1436732536) app, or some object, or illustration style - whatever is the most important to us.
-
-![examples of a given object in new contexts https://dreambooth.github.io/](./screenshot-5.jpg)
+![Dreambooth training concept https://dreambooth.github.io/](./screenshot-2.jpg)
 
 ## Choosing a Style
 
 You need at least 20 different images to train a model in a particular style.
 While searching for a training dataset, I came across the wonderful new MS fluentui emojis. I realized that this is just what I needed! First, we have many images in one style for tests with different dataset sizes. (Thank you MS for making all emojis [publicly available](https://github.com/microsoft/fluentui-emoji)). Second, such a style of 3D icons is modern and universal. We could use it later in as web designers to create new icons, or small illustrations on some topic.
 
-![https://www.behance.net/gallery/125956251/Microsoft-Emojis](./screenshot-6.jpg)
+![https://www.behance.net/gallery/125956251/Microsoft-Emojis](./screenshot-3.jpg)
 
 On GitHub, the 3D versions of the icons are uploaded in 256x256 pixels resolution, which is not enough for training, so I additionally upscaled them to 512x512 using SwinIR_4x in AUTOMATIC 1111 web UI.
 
@@ -43,27 +38,27 @@ I ended up with four models as a result:
 
 **MS_emoji_v2_30img** - the same dataset of 30 emojis and 3000 training steps. I trained the following models on [www.runpod.io](http://www.runpod.io/) (1 x RTX A5000 8 vCPU 29 GB RAM), manually, based on the 7.5 GB original model SD v1-5-pruned.ckpt prepared for retraining [tutorial](https://www.youtube.com/watch?v=tgRiZzwSdXg)). Unlike Colab, runpod has the option to provide a REGULARIZATION IMAGES dataset. I didn't quite understand its purpose; looks like these are images on a specific topic that the neural network already knows (as it has generated them before). But I didn't understand how the NN knows that it already knows them, so I downloaded the default dataset, the prompts are not embedded in PNGs, so I uploaded a dataset of 1000 original MS emojis.
 
-![Dataset of 30 emojis](./screenshot-7.jpg)
+![Training dataset of 30 Microsoft Emojis](./screenshot-4.jpg)
 
 **MS_emoji_v3_50img** is a dataset of 50 emojis different from the first dataset. The model was trained for 5000 steps. All emojis were meant to be scaled up from 256x256 to 512x512 before the training. However, for this model, I accidentally specified the wrong folder and used 256x256 images for training. The model learned to understand that the images should look soapy and compressed =)
 
-![Dataset of 50 emojis](./screenshot-8.png)
+![Training dataset of 50 Microsoft Emojis](./screenshot-5.jpg)
 
 **The MS_emoji_v4_850img** is the largest dataset with 850 emojis. I manually removed overly complex or simple images, as well as all people and faces, so that only objects and animals remained. The model was trained for two days (others were trained for 2-4 hours for comparison).
 
-![Dataset of 850 emojis](./screenshot-9.jpg)
+![Training dataset of 850 Microsoft Emojis](./screenshot-6.jpg)
 
 I also slightly changed the REGULARIZATION IMAGES set, adding 370 more simple SD 1.5 generated images to the previous 1000 emojis, which I specifically generated in a similar style. It was never clear if this affected the result.
 
-![additional Regularization images](./screenshot-10.jpg)
+![Additional data set of regularization images](./screenshot-7.jpg)
 
 ## txt2img testing
 
 I tested how each model generates images with the same seed and prompt inputs.
 
-![Little cute christmas tree, MS_emoji style](./screenshot-11.jpg)
+![Prompt: little cute christmas tree, MS_emoji style](./screenshot-8.jpg)
 
-![Little cute elephant, MS_emoji style](./screenshot-12.jpg)
+![Prompt: little cute elephant, MS_emoji style](./screenshot-9.jpg)
 
 The test results for txt2img showed that models trained on datasets with 30 and 50 images produce the best results. However, the **MS_emoji_v4_850img** model produced abstract results that rarely showed what was asked.
 
@@ -75,15 +70,14 @@ During the testing of MS_emoji models in img2img, I got very interesting results
 
 With high values of Denoising Strength, the models produce interesting variations in shape, and the characteristic violet highlight reappears.
 
-![Promt: “cat, MS_emoji style” | Sampling Steps: 40 (Euler a) | CFG Scale: 9](./screenshot-13.jpg)
+![Prompt: "cat, MS_emoji style" | Sampling Steps: 40 (Euler a) | CFG Scale: 9](./screenshot-10.jpg)
 
-![Promt: “chainsaw, MS_emoji style” | Sampling Steps: 40 (Euler a) | CFG Scale: 9](./screenshot-14.jpg)
+![Prompt: "chainsaw, MS_emoji style" | Sampling Steps: 40 (Euler a) | CFG Scale: 9](./screenshot-11.jpg)
 
 The MS fluentui dataset on GitHub has multiple versions of each image, including 2D and 3D styles. I thought it would be interesting to compare the results of the AI work and the original 3D illustration from MS by inputting the original flat version of the emoji into SD model.
 
-![GATSBY_EMPTY_ALT](./screenshot-15.jpg)
-
-<!-- ![GATSBY_EMPTY_ALT](./screenshot-16.png) -->
+![GATSBY_EMPTY_ALT](./screenshot-12.jpg)
+![GATSBY_EMPTY_ALT](./screenshot-13.jpg)
 
 The results are look good and seem quite close to the original 3D images. However, the typical violet highlights of MS emoji are missing. Nevertheless, we have got a universal 2D-3D style converter that does not deviate from the original color palette in the process.
 
@@ -97,15 +91,17 @@ The results varied depending on the original image, so I generated 16 versions o
 
 Here are the results:
 
-<!-- <video autoplay playsinline muted loop width="1920" height="1080">
+<video autoplay playsinline muted loop width="1920" height="1080">
 
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-ms-fluent-emoji-style-fine-tune-on-stable-diffusion/video-1.mp4" />
 
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-ms-fluent-emoji-style-fine-tune-on-stable-diffusion/video-1.webm" />
-</video> -->
+</video>
 
-![100 2D color icons from https://www.graphicsfuel.com/2015/04/100-free-flat-color-icons/](./screenshot-18.jpg)
+Here you can find the result of conversion 100 2d icons to 3d. [Source.](https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-ms-fluent-emoji-style-fine-tune-on-stable-diffusion/screenshot-14.jpeg)
 
-![Generated 3D versions of icons.](./screenshot-19.jpg)
+## Summary
 
-AI can speed up the brainstorming process in our company, but it struggles with specific requests. Training AI for specific use cases can solve this problem. You can download the models we trained for this article on Huggingface for personal testing at this link: [insert link].
+AI can speed up the brainstorming process in our company, but it struggles with specific requests. Training AI for specific use cases can solve this problem. You can download the models we trained for this article on Huggingface for personal testing at this link: [https://huggingface.co/pixel-point/stable-diffusion-microsoft-emoji].
+
+If you enjoyed the article and want to see more web and design tips, [follow us on Twitter](https://twitter.com/alex_barashkov).

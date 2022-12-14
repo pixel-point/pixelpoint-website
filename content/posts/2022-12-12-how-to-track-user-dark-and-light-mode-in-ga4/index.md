@@ -1,5 +1,5 @@
 ---
-title: 'How to track user’s dark and light mode in Google Analytics 4'
+title: 'How to track user’s dark and light mode in Google Analytics(GA4)'
 summary: Learn your users’ preferences in light/dark mode settings with a simple Google Analytics solution.
 author: Alex Barashkov
 cover: cover.jpg
