@@ -1,6 +1,6 @@
 ---
 title: 'How to track user’s dark and light mode in GA4'
-summary: ADD INFO.
+summary: Learn your users’ preferences in light/dark mode settings with a simple Google Analytics solution.
 author: Alex Barashkov
 cover: cover.jpg
 category: Development
@@ -12,32 +12,28 @@ To track the user's dark mode setting, we will use Google Analytics 4 (GA4) and 
 
 Here are the steps to create a custom variable in GTM to track the user's dark and light theme setting:
 
-1. In your GTM account, go to the "Variables" section and click on the "New" button.
-2. On the "Create Variable" page, select "Custom JavaScript" as the variable type and name it “User Color Mode”.
-3. In the "Custom JavaScript" field, enter a function that returns either "dark" or "light" depending on the user's dark mode setting.
+- In your GTM account, go to the "Variables" section and click on the "New" button.
+- On the "Create Variable" page, select "Custom JavaScript" as the variable type and name it “User Color Mode”.
+- In the "Custom JavaScript" field, enter a function that returns either "dark" or "light" depending on the user's dark mode setting.
 
 <!-- <video autoplay playsinline muted loop width="1920" height="1080">
-
-<source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video-2.mp4" />
-
-<source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video-2.webm" />
+<source type="video/mp4" src="content/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video/video-2.mp4" />
+<source type="video/webm" src="content/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video/video-2.webm" />
 </video> -->
 
 ```jsx
-function () {
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return 'Dark';
+  function () {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'Dark';
+    }
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      return 'Light';
+    }
+    return 'No Preference';
   }
-  else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    return 'Light';
-  }
-  return 'No Preference';
-}
 ```
 
-4. Click on the "Save" button to save the custom variable.
-
-<!-- ![GATSBY_EMPTY_ALT](./screenshot-9.jpg) -->
+- Click on the "Save" button to save the custom variable.
 
 Example result:
 

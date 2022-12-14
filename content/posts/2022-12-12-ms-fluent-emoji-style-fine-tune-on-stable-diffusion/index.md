@@ -1,6 +1,6 @@
 ---
 title: '“MS fluent emoji” style fine-tune on Stable Diffusion'
-summary: ADD INFO.
+summary: Train a Stable Diffusion model with us to create new colorful 3D emojis using both text and image prompts!
 author: Alexey Shchipachev
 cover: cover.jpg
 category: Design
@@ -18,14 +18,14 @@ Of course, it is possible to develop an original Promt template that will genera
 
 Instead of developing a Promt, there is a simpler way to direct AI's wild imagination to a narrow area of a particular graphics task - Fine-tune retraining of the model on a small set of images. You can add a separate object to AI's vocabulary, such as your own face, as in the widely discussed [Lensa](https://apps.apple.com/app/id1436732536) app, or some object, or illustration style - whatever is the most important to us.
 
-![GATSBY_EMPTY_ALT](./screenshot-5.jpg)
+![examples of a given object in new contexts https://dreambooth.github.io/](./screenshot-5.jpg)
 
 ## Choosing a Style
 
 You need at least 20 different images to train a model in a particular style.
 While searching for a training dataset, I came across the wonderful new MS fluentui emojis. I realized that this is just what I needed! First, we have many images in one style for tests with different dataset sizes. (Thank you MS for making all emojis [publicly available](https://github.com/microsoft/fluentui-emoji)). Second, such a style of 3D icons is modern and universal. We could use it later in as web designers to create new icons, or small illustrations on some topic.
 
-![GATSBY_EMPTY_ALT](./screenshot-6.jpg)
+![https://www.behance.net/gallery/125956251/Microsoft-Emojis](./screenshot-6.jpg)
 
 On GitHub, the 3D versions of the icons are uploaded in 256x256 pixels resolution, which is not enough for training, so I additionally upscaled them to 512x512 using SwinIR_4x in AUTOMATIC 1111 web UI.
 
@@ -43,27 +43,27 @@ I ended up with four models as a result:
 
 **MS_emoji_v2_30img** - the same dataset of 30 emojis and 3000 training steps. I trained the following models on [www.runpod.io](http://www.runpod.io/) (1 x RTX A5000 8 vCPU 29 GB RAM), manually, based on the 7.5 GB original model SD v1-5-pruned.ckpt prepared for retraining [tutorial](https://www.youtube.com/watch?v=tgRiZzwSdXg)). Unlike Colab, runpod has the option to provide a REGULARIZATION IMAGES dataset. I didn't quite understand its purpose; looks like these are images on a specific topic that the neural network already knows (as it has generated them before). But I didn't understand how the NN knows that it already knows them, so I downloaded the default dataset, the prompts are not embedded in PNGs, so I uploaded a dataset of 1000 original MS emojis.
 
-![GATSBY_EMPTY_ALT](./screenshot-7.jpg)
+![Dataset of 30 emojis](./screenshot-7.jpg)
 
 **MS_emoji_v3_50img** is a dataset of 50 emojis different from the first dataset. The model was trained for 5000 steps. All emojis were meant to be scaled up from 256x256 to 512x512 before the training. However, for this model, I accidentally specified the wrong folder and used 256x256 images for training. The model learned to understand that the images should look soapy and compressed =)
 
-![GATSBY_EMPTY_ALT](./screenshot-8.png)
+![Dataset of 50 emojis](./screenshot-8.png)
 
 **The MS_emoji_v4_850img** is the largest dataset with 850 emojis. I manually removed overly complex or simple images, as well as all people and faces, so that only objects and animals remained. The model was trained for two days (others were trained for 2-4 hours for comparison).
 
-![GATSBY_EMPTY_ALT](./screenshot-9.jpg)
+![Dataset of 850 emojis](./screenshot-9.jpg)
 
 I also slightly changed the REGULARIZATION IMAGES set, adding 370 more simple SD 1.5 generated images to the previous 1000 emojis, which I specifically generated in a similar style. It was never clear if this affected the result.
 
-![GATSBY_EMPTY_ALT](./screenshot-10.jpg)
+![additional Regularization images](./screenshot-10.jpg)
 
 ## txt2img testing
 
 I tested how each model generates images with the same seed and prompt inputs.
 
-![GATSBY_EMPTY_ALT](./screenshot-11.jpg)
+![Little cute christmas tree, MS_emoji style](./screenshot-11.jpg)
 
-![GATSBY_EMPTY_ALT](./screenshot-12.jpg)
+![Little cute elephant, MS_emoji style](./screenshot-12.jpg)
 
 The test results for txt2img showed that models trained on datasets with 30 and 50 images produce the best results. However, the **MS_emoji_v4_850img** model produced abstract results that rarely showed what was asked.
 
@@ -81,9 +81,9 @@ With high values of Denoising Strength, the models produce interesting variation
 
 The MS fluentui dataset on GitHub has multiple versions of each image, including 2D and 3D styles. I thought it would be interesting to compare the results of the AI work and the original 3D illustration from MS by inputting the original flat version of the emoji into SD model.
 
-![original MS Flat emoji](./screenshot-15.jpg)
+![GATSBY_EMPTY_ALT](./screenshot-15.jpg)
 
-![original MS 3D emoji](./screenshot-16.png)
+<!-- ![GATSBY_EMPTY_ALT](./screenshot-16.png) -->
 
 The results are look good and seem quite close to the original 3D images. However, the typical violet highlights of MS emoji are missing. Nevertheless, we have got a universal 2D-3D style converter that does not deviate from the original color palette in the process.
 
