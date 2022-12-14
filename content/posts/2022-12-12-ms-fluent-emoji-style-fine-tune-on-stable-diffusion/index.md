@@ -4,7 +4,7 @@ summary: Train a Stable Diffusion model with us to create new colorful 3D emojis
 author: Alexey Shchipachev
 cover: cover.jpg
 category: Design
-draft: true
+isDraft: true
 ---
 
 Text-to-image diffusion models represented significant progress in AI development, so we are eager to apply them in real projects. The synthesized images will impress you with their "artistic" vision and photorealism. However, in our web design field, such images are still more like entertainment. They can become illustrations on a page only in rare particular cases. We want to have a more predictable result and develop a systematic, personalized approach to generate illustrations for the entire site in the same uniform style.
