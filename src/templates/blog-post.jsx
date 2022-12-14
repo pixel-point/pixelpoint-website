@@ -67,7 +67,11 @@ export const query = graphql`
       }
     }
     allMdx(
-      filter: { fileAbsolutePath: { regex: "/posts/" }, id: { ne: $id } }
+      filter: {
+        fileAbsolutePath: { regex: "/posts/" }
+        id: { ne: $id }
+        fields: { isDraft: { in: [false] } }
+      }
       limit: 4
       sort: { order: DESC, fields: slug }
     ) {
