@@ -1,5 +1,5 @@
 ---
-title: 'Stable Diffusion with Dreambooth 2D to 3D icons converter'
+title: 'Creating Stable Diffusion with Dreambooth 2D to 3D icons converter'
 summary: Train a Stable Diffusion model with us to create new colorful 3D emojis using both text and image prompts!
 author: Alexey Shchipachev
 cover: cover.jpg
