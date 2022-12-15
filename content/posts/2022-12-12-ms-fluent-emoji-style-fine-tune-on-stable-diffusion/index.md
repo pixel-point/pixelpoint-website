@@ -1,10 +1,9 @@
 ---
-title: '"MS fluent emoji" style fine-tune on Stable Diffusion'
+title: 'Stable Diffusion with Dreambooth 2D to 3D icons converter'
 summary: Train a Stable Diffusion model with us to create new colorful 3D emojis using both text and image prompts!
 author: Alexey Shchipachev
 cover: cover.jpg
 category: Design
-isDraft: true
 ---
 
 Text-to-image diffusion models represented significant progress in AI development, so we are eager to apply them in real projects. The synthesized images will impress you with their "artistic" vision and photorealism. However, in our web design field, such images are still more like entertainment. They can become illustrations on a page only in rare particular cases. We want to have a more predictable result and develop a systematic, personalized approach to generate illustrations for the entire site in the same uniform style.
@@ -102,6 +101,6 @@ Here you can find the result of conversion 100 2d icons to 3d. [Source.](https:/
 
 ## Summary
 
-AI can speed up the brainstorming process in our company, but it struggles with specific requests. Training AI for specific use cases can solve this problem. You can download the models we trained for this article on Huggingface for personal testing at this link: [https://huggingface.co/pixel-point/stable-diffusion-microsoft-emoji].
+AI can speed up the brainstorming process in our company, but it struggles with specific requests. Training AI for specific use cases can solve this problem. You can download the models we trained for this article on Huggingface for personal testing at this [link](https://huggingface.co/pixel-point/stable-diffusion-microsoft-emoji).
 
 If you enjoyed the article and want to see more web and design tips, [follow us on Twitter](https://twitter.com/alex_barashkov).
