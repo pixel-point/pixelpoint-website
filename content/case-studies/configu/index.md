@@ -16,8 +16,8 @@ services:
   - Brand Identity
   - Motion Design
   - Web Design
-  - Web Development
   - Illustrations
+  - Web Development
 stack:
   - React
   - Gatsby
@@ -31,7 +31,7 @@ keynotes:
   - Gave Configu's web app a fresh look
 cover: cover.jpg
 isFeatured: true
-position: 8
+position: 1
 ---
 
 For over a decade, a team of highly experienced software and DevOps engineers has gathered enough evidence that managing configuration files has become tedious, costly, and risky. Having had enough of manual setups, bottlenecks, and production failures, they embarked on a journey to build the ultimate configuration management tool and revolutionize the way software is being developed and maintained. Thus, the Configu company was born.
