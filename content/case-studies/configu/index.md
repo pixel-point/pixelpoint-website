@@ -6,12 +6,14 @@ logo:
 title: Configu
 description: Configuration management as a service
 websiteUrl: https://configu.com/
+githubUsername: configu
+githubRepoName: configu
 quote:
   text: As a DevTool company, we were looking for a design company that understands developers and can create a brand that would captivate their attention. Working with Pixel Point was a pleasure from the very beginning. They have high standards and know how to deliver quality products quickly.
   authorName: Peleg Porat
   authorPosition: CEO & Co-Founder
   authorPhoto: author-photo.jpg
-overview: In 2019, individuals called "nayms" came together to create the most efficient capital provision ecosystem for the worlds digital risk. A rather ambitious goal, but within a few years of hard work they were able to build a product ready to be used by the new wave of insurtech pioneers. It was time to expose Nayms to a broad audience, but to conquer the market, you have to look appropriately, and they reached us out for help in the spring of 2021.
+overview: For over a decade, a team of highly experienced software and DevOps engineers has gathered enough evidence that managing configuration files has become tedious, costly, and risky. Having had enough of manual setups, bottlenecks, and production failures, they embarked on a journey to build the ultimate configuration management tool and revolutionize the way software is being developed and maintained. Thus, the Configu company was born.
 services:
   - Brand Identity
   - Motion Design
