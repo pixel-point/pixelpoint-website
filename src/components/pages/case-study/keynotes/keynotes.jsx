@@ -10,6 +10,9 @@ import BrowserlessIcon3 from './images/browserless-icon-3.inline.svg';
 import CiliumIcon1 from './images/cilium-icon-1.inline.svg';
 import CiliumIcon2 from './images/cilium-icon-2.inline.svg';
 import CiliumIcon3 from './images/cilium-icon-3.inline.svg';
+import ConfiguIcon1 from './images/configu-icon-1.inline.svg';
+import ConfiguIcon2 from './images/configu-icon-2.inline.svg';
+import ConfiguIcon3 from './images/configu-icon-3.inline.svg';
 import DroneIcon1 from './images/drone-icon-1.inline.svg';
 import DroneIcon2 from './images/drone-icon-2.inline.svg';
 import DroneIcon3 from './images/drone-icon-3.inline.svg';
@@ -68,6 +71,7 @@ const icons = {
   neon: [NeonIcon1, NeonIcon2, NeonIcon3],
   parca: [ParcaIcon1, ParcaIcon2, ParcaIcon3],
   nayms: [NaymsIcon1, NaymsIcon2, NaymsIcon3],
+  configu: [ConfiguIcon1, ConfiguIcon2, ConfiguIcon3],
 };
 
 const Keynotes = ({ items, iconsName }) => (
