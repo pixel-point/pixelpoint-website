@@ -33,6 +33,7 @@ keynotes:
   - Gave Configu's web app a fresh look
 cover: cover.jpg
 isFeatured: true
+isOpenSource: true
 position: 1
 ---
 
