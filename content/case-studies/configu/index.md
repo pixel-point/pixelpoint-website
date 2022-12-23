@@ -6,8 +6,7 @@ logo:
 title: Configu
 description: Configuration management as a service
 websiteUrl: https://configu.com/
-githubUsername: configu
-githubRepoName: configu
+
 quote:
   text: As a DevTool company, we were looking for a design company that understands developers and can create a brand that would captivate their attention. Working with Pixel Point was a pleasure from the very beginning. They have high standards and know how to deliver quality products quickly.
   authorName: Peleg Porat
@@ -33,7 +32,6 @@ keynotes:
   - Gave Configu's web app a fresh look
 cover: cover.jpg
 isFeatured: true
-isOpenSource: true
 position: 1
 ---
 
