@@ -1,0 +1,71 @@
+@layer components {
+  .highlighted-code {
+    code {
+      text-shadow: unset !important;
+
+      span {
+        @apply text-[color:var(--color1)];
+      }
+    }
+
+    .token.keyword,
+    .token.class-name,
+    .token.url,
+    .token.tag {
+      @apply text-[color:var(--color2)];
+    }
+
+    .token.console,
+    .token.class-name.namespace,
+    .token.tag.attr-name {
+      @apply text-[color:var(--color1)];
+    }
+
+    .token.builtin,
+    .token.function,
+    .token.string,
+    .token.char,
+    .token.selector,
+    .token.tag.attr-value,
+    .token.atrule,
+    .token.inserted {
+      @apply text-[color:var(--color3)];
+    }
+
+    .token.boolean,
+    .token.number,
+    .token.symbol,
+    .token.variable,
+    .token.constant,
+    .token.property,
+    .token.property-access,
+    .token.deleted {
+      @apply text-[color:var(--color4)];
+    }
+
+    .token.regex,
+    .token.important {
+      @apply text-[color:var(--color6)];
+    }
+
+    .token.operator,
+    .token.entity {
+      @apply text-[color:var(--color5)];
+    }
+
+    .token.punctuation {
+      @apply text-[color:var(--color7)];
+    }
+
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+      @apply text-[color:var(--color8)];
+    }
+
+    .react-syntax-highlighter-line-number.linenumber {
+      @apply !min-w-[2.25em] text-[color:var(--lineNumbers)];
+    }
+  }
+}

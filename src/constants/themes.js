@@ -1,0 +1,88 @@
+const THEMES = [
+  {
+    background: '#FFFFFF',
+    'Ethereal Shadow': {
+      '--color1': '#8C53C6',
+      '--color2': '#5D7E2A',
+      '--color3': '#BF4040',
+      '--color4': '#2D7786',
+      '--color5': '#E5A11A',
+      '--color6': '#000000',
+      '--color7': '#999999',
+      '--color8': '#BFBFBF',
+      '--lineNumbers': '#999999',
+    },
+  },
+  {
+    background: '#000000',
+    'Shadowed Serenity': {
+      '--color1': '#A679D2',
+      '--color2': '#99CC66',
+      '--color3': '#CC6666',
+      '--color4': '#66BBCC',
+      '--color5': '#F5D63D',
+      '--color6': '#FFFFFF',
+      '--color7': '#808080',
+      '--color8': '#C2C2C2',
+      '--lineNumbers': '#808080',
+    },
+  },
+  {
+    background: '#FFFFFF',
+    Ember: {
+      '--color1': '#006AFF',
+      '--color2': '#008033',
+      '--color3': '#DC3918',
+      '--color4': '#805E00',
+      '--color5': '#FF9C1A',
+      '--color6': '#0D0D0D',
+      '--color7': '#666666',
+      '--color8': '#B3B3B3',
+      '--lineNumbers': '#666666',
+    },
+  },
+  {
+    background: '#303036',
+    'Nebula Purple': {
+      '--color1': '#A78AFF',
+      '--color2': '#8AFFF5',
+      '--color3': '#FF8AF5',
+      '--color4': '#FFE599',
+      '--color5': '#FFA78A',
+      '--color6': '#FFFFFF',
+      '--color7': '#BFB9D0',
+      '--color8': '#E3E0EB',
+      '--lineNumbers': '#BFB9D0',
+    },
+  },
+  {
+    background: '#FFFFFF',
+    'Darkened Light': {
+      '--color1': '#0F3CBD',
+      '--color2': '#0FAFBD',
+      '--color3': '#BD0F94',
+      '--color4': '#A36629',
+      '--color5': '#ECAB13',
+      '--color6': '#020818',
+      '--color7': '#5C6170',
+      '--color8': '#ABAFBA',
+      '--lineNumbers': '#5C6170',
+    },
+  },
+  {
+    background: '#020818',
+    Eclipse: {
+      '--color1': '#7192F4',
+      '--color2': '#71E9F4',
+      '--color3': '#F471D5',
+      '--color4': '#D6995C',
+      '--color5': '#F4CD71',
+      '--color6': '#FFFFFF',
+      '--color7': '#8F94A3',
+      '--color8': '#C7C9D1',
+      '--lineNumbers': '#8F94A3',
+    },
+  },
+];
+
+export default THEMES;
