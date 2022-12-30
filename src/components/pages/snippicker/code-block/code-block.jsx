@@ -83,7 +83,7 @@ const CodeBlock = ({ className, children, showLineNumbers, theme, items, ...othe
             <m.li className="grow" key={index} variants={tabVariants}>
               <button
                 className={clsx(
-                  'block w-full cursor-pointer whitespace-nowrap bg-gray-10 py-2.5 px-4 text-xs font-medium leading-none text-gray-6 transition-colors duration-200 hover:bg-gray-9 hover:text-black xl:px-2.5',
+                  'block w-full cursor-pointer whitespace-nowrap bg-[#2e3338] py-2.5 px-4 text-xs font-medium leading-none text-gray-6 transition-colors duration-200 hover:bg-gray-9 hover:text-black xl:px-2.5',
                   activeIndex === index && '!bg-black !text-white',
                   items.length === 1 && '!bg-[#FAFAFA] !text-white'
                 )}
