@@ -188,7 +188,7 @@ const Snippicker = () => {
           />
         </div>
 
-        <aside className="flex max-h-[100vh] min-h-[100vh] w-[250px] flex-col overflow-y-scroll bg-white p-4">
+        <aside className="flex max-h-[100vh] min-h-[100vh] w-[250px] flex-col overflow-y-scroll bg-[#ffffff] p-4">
           <div className="flex flex-col pt-4">
             <h3 className="mb-3 font-sans text-sm font-semibold">Tokens</h3>
 

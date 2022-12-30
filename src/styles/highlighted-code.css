@@ -2,6 +2,7 @@
   .highlighted-code {
     code {
       text-shadow: unset !important;
+      @apply !text-[color:var(--color1)];
 
       span {
         @apply text-[color:var(--color1)];

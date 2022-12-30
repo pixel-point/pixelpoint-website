@@ -56,7 +56,7 @@ const CodeBlock = ({
   return (
     <LazyMotion features={domAnimation}>
       <div className="sticky top-14 left-0 z-10 p-4" style={{ backgroundColor: bgColor }}>
-        <m.div className="overflow-hidden rounded-lg bg-black" aria-hidden>
+        <m.div className="overflow-hidden rounded-lg bg-[#1a1a1a]" aria-hidden>
           <m.ul
             className="scrollbar-hidden flex space-x-0.5 overflow-x-auto overflow-y-hidden"
             variants={tabsWrapperVariants}
@@ -65,9 +65,9 @@ const CodeBlock = ({
               <m.li className="grow" key={index} variants={tabVariants}>
                 <button
                   className={clsx(
-                    'block w-full cursor-pointer whitespace-nowrap bg-gray-10 py-2.5 px-4 text-xs font-medium leading-none text-gray-6 transition-colors duration-200 hover:bg-gray-9 hover:text-black xl:px-2.5',
-                    activeIndex === index && '!bg-black !text-white',
-                    items.length === 1 && '!bg-gray-9 !text-white'
+                    'block w-full cursor-pointer whitespace-nowrap py-2.5 px-4 text-xs font-medium leading-none text-[#cccccc] transition-colors duration-200 hover:bg-[#FAFAFA] hover:text-[#1a1a1a] xl:px-2.5',
+                    activeIndex === index && '!bg-[#1a1a1a] !text-[#ffffff]',
+                    items.length === 1 && '!bg-[#FAFAFA] !text-[#ffffff]'
                   )}
                   type="button"
                   onClick={() => setActiveIndex(index)}
