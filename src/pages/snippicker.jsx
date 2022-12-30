@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 
 import Button from 'components/pages/snippicker/button';
 import CodeBlock from 'components/pages/snippicker/code-block';
+import ColorPicker from 'components/pages/snippicker/color-picker';
 import SEO from 'components/shared/seo/seo';
 import DEFAULT_CODE_SNIPPETS from 'constants/code-snippets';
+import useCopyToClipboard from 'hooks/use-copy-to-clipboard';
 
 const generateCode = (
   color1,
@@ -89,9 +91,7 @@ const generateCode = (
   }
   `;
 
-const colorPickerStyles = 'h-8 w-8 !bg-white border-none';
 const headerStyles = 'mb-2 font-sans text-sm font-semibold';
-const descriptionStyles = 'ml-2.5 text-center text-base leading-denser';
 
 const Snippicker = () => {
   const [color1, setColor1] = useState('#000000');
@@ -116,6 +116,44 @@ const Snippicker = () => {
     color8,
     lineNumbersColor
   );
+
+  const colorPickers = [
+    {
+      value: color1,
+      onChange: (e) => setColor1(e.target.value),
+    },
+    {
+      value: color2,
+      onChange: (e) => setColor2(e.target.value),
+    },
+    {
+      value: color3,
+      onChange: (e) => setColor3(e.target.value),
+    },
+    {
+      value: color4,
+      onChange: (e) => setColor4(e.target.value),
+    },
+    {
+      value: color5,
+      onChange: (e) => setColor5(e.target.value),
+    },
+    {
+      value: color6,
+      onChange: (e) => setColor6(e.target.value),
+    },
+    {
+      value: color7,
+      onChange: (e) => setColor7(e.target.value),
+    },
+    {
+      value: color8,
+      onChange: (e) => setColor8(e.target.value),
+    },
+  ];
+
+  const { isCopied, handleCopy } = useCopyToClipboard(3000);
+
   return (
     <div className="text-lg">
       <div className="flex">
@@ -123,6 +161,15 @@ const Snippicker = () => {
           className="no-scrollbars relative mx-auto mt-20 max-h-[80vh] max-w-[900px] overflow-scroll rounded-lg px-5 pb-5"
           style={{ backgroundColor: bgColor }}
         >
+          <div
+            className="sticky top-0 left-0 z-10 flex w-full gap-[8px] pb-4 pt-5"
+            style={{ backgroundColor: bgColor }}
+          >
+            <span className="h-5 w-5 rounded-full bg-[#FE5F56]" />
+            <span className="h-5 w-5 rounded-full bg-[#FFBD2D]" />
+            <span className="h-5 w-5 rounded-full bg-[#26C940]" />
+          </div>
+
           <CodeBlock
             theme={{
               '--color1': color1,
@@ -136,164 +183,40 @@ const Snippicker = () => {
               '--lineNumbers': lineNumbersColor,
             }}
             items={DEFAULT_CODE_SNIPPETS}
+            bgColor={`${bgColor}`}
             showLineNumbers
           />
         </div>
 
-        <aside className="flex max-h-[100vh] w-[250px] flex-col overflow-scroll bg-white p-4">
+        <aside className="flex max-h-[100vh] min-h-[100vh] w-[250px] flex-col overflow-y-scroll bg-white p-4">
           <div className="flex flex-col pt-4">
             <h3 className="mb-3 font-sans text-sm font-semibold">Tokens</h3>
 
-            <div className="mb-3" id="color1">
-              <p className={headerStyles}>Color 1</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="color1"
-                  type="color"
-                  value={color1}
-                  onChange={(e) => setColor1(e.target.value)}
-                />
-                <span className={descriptionStyles}>{color1}</span>
-              </div>
-            </div>
-
-            <div className="mb-3" id="color2">
-              <p className={headerStyles}>Color 2</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="color2"
-                  type="color"
-                  value={color2}
-                  onChange={(e) => setColor2(e.target.value)}
-                />
-                <span className={descriptionStyles}>{color2}</span>
-              </div>
-            </div>
-
-            <div className="mb-3" id="color3">
-              <p className={headerStyles}>Color 3</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="color3"
-                  type="color"
-                  value={color3}
-                  onChange={(e) => setColor3(e.target.value)}
-                />
-                <span className={descriptionStyles}>{color3}</span>
-              </div>
-            </div>
-
-            <div className="mb-3" id="color4">
-              <p className={headerStyles}>Color 4</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="color4"
-                  type="color"
-                  value={color4}
-                  onChange={(e) => setColor4(e.target.value)}
-                />
-                <span className={descriptionStyles}>{color4}</span>
-              </div>
-            </div>
-
-            <div className="mb-3" id="color5">
-              <p className={headerStyles}>Color 5</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="color5"
-                  type="color"
-                  value={color5}
-                  onChange={(e) => setColor5(e.target.value)}
-                />
-                <span className={descriptionStyles}>{color5}</span>
-              </div>
-            </div>
-
-            <div className="mb-3" id="color6">
-              <p className={headerStyles}>Color 6</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="color6"
-                  type="color"
-                  value={color6}
-                  onChange={(e) => setColor6(e.target.value)}
-                />
-                <span className={descriptionStyles}>{color6}</span>
-              </div>
-            </div>
-
-            <div className="mb-3" id="color7">
-              <p className={headerStyles}>Color 7</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="color7"
-                  type="color"
-                  value={color7}
-                  onChange={(e) => setColor7(e.target.value)}
-                />
-                <span className={descriptionStyles}>{color7}</span>
-              </div>
-            </div>
-
-            <div className="mb-3" id="color8">
-              <p className={headerStyles}>Color 8</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="color8"
-                  type="color"
-                  value={color8}
-                  onChange={(e) => setColor8(e.target.value)}
-                />
-                <span className={descriptionStyles}>{color8}</span>
-              </div>
-            </div>
+            {colorPickers.map((picker, index) => (
+              <ColorPicker value={picker.value} key={index} onChange={picker.onChange} />
+            ))}
 
             <div className="mb-3 mt-4 border-t border-[#E6E6E6] pt-4" id="lineNumbersColor">
               <p className={headerStyles}>Line numbers color</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="lineNumbersColor"
-                  type="color"
-                  value={lineNumbersColor}
-                  onChange={(e) => setLineNumbersColor(e.target.value)}
-                />
-                <span className={descriptionStyles}>{lineNumbersColor}</span>
-              </div>
+              <ColorPicker
+                value={lineNumbersColor}
+                onChange={(e) => setLineNumbersColor(e.target.value)}
+              />
             </div>
 
             <div className="mb-3 mt-4 border-t border-[#E6E6E6] pt-4" id="backgroundColor">
               <p className={headerStyles}>Background</p>
-              <div className="flex items-center">
-                <input
-                  className={colorPickerStyles}
-                  name="backgroundColor"
-                  type="color"
-                  value={bgColor}
-                  onChange={(e) => setBgColor(e.target.value)}
-                />
 
-                <span className={descriptionStyles}>{bgColor}</span>
-              </div>
+              <ColorPicker value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
             </div>
           </div>
 
           <div className="mt-4 border-t border-[#E6E6E6] pt-4">
             <p className={headerStyles}>Export</p>
-            <Button type="button" onClick={() => navigator.clipboard.writeText(generatedCode)}>
-              Copy CSS
+            <Button disabled={isCopied} onClick={() => handleCopy(generatedCode)}>
+              {isCopied ? 'CSS is copied!' : 'Copy CSS'}
             </Button>
           </div>
-
-          {/* <Button>Copy CSS</Button> */}
         </aside>
       </div>
     </div>

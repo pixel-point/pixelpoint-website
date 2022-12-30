@@ -37,6 +37,7 @@
     "@mdx-js/react": "1.6.22",
     "@tailwindcss/line-clamp": "^0.4.2",
     "clsx": "^1.2.1",
+    "copy-to-clipboard": "^3.3.3",
     "framer-motion": "^6.5.1",
     "gatsby": "^4.24.4",
     "gatsby-plugin-canonical-urls": "^4.24.0",
