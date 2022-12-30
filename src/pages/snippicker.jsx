@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import Button from 'components/pages/snippicker/button';
 import CodeBlock from 'components/pages/snippicker/code-block';
-// import Layout from 'components/shared/layout';
 import SEO from 'components/shared/seo/seo';
 import DEFAULT_CODE_SNIPPETS from 'constants/code-snippets';
 
@@ -93,6 +92,7 @@ const generateCode = (
 const colorPickerStyles = 'h-8 w-8 !bg-white border-none';
 const headerStyles = 'mb-2 font-sans text-sm font-semibold';
 const descriptionStyles = 'ml-2.5 text-center text-base leading-denser';
+
 const Snippicker = () => {
   const [color1, setColor1] = useState('#000000');
   const [color2, setColor2] = useState('#8c53c6');
@@ -117,7 +117,6 @@ const Snippicker = () => {
     lineNumbersColor
   );
   return (
-    // <Layout headerTheme="black">
     <div className="text-lg">
       <div className="flex">
         <div
@@ -297,7 +296,7 @@ const Snippicker = () => {
           {/* <Button>Copy CSS</Button> */}
         </aside>
       </div>
-    </div> // </Layout>
+    </div>
   );
 };
 
