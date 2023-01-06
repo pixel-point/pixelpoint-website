@@ -155,7 +155,7 @@ const Snippicker = () => {
   const { isCopied, handleCopy } = useCopyToClipboard(3000);
 
   return (
-    <div className="text-lg">
+    <div className="bg-gray-5 text-lg">
       <div className="flex">
         <div
           className="no-scrollbars relative mx-auto mt-20 max-h-[80vh] max-w-[900px] overflow-scroll rounded-lg px-5 pb-5"
