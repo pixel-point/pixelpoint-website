@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 
 import CodeBlock from 'components/pages/snippicker/code-block';
 import ColorPicker from 'components/pages/snippicker/color-picker';
+import Dropdown from 'components/pages/snippicker/dropdown';
 import SEO from 'components/shared/seo/seo';
 import DEFAULT_CODE_SNIPPETS from 'constants/code-snippets';
+import THEMES from 'constants/themes';
 import useCopyToClipboard from 'hooks/use-copy-to-clipboard';
 
 const generateCode = (
@@ -105,6 +107,7 @@ const Snippicker = () => {
   const [color8, setColor8] = useState('#bfbfbf');
   const [lineNumbersColor, setLineNumbersColor] = useState('#b3b3b3');
   const [bgColor, setBgColor] = useState('#ffffff');
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const generatedCode = generateCode(
     color1,
@@ -185,13 +188,32 @@ const Snippicker = () => {
             }}
             items={DEFAULT_CODE_SNIPPETS}
             bgColor={`${bgColor}`}
+            activeIndex={activeIndex}
             showLineNumbers
           />
         </div>
 
         <aside className="flex max-h-[100vh] min-h-[100vh] w-[250px] flex-col overflow-y-scroll bg-[#ffffff] p-4">
           <div className="flex flex-col pt-4">
-            <h3 className="mb-3 font-sans text-sm font-semibold">Tokens</h3>
+            <Dropdown
+              items={THEMES}
+              title="Theme"
+              onChange={(e) => {
+                setActiveIndex(e);
+              }}
+            />
+
+            <Dropdown
+              items={DEFAULT_CODE_SNIPPETS}
+              title="Language"
+              onChange={(e) => {
+                setActiveIndex(e);
+              }}
+            />
+
+            <h3 className="mb-3 mt-4 border-t border-[#E6E6E6] pt-4 font-sans text-sm font-semibold">
+              Tokens
+            </h3>
 
             {colorPickers.map((picker, index) => (
               <ColorPicker value={picker.value} key={index} onChange={picker.onChange} />

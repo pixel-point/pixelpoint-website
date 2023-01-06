@@ -1,7 +1,8 @@
 const THEMES = [
   {
     background: '#FFFFFF',
-    'Ethereal Shadow': {
+    name: 'Ethereal Shadow',
+    style: {
       '--color1': '#8C53C6',
       '--color2': '#5D7E2A',
       '--color3': '#BF4040',
@@ -15,7 +16,8 @@ const THEMES = [
   },
   {
     background: '#000000',
-    'Shadowed Serenity': {
+    name: 'Shadowed Serenity',
+    style: {
       '--color1': '#A679D2',
       '--color2': '#99CC66',
       '--color3': '#CC6666',
@@ -29,7 +31,8 @@ const THEMES = [
   },
   {
     background: '#FFFFFF',
-    Ember: {
+    name: 'Ember',
+    style: {
       '--color1': '#006AFF',
       '--color2': '#008033',
       '--color3': '#DC3918',
@@ -43,7 +46,8 @@ const THEMES = [
   },
   {
     background: '#303036',
-    'Nebula Purple': {
+    name: 'Nebula Purple',
+    style: {
       '--color1': '#A78AFF',
       '--color2': '#8AFFF5',
       '--color3': '#FF8AF5',
@@ -57,7 +61,8 @@ const THEMES = [
   },
   {
     background: '#FFFFFF',
-    'Darkened Light': {
+    name: 'Darkened Light',
+    style: {
       '--color1': '#0F3CBD',
       '--color2': '#0FAFBD',
       '--color3': '#BD0F94',
@@ -71,7 +76,8 @@ const THEMES = [
   },
   {
     background: '#020818',
-    Eclipse: {
+    name: 'Eclipse',
+    style: {
       '--color1': '#7192F4',
       '--color2': '#71E9F4',
       '--color3': '#F471D5',
