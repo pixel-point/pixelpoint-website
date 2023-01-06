@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import Button from 'components/pages/snippicker/button';
 import CodeBlock from 'components/pages/snippicker/code-block';
 import ColorPicker from 'components/pages/snippicker/color-picker';
 import SEO from 'components/shared/seo/seo';
@@ -92,6 +91,8 @@ const generateCode = (
   `;
 
 const headerStyles = 'mb-2 font-sans text-sm font-semibold';
+const buttonStyles =
+  'inline-flex w-full items-center justify-center rounded border bg-transparent py-2.5 text-center text-sm leading-denser transition-colors duration-200 hover:border-[#008CF0] hover:bg-[#F5F5F5]';
 
 const Snippicker = () => {
   const [color1, setColor1] = useState('#000000');
@@ -155,7 +156,7 @@ const Snippicker = () => {
   const { isCopied, handleCopy } = useCopyToClipboard(3000);
 
   return (
-    <div className="bg-gray-5 text-lg">
+    <div className="bg-gray-2 text-lg">
       <div className="flex">
         <div
           className="no-scrollbars relative mx-auto mt-20 max-h-[80vh] max-w-[900px] overflow-scroll rounded-lg px-5 pb-5"
@@ -212,10 +213,15 @@ const Snippicker = () => {
           </div>
 
           <div className="mt-4 border-t border-[#E6E6E6] pt-4">
-            <p className={headerStyles}>Export</p>
-            <Button disabled={isCopied} onClick={() => handleCopy(generatedCode)}>
+            <p className={headerStyles}>Export styles</p>
+            <button
+              className={buttonStyles}
+              type="button"
+              disabled={isCopied}
+              onClick={() => handleCopy(generatedCode)}
+            >
               {isCopied ? 'CSS is copied!' : 'Copy CSS'}
-            </Button>
+            </button>
           </div>
         </aside>
       </div>
