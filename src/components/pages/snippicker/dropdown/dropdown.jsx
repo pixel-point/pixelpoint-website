@@ -35,7 +35,7 @@ const icons = {
   Language: WorldIcon,
 };
 
-const Dropdown = ({ title, items }) => {
+const Dropdown = ({ title, items, onClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -75,6 +75,7 @@ const Dropdown = ({ title, items }) => {
                     )}
                     type="button"
                     onClick={() => {
+                      onClick(index);
                       setActiveIndex(index);
                       handleClick();
                     }}
@@ -96,6 +97,7 @@ const Dropdown = ({ title, items }) => {
 
 Dropdown.propTypes = {
   title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,

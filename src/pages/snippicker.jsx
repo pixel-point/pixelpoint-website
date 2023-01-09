@@ -107,6 +107,7 @@ const Snippicker = () => {
   const [color8, setColor8] = useState('#bfbfbf');
   const [lineNumbersColor, setLineNumbersColor] = useState('#b3b3b3');
   const [bgColor, setBgColor] = useState('#ffffff');
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const generatedCode = generateCode(
@@ -195,20 +196,13 @@ const Snippicker = () => {
 
         <aside className="flex max-h-[100vh] min-h-[100vh] w-[250px] flex-col overflow-y-scroll bg-[#ffffff] p-4">
           <div className="flex flex-col pt-4">
-            <Dropdown
-              items={THEMES}
-              title="Theme"
-              onChange={(e) => {
-                setActiveIndex(e);
-              }}
-            />
+            <Dropdown items={THEMES} title="Theme" />
 
             <Dropdown
               items={DEFAULT_CODE_SNIPPETS}
               title="Language"
-              onChange={(e) => {
-                setActiveIndex(e);
-              }}
+              activeIndex={activeIndex}
+              onClick={setActiveIndex}
             />
 
             <h3 className="mb-3 mt-4 border-t border-[#E6E6E6] pt-4 font-sans text-sm font-semibold">
