@@ -37,6 +37,7 @@ const icons = {
 
 const Dropdown = ({ title, items, onClick }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleClick = () => {

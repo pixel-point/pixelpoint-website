@@ -157,6 +157,23 @@ const Snippicker = () => {
     },
   ];
 
+  const setStyles = (index) => {
+    setBgColor(THEMES[index].background);
+    setColor1(THEMES[index].color1);
+    setColor2(THEMES[index].color2);
+    setColor3(THEMES[index].color3);
+    setColor4(THEMES[index].color4);
+    setColor5(THEMES[index].color5);
+    setColor6(THEMES[index].color6);
+    setColor7(THEMES[index].color7);
+    setColor8(THEMES[index].color8);
+    setLineNumbersColor(THEMES[index].lineNumbers);
+  };
+
+  const setTheme = (index) => {
+    setStyles(index);
+  };
+
   const { isCopied, handleCopy } = useCopyToClipboard(3000);
 
   return (
@@ -196,14 +213,9 @@ const Snippicker = () => {
 
         <aside className="flex max-h-[100vh] min-h-[100vh] w-[250px] flex-col overflow-y-scroll bg-[#ffffff] p-4">
           <div className="flex flex-col pt-4">
-            <Dropdown items={THEMES} title="Theme" />
+            <Dropdown items={THEMES} title="Theme" onClick={setTheme} />
 
-            <Dropdown
-              items={DEFAULT_CODE_SNIPPETS}
-              title="Language"
-              activeIndex={activeIndex}
-              onClick={setActiveIndex}
-            />
+            <Dropdown items={DEFAULT_CODE_SNIPPETS} title="Language" onClick={setActiveIndex} />
 
             <h3 className="mb-3 mt-4 border-t border-[#E6E6E6] pt-4 font-sans text-sm font-semibold">
               Tokens
