@@ -1,7 +1,9 @@
 import clsx from 'clsx';
 import { m, LazyMotion, domAnimation } from 'framer-motion';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+
+import useClickOutside from 'hooks/use-click-outside';
 
 import BucketIcon from '../images/bucket-icon.inline.svg';
 import DownArrowIcon from '../images/down-arrow-icon.inline.svg';
@@ -40,9 +42,13 @@ const Dropdown = ({ title, items, onClick }) => {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const rootRef = useRef(null);
+
   const handleClick = () => {
     setIsOpen((isOpen) => !isOpen);
   };
+
+  useClickOutside([rootRef], () => setIsOpen(false));
 
   const Icon = icons[title];
 
@@ -51,7 +57,10 @@ const Dropdown = ({ title, items, onClick }) => {
       <h3 className="mb-3 mt-4 border-t border-[#E6E6E6] pt-4 font-sans text-sm font-semibold">
         {title}
       </h3>
-      <div className="group flex items-center rounded border border-transparent transition-colors duration-200 hover:border hover:border-gray-6">
+      <div
+        className="group flex items-center rounded border border-transparent transition-colors duration-200 hover:border hover:border-gray-6"
+        ref={rootRef}
+      >
         {Icon && <Icon className="my-auto ml-1 mr-2.5 h-3.5 w-3.5 justify-self-start" />}
         <m.div className="relative w-28 min-w-fit rounded-lg" aria-hidden>
           <div className="relative flex">
