@@ -62,10 +62,10 @@ const Dropdown = ({ title, items, onClick }) => {
         ref={rootRef}
       >
         {Icon && <Icon className="my-auto ml-1 mr-2.5 h-3.5 w-3.5 justify-self-start" />}
-        <m.div className="relative w-28 min-w-fit rounded-lg" aria-hidden>
+        <m.div className="relative w-full min-w-fit rounded-lg" aria-hidden>
           <div className="relative flex">
             <button
-              className="w-full text-left align-middle font-sans text-sm font-normal leading-denser text-black"
+              className="w-full grow text-left align-middle font-sans text-sm font-normal leading-denser text-black"
               type="button"
               onClick={handleClick}
             >
@@ -74,7 +74,7 @@ const Dropdown = ({ title, items, onClick }) => {
           </div>
           {isOpen && (
             <m.ul
-              className="scrollbar-hidden absolute -left-7 top-6 z-10 flex w-[200px] min-w-full flex-col overflow-x-auto overflow-y-hidden rounded bg-black"
+              className="scrollbar-hidden absolute -left-6 top-6 z-10 flex w-[202px] min-w-full flex-col overflow-x-auto overflow-y-hidden rounded bg-black"
               variants={tabsWrapperVariants}
             >
               {items.map(({ name }, index) => (

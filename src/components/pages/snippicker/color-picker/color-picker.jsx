@@ -16,7 +16,7 @@ const ColorPickerNew = ({ value, onChange }) => (
       value={value}
       onChange={onChange}
     />
-    <span className="ml-2.5 text-center text-base leading-denser">{value}</span>
+    <span className="ml-2.5 text-center text-xs leading-denser">{value}</span>
   </div>
 );
 
