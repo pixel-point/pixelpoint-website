@@ -19,6 +19,9 @@ import DroneIcon3 from './images/drone-icon-3.inline.svg';
 import DroneIcon4 from './images/drone-icon-4.inline.svg';
 import DroneIcon5 from './images/drone-icon-5.inline.svg';
 import DroneIcon6 from './images/drone-icon-6.inline.svg';
+import EbpfIcon1 from './images/ebpf-icon-1.inline.svg';
+import EbpfIcon2 from './images/ebpf-icon-2.inline.svg';
+import EbpfIcon3 from './images/ebpf-icon-3.inline.svg';
 import FlagsmithIcon1 from './images/flagsmith-icon-1.inline.svg';
 import FlagsmithIcon2 from './images/flagsmith-icon-2.inline.svg';
 import FlagsmithIcon3 from './images/flagsmith-icon-3.inline.svg';
@@ -55,7 +58,7 @@ import RevenuecatIcon3 from './images/revenuecat-icon-3.inline.svg';
 const icons = {
   browserless: [BrowserlessIcon1, BrowserlessIcon2, BrowserlessIcon3],
   cilium: [CiliumIcon1, CiliumIcon2, CiliumIcon3],
-  ebpf: [CiliumIcon1, CiliumIcon2, CiliumIcon3],
+  ebpf: [EbpfIcon1, EbpfIcon2, EbpfIcon3],
   drone: [DroneIcon1, DroneIcon2, DroneIcon3, DroneIcon4, DroneIcon5, DroneIcon6],
   flagsmith: [
     FlagsmithIcon1,
