@@ -55,6 +55,7 @@ import RevenuecatIcon3 from './images/revenuecat-icon-3.inline.svg';
 const icons = {
   browserless: [BrowserlessIcon1, BrowserlessIcon2, BrowserlessIcon3],
   cilium: [CiliumIcon1, CiliumIcon2, CiliumIcon3],
+  ebpf: [CiliumIcon1, CiliumIcon2, CiliumIcon3],
   drone: [DroneIcon1, DroneIcon2, DroneIcon3, DroneIcon4, DroneIcon5, DroneIcon6],
   flagsmith: [
     FlagsmithIcon1,
