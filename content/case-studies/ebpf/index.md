@@ -1,8 +1,7 @@
 ---
 logo:
   url: logo.svg
-  width: 180
-  height: 58
+  width: 135
 title: eBPF
 description: Dynamically program the kernel for efficient networking, observability, tracing, and security
 websiteUrl: https://ebpf.io
