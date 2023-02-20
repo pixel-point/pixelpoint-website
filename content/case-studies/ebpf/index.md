@@ -32,4 +32,4 @@ eBPF is a technology that allows developers to write and execute custom code wit
 
 Thanks to a partnership with Isovalent, we got the opportunity to improve it. Soon enough, we developed a new eBPF home, which featured a modern, utilitarian design with a clean and professional aesthetic. The site is optimized for search engines and includes clear, concise messaging that effectively conveys eBPF's key value propositions.
 
-Since the launch of the new site, eBPF has seen a significant increase in traffic and engagement, with positive feedback from the community. This success highlights the importance of collaboration and the value of creating accessible resources for emerging technologies like eBPF.
+Since the launch of the new site, eBPF has received a positive feedback from the community. This success highlights the importance of collaboration and the value of creating accessible resources for emerging technologies like eBPF.
