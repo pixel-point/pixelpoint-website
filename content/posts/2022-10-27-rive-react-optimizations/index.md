@@ -220,7 +220,7 @@ export default Section
 
 You can find a full example of this solution in a great demo by **[Paul Scanlon](https://twitter.com/PaulieScanlon).**
 
-[Rive animation component](https://www.notion.so/d7935306ee974c0cb44aa73ebeaa22c9)
+[Rive animation component](https://github.com/PaulieScanlon/rise-of-the-robots/blob/main/src/sections/rive-section.js)
 
 [Section component](https://github.com/PaulieScanlon/rise-of-the-robots/blob/main/src/sections/gatsby-section.js#L9)
 
