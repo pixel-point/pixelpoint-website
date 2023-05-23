@@ -7,6 +7,9 @@ import ImagePlaceholder from 'components/shared/image-placeholder';
 import BrowserlessIcon1 from './images/browserless-icon-1.inline.svg';
 import BrowserlessIcon2 from './images/browserless-icon-2.inline.svg';
 import BrowserlessIcon3 from './images/browserless-icon-3.inline.svg';
+import BytebaseIcon1 from './images/bytebase-icon-1.inline.svg';
+import BytebaseIcon2 from './images/bytebase-icon-2.inline.svg';
+import BytebaseIcon3 from './images/bytebase-icon-3.inline.svg';
 import CiliumIcon1 from './images/cilium-icon-1.inline.svg';
 import CiliumIcon2 from './images/cilium-icon-2.inline.svg';
 import CiliumIcon3 from './images/cilium-icon-3.inline.svg';
@@ -76,6 +79,7 @@ const icons = {
   parca: [ParcaIcon1, ParcaIcon2, ParcaIcon3],
   nayms: [NaymsIcon1, NaymsIcon2, NaymsIcon3],
   configu: [ConfiguIcon1, ConfiguIcon2, ConfiguIcon3],
+  bytebase: [BytebaseIcon1, BytebaseIcon2, BytebaseIcon3],
 };
 
 const Keynotes = ({ items, iconsName }) => (
