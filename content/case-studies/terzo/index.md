@@ -8,7 +8,7 @@ description: AI-powered contract platform for business and legal teams
 websiteUrl: https://terzo.ai/
 
 quote:
-  text: Alex, Kate, and team at Pixel Point consistently went above and beyond redesigning our new website. Their design work is truly amazing. They did such an excellent job of casting our vision into our new website. and helped us find the brand we were seeking. I also appreciated how gritty they were to meet deadlines and get things done. We are looking forward to continuing to build out our website even more with them!
+  text: Alex, Kate, and team at Pixel Point consistently went above and beyond redesigning our new website. Their design work is truly amazing. They did such an excellent job of casting our vision into our new website and helped us find the brand we were seeking. I also appreciated how gritty they were to meet deadlines and get things done. We are looking forward to continuing to build out our website even more with them!
   authorName: Justin Hiatt
   authorPosition: Chief Growth Officer
   authorPhoto: author-photo.jpg
