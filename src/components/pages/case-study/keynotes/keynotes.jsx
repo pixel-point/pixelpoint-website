@@ -57,6 +57,9 @@ import ParcaIcon3 from './images/parca-icon-3.inline.svg';
 import RevenuecatIcon1 from './images/revenuecat-icon-1.inline.svg';
 import RevenuecatIcon2 from './images/revenuecat-icon-2.inline.svg';
 import RevenuecatIcon3 from './images/revenuecat-icon-3.inline.svg';
+import TerzoIcon1 from './images/terzo-icon-1.inline.svg';
+import TerzoIcon2 from './images/terzo-icon-2.inline.svg';
+import TerzoIcon3 from './images/terzo-icon-3.inline.svg';
 
 const icons = {
   browserless: [BrowserlessIcon1, BrowserlessIcon2, BrowserlessIcon3],
@@ -80,6 +83,7 @@ const icons = {
   nayms: [NaymsIcon1, NaymsIcon2, NaymsIcon3],
   configu: [ConfiguIcon1, ConfiguIcon2, ConfiguIcon3],
   bytebase: [BytebaseIcon1, BytebaseIcon2, BytebaseIcon3],
+  terzo: [TerzoIcon1, TerzoIcon2, TerzoIcon3],
 };
 
 const Keynotes = ({ items, iconsName }) => (
