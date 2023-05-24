@@ -13,7 +13,7 @@ quote:
   text: Before contracting Pixel Point for our new website, we have already failed 2 times working with other agencies. Lesson learned is to build a website for a DevTool company, the design partner needs to understand developers. Turns out Pixel Point has far exceeded our expectation, they are developers, understand open source and in particular, our database domain, of course, they are top-notch designers. The result, a new website impressed every one of us.
   authorName: Tianzhou Chen
   authorPosition: CEO & Co-Founder
-  authorPhoto: author-photo.webp
+  authorPhoto: author-photo.jpg
 overview: Bytebase offers a web-based collaboration workspace to help DBAs and Developers manage the database development lifecycle. It is built by engineers from top companies like Google and Ant Group and backed up by their expertise in database development flow. In the DevOps methodology, teams adopt GitHub for code management, and Bytebase offers a similar solution but for database management.
 services:
   - Motion Design
