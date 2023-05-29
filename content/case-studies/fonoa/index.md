@@ -34,7 +34,7 @@ keynotes:
   - Ensured optimal performance across different browsers and devices
 cover: cover.jpg
 isFeatured: true
-position: 2
+position: 3
 ---
 
 Fonoa is the global tax automation platform that allows customers to validate tax IDs, calculate taxes, generate invoices and e-invoices, report transactions and file tax returns through a single solution. They support tax compliance at the transaction level and simplifies the global tax landscape.

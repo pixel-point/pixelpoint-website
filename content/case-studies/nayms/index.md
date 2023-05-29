@@ -30,7 +30,7 @@ keynotes:
   - Ensured the highest Lighthouse performance score of 100 points
 cover: cover.jpg
 isFeatured: false
-position: 14
+position: 15
 ---
 
 In 2019, individuals called "nayms" came together to create the most efficient capital provision ecosystem for the worlds digital risk. A rather ambitious goal, but within a few years of hard work they were able to build a product ready to be used by the new wave of insurtech pioneers. It was time to expose Nayms to a broad audience, but to conquer the market, you have to look appropriately, and they reached us out for help in the spring of 2021.
