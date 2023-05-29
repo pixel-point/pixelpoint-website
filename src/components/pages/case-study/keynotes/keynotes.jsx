@@ -31,6 +31,9 @@ import FlagsmithIcon3 from './images/flagsmith-icon-3.inline.svg';
 import FlagsmithIcon4 from './images/flagsmith-icon-4.inline.svg';
 import FlagsmithIcon5 from './images/flagsmith-icon-5.inline.svg';
 import FlagsmithIcon6 from './images/flagsmith-icon-6.inline.svg';
+import FonoaIcon1 from './images/fonoa-icon-1.inline.svg';
+import FonoaIcon2 from './images/fonoa-icon-2.inline.svg';
+import FonoaIcon3 from './images/fonoa-icon-3.inline.svg';
 import illustrationSm from './images/illustration-sm.svg';
 import illustration from './images/illustration.svg';
 import IsovalentIcon1 from './images/isovalent-icon-1.inline.svg';
@@ -84,6 +87,7 @@ const icons = {
   configu: [ConfiguIcon1, ConfiguIcon2, ConfiguIcon3],
   bytebase: [BytebaseIcon1, BytebaseIcon2, BytebaseIcon3],
   terzo: [TerzoIcon1, TerzoIcon2, TerzoIcon3],
+  fonoa: [FonoaIcon1, FonoaIcon2, FonoaIcon3],
 };
 
 const Keynotes = ({ items, iconsName }) => (
