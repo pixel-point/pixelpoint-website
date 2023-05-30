@@ -9,10 +9,9 @@ websiteUrl: https://fonoa.com/
 
 # TODO: add testimonial
 quote:
-  text: TBD
-  authorName: Kristian Posavcevic
-  authorPosition: Marketing Manager
-  authorPhoto: author-photo.jpg
+  # authorName: Kristian Posavcevic
+  # authorPosition: Marketing Manager
+  # authorPhoto: author-photo.jpg
 overview: Fonoa is the global tax automation platform that allows customers to validate tax IDs, calculate taxes, generate invoices and e-invoices, report transactions and file tax returns through a single solution. They support tax compliance at the transaction level and simplifies the global tax landscape.
 services:
   - Brand Identity
@@ -29,7 +28,7 @@ stack:
   - Rive
 #   TODO: update keynotes (and icons if necessary)
 keynotes:
-  - Designed and developed a new website with explanatory product animations and graphics
+  - Designed and developed a new website with enlightening visuals
   - Built a Sanity-based content management system for blog posts and tax guides
   - Ensured optimal performance across different browsers and devices
 cover: cover.jpg

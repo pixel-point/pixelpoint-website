@@ -27,9 +27,9 @@ stack:
   - Vercel
   - Rive
 keynotes:
-  - Designed and developed a brand new website with explanatory product animations
-  - Built a Storyblok-based blog and created an content posting workflow for the marketing team
-  - Ensured optimal performance across different browsers on shadow-, blur-, and animation-heavy pages
+  - Designed and developed a brand new website with illustrative product animations
+  - Built a Storyblok-based blog and created a content managing pipeline for the marketing team
+  - Ensured optimal performance across different browsers on resource-heavy pages
 cover: cover.jpg
 isFeatured: true
 position: 2
@@ -39,4 +39,4 @@ Terzo is a technology startup focused on contract management. Their main product
 
 The Terzo team approached us with a specific goal in mind: they wanted to create an impressive website to highlight the capabilities of their AI-powered contract management platform and position it as a premium product. Our starting point was the home page hero section, where we aimed to demonstrate the platform's functionality through an intuitive and visually appealing animation. To achieve a sophisticated and professional look, we decided to use a predominantly dark color scheme with strategic pops of color. For the blog and content library, we opted for Storyblok, a user-friendly and contemporary headless CMS, to streamline the process of creating and managing posts.
 
-Our work with Terzo was truly inspiring, and we already have plans for more collaboration in the future!
+Our collaboration with Terzo was truly inspiring, and they have already chosen to continue working with us to create new stunning pages and animations for their website.
