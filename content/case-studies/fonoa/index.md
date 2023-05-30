@@ -28,8 +28,8 @@ stack:
   - Rive
 #   TODO: update keynotes (and icons if necessary)
 keynotes:
-  - Designed and developed a new website with enlightening visuals
-  - Built a Sanity-based content management system for blog posts and tax guides
+  - Designed and developed a new website based on flexible building blocks with enlightening graphics
+  - Introduced feature-rich blog portal with robust yet flexible content management system
   - Ensured optimal performance across different browsers and devices
 cover: cover.jpg
 isFeatured: true
@@ -42,4 +42,4 @@ Fonoa is a prominent enterprise client from the fintech industry, where striking
 
 The primary challenge we faced was designing and developing a significant number of high-quality pages within a relatively short timeframe. To overcome this, we adopted a strategy of creating a collection of captivating building blocks that could be easily mixed and matched based on the specific content of each page. By doing so, we maximized time efficiency without compromising on the overall quality, allowing us to place greater emphasis on product animations and impressive graphic elements.
 
-We are incredibly happy with the outcome of this collaboration and look forward to assisting Fonoa in enhancing their website and product visibility as they continue to grow.
+We are incredibly happy with the outcome of this collaboration and are eager to further assist Fonoa in enhancing their website and increasing product visibility as they continue to expand.
