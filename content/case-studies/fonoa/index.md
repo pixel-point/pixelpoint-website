@@ -12,7 +12,7 @@ quote:
   # authorName: Kristian Posavcevic
   # authorPosition: Marketing Manager
   # authorPhoto: author-photo.jpg
-overview: Fonoa is the global tax automation platform that allows customers to validate tax IDs, calculate taxes, generate invoices and e-invoices, report transactions and file tax returns through a single solution. They support tax compliance at the transaction level and simplifies the global tax landscape.
+overview: Fonoa is the global tax automation platform that allows customers to validate tax IDs, calculate taxes, generate invoices and e-invoices, report transactions and file tax returns through a single solution. They support tax compliance at the transaction level and simplify the global tax landscape.
 services:
   - Brand Identity
   - Motion Design
@@ -36,7 +36,7 @@ isFeatured: true
 position: 3
 ---
 
-Fonoa is the global tax automation platform that allows customers to validate tax IDs, calculate taxes, generate invoices and e-invoices, report transactions and file tax returns through a single solution. They support tax compliance at the transaction level and simplifies the global tax landscape.
+Fonoa is the global tax automation platform that allows customers to validate tax IDs, calculate taxes, generate invoices and e-invoices, report transactions and file tax returns through a single solution. They support tax compliance at the transaction level and simplify the global tax landscape.
 
 Fonoa is a prominent enterprise client from the fintech industry, where striking a balance between being trendy and appealing while maintaining reliability and sophistication is crucial. Keeping these key factors in mind, our journey began. The objective behind the redesign was to create a modern and sleek website that heavily relies on visually engaging graphics to showcase the wide range of Fonoa's use cases and effectively explain their products and scope.
 
