@@ -29,7 +29,7 @@ keynotes:
   - Hooked up integrations necessary for business
   - Established a clear editing workflow for marketing team
 isOpenSource: true
-position: 7
+position: 9
 ---
 
 Cilium project is an integral part of the rapidly growing [Isovalent](/case-studies/isovalent) company which brings the power of eBPF to Cloud Native environment, improving a lot networking, observability and security.

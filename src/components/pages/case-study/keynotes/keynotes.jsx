@@ -7,6 +7,9 @@ import ImagePlaceholder from 'components/shared/image-placeholder';
 import BrowserlessIcon1 from './images/browserless-icon-1.inline.svg';
 import BrowserlessIcon2 from './images/browserless-icon-2.inline.svg';
 import BrowserlessIcon3 from './images/browserless-icon-3.inline.svg';
+import BytebaseIcon1 from './images/bytebase-icon-1.inline.svg';
+import BytebaseIcon2 from './images/bytebase-icon-2.inline.svg';
+import BytebaseIcon3 from './images/bytebase-icon-3.inline.svg';
 import CiliumIcon1 from './images/cilium-icon-1.inline.svg';
 import CiliumIcon2 from './images/cilium-icon-2.inline.svg';
 import CiliumIcon3 from './images/cilium-icon-3.inline.svg';
@@ -28,6 +31,9 @@ import FlagsmithIcon3 from './images/flagsmith-icon-3.inline.svg';
 import FlagsmithIcon4 from './images/flagsmith-icon-4.inline.svg';
 import FlagsmithIcon5 from './images/flagsmith-icon-5.inline.svg';
 import FlagsmithIcon6 from './images/flagsmith-icon-6.inline.svg';
+import FonoaIcon1 from './images/fonoa-icon-1.inline.svg';
+import FonoaIcon2 from './images/fonoa-icon-2.inline.svg';
+import FonoaIcon3 from './images/fonoa-icon-3.inline.svg';
 import illustrationSm from './images/illustration-sm.svg';
 import illustration from './images/illustration.svg';
 import IsovalentIcon1 from './images/isovalent-icon-1.inline.svg';
@@ -54,6 +60,9 @@ import ParcaIcon3 from './images/parca-icon-3.inline.svg';
 import RevenuecatIcon1 from './images/revenuecat-icon-1.inline.svg';
 import RevenuecatIcon2 from './images/revenuecat-icon-2.inline.svg';
 import RevenuecatIcon3 from './images/revenuecat-icon-3.inline.svg';
+import TerzoIcon1 from './images/terzo-icon-1.inline.svg';
+import TerzoIcon2 from './images/terzo-icon-2.inline.svg';
+import TerzoIcon3 from './images/terzo-icon-3.inline.svg';
 
 const icons = {
   browserless: [BrowserlessIcon1, BrowserlessIcon2, BrowserlessIcon3],
@@ -76,6 +85,9 @@ const icons = {
   parca: [ParcaIcon1, ParcaIcon2, ParcaIcon3],
   nayms: [NaymsIcon1, NaymsIcon2, NaymsIcon3],
   configu: [ConfiguIcon1, ConfiguIcon2, ConfiguIcon3],
+  bytebase: [BytebaseIcon1, BytebaseIcon2, BytebaseIcon3],
+  terzo: [TerzoIcon1, TerzoIcon2, TerzoIcon3],
+  fonoa: [FonoaIcon1, FonoaIcon2, FonoaIcon3],
 };
 
 const Keynotes = ({ items, iconsName }) => (
