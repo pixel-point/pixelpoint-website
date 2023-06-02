@@ -28,7 +28,6 @@ keynotes:
   - Enriched the user experience with eye-catching animations
   - Ensured the highest Lighthouse performance score of 100 points
 cover: cover.jpg
-isFeatured: true
 isOpenSource: true
 position: 12
 ---
