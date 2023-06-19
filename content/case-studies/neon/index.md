@@ -19,14 +19,13 @@ services:
   - Web Design
   - Illustrations
   - Web Development
-  - Product Design
 stack:
   - React
-  - Gatsby
+  - Next.js
+  - Vercel
   - TailwindCSS
   - MDX
-  - Cloudflare Pages
-  - Formspark
+  - Hubspot
 keynotes:
   - Designed & developed a modern landing page
   - Built custom MDX-based documentation portal
