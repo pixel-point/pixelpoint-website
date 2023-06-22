@@ -84,7 +84,7 @@ As things begin to make more sense, let's briefly discuss the final piece of the
 
 Next Image utilizes different image optimization libraries - Sharp or Squoosh - depending on certain conditions:
 
-Sharp is a fast and efficient image optimization Node.js module that makes use of the native <a href="https://github.com/libvips/libvips" target="_blank">libvips</a>() library.
+Sharp is a fast and efficient image optimization Node.js module that makes use of the native <a href="https://github.com/libvips/libvips" target="_blank">libvips</a> library.
 
 Squoosh is a fully node-based image optimization solution. It's slower, but it doesn't require any additional libraries to be installed on a machine. For this reason, Sharp is recommended for production use, whereas Squoosh is used by default in local environments.
 
