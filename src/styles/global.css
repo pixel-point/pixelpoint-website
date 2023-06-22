@@ -12,3 +12,7 @@
 .gatsby-image-wrapper .loaded[data-main-image] {
   opacity: 1 !important;
 }
+
+.gatsby-resp-image-image {
+  box-shadow: none !important;
+}
