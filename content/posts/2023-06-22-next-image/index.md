@@ -254,7 +254,7 @@ While I can only speculate about the exact reasoning behind this architecture, I
 
 ## Conclusions
 
-Though Next Image simplifies image management and provides significant advantages, it could benefit from additional features like advanced cropping and precise resizing, similar to third-party solutions. Incorporating a specialized <picture> component for fine-tuned art direction would also be advantageous. I'd particularly appreciate an automated method for generating four image versions at 0.25x, 0.5x, 1x, and 2x the supplied width.
+Though Next Image simplifies image management and provides significant advantages, it could benefit from additional features like advanced cropping and precise resizing, similar to third-party solutions. Incorporating a specialized `<picture>` component for fine-tuned art direction would also be advantageous. I'd particularly appreciate an automated method for generating four image versions at 0.25x, 0.5x, 1x, and 2x the supplied width.
 
 Nevertheless, for most use cases, the developer experience and efficiency of Next Image will more than enough.
 
