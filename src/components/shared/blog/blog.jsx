@@ -14,10 +14,7 @@ const Blog = () => {
       allMdx(
         filter: {
           slug: {
-            in: [
-              "2022-02-22-comparing-gatsby-and-nextjs-for-website-development/"
-              "2022-02-01-measuring-gatsby-projects-build-time-using-paid-plans-of-popular-static-website-hosting-platforms/"
-            ]
+            in: ["2022-11-28-advanced-web-font-optimization-techniques/", "2023-06-22-next-image/"]
           }
         }
       ) {
