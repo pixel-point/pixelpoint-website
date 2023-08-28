@@ -24,7 +24,7 @@ keynotes:
   - Hooked up integrations necessary for business
   - Carefully migrated the existing community content
 isOpenSource: true
-position: 14
+position: 16
 ---
 
 eBPF is a technology that allows developers to write and execute custom code within the Linux kernel itself. [Isovalent](/case-studies/isovalent) and [Cilium](/case-studies/cilium) both leverage this technology to provide advanced networking and security capabilities for container-based applications running in Kubernetes environments. However, this fantastic piece of tech has been desperately longing for a proper place for everybody to learn and collaborate for quite some time.

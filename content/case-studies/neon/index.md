@@ -29,11 +29,11 @@ stack:
 keynotes:
   - Designed & developed a modern landing page
   - Built custom MDX-based documentation portal
-  - Designed product user dashboard
+  - Created eye-catching animations that highlight the product features
 cover: cover.jpg
 isOpenSource: true
 isFeatured: true
-position: 6
+position: 7
 ---
 
 It all began in 2021, when a group of PostgreSQL contributors and technologists set up on a mission to create an OS cloud-native database as a service available for every developer. They united under the brand name Neon. We joined the team shortly after they had made a successful series A financing, with intention to help them establish a proper brand image.
