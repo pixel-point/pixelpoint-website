@@ -54,6 +54,9 @@ import NeonIcon3 from './images/neon-icon-3.inline.svg';
 import NovuIcon1 from './images/novu-icon-1.inline.svg';
 import NovuIcon2 from './images/novu-icon-2.inline.svg';
 import NovuIcon3 from './images/novu-icon-3.inline.svg';
+import ObservIQIcon1 from './images/observiq-icon-1.inline.svg';
+import ObservIQIcon2 from './images/observiq-icon-2.inline.svg';
+import ObservIQIcon3 from './images/observiq-icon-3.inline.svg';
 import ParcaIcon1 from './images/parca-icon-1.inline.svg';
 import ParcaIcon2 from './images/parca-icon-2.inline.svg';
 import ParcaIcon3 from './images/parca-icon-3.inline.svg';
@@ -85,6 +88,7 @@ const icons = {
   parca: [ParcaIcon1, ParcaIcon2, ParcaIcon3],
   nayms: [NaymsIcon1, NaymsIcon2, NaymsIcon3],
   configu: [ConfiguIcon1, ConfiguIcon2, ConfiguIcon3],
+  observiq: [ObservIQIcon1, ObservIQIcon2, ObservIQIcon3],
   bytebase: [BytebaseIcon1, BytebaseIcon2, BytebaseIcon3],
   terzo: [TerzoIcon1, TerzoIcon2, TerzoIcon3],
   fonoa: [FonoaIcon1, FonoaIcon2, FonoaIcon3],
