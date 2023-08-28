@@ -29,7 +29,7 @@ stack:
 keynotes:
   - Designed & developed a modern landing page
   - Built custom MDX-based documentation portal
-  - Designed product user dashboard
+  - Created eye-catching animations that highlight the product features
 cover: cover.jpg
 isOpenSource: true
 isFeatured: true
