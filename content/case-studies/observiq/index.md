@@ -8,9 +8,9 @@ description: Top observability solutions for modern IT environments
 websiteUrl: https://observiq.com/
 
 quote:
-  text: TBD
-  authorName: TBD
-  authorPosition: TBD
+  text: Such a pleasure working with Alex and the entire Pixel Point team, they did an absolutely incredible job!
+  authorName: Ryan Goins
+  authorPosition: Product Manager
   authorPhoto: author-photo.jpg
 overview: ObservIQ stands at the forefront of the technology industry, offering solutions that empower businesses with unmatched visibility into their IT infrastructure. Their commitment is to transform the often convoluted world of IT observability into one of clarity and control.
 services:
