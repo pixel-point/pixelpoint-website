@@ -148,5 +148,6 @@ module.exports = {
         siteUrl: process.env.GATSBY_DEFAULT_SITE_URL,
       },
     },
+    'gatsby-plugin-mdx-embed',
   ],
 };
