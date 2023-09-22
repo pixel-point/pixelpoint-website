@@ -17,7 +17,7 @@ As you can see, the idea is extremely straightforward. But for us, the applicati
 
 ![You can download the application here](mute1.png)
 
-{/_ *You can download the application [here](https://muteme.pixelpoint.io/)* _/}
+{/* _You can download the application [here](https://muteme.pixelpoint.io/)_  */}
 
 ## Key facts about the development of Touch Bar applications
 

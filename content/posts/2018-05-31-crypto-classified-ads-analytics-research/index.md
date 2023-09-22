@@ -30,7 +30,7 @@ After that, we redirected our research towards Europe. At that time, our working
 
 ![leboncoin.fr - The biggest classified ads site in France](crypto2.jpeg)
 
-{/_ *[leboncoin.fr](https://www.leboncoin.fr/) (The biggest classified ads site in France)* _/}
+{/* _[leboncoin.fr](https://www.leboncoin.fr/) (The biggest classified ads site in France)_  */}
 
 ## Regulation surprisingly helps crypto market
 
@@ -38,7 +38,7 @@ Finally, we redirected our research efforts to North America and saw some surpri
 
 ![newyork.craigslist.org - Classified ads in New York](crypto3.jpeg)
 
-{/_ *[newyork.craigslist.org](https://newyork.craigslist.org/) (Classified ads in New York)* _/}
+{/* _[newyork.craigslist.org](https://newyork.craigslist.org/) (Classified ads in New York)_  */}
 
 Thanks to our research, we were able to quickly identify our best target market. But this raised another interesting question: why did we see a very different situation in the USA than what we identified in the other countries we looked at?
 
@@ -59,6 +59,6 @@ That’s why our company has made the first steps at this direction by opening [
 
 ![bitsburg.com - Cryptocurrency classified ads. Buy and sell with Bitcoin and Ethereum](crypto4.jpeg)
 
-{/_ *[bitsburg.com](https://bitsburg.com/) (Cryptocurrency classified ads. Buy and sell with Bitcoin and Ethereum)* _/}
+{/* _[bitsburg.com](https://bitsburg.com/) (Cryptocurrency classified ads. Buy and sell with Bitcoin and Ethereum)_  */}
 
 We have tried to make our website beautiful, easy to use, and with great cryptocurrencies related features. For example, users can write price in their chosen fiat currency and our system automatically translates these to BTC or ETH. Publish ads your old or unused goods at Bitsburg or at other sites help cryptocurrency become more popular in the world.

@@ -20,7 +20,7 @@ Photoshop has a lot of useful plugins to expedite your work process, but we reco
 
 ![iOS Human Interface Guidelines file size for Photoshop and Sketch](pp1.png)
 
-{/_ *[iOS Human Interface Guidelines file size for Photoshop and Sketch](http://apple.co/28YytHY)* _/}
+{/* _[iOS Human Interface Guidelines file size for Photoshop and Sketch](http://apple.co/28YytHY)_  */}
 
 ## Naming of assets
 
