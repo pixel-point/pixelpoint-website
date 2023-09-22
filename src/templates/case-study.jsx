@@ -54,6 +54,9 @@ const CaseStudyTemplate = ({
 export const query = graphql`
   query ($id: String!) {
     mdx(id: { eq: $id }) {
+      fields {
+        slug
+      }
       frontmatter {
         logo {
           url {
