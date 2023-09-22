@@ -15,10 +15,7 @@ const Blog = () => {
         filter: {
           fields: {
             slug: {
-              in: [
-                "2022-11-28-advanced-web-font-optimization-techniques/"
-                "2023-06-22-next-image/"
-              ]
+              in: ["2022-11-28-advanced-web-font-optimization-techniques", "2023-06-22-next-image"]
             }
           }
         }
