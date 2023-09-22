@@ -34,23 +34,25 @@ const Sidebar = ({ author, readMorePosts, socialShareUrl }) => (
         More from Pixel Point
       </h2>
       <ul className="mt-5 space-y-6">
-        {readMorePosts.map(({ slug, frontmatter: { title, smallCover: cover } }, index) => (
-          <li className="sidebar-posts-item" key={index}>
-            <Link
-              className="flex items-center space-x-4 text-sm transition-colors duration-200 hover:text-red"
-              to={getBlogPostPath(slug)}
-            >
-              <GatsbyImage
-                className="w-20 shrink-0 rounded-sm"
-                imgClassName="rounded-sm"
-                image={getImage(cover)}
-                loading="eager"
-                alt=""
-              />
-              <h3 className="text-sm font-normal line-clamp-2">{title}</h3>
-            </Link>
-          </li>
-        ))}
+        {readMorePosts.map(
+          ({ frontmatter: { title, smallCover: cover }, fields: { slug } }, index) => (
+              <li className="sidebar-posts-item" key={index}>
+                <Link
+                  className="flex items-center space-x-4 text-sm transition-colors duration-200 hover:text-red"
+                  to={getBlogPostPath(slug)}
+                >
+                  <GatsbyImage
+                    className="w-20 shrink-0 rounded-sm"
+                    imgClassName="rounded-sm"
+                    image={getImage(cover)}
+                    loading="eager"
+                    alt=""
+                  />
+                  <h3 className="text-sm font-normal line-clamp-2">{title}</h3>
+                </Link>
+              </li>
+            )
+        )}
       </ul>
       <h2 className="mt-8 border-t border-t-gray-4 pt-8 text-sm font-normal dark:border-t-gray-8">
         Share this article:
@@ -92,7 +94,9 @@ Sidebar.propTypes = {
   }).isRequired,
   readMorePosts: PropTypes.arrayOf(
     PropTypes.shape({
-      slug: PropTypes.string.isRequired,
+      fields: PropTypes.shape({
+        slug: PropTypes.string.isRequired,
+      }).isRequired,
       frontmatter: PropTypes.shape({
         title: PropTypes.string.isRequired,
         mediumCover: PropTypes.exact({

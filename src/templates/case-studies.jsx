@@ -33,13 +33,15 @@ export const query = graphql`
   query ($draftFilter: [Boolean]!) {
     allMdx(
       filter: {
-        fileAbsolutePath: { regex: "/case-studies/" }
+        internal: { contentFilePath: { regex: "/content/case-studies/" } }
         fields: { isDraft: { in: $draftFilter }, isFeatured: { eq: true } }
       }
-      sort: { fields: frontmatter___position, order: ASC }
+      sort: { frontmatter: { position: ASC } }
     ) {
       nodes {
-        slug
+        fields {
+          slug
+        }
         frontmatter {
           logo {
             url {

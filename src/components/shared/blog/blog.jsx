@@ -13,13 +13,17 @@ const Blog = () => {
     query {
       allMdx(
         filter: {
-          slug: {
-            in: ["2022-11-28-advanced-web-font-optimization-techniques/", "2023-06-22-next-image/"]
+          fields: {
+            slug: {
+              in: [
+                "2022-11-28-advanced-web-font-optimization-techniques/"
+                "2023-06-22-next-image/"
+              ]
+            }
           }
         }
       ) {
         nodes {
-          slug
           frontmatter {
             title
             cover {

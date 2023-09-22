@@ -9,6 +9,9 @@ const { CASE_STUDIES_BASE_PATH } = require('./src/constants/case-studies');
 const getBlogPath = require('./src/utils/get-blog-path');
 const getBlogPostPath = require('./src/utils/get-blog-post-path');
 
+const blogPostTemplate = path.resolve('./src/templates/blog-post.jsx');
+const caseStudyTemplate = path.resolve('./src/templates/case-study.jsx');
+
 // We have this variable in order to decide whether to render draft posts or not
 // We are rendering ALL posts, including draft ones in development mode
 // And we are skipping draft posts in production mode
@@ -38,7 +41,7 @@ async function createBlogPages({ graphql, actions }) {
       query ($draftFilter: [Boolean]!) {
         allMdx(
           filter: {
-            fileAbsolutePath: { regex: "/posts/" }
+            internal: { contentFilePath: { regex: "/content/posts/((?!post-authors).)*$/" } }
             fields: { isDraft: { in: $draftFilter } }
           }
         ) {
@@ -102,14 +105,16 @@ async function createBlogPosts({ graphql, actions }) {
   const result = await graphql(`
     {
       allMdx(
-        filter: { fileAbsolutePath: { regex: "/posts/" } }
-        sort: { fields: fileAbsolutePath, order: DESC }
+        filter: {
+          internal: { contentFilePath: { regex: "/content/posts/((?!post-authors).)*$/" } }
+        }
+        sort: { internal: { contentFilePath: DESC } }
       ) {
         nodes {
           id
-          slug
           fields {
             isDraft
+            slug
           }
           frontmatter {
             title
@@ -119,6 +124,9 @@ async function createBlogPosts({ graphql, actions }) {
               publicURL
             }
             category
+          }
+          internal {
+            contentFilePath
           }
         }
       }
@@ -140,20 +148,22 @@ async function createBlogPosts({ graphql, actions }) {
 
   if (result.errors) throw new Error(result.errors);
 
-  result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
+  result.data.allMdx.nodes.forEach(({ id, fields, frontmatter, internal: { contentFilePath } }) => {
+    const {slug} = fields;
+
     // Do not create a post in production if it's draft
     if (process.env.NODE_ENV === 'production' && fields.isDraft) return;
 
     // Required fields validation
     POST_REQUIRED_FIELDS.forEach((fieldName) => {
       if (!get(frontmatter, fieldName)) {
-        throw new Error(`Post "${slug}" does not have field "${fieldName}"!`);
+        throw new Error(`Post "${contentFilePath}" does not have field "${fieldName}"!`);
       }
     });
 
     if (!BLOG_CATEGORIES.includes(frontmatter.category)) {
       throw new Error(
-        `Post "${slug}" has unknown category "${
+        `Post "${contentFilePath}" has unknown category "${
           frontmatter.category
         }"!\nAvailable categories: ${Object.keys(BLOG_CATEGORIES).join(
           ', '
@@ -174,7 +184,7 @@ async function createBlogPosts({ graphql, actions }) {
     // Create a page for each blog post and pass context with video covers only for the current post
     createPage({
       path: getBlogPostPath(slug),
-      component: path.resolve('./src/templates/blog-post.jsx'),
+      component: `${blogPostTemplate}?__contentFilePath=${contentFilePath}`,
       context: { id, videoCovers: allVideoCovers[slug] },
     });
   });
@@ -197,12 +207,12 @@ async function createCaseStudies({ graphql, actions }) {
 
   const result = await graphql(`
     {
-      allMdx(filter: { fileAbsolutePath: { regex: "/case-studies/" } }) {
+      allMdx(filter: { internal: { contentFilePath: { regex: "/content/case-studies/" } } }) {
         nodes {
           id
-          slug
           fields {
             isDraft
+            slug
           }
           frontmatter {
             logo {
@@ -233,6 +243,9 @@ async function createCaseStudies({ graphql, actions }) {
             isFeatured
             isOpenSource
           }
+          internal {
+            contentFilePath
+          }
         }
       }
     }
@@ -240,21 +253,21 @@ async function createCaseStudies({ graphql, actions }) {
 
   if (result.errors) throw new Error(result.errors);
 
-  result.data.allMdx.nodes.forEach(({ id, slug, fields, frontmatter }) => {
+  result.data.allMdx.nodes.forEach(({ id, fields, frontmatter, internal: { contentFilePath } }) => {
     // Do not create a case study in production if it's draft
     if (process.env.NODE_ENV === 'production' && fields.isDraft) return;
 
     // Required fields validation
     CASE_STUDY_REQUIRED_FIELDS.forEach((fieldName) => {
       if (!get(frontmatter, fieldName)) {
-        throw new Error(`Case Study "${slug}" does not have field "${fieldName}"!`);
+        throw new Error(`Case Study "${fields.slug}" does not have field "${fieldName}"!`);
       }
     });
 
     if (frontmatter.isFeatured) {
       FEATURED_CASE_STUDY_REQUIRED_FIELDS.forEach((fieldName) => {
         if (!get(frontmatter, fieldName)) {
-          throw new Error(`Case Study "${slug}" does not have field "${fieldName}"!`);
+          throw new Error(`Case Study "${fields.slug}" does not have field "${fieldName}"!`);
         }
       });
     }
@@ -262,14 +275,14 @@ async function createCaseStudies({ graphql, actions }) {
     if (frontmatter.isOpenSource) {
       OPEN_SOURCE_CASE_STUDY_REQUIRED_FIELDS.forEach((fieldName) => {
         if (!get(frontmatter, fieldName)) {
-          throw new Error(`Case Study "${slug}" does not have field "${fieldName}"!`);
+          throw new Error(`Case Study "${fields.slug}" does not have field "${fieldName}"!`);
         }
       });
     }
 
     createPage({
-      path: `${CASE_STUDIES_BASE_PATH}${slug}`,
-      component: path.resolve('./src/templates/case-study.jsx'),
+      path: `${CASE_STUDIES_BASE_PATH}${fields.slug}`,
+      component: `${caseStudyTemplate}?__contentFilePath=${contentFilePath}`,
       context: { id },
     });
   });
@@ -277,6 +290,14 @@ async function createCaseStudies({ graphql, actions }) {
 
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions;
+
+  createNodeField({
+    node,
+    name: 'slug',
+    value: node.internal.contentFilePath
+      ? node.internal.contentFilePath.split('/').slice(-2, -1)[0]
+      : '',
+  });
 
   if (node.frontmatter) {
     createNodeField({
@@ -304,11 +325,11 @@ exports.createResolvers = ({ createResolvers, cache }) => {
     Mdx: {
       githubStars: {
         type: 'String',
-        resolve: async ({ frontmatter, fileAbsolutePath }) => {
+        resolve: async ({ frontmatter, internal: { contentFilePath } }) => {
           const { githubUsername, githubRepoName, isOpenSource } = frontmatter;
 
           if (
-            fileAbsolutePath.includes('/case-studies/') &&
+            contentFilePath.includes('/case-studies/') &&
             isOpenSource &&
             githubUsername &&
             githubRepoName

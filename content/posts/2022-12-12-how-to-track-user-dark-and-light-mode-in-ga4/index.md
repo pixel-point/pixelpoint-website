@@ -50,7 +50,7 @@ Once you have created the custom variable in GTM to track the user's dark mode s
 3. In the "Google Analytics Settings" section, select the correct GA4 property from the "Configuration Tag" dropdown. Make sure that you’ve selected the property that corresponds to your website or app.
 4. In the "Event Parameters" section, enter the following values:
    - Event name: "page_view"
-   - Event parameters: { "color_mode": {{User Color Mode}} }
+   - Event parameters: `{ "color_mode": {{User Color Mode}} }`
 5. Add trigger “Initialization - All pages”
 6. Press “Save”
 

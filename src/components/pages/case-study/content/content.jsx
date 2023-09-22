@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MDXProvider } from '@mdx-js/react';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 
@@ -100,9 +99,7 @@ const Content = ({
         </div>
         <h2 className="mt-12 text-2xl font-normal leading-snug sm:text-xl">About the project</h2>
         <div className="with-link-red mt-2.5 space-y-5 text-lg md:space-y-4">
-          <MDXProvider>
-            <MDXRenderer>{text}</MDXRenderer>
-          </MDXProvider>
+          <MDXProvider>{text}</MDXProvider>
         </div>
       </div>
       <div className="col-start-10 col-end-13 rounded-2xl border border-gray-8 p-7 lg:col-start-9 lg:rounded-xl md:hidden">

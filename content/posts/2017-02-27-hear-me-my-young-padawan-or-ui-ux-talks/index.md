@@ -54,7 +54,7 @@ I am skeptical about such works for the following reasons:
 
 ![NYT redesign concept. Media is funded by advertising, but I don’t see it in this design.](ui3.png)
 
-<!-- _NYT redesign concept. Media is funded by advertising, but I don’t see it in this design. [project](http://bit.ly/2mlQoQG)_ -->
+{/_ NYT redesign concept. Media is funded by advertising, but I don’t see it in this design. [project](http://bit.ly/2mlQoQG) _/}
 
 ![Current NYT design. In concepts, designers don’t usually consider financial practicalities](ui4.png)
 
@@ -62,7 +62,7 @@ I am skeptical about such works for the following reasons:
 
 ![Okay, looks good. But why do I see only four videos on the full pageview?](ui5.png)
 
-<!-- _Okay, looks good. But why do I see only four videos on the full pageview? [project](http://bit.ly/2mlRtrM)_ -->
+{/_ Okay, looks good. But why do I see only four videos on the full pageview? [project](http://bit.ly/2mlRtrM) _/}
 
 ![Compare with the current YouTube homepage. It looks older, but more functional](ui6.png)
 
@@ -70,17 +70,17 @@ I am skeptical about such works for the following reasons:
 
 ![Purple Skype design. Brand identification is lost](ui7.png)
 
-<!-- _Purple Skype design. Brand identification is lost [project](http://bit.ly/2mm9MwH)_ -->
+{/_ *Purple Skype design. Brand identification is lost [project](http://bit.ly/2mm9MwH)* _/}
 
 ![Purple Spotify design. I don’t know why this color decision was made. Just for novelty?](ui8.png)
 
-<!-- _Purple Spotify design. I don’t know why this color decision was made. Just for novelty? [project](http://bit.ly/2mlQbg3)_ -->
+{/_ *Purple Spotify design. I don’t know why this color decision was made. Just for novelty? [project](http://bit.ly/2mlQbg3)* _/}
 
 - **Complexity of support**. Often, when creating a concept, the designer thinks only about the beautiful picture, losing sight of such important factors as accessibility and future product support. For example, in the media sphere, it is important that editors can put out articles quickly after having prepared all the necessary materials. Concepts often lose sight of such nuances.
 
 ![Some may think this design looks good, but I find it hard to support. It requires too much time to process the picture and make a selection.](ui9.png)
 
-<!-- _Some may think this design looks good, but I find it hard to support. It requires too much time to process the picture and make a selection. [project](http://bit.ly/2mm155F)_ -->
+{/_ *Some may think this design looks good, but I find it hard to support. It requires too much time to process the picture and make a selection. [project](http://bit.ly/2mm155F)* _/}
 
 I believe that designers who invest time and effort into creating such concepts generally do so for the sake of publicity around the work. New concepts of large websites will draw media exposure easily, and lead to many likes and follows. But from a practical point of view, they will be useless. And, in such works, the essence of the UI/UX design profession is washed away. In place of reasonable decisions, there are only nice pictures.
 

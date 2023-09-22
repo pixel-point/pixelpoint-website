@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MDXProvider } from '@mdx-js/react';
 import clsx from 'clsx';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
 import PropTypes from 'prop-types';
 import React from 'react';
 import slugify from 'slugify';
@@ -86,9 +85,7 @@ const getComponents = (videoCovers) => ({
 const Content = ({ className, content, videoCovers }) => (
   <div className="mt-10 md:mt-8">
     <div className={clsx('content', className)}>
-      <MDXProvider components={getComponents(videoCovers)}>
-        <MDXRenderer>{content}</MDXRenderer>
-      </MDXProvider>
+      <MDXProvider components={getComponents(videoCovers)}>{content}</MDXProvider>
     </div>
   </div>
 );

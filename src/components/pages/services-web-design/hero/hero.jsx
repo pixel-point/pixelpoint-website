@@ -1,7 +1,7 @@
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import clsx from 'clsx';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 const Hero = () => {
   const [animationWrapperRef, isAnimationWrapperInView] = useInView({ triggerOnce: true });

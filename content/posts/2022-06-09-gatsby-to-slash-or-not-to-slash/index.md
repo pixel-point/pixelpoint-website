@@ -146,7 +146,7 @@ In Gatsby v5 the default trailing slash config option will be `always`, meaning 
 
 The table below shows how Gatsby Cloud (and also Gatsby itself within `gatsby develop` and `gatsby serve`) handles redirects depending on the `trailingSlash` value:
 
-The example page is at the <https://example.io/blog/index.html>.
+The example page is at the [https://example.io/blog/index.html](https://example.io/blog/index.html).
 
 | `trailingSlash` value | Requested URL    | Redirect code | Rendered URL |
 | --------------------- | ---------------- | ------------- | ------------ |

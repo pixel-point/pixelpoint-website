@@ -1,7 +1,7 @@
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import { useAnimation, motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 import TitleAnimation from 'components/shared/title-animation';

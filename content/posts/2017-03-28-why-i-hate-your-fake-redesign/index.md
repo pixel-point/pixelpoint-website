@@ -26,13 +26,13 @@ If you are at the beginning of your career and lack a portfolio, coming up with 
 
 ![Google redesign](google.png)
 
-<!-- _[Google redesign](https://medium.muz.li/google-redesign-8947ccadab46)_ -->
+{/_ *[Google redesign](https://medium.muz.li/google-redesign-8947ccadab46)* _/}
 
 For some reason, this designer decided to forget about branding and use a bold background color that looks pretty good but splits focus. They also moved the Account Settings to the left corner, when there is an established practice of placing it at the top right corner.
 
 ![Skype redesign](skype.png)
 
-<!-- _[Skype redesign](https://medium.muz.li/skype-redesign-concepts-46972389979)_ -->
+{/_ *[Skype redesign](https://medium.muz.li/skype-redesign-concepts-46972389979)* _/}
 
 This is a Skype concept from Muzli. Again, we see that the designer forgot about branding and made Skype look too similar to Viber. I have no idea why there is a bold, purple and pink left panel. With this design, users are encouraged to focus more on the list of conversations than on their current chat.
 
@@ -40,7 +40,7 @@ The designer probably used these colors because they thought it looked cool. Sto
 
 ![Facebook redesign](facebook.png)
 
-<!-- _[Facebook redesign](https://medium.muz.li/facebook-redesign-concepts-ca694efff84f)_ -->
+{/_ *[Facebook redesign](https://medium.muz.li/facebook-redesign-concepts-ca694efff84f)* _/}
 
 Another Facebook concept. These guys made tons of work, but I can’t imagine Facebook implementing these changes anytime soon. Dark colors, grid view, Apple-style gradient button, and no ads? Really?
 
@@ -65,28 +65,28 @@ How do you make the world a better place and get real experience?
 
 Charitable foundations all over the world are trying to help people, but very often have terrible websites. I would guess that they’d love free design help, so offer your services! This is also a great way to improve your karma. :)
 
-- <http://www.nastenka.ru/>
+- [http://www.nastenka.ru/](http://www.nastenka.ru/)
 
-- <http://www.cancersurvivorsfund.org/>
+- [http://www.cancersurvivorsfund.org/](http://www.cancersurvivorsfund.org/)
 
-- <https://paradisecharity.org/>
+- [https://paradisecharity.org/](https://paradisecharity.org/)
 
-- <http://rachelfriends.org/previews/rachelplus-en/>
+- [http://rachelfriends.org/previews/rachelplus-en/](http://rachelfriends.org/previews/rachelplus-en/)
 
 Don’t like that approach? You can also pick the websites of famous attractions and offer to help them. They have a lot of visitors every day, but often don’t have great sites.
 
-- <http://www.galleriaborghese.it/en>
+- [http://www.galleriaborghese.it/en](http://www.galleriaborghese.it/en)
 
-- <http://www.stage-entertainment.fr/theatre>
+- [http://www.stage-entertainment.fr/theatre](http://www.stage-entertainment.fr/theatre)
 
-- <http://www.patrimonionacional.es/>
+- [http://www.patrimonionacional.es/](http://www.patrimonionacional.es/)
 
 Want to try designing for ecommerce sites? Let’s Google “flower delivery Paris” and pick a few poorly designed examples:
 
-- <http://www.parisfloristandgifts.com/>
+- [http://www.parisfloristandgifts.com/](http://www.parisfloristandgifts.com/)
 
-- <https://www.arenaflowers.com/international/france>
+- [https://www.arenaflowers.com/international/france](https://www.arenaflowers.com/international/france)
 
-- <http://www.interflora.fr/>
+- [http://www.interflora.fr/](http://www.interflora.fr/)
 
 Don’t hesitate to message site owners or ask your friends, maybe they need your help. You will find a real project and get real experience. With this method, you will improve your communication skills, get valuable new contacts, and learn about analytics and client preferences firsthand.

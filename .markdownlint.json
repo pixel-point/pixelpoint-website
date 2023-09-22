@@ -4,5 +4,6 @@
   "no-inline-html": false,
   "ol-prefix": false,
   "no-trailing-punctuation": false,
-  "no-emphasis-as-header": false
+  "no-emphasis-as-header": false,
+  "no-space-in-emphasis": false
 }

@@ -34,16 +34,15 @@ export const query = graphql`
   query ($category: String, $draftFilter: [Boolean]!, $limit: Int!, $skip: Int!) {
     allMdx(
       filter: {
-        fileAbsolutePath: { regex: "/posts/" }
+        internal: { contentFilePath: { regex: "/content/posts/((?!post-authors).)*$/" } }
         fields: { isDraft: { in: $draftFilter } }
         frontmatter: { category: { eq: $category } }
       }
-      sort: { order: DESC, fields: slug }
+      sort: { internal: { contentFilePath: DESC } }
       limit: $limit
       skip: $skip
     ) {
       nodes {
-        slug
         author {
           name
           photo {
@@ -61,6 +60,9 @@ export const query = graphql`
               gatsbyImageData(width: 488)
             }
           }
+        }
+        fields {
+          slug
         }
       }
     }
