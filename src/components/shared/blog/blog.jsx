@@ -29,6 +29,9 @@ const Blog = () => {
               }
             }
           }
+          fields {
+            slug
+          }
         }
       }
     }
@@ -44,7 +47,7 @@ const Blog = () => {
           </Link>
         </h2>
         <ul className="grid-gap-x mt-16 grid grid-cols-2 lg:mt-14 md:mt-11 sm:mt-10 sm:block sm:space-y-10">
-          {items.map(({ slug, frontmatter: { title, cover } }, index) => (
+          {items.map(({ fields: { slug }, frontmatter: { title, cover } }, index) => (
             <li key={index}>
               <Link
                 className="with-nested-link-red-hover flex h-full flex-col"
