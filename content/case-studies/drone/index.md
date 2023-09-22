@@ -35,7 +35,7 @@ keynotes:
   - Developed front-end of the product
   - Bouncing rate dropped down to 29%
 isOpenSource: true
-position: 17
+position: 18
 ---
 
 We discovered Drone CI back in 2018, during experiments with CI/CD pipelines for our projects. It was a highly customizable and perfectly scalable solution, way ahead of the competition, but as it often happens with great tools created by seasoned devs, its interface wasn't particularly user-friendly. We reached out to its author, Brad Rydzewski, and were given carte blanche to act straight away.

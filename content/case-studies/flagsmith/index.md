@@ -36,7 +36,7 @@ keynotes:
   - Github Stars increase from 200 to 1.4k
   - 'Flagsmith made it to Product Hunt top #5'
 isOpenSource: true
-position: 15
+position: 16
 ---
 
 Freshly acquired by Polychrome Capitals, guys were in the process of a major company transformation requiring full rebranding - and we were eager to help.

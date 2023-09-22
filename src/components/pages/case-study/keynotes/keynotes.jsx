@@ -59,6 +59,7 @@ const icons = {
   bytebase: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
   terzo: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
   fonoa: [LayoutIcon, WritingIcon, PerformanceIcon],
+  gitness: [LikeIcon, IntegrationsIcon, PerformanceIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (

@@ -36,7 +36,7 @@ keynotes:
 cover: cover.jpg
 isOpenSource: true
 isFeatured: true
-position: 2
+position: 3
 ---
 
 Bytebase offers a web-based collaboration workspace to help DBAs and Developers manage the database development lifecycle. It is built by engineers from top companies like Google and Ant Group and backed up by their expertise in database development flow. In the DevOps methodology, teams adopt GitHub for code management, and Bytebase offers a similar solution but for database management.
