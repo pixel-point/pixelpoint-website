@@ -101,6 +101,16 @@ module.exports = {
       options: {
         extensions: ['.mdx', '.md'],
         gatsbyRemarkPlugins: [
+          'gatsby-remark-prismjs',
+          {
+            resolve: 'gatsby-remark-embed-video',
+            options: {
+              width: 800,
+              loadingStrategy: 'lazy',
+              containerClass: 'embedVideo-container',
+            },
+          },
+          'gatsby-remark-copy-linked-files',
           {
             resolve: `gatsby-remark-images`,
             options: {
