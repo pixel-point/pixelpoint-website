@@ -33,7 +33,6 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@rive-app/react-canvas": "^4.3.3",
     "@tailwindcss/line-clamp": "^0.4.4",
