@@ -94,7 +94,9 @@ const CaseStudies = ({ items }) => (
 CaseStudies.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.exact({
-      slug: PropTypes.string.isRequired,
+      fields: PropTypes.exact({
+        slug: PropTypes.string.isRequired,
+      }).isRequired,
       frontmatter: PropTypes.exact({
         logo: PropTypes.exact({
           url: PropTypes.exact({

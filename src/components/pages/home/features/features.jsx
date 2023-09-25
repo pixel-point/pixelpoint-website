@@ -114,8 +114,6 @@ const Features = () => {
       iconAnimation5.on('stop', () => iconAnimation6.play(['Animations']));
       iconAnimation6.on('stop', () => iconAnimation1.play(['Animations']));
     }
-
-    return () => icons.forEach(({ animation }) => animation && animation.unsubscribeAll());
   }, [
     isWrapperInView,
     iconAnimation1,

@@ -35,7 +35,6 @@
   "dependencies": {
     "@mdx-js/react": "^2.3.0",
     "@rive-app/react-canvas": "^4.3.3",
-    "@tailwindcss/line-clamp": "^0.4.4",
     "clsx": "^2.0.0",
     "framer-motion": "^10.16.4",
     "gatsby": "^5.12.4",
