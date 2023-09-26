@@ -50,6 +50,7 @@ const Services = () => {
           </p>
           <Link className="mt-5 md:mt-4" to={LINKS.webDesign} size="base" theme="arrow-red">
             Read more
+            <span className="sr-only"> about web design</span>
           </Link>
         </div>
         <div className="mt-14 hidden md:block sm:mt-8" aria-hidden>
@@ -75,6 +76,7 @@ const Services = () => {
           </p>
           <Link className="mt-5 md:mt-4" to={LINKS.webDevelopment} size="base" theme="arrow-red">
             Read more
+            <span className="sr-only"> about web development</span>
           </Link>
           <ImagePlaceholder
             className="mx-auto mt-14 hidden max-w-[468px] md:block sm:mt-8"
