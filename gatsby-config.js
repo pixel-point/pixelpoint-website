@@ -112,7 +112,7 @@ module.exports = {
           },
           'gatsby-remark-copy-linked-files',
           {
-            resolve: `gatsby-remark-images`,
+            resolve: 'gatsby-remark-images',
             options: {
               maxWidth: 696,
               quality: 90,

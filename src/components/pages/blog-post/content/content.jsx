@@ -76,7 +76,6 @@ const getComponents = (videoCovers) => ({
       <table {...props} />
     </div>
   ),
-  // pre: (props) => <div><pre {...props} /></div>,
   video: (props) => <Video {...props} videoCovers={videoCovers} />,
   // this code prevents the creation of an additional video iframe wrapper in mdx
   undefined: (obj) =>
