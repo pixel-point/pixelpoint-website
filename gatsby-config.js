@@ -2,6 +2,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
 
+const wrapESMPlugin = (name) =>
+  function wrapESM(opts) {
+    return async (...args) => {
+      const mod = await import(name);
+      const plugin = mod.default(opts);
+      return plugin(...args);
+    };
+  };
+
 module.exports = {
   trailingSlash: 'always',
   flags: { DEV_SSR: process.env.GATSBY_DEV_SSR || false },
@@ -92,6 +101,7 @@ module.exports = {
       options: {
         extensions: ['.mdx', '.md'],
         gatsbyRemarkPlugins: [
+          'gatsby-remark-prismjs',
           {
             resolve: 'gatsby-remark-embed-video',
             options: {
@@ -113,8 +123,11 @@ module.exports = {
               disableBgImageOnAlpha: true,
             },
           },
-          'gatsby-remark-prismjs',
         ],
+        mdxOptions: {
+          remarkPlugins: [require('remark-gfm')],
+          rehypePlugins: [wrapESMPlugin('rehype-slug'), wrapESMPlugin('rehype-autolink-headings')],
+        },
       },
     },
     {
@@ -135,6 +148,6 @@ module.exports = {
         siteUrl: process.env.GATSBY_DEFAULT_SITE_URL,
       },
     },
-    `gatsby-plugin-mdx-embed`,
+    'gatsby-plugin-mdx-embed',
   ],
 };

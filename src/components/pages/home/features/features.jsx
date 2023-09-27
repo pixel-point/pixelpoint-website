@@ -1,6 +1,6 @@
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import React, { useEffect, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 
@@ -106,16 +106,29 @@ const Features = () => {
       iconAnimation5 &&
       iconAnimation6
     ) {
-      iconAnimation1.play(['Animations']);
-      iconAnimation1.on('stop', () => iconAnimation2.play(['Animations']));
-      iconAnimation2.on('stop', () => iconAnimation3.play(['Animations']));
-      iconAnimation3.on('stop', () => iconAnimation4.play(['Animations']));
-      iconAnimation4.on('stop', () => iconAnimation5.play(['Animations']));
-      iconAnimation5.on('stop', () => iconAnimation6.play(['Animations']));
-      iconAnimation6.on('stop', () => iconAnimation1.play(['Animations']));
+      iconAnimation1.play();
+      iconAnimation1.on('stop', () => {
+        iconAnimation2.play();
+      });
+      iconAnimation2.on('stop', () => {
+        iconAnimation3.play();
+      });
+      iconAnimation3.on('stop', () => {
+        iconAnimation4.play();
+      });
+      iconAnimation4.on('stop', () => {
+        iconAnimation5.play();
+      });
+      iconAnimation5.on('stop', () => {
+        iconAnimation6.play();
+      });
+      iconAnimation6.on('stop', () => {
+        iconAnimation1.play();
+      });
     }
 
-    return () => icons.forEach(({ animation }) => animation && animation.unsubscribeAll());
+    return () =>
+      icons.forEach(({ animation }) => animation && animation.removeAllRiveEventListeners());
   }, [
     isWrapperInView,
     iconAnimation1,

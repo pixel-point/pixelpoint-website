@@ -1,8 +1,8 @@
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
 import Link from 'components/shared/link';

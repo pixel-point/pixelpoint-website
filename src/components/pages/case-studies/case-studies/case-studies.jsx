@@ -14,7 +14,10 @@ const CaseStudies = ({ items }) => (
       </h1>
       <div className="mt-28 space-y-40 lg:mt-24 lg:space-y-36 md:mt-20 md:space-y-24 sm:mt-16 sm:space-y-16">
         {items.map(
-          ({ slug, frontmatter: { logo, title, description, overview, quote, cover } }, index) => (
+          (
+            { fields: { slug }, frontmatter: { logo, title, description, overview, quote, cover } },
+            index
+          ) => (
             <article
               className="grid-gap-x grid grid-cols-2 md:flex md:flex-col md:items-stretch"
               key={index}
@@ -91,7 +94,9 @@ const CaseStudies = ({ items }) => (
 CaseStudies.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.exact({
-      slug: PropTypes.string.isRequired,
+      fields: PropTypes.exact({
+        slug: PropTypes.string.isRequired,
+      }).isRequired,
       frontmatter: PropTypes.exact({
         logo: PropTypes.exact({
           url: PropTypes.exact({

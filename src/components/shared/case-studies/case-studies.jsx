@@ -1,8 +1,8 @@
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import { useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useRive, Layout, Fit, Alignment } from 'rive-react';
 
 import Link from 'components/shared/link';
 import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
@@ -91,13 +91,13 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
   } = useStaticQuery(graphql`
     query {
       allMdx(
-        filter: { fileAbsolutePath: { regex: "/case-studies/" } }
-        sort: { fields: frontmatter___position, order: ASC }
+        filter: { internal: { contentFilePath: { regex: "/content/case-studies/" } } }
+        sort: { frontmatter: { position: ASC } }
       ) {
         nodes {
-          slug
           fields {
             isDraft
+            slug
           }
           frontmatter {
             logo {
@@ -125,7 +125,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
       if (process.env.NODE_ENV === 'production') return !isDraft;
       return true;
     })
-    .filter(({ frontmatter: { isOpenSource, isFeatured }, slug }) => {
+    .filter(({ frontmatter: { isOpenSource, isFeatured }, fields: { slug } }) => {
       if (slug === activeItemSlug) return false;
       if (itemsType === 'open-source') return isOpenSource;
       if (itemsType === 'not-featured') return !isFeatured;
@@ -146,7 +146,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
           )}
         </h2>
         <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-14 lg:gap-y-14 md:mt-11 md:grid-cols-2 md:gap-y-11 sm:mt-10 sm:block sm:space-y-10">
-          {itemsToRender.map(({ slug, frontmatter, githubStars }, index) => (
+          {itemsToRender.map(({ fields: { slug }, frontmatter, githubStars }, index) => (
             <li key={index}>
               <Card
                 {...frontmatter}

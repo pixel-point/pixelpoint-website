@@ -10,7 +10,8 @@ If you've worked with Next.js, it's likely that you've come across Next Image co
 
 To leverage this magic, simply add the following code to your page:
 
-<!-- prettier-ignore-start -->
+{/* prettier-ignore-start  */}
+
 ```javascript
 import Image from 'next/image';
  
@@ -25,7 +26,8 @@ export default function Page() {
   );
 }
 ```
-<!-- prettier-ignore-end -->
+
+{/* prettier-ignore-end  */}
 
 However, as is the case with any magic, there's a solid foundation of hard work that enables it to function seamlessly. In this article, we're going to explore how Next Image works and clear up some common misconceptions surrounding it.
 
@@ -43,7 +45,8 @@ The underlying architecture of `next/image` is primarily made up of three compon
 
 The primary function of the component is to generate the correct HTML image output based on the provided properties and to construct multiple URLs to be populated in the `srcset` and `src` attributes. Here is an example output from the Next Image component:
 
-<!-- prettier-ignore-start -->
+{/* prettier-ignore-start  */}
+
 ```html
 <img 
   alt="Example"
@@ -58,7 +61,8 @@ The primary function of the component is to generate the correct HTML image outp
   src="/_next/image?url=%2Fimages%2Fexample.jpg&amp;w=1080&amp;q=75"
 >
 ```
-<!-- prettier-ignore-end -->
+
+{/* prettier-ignore-end  */}
 
 Let's take a closer look at the generated URL:
 
@@ -183,7 +187,8 @@ Using an absolute path is common when dealing with local images in examples, tut
 
 The `next/image` component accepts a property known as 'sizes', akin to the html img sizes attribute. However, in line with other aspects we've discussed, it performs some unique operations too. The 'sizes' attribute works in concert with 'srcset' and accepts a list of browser conditions and image widths for which they should be activated. If you're unfamiliar with this, I recommend taking a look at <a href="https://www.dofactory.com/html/img/sizes" target="_blank">these docs</a>, and this <a href="https://codesandbox.io/s/hungry-brattain-vw78xf?file=/index.html:1653-1685" target="_blank">codesandbox example</a>. Here's an example of an image using 'sizes':
 
-<!-- prettier-ignore-start -->
+{/* prettier-ignore-start  */}
+
 ```html
 <img srcset="/img/html/vangogh-sm.jpg 120w,
              /img/html/vangogh.jpg 193w,
@@ -192,7 +197,8 @@ The `next/image` component accepts a property known as 'sizes', akin to the html
             (max-width: 991px) 193px,
             278px">
 ```
-<!-- prettier-ignore-end -->
+
+{/* prettier-ignore-end  */}
 
 Let's dive into the details for better understanding. When you utilize Next Image without specifying the 'sizes' property, your 'srcset' will include two URLs: one for the standard version (x1) and another for the Retina version (x2). With this setup, the browser will invariably opt for the Retina version when used on a Retina device. This preference arises due to the use of 1x and 2x syntax within the 'srcset'.
 

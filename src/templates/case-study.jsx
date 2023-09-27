@@ -14,8 +14,13 @@ import SEO_DATA from 'constants/seo-data';
 
 const CaseStudyTemplate = ({
   data: {
-    mdx: { body, slug, frontmatter, githubStars },
+    mdx: {
+      fields: { slug },
+      frontmatter,
+      githubStars,
+    },
   },
+  children,
 }) => {
   const content = {
     logo: frontmatter.logo,
@@ -25,7 +30,7 @@ const CaseStudyTemplate = ({
     githubUsername: frontmatter.githubUsername,
     githubRepoName: frontmatter.githubRepoName,
     quote: frontmatter.quote,
-    text: body,
+    text: children,
     services: frontmatter.services,
     stack: frontmatter.stack,
     githubStars,
@@ -49,8 +54,9 @@ const CaseStudyTemplate = ({
 export const query = graphql`
   query ($id: String!) {
     mdx(id: { eq: $id }) {
-      body
-      slug
+      fields {
+        slug
+      }
       frontmatter {
         logo {
           url {

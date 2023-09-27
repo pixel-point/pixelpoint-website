@@ -11,7 +11,7 @@ const Burger = ({ className, theme, isToggled, onClick }) => (
       'relative h-5 w-7 dark:text-white',
       theme === 'white' && 'text-white',
       theme === 'black' && 'text-black',
-      isToggled && 'text-black dark:text-black',
+      isToggled && '!text-black dark:text-black',
       className
     )}
     type="button"

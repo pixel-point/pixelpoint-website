@@ -13,33 +13,36 @@ import SEO_DATA from 'constants/seo-data';
 
 const BlogPostTemplate = ({
   data: {
-    mdx: { slug, body, author, frontmatter },
+    mdx: {
+      author,
+      frontmatter,
+      fields: { slug },
+    },
     allMdx: { nodes: readMorePosts },
   },
   location,
   pageContext: { videoCovers },
+  children,
 }) => (
-  <Layout headerTheme="black" headerShowThemeButton>
-    <article className="safe-paddings pt-32 sm:pt-24">
-      <div className="container">
-        <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
-          <div className="xl:max-w-[696px] lg:max-w-[626px] md:max-w-none">
-            <Hero {...frontmatter} slug={slug} />
-            <Content content={body} videoCovers={videoCovers} />
+    <Layout headerTheme="black" headerShowThemeButton>
+      <article className="safe-paddings pt-32 sm:pt-24">
+        <div className="container">
+          <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
+            <div className="xl:max-w-[696px] lg:max-w-[626px] md:max-w-none">
+              <Hero {...frontmatter} slug={slug} />
+              <Content content={children} videoCovers={videoCovers} />
+            </div>
+            <Sidebar author={author} readMorePosts={readMorePosts} socialShareUrl={location.href} />
           </div>
-          <Sidebar author={author} readMorePosts={readMorePosts} socialShareUrl={location.href} />
         </div>
-      </div>
-    </article>
-    <CTA withTopMargin />
-  </Layout>
-);
+      </article>
+      <CTA withTopMargin />
+    </Layout>
+  );
 
 export const query = graphql`
   query ($id: String!) {
     mdx(id: { eq: $id }) {
-      slug
-      body
       author {
         name
         photo {
@@ -65,18 +68,20 @@ export const query = graphql`
           }
         }
       }
+      fields {
+        slug
+      }
     }
     allMdx(
       filter: {
-        fileAbsolutePath: { regex: "/posts/" }
+        internal: { contentFilePath: { regex: "/content/posts/((?!post-authors).)*$/" } }
         id: { ne: $id }
         fields: { isDraft: { in: [false] } }
       }
       limit: 4
-      sort: { order: DESC, fields: slug }
+      sort: { internal: { contentFilePath: DESC } }
     ) {
       nodes {
-        slug
         frontmatter {
           title
           mediumCover: cover {
@@ -89,6 +94,9 @@ export const query = graphql`
               gatsbyImageData(width: 80, layout: FIXED)
             }
           }
+        }
+        fields {
+          slug
         }
       }
     }

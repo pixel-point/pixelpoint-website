@@ -98,7 +98,7 @@ data:
             <level>warning</level>
             <console>true</console>
         </logger>
-        <!-- Stop all the unnecessary logging -->
+        {/* Stop all the unnecessary logging */}
         <query_thread_log remove="remove"/>
         <query_log remove="remove"/>
         <text_log remove="remove"/>

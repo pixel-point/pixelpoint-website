@@ -35,51 +35,56 @@ const PostsList = ({ activeCategory, items }) => (
         ))}
       </ul>
       <div className="grid-gap-x mt-20 space-y-20 lg:mt-16 lg:space-y-16 md:mt-14 md:space-y-14">
-        {items.map(({ slug, author, frontmatter: { title, summary, category, cover } }, index) => (
-          <article key={index}>
-            <Link className="with-nested-link-red-hover block" to={getBlogPostPath(slug)}>
-              <div className="flex items-center">
-                <span className="text-sm font-normal text-red">{category}</span>
-                <span className="relative ml-3 pl-3 text-sm font-normal text-gray-7 before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gray-4 dark:before:bg-gray-8">
-                  {getBlogPostDateFromSlug(slug)}
-                </span>
-              </div>
-              <div className="mt-4 flex items-center justify-between md:block md:space-y-4">
-                <h1 className="max-w-[696px] text-2xl font-normal leading-snug lg:max-w-[600px] md:max-w-none sm:text-xl">
-                  {title}
-                </h1>
-                <div className="flex items-center space-x-2.5 md:space-x-0">
-                  <span className="text-sm font-normal md:ml-2.5">{author.name}</span>
-                  <GatsbyImage
-                    className="w-9 rounded-full md:order-first"
-                    imgClassName="rounded-full"
-                    image={getImage(author.photo)}
-                    alt={author.name}
-                  />
-                </div>
-              </div>
-              <div className="mt-5 flex items-start space-x-8 lg:space-x-7 md:mt-4 md:space-x-5 sm:flex-col sm:space-x-0">
-                <div className="flex-1 sm:mt-4">
-                  <p className="text-lg sm:text-base">{summary}</p>
-                  <Link
-                    className="nested-link-red mt-5 md:mt-4"
-                    size="base"
-                    theme="arrow-red"
-                    withoutHover
-                  >
-                    Read article
-                  </Link>
-                </div>
-                <GatsbyImage
-                  className="rounded-xl md:max-w-[350px] sm:order-first sm:max-w-none"
-                  imgClassName="rounded-xl"
-                  image={getImage(cover)}
-                  alt=""
-                />
-              </div>
-            </Link>
-          </article>
-        ))}
+        {items.map(
+          (
+            { author, frontmatter: { title, summary, category, cover }, fields: { slug } },
+            index
+          ) => (
+              <article key={index}>
+                <Link className="with-nested-link-red-hover block" to={getBlogPostPath(slug)}>
+                  <div className="flex items-center">
+                    <span className="text-sm font-normal text-red">{category}</span>
+                    <span className="relative ml-3 pl-3 text-sm font-normal text-gray-7 before:absolute before:left-0 before:top-0 before:h-full before:w-px before:bg-gray-4 dark:before:bg-gray-8">
+                      {getBlogPostDateFromSlug(slug)}
+                    </span>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between md:block md:space-y-4">
+                    <h1 className="max-w-[696px] text-2xl font-normal leading-snug lg:max-w-[600px] md:max-w-none sm:text-xl">
+                      {title}
+                    </h1>
+                    <div className="flex items-center space-x-2.5 md:space-x-0">
+                      <span className="text-sm font-normal md:ml-2.5">{author.name}</span>
+                      <GatsbyImage
+                        className="w-9 rounded-full md:order-first"
+                        imgClassName="rounded-full"
+                        image={getImage(author.photo)}
+                        alt={author.name}
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-5 flex items-start space-x-8 lg:space-x-7 md:mt-4 md:space-x-5 sm:flex-col sm:space-x-0">
+                    <div className="flex-1 sm:mt-4">
+                      <p className="text-lg sm:text-base">{summary}</p>
+                      <Link
+                        className="nested-link-red mt-5 md:mt-4"
+                        size="base"
+                        theme="arrow-red"
+                        withoutHover
+                      >
+                        Read article
+                      </Link>
+                    </div>
+                    <GatsbyImage
+                      className="rounded-xl md:max-w-[350px] sm:order-first sm:max-w-none"
+                      imgClassName="rounded-xl"
+                      image={getImage(cover)}
+                      alt=""
+                    />
+                  </div>
+                </Link>
+              </article>
+            )
+        )}
       </div>
     </div>
   </section>
@@ -89,7 +94,6 @@ PostsList.propTypes = {
   activeCategory: PropTypes.oneOf(BLOG_CATEGORIES),
   items: PropTypes.arrayOf(
     PropTypes.exact({
-      slug: PropTypes.string.isRequired,
       author: PropTypes.exact({
         name: PropTypes.string.isRequired,
         photo: PropTypes.exact({
@@ -107,6 +111,9 @@ PostsList.propTypes = {
             gatsbyImageData: PropTypes.object.isRequired,
           }).isRequired,
         }).isRequired,
+      }).isRequired,
+      fields: PropTypes.exact({
+        slug: PropTypes.string.isRequired,
       }).isRequired,
     })
   ).isRequired,

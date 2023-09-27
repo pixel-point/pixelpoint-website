@@ -40,7 +40,7 @@ Let's break down what is happening here.
 
 Definitely not a rocket science. Now to practice!
 GitHub logo Flagsmith / flagsmith
-Open Source Feature Flagging and Remote Config Service. Host on-prem or use our hosted version at <https://flagsmith.com/>
+Open Source Feature Flagging and Remote Config Service. Host on-prem or use our hosted version at [https://flagsmith.com/](https://flagsmith.com/)
 
 ## Our goal
 
