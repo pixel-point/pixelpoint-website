@@ -149,7 +149,7 @@ async function createBlogPosts({ graphql, actions }) {
   if (result.errors) throw new Error(result.errors);
 
   result.data.allMdx.nodes.forEach(({ id, fields, frontmatter, internal: { contentFilePath } }) => {
-    const {slug} = fields;
+    const { slug } = fields;
 
     // Do not create a post in production if it's draft
     if (process.env.NODE_ENV === 'production' && fields.isDraft) return;
@@ -173,7 +173,7 @@ async function createBlogPosts({ graphql, actions }) {
     // Create an object containing all the video covers for all blog posts groped by post slug
     const allVideoCovers = result.data.allFile.nodes.reduce((acc, item) => {
       const { name, ext, childImageSharp, relativeDirectory } = item;
-      const slug = `${relativeDirectory}/`;
+      const slug = `${relativeDirectory}`;
       if (!acc[slug]) {
         acc[slug] = {};
       }

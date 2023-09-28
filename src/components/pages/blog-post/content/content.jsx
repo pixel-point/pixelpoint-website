@@ -42,12 +42,12 @@ Paragraph.propTypes = {
 
 const Quote = ({ authorName, children }) => (
   <figure
-    className="rounded-2xl p-7 dark:!bg-gray-9 dark:!bg-none lg:rounded-xl"
+    className="rounded-2xl p-7 dark:!bg-gray-9 dark:!bg-none lg:rounded-xl not-prose"
     style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
   >
     <QuoteIcon className="w-10 sm:w-8" aria-hidden />
-    <blockquote className="mt-4 text-2xl sm:text-xl">
-      <p className="my-0 before:hidden after:hidden">{children}</p>
+    <blockquote className="mt-4 text-2xl sm:text-xl [&_p:first-child]:mt-0 [&_p:last-child]:mb-0">
+      {children}
     </blockquote>
     {authorName && (
       <figcaption className="mt-5 flex items-center">
@@ -76,7 +76,7 @@ const getComponents = (videoCovers) => ({
       <table {...props} />
     </div>
   ),
-  video: (props) => <Video {...props} videoCovers={videoCovers} />,
+  Video: (props) => <Video {...props} videoCovers={videoCovers} />,
   // this code prevents the creation of an additional video iframe wrapper in mdx
   undefined: (obj) =>
     obj?.children.filter((child) => typeof child === 'object') || obj?.props?.children,

@@ -12,10 +12,10 @@ To track the user's dark mode setting, we will use Google Analytics 4 (GA4) and 
 
 Here are the steps to create a custom variable in GTM to track the user's dark and light theme setting:
 
-<video autoplay playsinline muted loop width="1528" height="1080">
+<Video autoPlay playsInline muted loop width="1528" height="1080">
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video-1.mp4" />
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video-1.webm" />
-</video>
+</Video>
 
 1. In your GTM account, go to the "Variables" section and click on the "New" button.
 2. On the "Create Variable" page, select "Custom JavaScript" as the variable type and name it “User Color Mode”.
@@ -38,12 +38,12 @@ Note: `window.matchMedia('(prefers-color-scheme: dark)')` shows user preference 
 
 Once you have created the custom variable in GTM to track the user's dark mode setting, you can create a custom tag in GTM that sends the data to GA4 as an event. To create a custom tag in GTM, follow these steps:
 
-<video autoplay playsinline muted loop width="1528" height="1080">
+<Video autoPlay playsInline muted loop width="1528" height="1080">
 
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video-2.mp4" />
 
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video-2.webm" />
-</video>
+</Video>
 
 1. In your GTM account, go to the "Tags" section and click on the "New" button.
 2. In the "Create Tag" page, select "Google Analytics: GA4 Event" as the tag type.
@@ -56,12 +56,12 @@ Once you have created the custom variable in GTM to track the user's dark mode s
 
 Now to see the results in Google Analytics(GA4) we need to add custom dimension. You can create a custom dimension named "User Color Mode" with a user property value of "color_mode." Here are the steps to do this:
 
-<video autoplay playsinline muted loop width="1528" height="1080">
+<Video autoPlay playsInline muted loop width="1528" height="1080">
 
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video-3.mp4" />
 
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-how-to-track-user-dark-and-light-mode-in-ga4/video-3.webm" />
-</video>
+</Video>
 
 1. Sign in to your Google Analytics account and navigate to the Configure section.
 2. Click on Custom Definitions, then click on Custom Dimensions.

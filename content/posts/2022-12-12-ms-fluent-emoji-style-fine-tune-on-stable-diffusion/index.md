@@ -90,12 +90,12 @@ The results varied depending on the original image, so I generated 16 versions o
 
 Here are the results:
 
-<video autoplay playsinline muted loop width="1920" height="1080">
+<Video autoPlay playsInline muted loop width="1920" height="1080">
 
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-ms-fluent-emoji-style-fine-tune-on-stable-diffusion/video-1.mp4" />
 
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-ms-fluent-emoji-style-fine-tune-on-stable-diffusion/video-1.webm" />
-</video>
+</Video>
 
 Here you can find the result of conversion 100 2d icons to 3d. [Source.](https://pixel-point-website.s3.amazonaws.com/posts/2022-12-12-ms-fluent-emoji-style-fine-tune-on-stable-diffusion/screenshot-14.jpeg)
 

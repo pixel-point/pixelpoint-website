@@ -183,7 +183,7 @@ Note: If you want to override the existing Graphql type completely, use `@dontIn
 
 There are some options to define nested relationships manually. However, the simplest option is to use a built-in `@link` directive. Think about it as a helper that does a mapping between two Graphql types based on provided foreign key relationships.
 
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-14-gatsby-graphql-schema-customization-for-beginners/video.mp4" width="1920" height="1080" poster="./video-cover-1.jpg" controls muted></video>
+<Video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-05-14-gatsby-graphql-schema-customization-for-beginners/video.mp4" width="1920" height="1080" poster="./video-cover-1.jpg" controls muted></Video>
 
 Let’s check it out. Add this code to the `gatsby-node.js` and see the result.
 

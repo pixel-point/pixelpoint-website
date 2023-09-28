@@ -131,11 +131,11 @@ I also have some other tricks that can help you with certain conditions.
 If you use small animations across the page, it is easy to load all of them in advance. However, if you have some complex graphics and animations in Rive, it could take easily 20KB+. For that reason, I recommend using Intersection Observer API to load them only when they are visible.
 
 _See example below how .riv file loads only when we're getting closer to the section with Rive animation_
-<video autoplay playsinline muted loop width="1392" height="740">
+<Video autoPlay playsInline muted loop width="1392" height="740">
 
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-10-27-rive-react-optimizations/video-1-compressed.mp4" />
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-10-27-rive-react-optimizations/video-1-compressed.webm" />
-</video>
+</Video>
 
 In order to achieve it, we need to understand how the Rive react component works. Based on Rive source code, it loads `.riv` file on component mount, meaning that in order to prevent additional files from loading, we need to prevent rendering of the `<RiveComponent>`.
 
