@@ -16,10 +16,10 @@ This topic can be confusing, so it's important to learn the difference. Think of
 
 Now that it is clear, the next important thing to learn is that not every codec is suitable for every video format. For `WebM`, it's `VP8` and `VP9`, while in `mp4` could be almost anything.
 
-<video autoplay playsinline muted loop width="1600" height="1200">
+<Video autoPlay playsInline muted loop width="1600" height="1200">
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/apple.mp4" />
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/apple.webm" />
-</video>
+</Video>
 
 For example, the video above from Apple's new Macbook Air site uses `mp4` format, but if we look deeper, it uses the `H264` codec. `H264` is very popular but much less optimized than `VP9` or `H265`.
 
@@ -69,10 +69,10 @@ For better visualization, I am going to show you how applying different options 
 
 The original file size of the video is ~ 26MB and has a 5000x2700 resolution.
 
-<video autoplay muted loop playsinline width="3840" height="2074">
+<Video autoPlay muted loop playsInline width="3840" height="2074">
 <source type="video/mp4" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/hero-an-crf32-best-libx265-3840.mp4" />
 <source type="video/webm" src="https://pixel-point-website.s3.amazonaws.com/posts/2022-06-29-web-optimized-video-ffmpeg/hero-crf-40-3840.webm" />
-</video>
+</Video>
 
 But after even a basic compression it cuts down to **1MB**. Not bad, but we can do better! 🚀
 

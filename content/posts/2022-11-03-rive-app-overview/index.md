@@ -42,7 +42,7 @@ Animation size is also significantly lower compared to Lottie files. Most of the
 
 Rive makes animations interactive - you can control the state of animation from your code, loop it’s parts or define the transition from one state to another. This is not possible to do with Lottie. It allows the creation of complex animations that react to mouse hover, clicks, movement, or changing the state based on the input value.
 
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-03-rive-app-overview/state-machine.mp4" width="1280" height="720" autoplay muted loop playsinline></video>
+<Video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-03-rive-app-overview/state-machine.mp4" width="1280" height="720" autoPlay muted loop playsInline></Video>
 
 ### Runs anywhere
 
@@ -79,10 +79,10 @@ You can’t align elements center, left or right.
 For example, if you need to have a vagon going over the curved road or a rollercoaster that also has to slow down and speed up according to the laws of physics, it might be hard to do in Rive. You will need to manually add a lot of keyframes replicating that road, as well as defining the transition functions between them. Fortunately, you can do it in AE, export it to Rive and tweak it to a perfect state. It’s a high demand feature that pops up quite often.
 
 In After Effect we just have to points and a curve and can make object move between them.
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-03-rive-app-overview/bezier-after.mp4" width="1280" height="720" autoplay muted loop playsinline></video>
+<Video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-03-rive-app-overview/bezier-after.mp4" width="1280" height="720" autoPlay muted loop playsInline></Video>
 
 In Rive to achieve similar effect we need to create more points. The more keyframes we create, the smoother the movement will be.
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-03-rive-app-overview/bezier-rive.mp4" width="1280" height="720" autoplay muted loop playsinline></video>
+<Video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-03-rive-app-overview/bezier-rive.mp4" width="1280" height="720" autoPlay muted loop playsInline></Video>
 
 ### Mask on a stroke
 
@@ -100,7 +100,7 @@ I often have cases when I need to change the object size without animating it, b
 
 You can’t change the size of the canvas by just pulling the edge while keeping all the objects at the same place and you can't extend the canvas from a specific side.
 
-<video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-03-rive-app-overview/canvas-resize.mp4" width="1280" height="720" autoplay muted loop playsinline></video>
+<Video src="https://pixel-point-website.s3.amazonaws.com/posts/2022-11-03-rive-app-overview/canvas-resize.mp4" width="1280" height="720" autoPlay muted loop playsInline></Video>
 
 ### Native app
 

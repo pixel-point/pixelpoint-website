@@ -44,6 +44,7 @@
 
     figure,
     > .gatsby-resp-image-wrapper,
+    span.gatsby-resp-image-wrapper,
     > img,
     .gatsby-highlight {
       @apply my-10 sm:my-8;

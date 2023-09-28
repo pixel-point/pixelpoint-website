@@ -39,7 +39,7 @@ const CaseStudyTemplate = ({
   return (
     <Layout headerTheme="white">
       <Content {...content} />
-      <Keynotes items={frontmatter.keynotes} iconsName={slug.slice(0, -1)} />
+      <Keynotes items={frontmatter.keynotes} iconsName={slug} />
       <CaseStudies
         title="We provided design & development services for many more projects."
         activeItemSlug={slug}
