@@ -6,7 +6,8 @@ import Burger from 'components/shared/burger';
 import Link from 'components/shared/link';
 import LINKS from 'constants/links';
 import MENUS from 'constants/menus';
-import Logo from 'images/logo.inline.svg';
+import logoBlackSvg from 'images/logo-black.svg';
+import logoWhiteSvg from 'images/logo-white.svg';
 
 import MoonIcon from './images/moon.inline.svg';
 import ServicesWebDesignIcon from './images/services-web-design.inline.svg';
@@ -40,15 +41,31 @@ const Header = forwardRef(
         ref={ref}
       >
         <div className="container-lg flex h-[88px] items-center justify-between sm:h-18">
-          <Link to="/">
+          <Link className="relative" to="/">
             <span className="sr-only">Pixel Point</span>
-            <Logo
+            <img
               className={clsx(
-                'h-9 transition-all duration-200 dark:invert-0',
-                isMobileMenuOpen && 'md:invert dark:md:invert',
-                theme === 'black' && 'invert'
+                'h-9 transition-opacity duration-200 w-auto dark:opacity-100',
+                theme === 'black' ? 'opacity-0' : 'opacity-100',
+                isMobileMenuOpen && 'md:opacity-0 dark:md:opacity-0'
               )}
-              aria-hidden
+              width={143}
+              height={36}
+              src={logoWhiteSvg}
+              loading="eager"
+              alt=""
+            />
+            <img
+              className={clsx(
+                'top-0 left-0 absolute h-9 transition-opacity duration-200 w-auto dark:opacity-0',
+                theme === 'white' && 'opacity-0',
+                isMobileMenuOpen && 'md:opacity-100 dark:md:opacity-100'
+              )}
+              width={143}
+              height={36}
+              src={logoBlackSvg}
+              loading="eager"
+              alt=""
             />
           </Link>
           <nav className="flex items-center">

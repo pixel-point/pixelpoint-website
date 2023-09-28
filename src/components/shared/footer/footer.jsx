@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'components/shared/link';
 import LINKS from 'constants/links';
 import MENUS from 'constants/menus';
-import Logo from 'images/logo.inline.svg';
+import logoWhiteSvg from 'images/logo-white.svg';
 
 const Footer = () => (
   <footer className="safe-paddings bg-black">
@@ -11,7 +11,14 @@ const Footer = () => (
       <div className="flex flex-col items-start justify-between">
         <Link to="/">
           <span className="sr-only">Pixel Point</span>
-          <Logo className="h-9" aria-hidden />
+          <img
+            className="h-9 w-auto"
+            width={143}
+            height={36}
+            src={logoWhiteSvg}
+            loading="lazy"
+            alt=""
+          />
         </Link>
         <Link className="sm:hidden" to={LINKS.email} size="base" theme="underline-red">
           info@pixelpoint.io
