@@ -20,7 +20,7 @@ In this article, we’re going to talk about [Rive](https://rive.app/): why it i
 
 I was using Lottie for many years, but one day, I got stuck with the performance issues of one specific animation. No matter how I tried to optimize it within Lottie framework, it simply did not work. That day, after some research, I discovered Rive. I reimplemented the animation in Rive, and I was shocked to see all the performance issues gone. No freezes or lags even on a low performing machine. This recent tweet from Rive’s founder is totally aligned with my experiments.
 
-<Tweet tweetLink="https://twitter.com/guidorosso/status/1580267624050532352?s=20&t=vOgDMFrOJ0AVVlSjVGeksg" align="center"/>
+https://twitter.com/guidorosso/status/1580267624050532352?s=20&t=vOgDMFrOJ0AVVlSjVGeksg
 
 ## What is Rive?
 

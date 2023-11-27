@@ -177,5 +177,9 @@
       /* https://stackoverflow.com/questions/52508598/html5-video-element-on-iphone-has-border */
       -webkit-mask-image: -webkit-radial-gradient(white, black);
     }
+
+    .twitter-tweet.twitter-tweet-rendered {
+      @apply mx-auto;
+    }
   }
 }

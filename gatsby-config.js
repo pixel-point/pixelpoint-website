@@ -123,6 +123,15 @@ module.exports = {
               disableBgImageOnAlpha: true,
             },
           },
+          {
+            resolve: 'gatsby-remark-embedder',
+            options: {
+              customTransformers: [
+                // Your custom transformers
+              ],
+              services: {},
+            },
+          },
         ],
         mdxOptions: {
           remarkPlugins: [require('remark-gfm')],
@@ -148,6 +157,6 @@ module.exports = {
         siteUrl: process.env.GATSBY_DEFAULT_SITE_URL,
       },
     },
-    'gatsby-plugin-mdx-embed',
+    'gatsby-plugin-twitter',
   ],
 };
