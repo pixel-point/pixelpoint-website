@@ -136,7 +136,10 @@ module.exports = {
           },
         ],
         mdxOptions: {
-          remarkPlugins: [require('remark-gfm'), [remarkCodeHike, { theme: customTheme }]],
+          remarkPlugins: [
+            require('remark-gfm'),
+            [remarkCodeHike, { theme: customTheme, showCopyButton: true }],
+          ],
           rehypePlugins: [wrapESMPlugin('rehype-slug'), wrapESMPlugin('rehype-autolink-headings')],
         },
       },
