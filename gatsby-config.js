@@ -3,6 +3,8 @@
 require('dotenv').config();
 const { remarkCodeHike } = require('@code-hike/mdx');
 
+const customTheme = require('./custom-code-theme.json');
+
 const wrapESMPlugin = (name) =>
   function wrapESM(opts) {
     return async (...args) => {
@@ -134,7 +136,7 @@ module.exports = {
           },
         ],
         mdxOptions: {
-          remarkPlugins: [require('remark-gfm'), [remarkCodeHike, { theme: 'material-from-css' }]],
+          remarkPlugins: [require('remark-gfm'), [remarkCodeHike, { theme: customTheme }]],
           rehypePlugins: [wrapESMPlugin('rehype-slug'), wrapESMPlugin('rehype-autolink-headings')],
         },
       },
