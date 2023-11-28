@@ -1,6 +1,34 @@
 @layer base {
   :root {
     --real-browser-height: 100vh;
+
+    --ch-0: dark;
+    --ch-1: #212121;
+    --ch-2: #eeffff;
+    --ch-3: #c3e88d;
+    --ch-4: #89ddff;
+    --ch-5: #ff9cac;
+    --ch-6: #f78c6c;
+    --ch-7: #82aaff;
+    --ch-8: #c792ea;
+    --ch-9: #f07178;
+    --ch-10: #ffcb6b;
+    --ch-11: #545454;
+    --ch-12: #b2ccd6;
+    --ch-13: #eeffff90;
+    --ch-14: #00000050;
+    --ch-15: #3794ff;
+    --ch-16: #61616150;
+    --ch-17: #ffffff;
+    --ch-18: #616161;
+    --ch-19: #00000030;
+    --ch-20: #424242;
+    --ch-21: #2b2b2b;
+    --ch-22: #ffffff10;
+    --ch-23: #c5c5c5;
+    --ch-24: #21212160;
+    --ch-25: #ffffff;
+    --ch-26: #212121e6;
   }
 
   body {

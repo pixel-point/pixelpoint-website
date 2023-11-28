@@ -1,6 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 // Gatsby has dotenv by default
-// eslint-disable-next-line import/no-extraneous-dependencies
 require('dotenv').config();
+const { remarkCodeHike } = require('@code-hike/mdx');
 
 const wrapESMPlugin = (name) =>
   function wrapESM(opts) {
@@ -101,7 +102,6 @@ module.exports = {
       options: {
         extensions: ['.mdx', '.md'],
         gatsbyRemarkPlugins: [
-          'gatsby-remark-prismjs',
           {
             resolve: 'gatsby-remark-embed-video',
             options: {
@@ -134,11 +134,12 @@ module.exports = {
           },
         ],
         mdxOptions: {
-          remarkPlugins: [require('remark-gfm')],
+          remarkPlugins: [require('remark-gfm'), [remarkCodeHike, { theme: 'material-from-css' }]],
           rehypePlugins: [wrapESMPlugin('rehype-slug'), wrapESMPlugin('rehype-autolink-headings')],
         },
       },
     },
+    'gatsby-plugin-twitter',
     {
       resolve: 'gatsby-plugin-gatsby-cloud',
       options: {
@@ -157,6 +158,5 @@ module.exports = {
         siteUrl: process.env.GATSBY_DEFAULT_SITE_URL,
       },
     },
-    'gatsby-plugin-twitter',
   ],
 };
