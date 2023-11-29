@@ -129,6 +129,12 @@
       @apply mx-auto;
     }
 
+    .ch-codeblock,
+    .ch-codegroup,
+    .ch-preview {
+      @apply shadow-none;
+    }
+
     .ch-codegroup {
       .ch-code-scroll-content {
         @apply rounded-b-md;
