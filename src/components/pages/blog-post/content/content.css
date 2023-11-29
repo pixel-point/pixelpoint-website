@@ -99,6 +99,10 @@
       }
     }
 
+    code:not(.ch-code-scroll-parent) {
+      @apply break-words rounded-sm bg-gray-3 px-1.5 py-0.5 text-base text-black dark:bg-gray-9 dark:text-white md:px-1 md:py-px md:text-sm;
+    }
+
     .embedVideo-container {
       /* 56.25% is 16:9 ratio
       this code makes an iframe responsive 
@@ -125,12 +129,30 @@
       @apply mx-auto;
     }
 
-    .ch-code-scroll-parent .ch-code-scroll-content {
-      @apply text-sm;
-
-      span {
-        @apply leading-normal;
+    .ch-codegroup {
+      .ch-code-scroll-content {
+        @apply rounded-b-md;
       }
+    }
+
+    .ch-codeblock {
+      .ch-code-scroll-content {
+        @apply rounded-md;
+      }
+    }
+
+    .ch-code-scroll-parent {
+      .ch-code-scroll-content {
+        @apply text-sm  border border-[#2e2e2e];
+
+        span {
+          @apply leading-normal;
+        }
+      }
+    }
+
+    .ch-frame-title-bar {
+      @apply border-t border-x border-[#2e2e2e] rounded-t-md;
     }
   }
 }
