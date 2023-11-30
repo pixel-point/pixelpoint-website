@@ -149,7 +149,7 @@
 
     .ch-code-scroll-parent {
       .ch-code-scroll-content {
-        @apply text-sm  border border-[#2e2e2e];
+        @apply text-sm  border border-[#ebebeb] dark:border-[#2e2e2e];
 
         span {
           @apply leading-normal;
@@ -158,7 +158,12 @@
     }
 
     .ch-frame-title-bar {
-      @apply border-t border-x border-[#2e2e2e] rounded-t-md;
+      @apply border-t border-x border-[#ebebeb] dark:border-[#2e2e2e] rounded-t-md;
+    }
+
+    .ch-code-button,
+    .ch-editor-button {
+      @apply text-[#666666] dark:text-[#a1a1a1];
     }
   }
 }
