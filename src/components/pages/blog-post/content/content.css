@@ -136,12 +136,20 @@
     }
 
     .ch-codegroup {
+      @apply border border-[#ebebeb] dark:border-[#2e2e2e];
+
+      .ch-frame-title-bar {
+        @apply border border-[#ebebeb] dark:border-[#2e2e2e] rounded-t-md;
+      }
+
       .ch-code-scroll-content {
         @apply rounded-b-md;
       }
     }
 
     .ch-codeblock {
+      @apply border border-[#ebebeb] dark:border-[#2e2e2e];
+
       .ch-code-scroll-content {
         @apply rounded-md;
       }
@@ -149,16 +157,12 @@
 
     .ch-code-scroll-parent {
       .ch-code-scroll-content {
-        @apply text-sm  border border-[#ebebeb] dark:border-[#2e2e2e];
+        @apply text-sm;
 
         span {
           @apply leading-normal;
         }
       }
-    }
-
-    .ch-frame-title-bar {
-      @apply border-t border-x border-[#ebebeb] dark:border-[#2e2e2e] rounded-t-md;
     }
 
     .ch-code-button,
