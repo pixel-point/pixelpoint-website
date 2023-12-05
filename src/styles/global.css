@@ -17,22 +17,20 @@
     --shiki-menu-background: #ebebeb;
   }
 
-  html[class='dark'] {
-    &:root {
-      --shiki-color-text: #ededed;
-      --shiki-token-constant: #52a8ff;
-      --shiki-token-string: #62c073;
-      --shiki-token-function: #bf7af0;
-      --shiki-token-comment: #a1a1a1;
-      --shiki-token-operator: #569cd6;
-      --shiki-token-list: #6796e6;
-      --shiki-token-quote: #6a9955;
-      --shiki-token-regex: #ce9178;
-      --shiki-token-keyword: #f75f8f;
-      --shiki-background-header: #000000;
-      --shiki-background-editor: #0a0a0a;
-      --shiki-menu-background: #252526;
-    }
+  .dark {
+    --shiki-color-text: #ededed;
+    --shiki-token-constant: #52a8ff;
+    --shiki-token-string: #62c073;
+    --shiki-token-function: #bf7af0;
+    --shiki-token-comment: #a1a1a1;
+    --shiki-token-operator: #569cd6;
+    --shiki-token-list: #6796e6;
+    --shiki-token-quote: #6a9955;
+    --shiki-token-regex: #ce9178;
+    --shiki-token-keyword: #f75f8f;
+    --shiki-background-header: #000000;
+    --shiki-background-editor: #0a0a0a;
+    --shiki-menu-background: #252526;
   }
 
   body {
