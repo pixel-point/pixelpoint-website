@@ -136,19 +136,23 @@
     }
 
     .ch-codegroup {
-      @apply border border-[#ebebeb] dark:border-[#2e2e2e];
+      @apply outline outline-[#ebebeb] dark:outline-[#2e2e2e];
 
       .ch-frame-title-bar {
-        @apply border border-[#ebebeb] dark:border-[#2e2e2e] rounded-t-md;
+        @apply outline outline-[#ebebeb] dark:outline-[#2e2e2e] rounded-t-md border-b border-[#ebebeb] dark:border-[#2e2e2e];
+
+        div[data-active='false'] {
+          @apply bg-[#fafafa] dark:bg-[#2e2e2e];
+        }
       }
 
       .ch-code-scroll-content {
-        @apply rounded-b-md;
+        @apply rounded-md;
       }
     }
 
     .ch-codeblock {
-      @apply border border-[#ebebeb] dark:border-[#2e2e2e];
+      @apply outline outline-[#ebebeb] dark:outline-[#2e2e2e];
 
       .ch-code-scroll-content {
         @apply rounded-md;
@@ -159,6 +163,10 @@
       .ch-code-scroll-content {
         @apply text-sm;
 
+        > div {
+          @apply !translate-y-4;
+        }
+
         span {
           @apply leading-normal;
         }
@@ -168,6 +176,10 @@
     .ch-code-button,
     .ch-editor-button {
       @apply text-[#666666] dark:text-[#a1a1a1];
+    }
+
+    .ch-code-line-number {
+      @apply text-[#a8a8a8] dark:text-[#878787];
     }
   }
 }
