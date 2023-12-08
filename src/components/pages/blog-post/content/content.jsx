@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
 import { MDXProvider } from '@mdx-js/react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -6,6 +6,8 @@ import React from 'react';
 import slugify from 'slugify';
 
 import QuoteIcon from 'images/quote.inline.svg';
+
+import '@code-hike/mdx/dist/index.css';
 
 import Video from './video';
 

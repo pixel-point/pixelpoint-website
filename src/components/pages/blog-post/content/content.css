@@ -99,60 +99,7 @@
       }
     }
 
-    pre {
-      @apply scrollbar-hidden overflow-scroll rounded-lg bg-gray-1 px-6 py-4 text-base text-black dark:bg-gray-9 dark:text-white md:px-4 md:py-3 md:text-sm;
-
-      .token.atrule,
-      .token.attr-value,
-      .token.keyword {
-        @apply text-[#0f2cbd] dark:text-[#7187f4];
-      }
-
-      .token.function,
-      .token.class-name {
-        @apply text-[#d41153] dark:text-[#fd5b92];
-      }
-
-      .token.operator,
-      .token.entity,
-      .token.url,
-      .language-css .token.string,
-      .style .token.string {
-        @apply text-[#7e428a] dark:text-[#9d53ac];
-      }
-
-      .token.property,
-      .token.tag,
-      .token.boolean,
-      .token.number,
-      .token.constant,
-      .token.symbol,
-      .token.deleted {
-        @apply text-[#82174c] dark:text-[#ad1f66];
-      }
-
-      .token.selector,
-      .token.attr-name,
-      .token.string,
-      .token.char,
-      .token.builtin,
-      .token.inserted {
-        @apply text-[#00994c] dark:text-[#38ee93];
-      }
-
-      .token.punctuation {
-        @apply text-[#737373];
-      }
-
-      .token.comment,
-      .token.prolog,
-      .token.doctype,
-      .token.cdata {
-        @apply text-[#a6a6a6];
-      }
-    }
-
-    :not(pre) > code {
+    code:not(.ch-code-scroll-parent) {
       @apply break-words rounded-sm bg-gray-3 px-1.5 py-0.5 text-base text-black dark:bg-gray-9 dark:text-white md:px-1 md:py-px md:text-sm;
     }
 
@@ -176,6 +123,63 @@
       /* Extra hack to remove grey border artifact on Safari */
       /* https://stackoverflow.com/questions/52508598/html5-video-element-on-iphone-has-border */
       -webkit-mask-image: -webkit-radial-gradient(white, black);
+    }
+
+    .twitter-tweet.twitter-tweet-rendered {
+      @apply mx-auto;
+    }
+
+    .ch-codeblock,
+    .ch-codegroup,
+    .ch-preview {
+      @apply shadow-none;
+    }
+
+    .ch-codegroup {
+      @apply outline outline-[#ebebeb] dark:outline-[#2e2e2e];
+
+      .ch-frame-title-bar {
+        @apply outline outline-[#ebebeb] dark:outline-[#2e2e2e] rounded-t-md border-b border-[#ebebeb] dark:border-[#2e2e2e];
+
+        div[data-active='false'] {
+          @apply bg-[#fafafa] dark:bg-[#2e2e2e];
+        }
+      }
+
+      .ch-code-scroll-content {
+        @apply rounded-md;
+      }
+    }
+
+    .ch-codeblock {
+      @apply outline outline-[#ebebeb] dark:outline-[#2e2e2e];
+
+      .ch-code-scroll-content {
+        @apply rounded-md;
+      }
+    }
+
+    .ch-code-scroll-parent {
+      .ch-code-scroll-content {
+        @apply text-sm;
+
+        > div {
+          @apply !translate-y-4;
+        }
+
+        span {
+          @apply leading-normal;
+        }
+      }
+    }
+
+    .ch-code-button,
+    .ch-editor-button {
+      @apply text-[#666666] dark:text-[#a1a1a1];
+    }
+
+    .ch-code-line-number {
+      @apply text-[#a8a8a8] dark:text-[#878787];
     }
   }
 }

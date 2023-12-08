@@ -16,7 +16,7 @@ See a lot of fascinating examples in [Rive community library](https://rive.app/c
 
 Rive tells us that all animations are already performing great, and **it’s true**. Just see this test from Rive team comparing Lottie and Rive.
 
-<Tweet tweetLink="https://twitter.com/guidorosso/status/1580267624050532352?s=20&t=vOgDMFrOJ0AVVlSjVGeksg" align="center"/>
+https://twitter.com/guidorosso/status/1580267624050532352?s=20&t=vOgDMFrOJ0AVVlSjVGeksg
 
 So I won’t be telling you how to draw and animate in Rive. I will tell you how can you optimize the loading of Rive animations to achieve a better user experience.
 
@@ -189,7 +189,7 @@ export default function App() {
 }
 ```
 
-<CodeSandbox codeSandboxId="confident-hill-cfwi8z" />
+https://codesandbox.io/s/confident-hill-cfwi8z
 
 Note: Rive WASM module also loads automatically on a first RiveComponent initialisation, so when postponing the rendering, you also postpone the loading of quite a large runtime.
 
