@@ -173,6 +173,10 @@
       }
     }
 
+    .ch-code-scroll-parent ::selection {
+      background: highlight;
+    }
+
     .ch-code-button,
     .ch-editor-button {
       @apply text-[#666666] dark:text-[#a1a1a1];
