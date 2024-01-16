@@ -1,4 +1,4 @@
-import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
+import { Alignment, Fit, Layout, useRive } from '@rive-app/react-canvas';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
@@ -42,8 +42,8 @@ const CTA = ({ className, withTopMargin }) => {
           <h2 className="text-6xl font-normal leading-snug text-white lg:text-[42px] md:text-[32px] sm:text-2xl">
             Let's have a chat
           </h2>
-          <Link size="6xl" theme="arrow-red" to={LINKS.bookCall}>
-            Book a call
+          <Link size="6xl" theme="arrow-red" to={LINKS.getInTouch}>
+            Get in touch
           </Link>
         </div>
         <div className="sm:mt-4.5" ref={animationWrapperRef}>

@@ -61,11 +61,11 @@ const MobileMenu = ({ isOpen, headerRef, onOutsideClick }) => {
         <li>
           <Link
             className="!flex py-5 !text-lg"
-            to={LINKS.bookCall}
+            to={LINKS.getInTouch}
             size="lg-only"
             theme="arrow-red"
           >
-            Book a call
+            Get in touch
           </Link>
         </li>
       </ul>
