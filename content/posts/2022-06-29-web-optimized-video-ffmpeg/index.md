@@ -215,6 +215,8 @@ ffmpeg -i input.mp4 -c:v libvpx-vp9 -crf 40 -vf scale=3840:-2 -deadline best -an
 - `-crf 40` define settings for Constant Quality mode
 - `-vf scale=3840:-2` define settings for scale filter
 - `-deadline best` manipulate the speed/quality ration of upcoming compressing
+- `-an` remove audio
+
 
 ### MP4(H265)
 
@@ -230,6 +232,7 @@ ffmpeg -i input.mp4 -c:v libx265 -crf 32 -vf scale=3840:-2 -preset veryslow -tag
 - `-preset veryslow` manipulate the speed/quality ration of upcoming compressing
 - `-tag:v hvc1` make video work on iOS and macOS devices
 - `-movflags faststart` make your video web-optimized
+- `-an` remove audio
 
 > Adjusting `-crf` values could help to find the best suitable option with a minimal size.
 
@@ -245,3 +248,9 @@ And embedding it to the project with this html getting the best possible result.
 As a bonus you can use the following nice shell script below that can create for you optimized video in VP9 and H265 with a single command.
 
 [Use Github Gist](https://gist.github.com/lnikell/7a241aa2fe371170f0fb4a9fb92549ac)
+
+### Troubleshooting
+
+- If you encounter a green screen video during conversion to H.265, try adding the `-pix_fmt yuv420p` flag
+- If you want to test the video quality with different settings without waiting for the entire video to be encoded, use the `-frames:v 1` option, which allows you to render only a specified number of frames from the beginning of the video
+- If you want to use video for on-scroll frame-by-frame animation, use the `-g 1` flag. It will make seeking smoother.
