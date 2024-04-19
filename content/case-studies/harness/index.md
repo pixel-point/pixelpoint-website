@@ -7,7 +7,7 @@ title: Harness
 description: The modern software delivery platform
 websiteUrl: https://harness-next.vercel.app/
 # quote:
-#   text: The collaboration on the Harness project showcased your team's creativity and technical prowess. Though the website did not launch due to strategic shifts at Harness, the work produced was exemplary. The team was impressed with the cutting-edge design and interactive features. We appreciate Pixel Point's dedication and look forward to future collaborations!
+#   text: The collaboration on the Harness project showcased your team's creativity and technical prowess. Though the website did not launch due to strategic shifts at Harness, the work produced was exemplary. The top-notch design provided our internal team with a clear vision of the potential visual direction, leaving us thoroughly impressed. We appreciate Pixel Point's dedication and expertise and look forward to future collaborations.
 #   authorName: Brad Rydzewski
 #   authorPosition: VP of Product
 #   authorPhoto: author-photo.jpg
