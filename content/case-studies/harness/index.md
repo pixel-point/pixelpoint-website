@@ -11,7 +11,7 @@ websiteUrl: https://harness-next.vercel.app/
 #   authorName: Brad Rydzewski
 #   authorPosition: VP of Product
 #   authorPhoto: author-photo.jpg
-overview: Harness is the world's first AI-augmented software delivery platform that helps developers simplify their work with innovative CI/CD, Feature Flags, Infrastructure as Code Management, and Chaos Engineering tools.
+overview: Harness is the world's first AI-augmented software delivery platform that helps developers simplify their work with innovative CI/CD, feature flags, infrastructure as code management, and chaos engineering tools.
 services:
   - Brand Identity
   - Motion Design
