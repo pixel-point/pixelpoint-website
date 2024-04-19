@@ -33,7 +33,7 @@ keynotes:
 cover: cover.jpg
 isOpenSource: false
 isFeatured: true
-position: 13
+position: 14
 ---
 
 Isovalent is the enterprise [Cilium](https://pixelpoint.io/case-studies/cilium) edition, which enables cloud native networking, security, and observability.
