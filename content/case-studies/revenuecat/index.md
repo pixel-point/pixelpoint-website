@@ -22,15 +22,14 @@ stack:
   - Gatsby
   - TailwindCSS
   - Headless WordPress
-  - HubSpot
-  - Gatsby Cloud
+  - Netlify
 keynotes:
   - Designed & developed a brand-new marketing website
   - Diligently migrated all the content and integrations from Webflow
   - Increased the performance score up to 97 points despite animation-heavy content
 cover: cover.jpg
 isFeatured: true
-position: 14
+position: 8
 ---
 
 Almost 5 straight years RevenueCat has been represented to their customers via a simple website built with Webflow. While it was just enough for the beginning, the company expansion made it obvious that they had outgrown the no-code platform, which appeared to be slow, had limited code customization, and confusing traffic plan variations. They've started to look for an agency that could help with the redesign and migration to a modern JAMStack-based website and found us.

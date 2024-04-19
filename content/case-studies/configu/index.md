@@ -31,8 +31,7 @@ keynotes:
   - Built feature-rich MDX-based docs portal and Headless WP-based blog platform
   - Gave Configu's web app a fresh look
 cover: cover.jpg
-isFeatured: true
-position: 6
+position: 15
 ---
 
 For over a decade, a team of highly experienced software and DevOps engineers has gathered enough evidence that managing configuration files has become tedious, costly, and risky. Having had enough of manual setups, bottlenecks, and production failures, they embarked on a journey to build the ultimate configuration management tool and revolutionize the way software is being developed and maintained. Thus, the Configu company was born.
