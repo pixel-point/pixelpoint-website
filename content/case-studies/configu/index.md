@@ -31,7 +31,6 @@ keynotes:
   - Built feature-rich MDX-based docs portal and Headless WP-based blog platform
   - Gave Configu's web app a fresh look
 cover: cover.jpg
-isFeatured: true
 position: 15
 ---
 

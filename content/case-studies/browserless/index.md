@@ -32,8 +32,7 @@ keynotes:
   - Finalist of Gatsby Best of 2021 Awards in Best Design category
 cover: cover.jpg
 isOpenSource: true
-isFeatured: true
-position: 13
+position: 18
 ---
 
 Browserless became yet another project in the portfolio of Polychrome Capital, who we’ve been working closely with since the [Flagsmith](/case-studies/flagsmith) project. Of course, they didn't hesitate to reach us out for assistance.

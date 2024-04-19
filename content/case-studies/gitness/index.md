@@ -8,11 +8,11 @@ description: Open-source code hosting & pipeline engine
 websiteUrl: https://gitness.com/
 githubUsername: harness
 githubRepoName: gitness
-# quote:
-#   text: The Gitness keynote was a resounding success, and the website turned out to be absolutely incredible. Our CEO, along with the entire team, is thoroughly impressed with the quality of work delivered. Many thanks to the Pixel Point team for their enormous efforts! We look forward to further collaboration!
-#   authorName: Brad Rydzewski
-#   authorPosition: VP of Product
-#   authorPhoto: author-photo.jpg
+quote:
+  text: The Gitness keynote was a resounding success, and the website turned out to be absolutely incredible. Our CEO, along with the entire team, is thoroughly impressed with the quality of work delivered. Many thanks to the Pixel Point team for their enormous efforts! We look forward to further collaboration!
+  authorName: Brad Rydzewski
+  authorPosition: VP of Product
+  authorPhoto: author-photo.jpg
 overview: Gitness, by Harness, is an open-source code hosting and CI/CD platform. It features robust security, one-click migration from platforms like GitHub, and delivers 4x faster pipeline execution with versatile templates.
 services:
   - Brand Identity
@@ -33,7 +33,7 @@ keynotes:
 cover: cover.jpg
 isFeatured: true
 isOpenSource: true
-position: 3
+position: 2
 ---
 
 Gitness, by Harness, is an open-source code hosting and CI/CD platform. It features robust security, one-click migration from platforms like GitHub, and delivers 4x faster pipeline execution with versatile templates.
