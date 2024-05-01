@@ -2,22 +2,24 @@ import clsx from 'clsx';
 import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 
-import AnalyticsLogo from './images/analytics.inline.svg';
-import AwsLogo from './images/aws.inline.svg';
-import CloudflareLogo from './images/cloudflare.inline.svg';
-import HotjarLogo from './images/hotjar.inline.svg';
-import HubspotLogo from './images/hubspot.inline.svg';
-import IubendaLogo from './images/iubenda.inline.svg';
-import NetlifyLogo from './images/netlify.inline.svg';
-import OnetrustLogo from './images/onetrust.inline.svg';
-import TagManagerLogo from './images/tagmanager.inline.svg';
-import TwilioLogo from './images/twilio.inline.svg';
-import VercelLogo from './images/vercel.inline.svg';
-import ZapierLogo from './images/zapier.inline.svg';
+import AnalyticsLogo from './images/analytics.svg';
+import AwsLogo from './images/aws.svg';
+import CloudflareLogo from './images/cloudflare.svg';
+import HotjarLogo from './images/hotjar.svg';
+import HubspotLogo from './images/hubspot.svg';
+import IubendaLogo from './images/iubenda.svg';
+import NetlifyLogo from './images/netlify.svg';
+import OnetrustLogo from './images/onetrust.svg';
+import TagManagerLogo from './images/tagmanager.svg';
+import TwilioLogo from './images/twilio.svg';
+import VercelLogo from './images/vercel.svg';
+import ZapierLogo from './images/zapier.svg';
 
 const headlessCmsItems = [
   {
     logo: AwsLogo,
+    width: 80,
+    height: 48,
     name: 'AWS',
     description: 'For enterprises seeking extensive scalability',
     color: 'text-white',
@@ -25,6 +27,8 @@ const headlessCmsItems = [
   },
   {
     logo: CloudflareLogo,
+    width: 134,
+    height: 48,
     name: 'Cloudflare',
     description: 'For businesses focusing on enhanced security',
     color: 'text-black',
@@ -32,6 +36,8 @@ const headlessCmsItems = [
   },
   {
     logo: NetlifyLogo,
+    width: 138,
+    height: 56,
     name: 'Netlify',
     description: 'For developers prioritizing streamlined deployment',
     color: 'text-black',
@@ -42,43 +48,51 @@ const headlessCmsItems = [
 const hostingPlatformsItems = [
   {
     logo: TagManagerLogo,
+    width: 76,
+    height: 76,
     name: 'Google Tag Manager',
-    height: 'h-[76px]',
   },
   {
     logo: HubspotLogo,
+    width: 122,
+    height: 34,
     name: 'Hubspot',
-    height: 'h-[34px]',
   },
   {
     logo: TwilioLogo,
+    width: 148,
+    height: 40,
     name: 'Twilio Segment',
-    height: 'h-10',
   },
   {
     logo: OnetrustLogo,
+    width: 136,
+    height: 24,
     name: 'Onetrust',
-    height: 'h-6',
   },
   {
     logo: ZapierLogo,
+    width: 132,
+    height: 36,
     name: 'Zapier',
-    height: 'h-9',
   },
   {
     logo: AnalyticsLogo,
+    width: 68,
+    height: 68,
     name: 'Google Analytics',
-    height: 'h-[68px]',
   },
   {
     logo: HotjarLogo,
+    width: 142,
+    height: 36,
     name: 'Hotjar',
-    height: 'h-9',
   },
   {
     logo: IubendaLogo,
+    width: 130,
+    height: 48,
     name: 'Iubenda',
-    height: 'h-12',
   },
 ];
 
@@ -94,7 +108,7 @@ const ThirdPartiesAndIntegrations = () => (
       <div className="grid-gap-x mt-10 grid grid-cols-2 lg:mt-8 md:mt-5 md:block md:space-y-5 sm:mt-4 sm:space-y-4">
         <div className="rounded-2xl bg-gray-9 p-8 px-4 pb-6 lg:rounded-xl lg:p-6 md:flex md:items-center md:space-x-6 sm:block sm:space-x-0 sm:p-5 sm:pb-4">
           <div className="px-4 lg:px-0">
-            <VercelLogo className="h-9 sm:h-8" aria-hidden />
+            <img src={VercelLogo} width="162" height="36" alt="" aria-hidden />
             <p className="mt-5 hidden text-xl text-white md:block sm:hidden">
               Default option providing best flexibility for a reasonable price
             </p>
@@ -112,19 +126,21 @@ const ThirdPartiesAndIntegrations = () => (
           </p>
         </div>
         <div className="grid-gap grid grid-cols-2 sm:block sm:space-y-4">
-          {headlessCmsItems.map(({ logo: Logo, name, description, color, background }, index) => (
-            <div
-              className={clsx(
-                'flex flex-col items-start justify-between rounded-2xl px-6 pb-5 pt-7 lg:min-h-[176px] lg:rounded-xl lg:py-4 lg:px-5 md:min-h-[144px]',
-                background
-              )}
-              key={index}
-            >
-              <Logo className="h-12 lg:h-11" aria-hidden />
-              <span className="sr-only">{name}</span>
-              <p className={clsx('text-base', color)}>{description}</p>
-            </div>
-          ))}
+          {headlessCmsItems.map(
+            ({ logo, width, height, name, description, color, background }, index) => (
+              <div
+                className={clsx(
+                  'flex flex-col items-start justify-between rounded-2xl px-6 pb-5 pt-7 lg:min-h-[176px] lg:rounded-xl lg:py-4 lg:px-5 md:min-h-[144px]',
+                  background
+                )}
+                key={index}
+              >
+                <img src={logo} width={width} height={height} alt="" aria-hidden />
+                <span className="sr-only">{name}</span>
+                <p className={clsx('text-base', color)}>{description}</p>
+              </div>
+            )
+          )}
           <p
             className="flex flex-col items-center justify-center rounded-2xl text-center lg:min-h-[176px] lg:rounded-xl md:min-h-[144px]"
             style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
@@ -140,13 +156,13 @@ const ThirdPartiesAndIntegrations = () => (
         Most popular third-party services and integration
       </h3>
       <ul className="grid-gap mt-10 grid grid-cols-4 lg:mt-8 md:mt-5 sm:mt-4 sm:block sm:space-y-4">
-        {hostingPlatformsItems.map(({ logo: Logo, name, height }, index) => (
+        {hostingPlatformsItems.map(({ logo, width, height, name }, index) => (
           <li
             className="flex min-h-[160px] items-center justify-center rounded-2xl lg:min-h-[120px] lg:rounded-xl md:min-h-[100px] sm:min-h-[120px]"
             style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
             key={index}
           >
-            <Logo className={height} aria-hidden />
+            <img src={logo} width={width} height={height} alt="" aria-hidden />
             <span className="sr-only">{name}</span>
           </li>
         ))}
