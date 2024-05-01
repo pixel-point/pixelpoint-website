@@ -1,9 +1,9 @@
 import React from 'react';
 
 import CodeQuality from 'components/pages/services-web-development/code-quality';
-import Frameworks from 'components/pages/services-web-development/frameworks';
 import Hero from 'components/pages/services-web-development/hero';
 import Lighthouse from 'components/pages/services-web-development/lighthouse';
+import Stack from 'components/pages/services-web-development/stack';
 import Tailwindcss from 'components/pages/services-web-development/tailwindcss';
 import ThirdPartiesAndIntegrations from 'components/pages/services-web-development/third-parties-and-integrations';
 import Blog from 'components/shared/blog';
@@ -25,7 +25,7 @@ const servicesCTA = {
 const ServicesWebDevelopmentPage = () => (
   <Layout headerTheme="white">
     <Hero />
-    <Frameworks />
+    <Stack />
     <Tailwindcss />
     <CodeQuality />
     <ThirdPartiesAndIntegrations />
