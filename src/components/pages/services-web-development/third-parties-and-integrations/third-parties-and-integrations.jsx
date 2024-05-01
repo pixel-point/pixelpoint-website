@@ -108,7 +108,7 @@ const ThirdPartiesAndIntegrations = () => (
       <div className="grid-gap-x mt-10 grid grid-cols-2 lg:mt-8 md:mt-5 md:block md:space-y-5 sm:mt-4 sm:space-y-4">
         <div className="rounded-2xl bg-gray-9 p-8 px-4 pb-6 lg:rounded-xl lg:p-6 md:flex md:items-center md:space-x-6 sm:block sm:space-x-0 sm:p-5 sm:pb-4">
           <div className="px-4 lg:px-0">
-            <img src={VercelLogo} width="162" height="36" alt="" aria-hidden />
+            <img src={VercelLogo} width="162" height="36" alt="Vercel" />
             <p className="mt-5 hidden text-xl text-white md:block sm:hidden">
               Default option providing best flexibility for a reasonable price
             </p>
@@ -135,8 +135,7 @@ const ThirdPartiesAndIntegrations = () => (
                 )}
                 key={index}
               >
-                <img src={logo} width={width} height={height} alt="" aria-hidden />
-                <span className="sr-only">{name}</span>
+                <img src={logo} width={width} height={height} alt={name} />
                 <p className={clsx('text-base', color)}>{description}</p>
               </div>
             )
@@ -162,8 +161,7 @@ const ThirdPartiesAndIntegrations = () => (
             style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
             key={index}
           >
-            <img src={logo} width={width} height={height} alt="" aria-hidden />
-            <span className="sr-only">{name}</span>
+            <img src={logo} width={width} height={height} alt={name} />
           </li>
         ))}
       </ul>
