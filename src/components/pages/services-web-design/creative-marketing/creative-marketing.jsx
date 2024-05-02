@@ -1,89 +1,140 @@
 import { StaticImage } from 'gatsby-plugin-image';
 import React from 'react';
 
-import Logo1 from './images/logo-1.inline.svg';
-import Logo2 from './images/logo-2.inline.svg';
-import Logo3 from './images/logo-3.inline.svg';
-import Logo4 from './images/logo-4.inline.svg';
+import Logo1 from './images/logo-1.svg';
+import Logo2 from './images/logo-2.svg';
+import Logo3 from './images/logo-3.svg';
+import Logo4 from './images/logo-4.svg';
+import Diagram from './images/technical-diagram.svg';
 
 const CreativeMarketing = () => (
-  <section className="safe-paddings mt-52 lg:mt-36 md:mt-32 sm:mt-20">
+  <section className="safe-paddings mt-[200px] lg:mt-36 md:mt-32 sm:mt-20">
     <div className="container">
-      <h2 className="with-text-highlight-red mx-auto max-w-[1008px] text-center text-6xl font-normal leading-snug lg:max-w-[900px] lg:text-[42px] md:max-w-[650px] md:text-4xl sm:text-2xl">
-        Bring your company <span>Credibility up</span> a level with creative marketing & business
+      <h2 className="with-text-highlight-red mx-auto max-w-[1008px] text-center text-6xl font-normal leading-snug tracking-[-1.12px] lg:max-w-[900px] lg:text-[42px] md:max-w-[650px] md:text-4xl sm:text-2xl">
+        Bring your company credibility up a level with <span>Creative marketing</span> & business
         assets
       </h2>
-      <div className="mt-20 flex space-x-8 lg:mt-16 lg:space-x-6 md:mt-11 md:block md:space-x-0 md:space-y-5 sm:mt-8 sm:space-y-4">
-        <div className="flex flex-1 flex-col space-y-8 lg:space-y-6 md:block sm:space-y-4">
-          <div className="rounded-2xl border-2 border-gray-3 px-9 pb-6 pt-10 lg:rounded-xl lg:px-7 lg:pt-8 lg:pb-5 md:p-8 sm:px-6 sm:pb-5 sm:pt-7 sm:pt-8">
-            <div className="md:flex md:justify-center md:space-x-6 sm:flex-col sm:items-center">
-              <div className="flex flex-wrap space-x-8 lg:space-x-6 md:space-x-8 sm:space-x-6">
-                <Logo1 className="h-28 lg:h-20 md:h-28 sm:h-20" />
-                <Logo2 className="mt-8 h-28 lg:mt-6 lg:h-20 md:mt-0 md:h-28 sm:mt-6 sm:h-20" />
-              </div>
-              <div className="flex flex-wrap space-x-8 lg:space-x-6 md:space-x-8 sm:space-x-6">
-                <Logo3 className="h-28 lg:h-20 md:h-28 sm:h-20" />
-                <Logo4 className="mt-8 h-28 lg:mt-6 lg:h-20 md:mt-0 md:h-28 sm:mt-6 sm:h-20" />
-              </div>
-            </div>
-            <h3 className="mt-7 text-center text-2xl lg:mt-5 lg:text-xl md:mt-7 md:text-2xl sm:mt-5 sm:text-xl">
-              Social media assets
-            </h3>
-          </div>
-          <div
-            className="flex flex-grow items-center justify-center rounded-2xl lg:rounded-xl md:hidden sm:flex sm:min-h-[156px]"
-            style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
-          >
-            <h3 className="text-center text-4xl lg:text-[32px] sm:text-[32px]">Presentations</h3>
-          </div>
-        </div>
-        <div className="flex shrink-0 basis-[488px] flex-col items-center rounded-2xl bg-gray-9 px-8 pt-16 pb-6 lg:basis-[388px] lg:rounded-xl lg:px-6 lg:pt-14 md:pt-12 md:pb-8 sm:px-6 sm:pb-5 sm:pt-12">
+      <div className="grid gap-5 grid-cols-[338px_1fr_338px] grid-rows-[212px_1fr_212px] min-h-[644px] mt-20 lg:mt-16 md:mt-11 md:grid-cols-2 md:grid-rows-[max-content_repeat(2,1fr)_200px] sm:grid-cols-1 sm:grid-rows-[max-content_200px_1fr_200px_1fr]">
+        <div className="col-start-1 col-end-2 row-start-1 row-end-3 relative overflow-hidden rounded-2xl py-6 text-center bg-gray-9 lg:rounded-xl md:col-span-2 md:row-span-1 sm:col-span-1">
           <StaticImage
-            className="md:max-w-[468px]"
-            src="./images/swag.png"
-            alt="Upscope Swag"
+            className="!absolute -inset-1.5 w-[102%] h-[102%]"
+            src="./images/social-bg.png"
+            alt=""
             loading="lazy"
             aria-hidden
           />
-          <h3 className="mt-10 text-2xl uppercase text-white lg:mt-8 lg:text-xl md:mt-12 md:text-2xl sm:mt-8 sm:text-xl">
-            Swag
+          <div className="relative flex justify-around items-center mx-5 pt-1.5 px-3 border border-dashed border-gray-8 rounded-[10px]">
+            <img className="max-w-[25%]" src={Logo1} alt="" loading="lazy" aria-hidden />
+            <img className="max-w-[25%]" src={Logo2} alt="" loading="lazy" aria-hidden />
+            <img className="max-w-[25%]" src={Logo3} alt="" loading="lazy" aria-hidden />
+            <img className="max-w-[25%]" src={Logo4} alt="" loading="lazy" aria-hidden />
+          </div>
+          <StaticImage
+            className="w-[338px] -mt-10 sm:relative sm:left-1/2 sm:-translate-x-1/2"
+            src="./images/social-media.png"
+            width="338"
+            height="274"
+            alt=""
+            loading="lazy"
+            aria-hidden
+          />
+          <h3 className="relative mt-4 font-light text-center text-2xl leading-normal text-white lg:mt-5 lg:text-xl md:mt-7 md:text-2xl sm:mt-5 sm:text-xl">
+            Social media assets
           </h3>
         </div>
-        <div className="flex flex-1 flex-col space-y-8 lg:space-y-6 md:block sm:space-y-4">
-          <div
-            className="flex flex-grow items-center justify-center rounded-2xl lg:rounded-xl md:hidden sm:flex sm:min-h-[156px]"
-            style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
+        <div className="col-start-1 col-end-2 row-start-3 row-end-4 relative overflow-hidden flex flex-grow items-center justify-center bg-gray-9 rounded-2xl lg:rounded-xl md:row-start-4 md:row-end-5 sm:row-start-2 sm:row-end-3">
+          <StaticImage
+            className="!absolute -inset-1.5 w-[102%] h-[102%]"
+            src="./images/small-bg.png"
+            width="338"
+            height="212"
+            alt=""
+            loading="lazy"
+            aria-hidden
+          />
+          <h3
+            className="relative text-center text-4xl text-transparent bg-clip-text lg:text-[32px] sm:text-[32px]"
+            style={{
+              backgroundImage:
+                'linear-gradient(86deg, #899bf5 19.47%, #f589ad 53.53%, #f5c489 84.93%)',
+            }}
+            title="Presentations"
           >
-            <h3 className="max-w-[150px] text-center text-4xl lg:text-[32px] sm:text-[32px]">
-              Business Cards
-            </h3>
-          </div>
-          <div className="rounded-2xl border-2 border-gray-3 p-5 pb-6 lg:rounded-xl lg:px-7 lg:pt-8 md:pb-8 md:pt-12 sm:px-6 sm:pt-8 sm:pb-5">
-            <StaticImage
-              className="md:mx-auto md:!block md:max-w-[468px]"
-              src="./images/technical-diagram.jpg"
-              alt="Browserless diagrams"
-              loading="lazy"
+            <span
+              className="absolute inset-0 text-transparent bg-clip-text blur-lg mix-blend-plus-lighter opacity-60"
+              style={{ backgroundImage: 'linear-gradient(99deg, #FFC682 27.43%, #FF82E0 89.47%)' }}
               aria-hidden
-            />
-            <h3 className="mt-4 text-center text-2xl lg:mt-3 lg:text-xl md:mt-12 md:text-2xl sm:mt-5 sm:text-xl">
-              Technical Diagrams
-            </h3>
-          </div>
+            >
+              Presentations
+            </span>
+            Presentations
+          </h3>
         </div>
-        <div className="hidden min-h-[200px] space-x-5 md:flex sm:hidden">
-          <div
-            className="flex flex-1 items-center justify-center rounded-xl"
-            style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
+        <div className="col-start-2 col-end-3 row-start-1 row-end-4 relative overflow-hidden flex justify-center items-center bg-gray-9 rounded-2xl lg:rounded-xl md:col-span-2 md:row-span-1 sm:col-span-1">
+          <StaticImage
+            className="!absolute -inset-1.5 w-[102%] h-[102%]"
+            src="./images/swag-bg.png"
+            width="500"
+            height="644"
+            alt=""
+            loading="lazy"
+            aria-hidden
+          />
+          <StaticImage
+            className="relative"
+            src="./images/swag.png"
+            width="500"
+            height="644"
+            alt="Swag"
+            loading="lazy"
+            aria-hidden
+          />
+        </div>
+        <div className="col-start-3 col-end-4 row-start-1 row-end-2 relative overflow-hidden flex flex-grow items-center justify-center bg-gray-9 rounded-2xl lg:rounded-xl md:col-start-2 md:col-end-3 md:row-start-4 md:row-end-5 sm:col-span-1">
+          <StaticImage
+            className="!absolute -inset-1.5 w-[102%] h-[102%]"
+            src="./images/small-bg.png"
+            width="338"
+            height="212"
+            alt=""
+            loading="lazy"
+            aria-hidden
+          />
+          <h3
+            className="relative max-w-[200px] text-center text-4xl text-transparent bg-clip-text lg:text-[32px] sm:text-[32px]"
+            style={{
+              backgroundImage:
+                'linear-gradient(86deg, #F59F89 10.44%, #F589AD 51.76%, #9B89F5 92.94%)',
+            }}
+            title="Presentations"
           >
-            <h3 className="text-center text-4xl">Presentations</h3>
-          </div>
-          <div
-            className="flex flex-1 items-center justify-center rounded-xl"
-            style={{ background: 'linear-gradient(247.55deg, #fcfcfc 0%, #f7f7f7 100%)' }}
-          >
-            <h3 className="max-w-[150px] text-center text-4xl">Business Cards</h3>
-          </div>
+            <span
+              className="absolute inset-0 text-transparent bg-clip-text blur-xl mix-blend-plus-lighter opacity-60"
+              style={{ backgroundImage: 'linear-gradient(99deg, #FFC682 27.43%, #FF82E0 89.47%)' }}
+              aria-hidden
+            >
+              Business Cards
+            </span>
+            Business Cards
+          </h3>
+        </div>
+        <div className="col-start-3 col-end-4 row-start-2 row-end-4 relative overflow-hidden flex flex-col justify-end bg-gray-9 rounded-2xl lg:rounded-xl md:col-span-2 md:row-span-1 sm:col-span-1">
+          <span
+            className="absolute top-1/2 left-1/2 -translate-x-64 -translate-y-64 w-[350px] h-[350px] rounded-full opacity-10 blur"
+            style={{ background: 'radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0) 75%);' }}
+          />
+          <img
+            className="absolute inset-0 md:static md:w-full"
+            src={Diagram}
+            width="338"
+            height="412"
+            alt="Technical diagrams"
+            loading="lazy"
+            aria-hidden
+          />
+          <h3 className="mb-6 text-center text-2xl text-white lg:text-xl md:text-2xl sm:text-xl">
+            Technical Diagrams
+          </h3>
         </div>
       </div>
     </div>
