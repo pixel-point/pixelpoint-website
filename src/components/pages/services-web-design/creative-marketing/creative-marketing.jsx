@@ -14,8 +14,8 @@ const CreativeMarketing = () => (
         Bring your company <span>credibility up</span> a level with creative marketing & business
         assets
       </h2>
-      <div className="grid gap-5 grid-cols-[338px_1fr_338px] grid-rows-[212px_1fr_212px] min-h-[644px] mt-20 lg:mt-16 md:mt-11 md:grid-cols-2 md:grid-rows-[max-content_repeat(2,1fr)_200px] sm:grid-cols-1 sm:grid-rows-[max-content_200px_1fr_200px_1fr]">
-        <div className="col-start-1 col-end-2 row-start-1 row-end-3 relative overflow-hidden rounded-2xl py-6 text-center bg-gray-9 lg:rounded-xl md:col-span-2 md:row-span-1 sm:col-span-1">
+      <div className="grid gap-5 grid-cols-[338px_1fr_338px] grid-rows-[212px_1fr_212px] min-h-[644px] mt-20 lg:mt-16 md:mt-11 md:grid-cols-1 md:grid-rows-[max-content_200px_1fr_200px_1fr] md:max-w-[450px] md:mx-auto">
+        <div className="col-start-1 col-end-2 row-start-1 row-end-3 relative overflow-hidden rounded-2xl py-6 text-center bg-gray-9 lg:rounded-xl md:row-span-1 md:col-span-1">
           <StaticImage
             className="!absolute -inset-1.5 w-[102%] h-[102%]"
             src="./images/social-bg.png"
@@ -23,7 +23,7 @@ const CreativeMarketing = () => (
             loading="lazy"
             aria-hidden
           />
-          <div className="relative flex justify-around items-center mx-5 pt-1.5 px-3 border border-dashed border-gray-8 rounded-[10px]">
+          <div className="relative flex justify-evenly items-center mx-5 pt-1.5 px-3 border border-dashed border-gray-8 rounded-[10px]">
             <img className="max-w-[25%]" src={Logo1} alt="" loading="lazy" aria-hidden />
             <img className="max-w-[25%]" src={Logo2} alt="" loading="lazy" aria-hidden />
             <img className="max-w-[25%]" src={Logo3} alt="" loading="lazy" aria-hidden />
@@ -42,7 +42,7 @@ const CreativeMarketing = () => (
             Social media assets
           </h3>
         </div>
-        <div className="col-start-1 col-end-2 row-start-3 row-end-4 relative overflow-hidden flex flex-grow items-center justify-center bg-gray-9 rounded-2xl lg:rounded-xl md:row-start-4 md:row-end-5 sm:row-start-2 sm:row-end-3">
+        <div className="col-start-1 col-end-2 row-start-3 row-end-4 relative overflow-hidden flex flex-grow items-center justify-center bg-gray-9 rounded-2xl lg:rounded-xl md:row-start-2 md:row-end-3">
           <StaticImage
             className="!absolute -inset-1.5 w-[102%] h-[102%]"
             src="./images/small-bg.png"
@@ -70,7 +70,7 @@ const CreativeMarketing = () => (
             Presentations
           </h3>
         </div>
-        <div className="col-start-2 col-end-3 row-start-1 row-end-4 relative overflow-hidden flex justify-center items-center bg-gray-9 rounded-2xl lg:rounded-xl md:col-span-2 md:row-span-1 sm:col-span-1">
+        <div className="col-start-2 col-end-3 row-start-1 row-end-4 relative overflow-hidden flex justify-center items-center bg-gray-9 rounded-2xl lg:rounded-xl md:row-span-1 md:col-span-1">
           <StaticImage
             className="!absolute -inset-1.5 w-[102%] h-[102%]"
             src="./images/swag-bg.png"
@@ -90,7 +90,7 @@ const CreativeMarketing = () => (
             aria-hidden
           />
         </div>
-        <div className="col-start-3 col-end-4 row-start-1 row-end-2 relative overflow-hidden flex flex-grow items-center justify-center bg-gray-9 rounded-2xl lg:rounded-xl md:col-start-2 md:col-end-3 md:row-start-4 md:row-end-5 sm:col-span-1">
+        <div className="col-start-3 col-end-4 row-start-1 row-end-2 relative overflow-hidden flex flex-grow items-center justify-center bg-gray-9 rounded-2xl lg:rounded-xl md:row-start-4 md:row-end-5 md:col-span-1">
           <StaticImage
             className="!absolute -inset-1.5 w-[102%] h-[102%]"
             src="./images/small-bg.png"
@@ -118,7 +118,7 @@ const CreativeMarketing = () => (
             Business Cards
           </h3>
         </div>
-        <div className="col-start-3 col-end-4 row-start-2 row-end-4 relative overflow-hidden flex flex-col justify-end bg-gray-9 rounded-2xl lg:rounded-xl md:col-span-2 md:row-span-1 sm:col-span-1">
+        <div className="col-start-3 col-end-4 row-start-2 row-end-4 relative overflow-hidden flex flex-col justify-end bg-gray-9 rounded-2xl lg:rounded-xl md:row-span-1 md:col-span-1">
           <span
             className="absolute top-1/2 left-1/2 -translate-x-64 -translate-y-64 w-[350px] h-[350px] rounded-full opacity-10 blur"
             style={{ background: 'radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0) 75%);' }}
