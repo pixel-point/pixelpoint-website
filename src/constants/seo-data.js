@@ -7,7 +7,7 @@ export default {
   servicesWebDevelopment: {
     title: 'Web Development — Pixel Point',
     description:
-      'Have a JAMStack powered web platform built with React, third parties, and integrations at your disposal.',
+      'Have a reliable web platform built with React, third parties, and integrations at your disposal.',
   },
   about: {
     title: 'About Us - Pixel Point',

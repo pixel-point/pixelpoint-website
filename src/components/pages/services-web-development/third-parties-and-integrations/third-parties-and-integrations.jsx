@@ -100,7 +100,7 @@ const ThirdPartiesAndIntegrations = () => (
   <section className="safe-paddings mt-52 lg:mt-36 sm:mt-20">
     <div className="container">
       <h2 className="with-text-highlight-red mx-auto max-w-[800px] text-center text-6xl font-normal leading-snug tracking-[-1.12px] lg:max-w-[568px] lg:text-[42px] md:max-w-[458px] md:text-4xl sm:max-w-none sm:text-2xl">
-        Choosing the <span>best hosting</span> and third-party integrations
+        Powered by <span>the best hosting</span> and third-party integrations
       </h2>
       <h3 className="mt-20 text-4xl leading-snug lg:mt-14 lg:text-3xl md:mt-10 md:text-xl sm:mt-6 sm:text-lg">
         The fastest and most reliable hosting platforms
@@ -152,7 +152,7 @@ const ThirdPartiesAndIntegrations = () => (
         </div>
       </div>
       <h3 className="mt-20 text-4xl leading-snug lg:mt-14 lg:text-3xl md:mt-10 md:text-xl sm:mt-10 sm:text-lg">
-        Most popular third-party services and integration
+        Most popular third-party services and integrations
       </h3>
       <ul className="grid-gap mt-10 grid grid-cols-4 lg:mt-8 md:mt-5 sm:mt-4 sm:block sm:space-y-4">
         {hostingPlatformsItems.map(({ logo, width, height, name }, index) => (

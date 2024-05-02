@@ -19,7 +19,8 @@ module.exports = {
   flags: { DEV_SSR: process.env.GATSBY_DEV_SSR || false },
   siteMetadata: {
     siteTitle: 'Pixel Point — Web Design and Development',
-    siteDescription: 'Design and development of JAMStack-based marketing websites',
+    siteDescription:
+      'Design and development of outstanding marketing websites that convert visitors into customers.',
     siteImage: '/images/social-preview.jpg',
     siteLanguage: 'en',
     siteUrl: process.env.GATSBY_DEFAULT_SITE_URL || 'http://localhost:8000',

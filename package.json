@@ -1,14 +1,13 @@
 {
   "name": "pixelpoint-website",
   "version": "0.1.0",
-  "description": "Design and development of JAMStack-based marketing websites",
+  "description": "Design and development of outstanding marketing websites that convert visitors into customers",
   "keywords": [
     "react",
     "gatsby",
     "tailwindcss",
     "rive",
-    "jamstack",
-    "jamstack-site"
+    "next-js"
   ],
   "license": "MIT",
   "homepage": "https://pixelpoint.io",

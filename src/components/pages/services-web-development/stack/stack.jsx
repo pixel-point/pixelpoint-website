@@ -1,5 +1,5 @@
-import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
-import { useAnimation, motion } from 'framer-motion';
+import { Alignment, Fit, Layout, useRive } from '@rive-app/react-canvas';
+import { motion, useAnimation } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -12,7 +12,7 @@ const titleItems = [
   { value: 'of' },
   { value: 'choice' },
   { value: 'for' },
-  { value: 'Effortless', color: '#ee2b6c' },
+  { value: 'effortless', color: '#ee2b6c' },
   { value: 'editing', color: '#ee2b6c' },
   { value: 'and' },
   { value: 'seamless' },

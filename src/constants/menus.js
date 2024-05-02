@@ -17,7 +17,7 @@ export default {
           iconName: 'webDevelopment',
           text: 'Web Development',
           description:
-            'Have a JAMStack powered web platform built with React, 3rd parties & integrations at your disposal',
+            'Have a reliable web platform built with React, 3rd parties & integrations at your disposal',
           linkText: 'Read more',
           to: LINKS.webDevelopment,
         },
