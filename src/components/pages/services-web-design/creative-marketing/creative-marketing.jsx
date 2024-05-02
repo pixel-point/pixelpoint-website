@@ -10,8 +10,8 @@ import Diagram from './images/technical-diagram.svg';
 const CreativeMarketing = () => (
   <section className="safe-paddings mt-[200px] lg:mt-36 md:mt-32 sm:mt-20">
     <div className="container">
-      <h2 className="with-text-highlight-red mx-auto max-w-[1008px] text-center text-6xl font-normal leading-snug tracking-[-1.12px] lg:max-w-[900px] lg:text-[42px] md:max-w-[650px] md:text-4xl sm:text-2xl">
-        Bring your company credibility up a level with <span>Creative marketing</span> & business
+      <h2 className="with-text-highlight-red mx-auto max-w-[1008px] text-center text-6xl font-normal leading-snug lg:max-w-[900px] lg:text-[42px] md:max-w-[650px] md:text-4xl sm:text-2xl">
+        Bring your company <span>credibility up</span> a level with creative marketing & business
         assets
       </h2>
       <div className="grid gap-5 grid-cols-[338px_1fr_338px] grid-rows-[212px_1fr_212px] min-h-[644px] mt-20 lg:mt-16 md:mt-11 md:grid-cols-2 md:grid-rows-[max-content_repeat(2,1fr)_200px] sm:grid-cols-1 sm:grid-rows-[max-content_200px_1fr_200px_1fr]">
