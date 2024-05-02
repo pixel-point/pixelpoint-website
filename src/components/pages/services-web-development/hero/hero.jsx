@@ -10,7 +10,7 @@ const Hero = () => {
   const [wrapperRef, isWrapperView] = useInView({ triggerOnce: true });
 
   const { RiveComponent, rive } = useRive({
-    src: '/animations/pages/services-web-development/hero.riv',
+    src: '/animations/pages/services-web-development/hero-v2.riv',
     autoplay: false,
     stateMachines: STATE_MACHINE_NAME,
     layout: new Layout({
@@ -19,6 +19,7 @@ const Hero = () => {
     }),
   });
   useEffect(() => {
+    // window.rives = rive;
     if (isWrapperView && rive) {
       rive.play();
     }
