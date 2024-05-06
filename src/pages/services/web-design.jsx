@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Benefits from 'components/pages/services-web-design/benefits';
+import Community from 'components/pages/services-web-design/community';
 import CreativeMarketing from 'components/pages/services-web-design/creative-marketing';
 import GuideAndEngage from 'components/pages/services-web-design/guide-and-engage';
 import Hero from 'components/pages/services-web-design/hero';
@@ -28,6 +29,7 @@ const ServicesWebDevelopmentPage = () => (
     <InHouseTeam />
     <Benefits />
     <WillTweet />
+    <Community />
     <GuideAndEngage />
     <CreativeMarketing />
     <CaseStudies title="There are plenty of companies we made design for." />

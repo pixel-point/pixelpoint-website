@@ -34,7 +34,7 @@ module.exports = {
       '5xl': ['48px'],
       '6xl': ['56px'],
       // '7xl': ['72px'],
-      // '8xl': ['96px'],
+      '8xl': ['96px'],
       // '9xl': ['128px'],
     },
     colors: ({ colors }) => ({
