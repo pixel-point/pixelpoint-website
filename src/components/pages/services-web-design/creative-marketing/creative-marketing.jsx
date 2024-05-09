@@ -77,7 +77,7 @@ const CreativeMarketing = () => (
           />
           <h3 className="relative text-center text-4xl text-transparent bg-[linear-gradient(86deg,#899bf5_19.47%,#f589ad_53.53%,#f5c489_84.93%)] bg-clip-text lg:text-[28px] md:text-4xl sm:text-[32px]">
             <span
-              className="absolute inset-0 text-transparent bg-[linear-gradient(99deg,#FFC682_27.43%,#FF82E0_89.47%)] bg-clip-text blur-lg mix-blend-plus-lighter opacity-60"
+              className="absolute inset-0 text-transparent bg-[linear-gradient(99deg,#ffc682_27.43%,#ff82e0_89.47%)] bg-clip-text blur-lg mix-blend-plus-lighter opacity-60"
               aria-hidden
             >
               Presentations
@@ -113,9 +113,9 @@ const CreativeMarketing = () => (
             loading="lazy"
             aria-hidden
           />
-          <h3 className="relative max-w-[200px] text-center text-4xl text-transparent bg-[linear-gradient(86deg,#F59F89_10.44%,#F589AD_51.76%,#9B89F5_92.94%)] bg-clip-text lg:text-[28px] md:text-4xl sm:max-w-none sm:text-[32px]">
+          <h3 className="relative max-w-[200px] text-center text-4xl text-transparent bg-[linear-gradient(86deg,#f59f89_10.44%,#f589ad_51.76%,#9b89f5_92.94%)] bg-clip-text lg:text-[28px] md:text-4xl sm:max-w-none sm:text-[32px]">
             <span
-              className="absolute inset-0 text-transparent bg-[linear-gradient(99deg,#FFC682_27.43%,#FF82E0_89.47%)] bg-clip-text blur-xl mix-blend-plus-lighter opacity-60"
+              className="absolute inset-0 text-transparent bg-[linear-gradient(99deg,#ffc682_27.43%,#ff82e0_89.47%)] bg-clip-text blur-xl mix-blend-plus-lighter opacity-60"
               aria-hidden
             >
               Business Cards
