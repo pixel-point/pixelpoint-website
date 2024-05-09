@@ -169,8 +169,7 @@ const Community = () => (
   <section className="relative h-[908px] overflow-hidden safe-paddings bg-gray-2 lg:h-auto lg:pt-36 lg:pb-28 sm:pt-14">
     <div className="container flex justify-center lg:flex-col">
       <div
-        className="absolute -top-8 left-1/2 -translate-x-[32%] w-[1388px] h-[980px] rounded-full blur lg:rounded-none lg:-translate-x-1/2 lg:top-auto lg:bottom-0 lg:h-[1025px] sm:-bottom-48 sm:h-[1920px]"
-        style={{ background: 'radial-gradient(circle, rgba(255,255,255,0) 0%, #f5f5f5 75%)' }}
+        className="absolute -top-8 left-1/2 -translate-x-[32%] w-[1388px] h-[980px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0)_0%,#f5f5f5_75%)] blur lg:rounded-none lg:-translate-x-1/2 lg:top-auto lg:bottom-0 lg:h-[1025px] sm:-bottom-48 sm:h-[1920px]"
         aria-hidden
       />
       <div className="relative max-w-[35%] mt-3 mr-auto pt-36 bg-gray-2 lg:max-w-[728px] lg:ml-auto lg:pt-0 sm:max-w-[328px] sm:mt-1 sm:mx-auto">

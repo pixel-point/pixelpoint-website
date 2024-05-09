@@ -13,19 +13,43 @@ const cases = [
     title: 'Harness',
     text: 'The modern software delivery platform',
     url: 'https://pixelpoint.io/case-studies/harness/',
-    image: <StaticImage src="./images/harness.png" alt="Harness website" loading="lazy" />,
+    image: (
+      <StaticImage
+        src="./images/harness.png"
+        width="920"
+        height="546"
+        alt="Harness website"
+        loading="lazy"
+      />
+    ),
   },
   {
     title: 'Neon',
     text: 'Open Source serverless Postgres',
     url: 'https://pixelpoint.io/case-studies/neon/',
-    image: <StaticImage src="./images/neon.png" alt="Neon website" loading="lazy" />,
+    image: (
+      <StaticImage
+        src="./images/neon.png"
+        width="920"
+        height="546"
+        alt="Neon website"
+        loading="lazy"
+      />
+    ),
   },
   {
     title: 'Gitness',
     text: 'Open-source code hosting & pipeline engine',
     url: 'https://pixelpoint.io/case-studies/gitness/',
-    image: <StaticImage src="./images/gitness.png" alt="Gitness website" loading="lazy" />,
+    image: (
+      <StaticImage
+        src="./images/gitness.png"
+        width="920"
+        height="546"
+        alt="Gitness website"
+        loading="lazy"
+      />
+    ),
   },
 ];
 
