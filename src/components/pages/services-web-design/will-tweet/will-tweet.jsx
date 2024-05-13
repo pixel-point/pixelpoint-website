@@ -14,44 +14,27 @@ const cases = [
     text: 'The modern software delivery platform',
     url: 'https://pixelpoint.io/case-studies/harness/',
     image: (
-      <StaticImage
-        src="./images/harness.png"
-        width="920"
-        height="546"
-        alt="Harness website"
-        loading="lazy"
-      />
+      <StaticImage src="./images/harness.png" width={920} height={546} alt="Harness website" />
     ),
   },
   {
     title: 'Neon',
     text: 'Open Source serverless Postgres',
     url: 'https://pixelpoint.io/case-studies/neon/',
-    image: (
-      <StaticImage
-        src="./images/neon.png"
-        width="920"
-        height="546"
-        alt="Neon website"
-        loading="lazy"
-      />
-    ),
+    image: <StaticImage src="./images/neon.png" width={920} height={546} alt="Neon website" />,
   },
   {
     title: 'Gitness',
     text: 'Open-source code hosting & pipeline engine',
     url: 'https://pixelpoint.io/case-studies/gitness/',
     image: (
-      <StaticImage
-        src="./images/gitness.png"
-        width="920"
-        height="546"
-        alt="Gitness website"
-        loading="lazy"
-      />
+      <StaticImage src="./images/gitness.png" width={920} height={546} alt="Gitness website" />
     ),
   },
 ];
+
+const paginationStyles =
+  'relative before:absolute before:left-0 before:w-full before:h-8 before:-translate-y-1/2';
 
 const WillTweet = () => (
   <section className="safe-paddings mt-[200px] pb-[245px] overflow-hidden lg:mt-36 lg:pb-44 md:mt-32 md:pb-36 sm:mt-20">
@@ -68,11 +51,13 @@ const WillTweet = () => (
           },
         }}
         pagination={{
-          enabled: true,
           clickable: true,
+          renderBullet: (index, className) =>
+            `<span class="${className} ${paginationStyles}">
+              <span class="sr-only">Go to ${index + 1} slide</span>
+            </span>`,
         }}
-        mousewheel={{ enabled: true }}
-        freeMode={{ enabled: false }}
+        mousewheel={{ enabled: true, forceToAxis: true }}
         modules={[Pagination, Mousewheel]}
         style={{
           '--swiper-pagination-bullet-width': '44px',
@@ -95,7 +80,7 @@ const WillTweet = () => (
                   {text}
                 </p>
                 <Link
-                  className="row-span-2 row-start-1 self-end text-sm sm:row-span-1 sm:justify-start"
+                  className="row-span-2 row-start-1 self-end text-sm after:absolute after:inset-0 after:z-10 sm:row-span-1 sm:justify-start"
                   to={url}
                   size="base"
                   theme="arrow-red"
