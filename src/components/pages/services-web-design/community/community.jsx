@@ -162,10 +162,10 @@ const data = [
 ];
 
 const Community = () => (
-  <section className="relative max-h-[908px] overflow-hidden safe-paddings bg-gray-2 lg:h-auto lg:pt-36 lg:pb-28 sm:pt-14">
+  <section className="relative max-h-[908px] overflow-hidden safe-paddings bg-gray-2 lg:max-h-none lg:pt-36 lg:pb-28 sm:pt-14">
     <div className="container flex justify-center lg:flex-col">
       <div className="relative z-10 max-w-[35%] mt-3 mr-auto pt-36 bg-gray-2 lg:max-w-[728px] lg:ml-auto lg:pt-0 sm:max-w-none sm:mt-1 sm:mx-auto">
-        <h2 className="mt-1.5 mb-4 font-normal text-[64px] leading-[1.1] -tracking-[2.56px] lg:text-5xl sm:mb-3 sm:text-[32px] sm:-tracking-[1.28px]">
+        <h2 className="mt-1.5 mb-4 font-normal text-[64px] leading-[1.1] -tracking-[0.04em] lg:text-5xl sm:mb-3 sm:text-[32px]">
           <span className="block">Get noticed </span>
           by community
         </h2>
@@ -176,10 +176,10 @@ const Community = () => (
         <ul className="relative z-10 grid gap-8 lg:grid-cols-2 sm:grid-cols-1">
           {stats.map(({ amount, title }) => (
             <li key={title} className="grid gap-1">
-              <span className="text-8xl leading-none -tracking-[3.84px] text-red lg:text-[88px] lg:-tracking-[3.82px]">
+              <span className="text-8xl leading-none -tracking-[0.04em] text-red lg:text-[88px]">
                 {amount}
               </span>
-              <span className="text-xl leading-none -tracking-[0.4px] opacity-80 sm:text-lg">
+              <span className="text-xl leading-none -tracking-[0.01em] opacity-80 sm:text-lg">
                 {title}
               </span>
             </li>
@@ -190,8 +190,8 @@ const Community = () => (
           aria-hidden
         />
       </div>
-      <div className="grid grid-cols-2 gap-6 lg:-mt-40 lg:-mb-64 sm:grid-cols-1 sm:gap-5 sm:-mt-[148px] sm:-mb-72">
-        <div className="flex flex-col gap-6 -mt-[174px] lg:items-end sm:items-center lg:mt-0">
+      <div className="grid grid-cols-2 gap-6 lg:-mt-40 lg:-mb-64 sm:grid-cols-1 sm:gap-4 sm:-mt-[148px] sm:-mb-72">
+        <div className="flex flex-col gap-6 -mt-[174px] lg:items-end lg:mt-0 sm:items-center sm:gap-4">
           <Card />
           {data
             .filter((_, index) => index % 2 === 0)

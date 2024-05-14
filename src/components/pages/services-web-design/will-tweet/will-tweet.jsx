@@ -14,21 +14,21 @@ const cases = [
     text: 'The modern software delivery platform',
     url: 'https://pixelpoint.io/case-studies/harness/',
     image: (
-      <StaticImage src="./images/harness.png" width={920} height={546} alt="Harness website" />
+      <StaticImage src="./images/harness.jpg" width={920} height={546} alt="Harness website" />
     ),
   },
   {
     title: 'Neon',
     text: 'Open Source serverless Postgres',
     url: 'https://pixelpoint.io/case-studies/neon/',
-    image: <StaticImage src="./images/neon.png" width={920} height={546} alt="Neon website" />,
+    image: <StaticImage src="./images/neon.jpg" width={920} height={546} alt="Neon website" />,
   },
   {
     title: 'Gitness',
     text: 'Open-source code hosting & pipeline engine',
     url: 'https://pixelpoint.io/case-studies/gitness/',
     image: (
-      <StaticImage src="./images/gitness.png" width={920} height={546} alt="Gitness website" />
+      <StaticImage src="./images/gitness.jpg" width={920} height={546} alt="Gitness website" />
     ),
   },
 ];
@@ -39,7 +39,7 @@ const paginationStyles =
 const WillTweet = () => (
   <section className="safe-paddings mt-[200px] pb-[245px] overflow-hidden lg:mt-36 lg:pb-44 md:mt-32 md:pb-36 sm:mt-20">
     <div className="container lg:max-w-none">
-      <h2 className="mb-16 with-text-highlight-red mx-auto max-w-[950px] text-center text-6xl font-normal leading-snug tracking-[-1.12px] lg:max-w-[712px] lg:mb-14 lg:text-[42px] md:mb-11 md:text-4xl sm:mb-6 sm:text-2xl">
+      <h2 className="mb-16 with-text-highlight-red mx-auto max-w-[950px] text-center text-6xl font-normal leading-snug -tracking-[0.02em] lg:max-w-[712px] lg:mb-14 lg:text-[42px] md:mb-11 md:text-4xl sm:mb-6 sm:text-2xl">
         Get an enticing company marketing website people <span>Will tweet</span> about
       </h2>
       <Swiper
@@ -75,8 +75,8 @@ const WillTweet = () => (
           <SwiperSlide key={title}>
             <article className="flex flex-col-reverse bg-gray-2 rounded-2xl overflow-hidden">
               <div className="grid grid-cols-[1fr_max-content] gap-1.5 pt-4 pb-5 px-6 font-normal text-sm sm:grid-cols-1">
-                <h3 className="leading-snug -tracking-[0.3px]">{title}</h3>
-                <p className="col-start-1 row-start-2 leading-none -tracking-[0.2px] text-gray-7">
+                <h3 className="leading-snug tracking-[0.02em]">{title}</h3>
+                <p className="col-start-1 row-start-2 leading-none tracking-[0.014em] text-gray-7">
                   {text}
                 </p>
                 <Link
