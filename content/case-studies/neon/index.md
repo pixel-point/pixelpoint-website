@@ -33,11 +33,11 @@ keynotes:
 cover: cover.jpg
 isOpenSource: true
 isFeatured: true
-position: 9
+position: 3
 ---
 
 It all began in 2021, when a group of PostgreSQL contributors and technologists set up on a mission to create an OS cloud-native database as a service available for every developer. They united under the brand name Neon. We joined the team shortly after they had made a successful series A financing, with intention to help them establish a proper brand image.
 
 We focused on designing a captivating marketing website, as attracting early customers is crucial for any startup. We put stakes on bold typography, colorful collages as the opposite of typical techie illustrations that are being used for websites of this area, and balanced it out with glitchy animations, preserving "deep tech" feeling for visitors.
 
-The Neon team enjoyed the final result, and we continue to collaborate with them to this day, creating new pages and eye-catching blog post covers and illustrations. Together we are forging a strong brand identity, setting Neon apart from the competition and increasing their visual recognition in the community.
+The Neon team enjoyed the final result, and we continue to collaborate with them to this day, creating new pages and eye-catching blog post covers and illustrations. Together we are gradually developing the Neon brand style and website to match the cutting-edge design trends while maintaining the brand identity and attracting users attention with captivating explanatory visuals.
