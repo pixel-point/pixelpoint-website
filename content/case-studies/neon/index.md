@@ -33,7 +33,7 @@ keynotes:
 cover: cover.jpg
 isOpenSource: true
 isFeatured: true
-position: 3
+position: 2
 ---
 
 It all began in 2021, when a group of PostgreSQL contributors and technologists set up on a mission to create an OS cloud-native database as a service available for every developer. They united under the brand name Neon. We joined the team shortly after they had made a successful series A financing, with intention to help them establish a proper brand image.

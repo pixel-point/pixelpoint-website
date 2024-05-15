@@ -33,7 +33,7 @@ keynotes:
 cover: cover.jpg
 isFeatured: true
 isOpenSource: true
-position: 2
+position: 3
 ---
 
 Gitness, by Harness, is an open-source code hosting and CI/CD platform. It features robust security, one-click migration from platforms like GitHub, and delivers 4x faster pipeline execution with versatile templates.
