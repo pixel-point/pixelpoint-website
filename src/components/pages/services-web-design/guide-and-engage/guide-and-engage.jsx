@@ -29,7 +29,7 @@ const GuideAndEngage = () => {
 
   return (
     <section
-      className="safe-paddings mt-52 bg-black py-52 text-white lg:mt-36 lg:py-36 md:mt-32 md:py-28 sm:mt-20 sm:py-16"
+      className="safe-paddings bg-black py-52 text-white lg:py-36 md:py-28 sm:py-16"
       ref={wrapperRef}
     >
       <div className="container" ref={containerRef}>
