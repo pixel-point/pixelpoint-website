@@ -85,7 +85,6 @@ const WillTweet = () => (
                   size="base"
                   theme="arrow-red"
                   target="_blank"
-                  rel="noopener noreferrer"
                 >
                   Read case study
                 </Link>
