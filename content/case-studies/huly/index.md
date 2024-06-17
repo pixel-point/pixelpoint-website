@@ -4,7 +4,7 @@ logo:
   width: 130
   height: 44
 title: Huly
-description: The Everything App for your teams
+description: Everything App for your teams
 websiteUrl: https://huly.io/
 githubUsername: hcengineering
 githubRepoName: platform
