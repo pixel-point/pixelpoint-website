@@ -30,7 +30,7 @@ keynotes:
   - Integrated the immersive 3D graphics into the website
 cover: cover.jpg
 isFeatured: true
-position: 1
+position: 2
 ---
 
 Harness is the AI-augmented software delivery platform designed to be a pioneer in its industry, featuring innovative CI/CD pipelines, advanced security features, and a user-centric interface for enhanced productivity in the software delivery process.

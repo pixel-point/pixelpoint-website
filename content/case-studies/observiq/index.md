@@ -32,7 +32,7 @@ keynotes:
   - Provided optimal performance despite the animation-heavy pages
 cover: cover.jpg
 isFeatured: true
-position: 5
+position: 6
 ---
 
 ObservIQ stands at the forefront of the technology industry, offering solutions that empower businesses with unmatched visibility into their IT infrastructure. Their commitment is to transform the often convoluted world of IT observability into one of clarity and control.

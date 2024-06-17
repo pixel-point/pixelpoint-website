@@ -32,7 +32,7 @@ keynotes:
   - Ensured optimal performance across different browsers on resource-heavy pages
 cover: cover.jpg
 isFeatured: true
-position: 6
+position: 7
 ---
 
 Terzo is a technology startup focused on contract management. Their main product is an AI-driven Contract Intelligence and Supplier Management solution that empowers businesses to automate repetitive tasks and improve operational efficiency. By leveraging their Contract Analytics platform, companies can optimize spend, improve governance, and reduce costs hidden in their contracts.
