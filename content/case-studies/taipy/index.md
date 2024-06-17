@@ -27,7 +27,7 @@ keynotes:
 cover: cover.jpg
 isFeatured: true
 isOpenSource: true
-position: 4
+position: 5
 ---
 
 Taipy is an open-source Python full-stack application builder that allows developers to swiftly turn their data and AI algorithms into production-ready web applications. The platform is designed to be a one-stop solution for developers who want to build and deploy their applications quickly and efficiently.

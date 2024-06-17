@@ -62,6 +62,7 @@ const icons = {
   harness: [FingerprintSquareIcon, IntegrationsIcon, PerformanceIcon],
   gitness: [LikeIcon, IntegrationsIcon, PerformanceIcon],
   taipy: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
+  huly: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
