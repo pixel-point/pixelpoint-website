@@ -7,7 +7,7 @@ export default {
   github: 'https://github.com/pixel-point',
   twitter: 'https://twitter.com/alex_barashkov',
   email: 'mailto:info@pixelpoint.io',
-  getInTouch: 'https://tally.so/r/n97KOE',
+  getInTouch: 'https://surveys.pixelpoint.io/work-with-us',
   gatsbyStarter: 'https://github.com/pixel-point/gatsby-tailwind-starter',
   nextjsStarter: 'https://github.com/pixel-point/nextjs-tailwind-starter',
 };
