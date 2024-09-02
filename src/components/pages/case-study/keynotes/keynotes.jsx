@@ -63,6 +63,7 @@ const icons = {
   gitness: [LikeIcon, IntegrationsIcon, PerformanceIcon],
   taipy: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
   huly: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
+  agentql: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
