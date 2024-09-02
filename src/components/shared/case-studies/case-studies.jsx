@@ -1,5 +1,5 @@
-import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
-import { useStaticQuery, graphql } from 'gatsby';
+import { Alignment, Fit, Layout, useRive } from '@rive-app/react-canvas';
+import { graphql, useStaticQuery } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -113,6 +113,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
             githubRepoName
             isOpenSource
             isFeatured
+            isHidden
           }
           githubStars
         }
@@ -125,10 +126,10 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
       if (process.env.NODE_ENV === 'production') return !isDraft;
       return true;
     })
-    .filter(({ frontmatter: { isOpenSource, isFeatured }, fields: { slug } }) => {
+    .filter(({ frontmatter: { isOpenSource, isFeatured, isHidden }, fields: { slug } }) => {
       if (slug === activeItemSlug) return false;
       if (itemsType === 'open-source') return isOpenSource;
-      if (itemsType === 'not-featured') return !isFeatured;
+      if (itemsType === 'not-featured') return !isHidden && !isFeatured;
       return false;
     });
 
