@@ -4,7 +4,7 @@ logo:
   width: 161
   height: 44
 title: Glassflow
-description: Python-basde tool for building real-time data pipelines
+description: Python-based tool for building real-time data pipelines
 websiteUrl: https://www.glassflow.dev/
 
 quote:
