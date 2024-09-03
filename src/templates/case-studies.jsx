@@ -34,7 +34,7 @@ export const query = graphql`
     allMdx(
       filter: {
         internal: { contentFilePath: { regex: "/content/case-studies/" } }
-        fields: { isDraft: { in: $draftFilter }, isFeatured: { eq: true } }
+        fields: { isDraft: { in: $draftFilter }, isFeatured: { eq: true }, isHidden: { eq: false } }
       }
       sort: { frontmatter: { position: ASC } }
     ) {

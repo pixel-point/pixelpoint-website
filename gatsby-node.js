@@ -242,6 +242,7 @@ async function createCaseStudies({ graphql, actions }) {
             }
             isFeatured
             isOpenSource
+            isHidden
           }
           internal {
             contentFilePath
@@ -316,6 +317,12 @@ exports.onCreateNode = ({ node, actions }) => {
       node,
       name: 'isOpenSource',
       value: node.frontmatter.isOpenSource || false,
+    });
+
+    createNodeField({
+      node,
+      name: 'isHidden',
+      value: node.frontmatter.isHidden || false,
     });
   }
 };
