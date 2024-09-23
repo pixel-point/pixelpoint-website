@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/links",
+      "destination": "https://pixel-point-next.vercel.app/links"
+    }
+  ]
+}
