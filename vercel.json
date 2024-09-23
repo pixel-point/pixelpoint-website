@@ -1,12 +1,15 @@
 {
+  "redirects": [
+    {
+      "source": "/work-inquiry/",
+      "destination": "https://surveys.pixelpoint.io/work-with-us",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/links/",
       "destination": "https://pixel-point-next.vercel.app/links"
-    },
-    {
-      "source": "/work-inquiry/",
-      "destination": "https://surveys.pixelpoint.io/work-with-us"
     },
     {
       "source": "/_next/:path*",
