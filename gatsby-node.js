@@ -289,6 +289,16 @@ async function createCaseStudies({ graphql, actions }) {
   });
 }
 
+async function createRedirects({ actions }) {
+  const { createRedirect } = actions;
+
+  createRedirect({
+    fromPath: '/links',
+    toPath: 'https://pixel-point-next.vercel.app/links',
+    statusCode: 200,
+  });
+}
+
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions;
 
@@ -395,6 +405,7 @@ exports.createSchemaCustomization = ({ actions }) => {
 };
 
 exports.createPages = async (options) => {
+  await createRedirects(options);
   await createBlogPages(options);
   await createBlogPosts(options);
   await createCaseStudiesPage(options);
