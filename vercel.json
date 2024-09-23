@@ -10,7 +10,7 @@
     },
     {
       "source": "/favicon.ico",
-      "destination": "https://pixel-point-next.vercel.app/favicon.ico"
+      "destination": "/favicon-32x32.png"
     }
   ]
 }
