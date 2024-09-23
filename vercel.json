@@ -3,6 +3,14 @@
     {
       "source": "/links/",
       "destination": "https://pixel-point-next.vercel.app/links"
+    },
+    {
+      "source": "/_next/*",
+      "destination": "https://pixel-point-next.vercel.app/_next/*"
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "https://pixel-point-next.vercel.app/favicon.ico"
     }
   ]
 }
