@@ -32,6 +32,10 @@
       "destination": "https://pixel-point-next.vercel.app/_next/:path*"
     },
     {
+      "source": "/api/:path*",
+      "destination": "https://pixel-point-next.vercel.app/api/:path*"
+    },
+    {
       "source": "/favicon.ico",
       "destination": "/favicon-32x32.png"
     }
