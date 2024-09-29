@@ -16,7 +16,7 @@
       "destination": "https://pixel-point-next.vercel.app/learn"
     },
     {
-      "source": "/learn/:path*",
+      "source": "/learn/:path*/",
       "destination": "https://pixel-point-next.vercel.app/learn/:path*"
     },
     {
