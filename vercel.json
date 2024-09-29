@@ -12,6 +12,10 @@
       "destination": "https://pixel-point-next.vercel.app/links"
     },
     {
+      "source": "/learn",
+      "destination": "https://pixel-point-next.vercel.app/learn"
+    },
+    {
       "source": "/learn/:slug*",
       "destination": "https://pixel-point-next.vercel.app/learn/:slug*"
     },
