@@ -4,6 +4,11 @@
       "source": "/work-inquiry/",
       "destination": "https://surveys.pixelpoint.io/work-with-us",
       "permanent": true
+    },
+    {
+      "source": "/youtube/",
+      "destination": "https://www.youtube.com/@pixelpoint-io?sub_confirmation=1",
+      "permanent": true
     }
   ],
   "rewrites": [
