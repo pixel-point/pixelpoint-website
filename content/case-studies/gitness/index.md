@@ -5,7 +5,7 @@ logo:
   height: 44
 title: Gitness
 description: Open-source code hosting & pipeline engine
-websiteUrl: https://gitness.com/
+websiteUrl: https://gitness.vercel.app/
 githubUsername: harness
 githubRepoName: gitness
 # quote:
