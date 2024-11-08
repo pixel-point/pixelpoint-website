@@ -65,6 +65,7 @@ const icons = {
   huly: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
   agentql: [FingerprintIcon, WebsiteIcon, ProductHuntIcon],
   glassflow: [FingerprintSquareIcon, PerformanceIcon, IntegrationsIcon],
+  vectara: [FingerprintIcon, WebsiteIcon, WritingSquareIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
