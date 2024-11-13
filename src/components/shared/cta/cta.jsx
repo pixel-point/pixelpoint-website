@@ -40,10 +40,10 @@ const CTA = ({ className, withTopMargin }) => {
       <div className="container grid-gap-x grid grid-cols-2 items-center sm:block">
         <div className="sm:text-center">
           <h2 className="text-6xl font-normal leading-snug text-white lg:text-[42px] md:text-[32px] sm:text-2xl">
-            Let's have a chat
+            Need our expertise?
           </h2>
           <Link size="6xl" theme="arrow-red" to={LINKS.getInTouch}>
-            Get in touch
+            Join the waitlist
           </Link>
         </div>
         <div className="sm:mt-4.5" ref={animationWrapperRef}>
