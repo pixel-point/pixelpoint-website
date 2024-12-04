@@ -4,7 +4,7 @@ logo:
   width: 161
   height: 44
 title: Solarpunk
-description: A platform to start your agrivoltaics journey.
+description: A platform to start your agrivoltaics journey
 websiteUrl: https://www.solarpunkhq.com/en/
 
 quote:
