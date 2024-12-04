@@ -1,7 +1,7 @@
 ---
 logo:
   url: logo.svg
-  width: 161
+  width: 168
   height: 44
 title: Solarpunk
 description: A platform to start your agrivoltaics journey
