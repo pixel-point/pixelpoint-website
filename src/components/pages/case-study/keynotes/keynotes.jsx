@@ -66,6 +66,7 @@ const icons = {
   agentql: [FingerprintIcon, WebsiteIcon, ProductHuntIcon],
   glassflow: [FingerprintSquareIcon, PerformanceIcon, IntegrationsIcon],
   vectara: [FingerprintIcon, WebsiteIcon, WritingSquareIcon],
+  solarpunk: [FingerprintSquareIcon, LayoutIcon, ProductHuntIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
