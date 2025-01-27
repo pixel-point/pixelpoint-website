@@ -5,7 +5,7 @@ logo:
   height: 44
 title: Glassflow
 description: Python-based tool for building real-time data pipelines
-websiteUrl: https://www.glassflow.dev/
+websiteUrl: https://glassflow.vercel.app/
 
 quote:
   text: From our first conversation with Pixel Point, we knew the results would be outstanding. They understood that data streaming is a very technical topic and demonstrated that they speak the same language as our users. We love the results they delivered and can recommend them 100%. I look forward to doing more projects with them.
