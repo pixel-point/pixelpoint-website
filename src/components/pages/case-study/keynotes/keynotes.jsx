@@ -55,7 +55,7 @@ const icons = {
   parca: [WebsiteIcon, EditingSquarePinkIcon, PerformanceIcon],
   nayms: [WebsiteIcon, EditingSquarePinkIcon, PerformanceIcon],
   configu: [WebsiteIcon, EditingCirclePinkIcon, WritingSquareIcon],
-  observiq: [WebsiteIcon, EditingSquarePinkIcon, PerformanceIcon],
+  bindplane: [WebsiteIcon, EditingSquarePinkIcon, PerformanceIcon],
   bytebase: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
   terzo: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
   fonoa: [LayoutIcon, WritingIcon, PerformanceIcon],
