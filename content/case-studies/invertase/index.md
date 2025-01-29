@@ -8,13 +8,12 @@ description: Open-source tools and SDKs for enhanced developer productivity
 websiteUrl: https://invertase.io
 githubUsername: invertase
 githubRepoName: react-native-firebase
-quote:
-  text: Placeholder testimonial
-  authorName: Ben Cook
-  authorPosition: Chief Commerical Officer
-  authorPhoto: author-photo.jpg
-# TODO: update content
-overview: It all began in 2021, when a group of PostgreSQL contributors and technologists, united under the brand name Neon, set up on a mission to create an OS cloud-native database as a service available for every developer. They reached out asking for help establishing a brand image, and we eagerly joined the team.
+# quote:
+#   text: Placeholder testimonial
+#   authorName: Ben Cook
+#   authorPosition: Chief Commerical Officer
+#   authorPhoto: author-photo.jpg
+overview: Invertase is a leading software development company specializing in open-source tools and infrastructure for modern web and mobile applications. Known for projects like Firebase Extended and React Native Firebase, Invertase provides developers with high-performance solutions that enhance productivity and scalability.
 services:
   - Motion Design
   - Web Design
