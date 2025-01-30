@@ -67,6 +67,7 @@ const icons = {
   glassflow: [FingerprintSquareIcon, PerformanceIcon, IntegrationsIcon],
   vectara: [FingerprintIcon, WebsiteIcon, WritingSquareIcon],
   solarpunk: [FingerprintSquareIcon, LayoutIcon, ProductHuntIcon],
+  invertase: [FingerprintSquareIcon, LayoutIcon, EditingSquarePinkIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
