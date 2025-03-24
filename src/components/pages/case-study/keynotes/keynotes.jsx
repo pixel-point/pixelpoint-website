@@ -64,7 +64,6 @@ const icons = {
   taipy: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
   huly: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
   agentql: [FingerprintIcon, WebsiteIcon, ProductHuntIcon],
-  glassflow: [FingerprintSquareIcon, PerformanceIcon, IntegrationsIcon],
   vectara: [FingerprintIcon, WebsiteIcon, WritingSquareIcon],
   solarpunk: [FingerprintSquareIcon, LayoutIcon, ProductHuntIcon],
   invertase: [FingerprintSquareIcon, LayoutIcon, EditingSquarePinkIcon],
