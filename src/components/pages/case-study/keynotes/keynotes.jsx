@@ -58,7 +58,6 @@ const icons = {
   bindplane: [WebsiteIcon, EditingSquarePinkIcon, PerformanceIcon],
   bytebase: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
   terzo: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
-  fonoa: [LayoutIcon, WritingIcon, PerformanceIcon],
   harness: [FingerprintSquareIcon, IntegrationsIcon, PerformanceIcon],
   gitness: [LikeIcon, IntegrationsIcon, PerformanceIcon],
   taipy: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
