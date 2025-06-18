@@ -40,7 +40,6 @@ const icons = {
     GithubIcon,
     ProductHuntIcon,
   ],
-  isovalent: [WebsiteIcon, IntegrationsIcon, EditingCircleBlueIcon],
   k6: [
     GithubIcon,
     GrafanaIcon,
