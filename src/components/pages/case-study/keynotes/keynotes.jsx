@@ -63,6 +63,7 @@ const icons = {
   huly: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
   agentql: [FingerprintIcon, WebsiteIcon, ProductHuntIcon],
   vectara: [FingerprintIcon, WebsiteIcon, WritingSquareIcon],
+  slash: [FingerprintIcon, WebsiteIcon, EditingSquareBlueIcon],
   solarpunk: [FingerprintSquareIcon, LayoutIcon, ProductHuntIcon],
   invertase: [FingerprintSquareIcon, LayoutIcon, EditingSquarePinkIcon],
 };
