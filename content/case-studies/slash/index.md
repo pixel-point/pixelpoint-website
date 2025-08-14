@@ -32,10 +32,10 @@ keynotes:
   - Implemented a scalable CMS for ongoing content updates and blog posts
 cover: cover.jpg
 isFeatured: true
-position: 1
+position: 2
 ---
 
-Slash is a fintech startup focused on providing tailored banking solutions for high-spend verticals like ticket resellers and performance marketers. Their platform offers features like 2% cashback, unlimited virtual cards, and free wires, designed specifically for entrepreneurs who need more than generic banking servicesю
+Slash is a fintech startup focused on providing tailored banking solutions for high-spend verticals like ticket resellers and performance marketers. Their platform offers features like 2% cashback, unlimited virtual cards, and free wires, designed specifically for entrepreneurs who need more than generic banking services.
 
 With plans to expand beyond outbound sales and referrals, Slash needed a website that could support broader marketing efforts, inspire trust, and reflect their edge as a high-performance fintech brand. Their initial input called for a hard identity — more Porsche than pastel SaaS.
 

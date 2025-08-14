@@ -66,6 +66,7 @@ const icons = {
   slash: [FingerprintIcon, WebsiteIcon, EditingSquareBlueIcon],
   solarpunk: [FingerprintSquareIcon, LayoutIcon, ProductHuntIcon],
   invertase: [FingerprintSquareIcon, LayoutIcon, EditingSquarePinkIcon],
+  cluely: [FingerprintIcon, LayoutIcon, EditingSquareWhiteIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
