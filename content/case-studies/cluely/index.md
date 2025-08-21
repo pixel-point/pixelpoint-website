@@ -5,7 +5,7 @@ logo:
   height: 44
 title: Cluely
 description: Live AI meeting assistant for real-time insights
-websiteUrl: https://cluely.com
+websiteUrl: https://cluely-next-git-origin-pixelpoint.vercel.app/
 overview: Cluely is redefining the way professionals access information during live conversations. Their undetectable AI assistant provides real-time answers in meetings, sales calls, and across any application — without ever appearing on screen.
 services:
   - Brand Identity
