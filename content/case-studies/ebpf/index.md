@@ -3,7 +3,7 @@ logo:
   url: logo.svg
   width: 135
 title: eBPF
-description: Dynamically program the kernel for efficient networking, observability, tracing, and security
+description: Kernel programming for networking, observability, and security
 websiteUrl: https://ebpf.io
 githubUsername: cilium
 githubRepoName: ebpf
@@ -24,7 +24,7 @@ keynotes:
   - Hooked up integrations necessary for business
   - Carefully migrated the existing community content
 isOpenSource: true
-position: 18
+position: 19
 ---
 
 eBPF is a technology that allows developers to write and execute custom code within the Linux kernel itself. Isovalent and [Cilium](/case-studies/cilium) both leverage this technology to provide advanced networking and security capabilities for container-based applications running in Kubernetes environments. However, this fantastic piece of tech has been desperately longing for a proper place for everybody to learn and collaborate for quite some time.

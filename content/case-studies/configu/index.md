@@ -4,8 +4,10 @@ logo:
   width: 143
   height: 44
 title: Configu
-description: Configuration management as a service
+description: Configuration management as a service
 websiteUrl: https://configu.com/
+githubUsername: configu
+githubRepoName: configu
 
 quote:
   text: As a DevTool company, we were looking for a design company that understands developers and can create a brand that would captivate their attention. Working with Pixel Point was a pleasure from the very beginning. They have high standards and know how to deliver quality products quickly.
@@ -32,6 +34,7 @@ keynotes:
   - Gave Configu's web app a fresh look
 cover: cover.jpg
 position: 17
+isOpenSource: true
 ---
 
 For over a decade, a team of highly experienced software and DevOps engineers has gathered enough evidence that managing configuration files has become tedious, costly, and risky. Having had enough of manual setups, bottlenecks, and production failures, they embarked on a journey to build the ultimate configuration management tool and revolutionize the way software is being developed and maintained. Thus, the Configu company was born.

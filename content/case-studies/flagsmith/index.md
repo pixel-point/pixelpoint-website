@@ -4,7 +4,7 @@ logo:
   width: 172
   height: 36
 title: Flagsmith
-description: Feature flag & remote config service
+description: Feature flag and remote config service
 websiteUrl: https://flagsmith.com
 githubUsername: Flagsmith
 githubRepoName: flagsmith

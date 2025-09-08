@@ -4,7 +4,7 @@ logo:
   width: 180
   height: 58
 title: Cilium
-description: eBPF-based Networking, Observability, and Security
+description: eBPF-based networking, observability, and security
 websiteUrl: https://cilium.io
 githubUsername: cilium
 githubRepoName: cilium

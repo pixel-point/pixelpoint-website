@@ -4,7 +4,7 @@ logo:
   width: 121
   height: 30
 title: Parca
-description: Open Source infrastructure-wide continuous profiling
+description: Infrastructure-wide continuous profiling
 websiteUrl: https://www.parca.dev/
 githubUsername: parca-dev
 githubRepoName: parca

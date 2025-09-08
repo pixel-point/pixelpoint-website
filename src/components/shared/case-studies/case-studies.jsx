@@ -5,7 +5,6 @@ import React from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import Link from 'components/shared/link';
-import { CASE_STUDIES_BASE_PATH } from 'constants/case-studies';
 import LINKS from 'constants/links';
 import GithubLogo from 'images/github.inline.svg';
 
@@ -13,7 +12,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min)) + Math.ceil(min));
 }
 
-const Card = ({ logo, title, description, slug, githubStars, isWrapperInView }) => {
+const Card = ({ logo, title, description, githubStars, isWrapperInView }) => {
   const { RiveComponent, rive } = useRive({
     src: '/animations/shared/case-studies-card.riv',
     autoplay: false,
@@ -28,11 +27,7 @@ const Card = ({ logo, title, description, slug, githubStars, isWrapperInView }) 
   };
 
   return (
-    <Link
-      className="with-nested-link-red-hover block"
-      to={`${CASE_STUDIES_BASE_PATH}${slug}`}
-      onMouseEnter={handleMouseEnter}
-    >
+    <div className="block" onMouseEnter={handleMouseEnter}>
       <h3 className="sr-only">{`${title} case study`}</h3>
       <div className="relative flex min-h-[200px] items-center justify-center overflow-hidden rounded-2xl bg-black lg:min-h-[154px] lg:rounded-xl md:min-h-[180px] sm:min-h-[170px]">
         <img
@@ -57,10 +52,7 @@ const Card = ({ logo, title, description, slug, githubStars, isWrapperInView }) 
         {isWrapperInView && <RiveComponent className="absolute top-0 left-0 right-0 bottom-0" />}
       </div>
       <p className="mt-2.5 text-lg font-normal leading-snug">{description}</p>
-      <Link className="nested-link-red mt-2.5" size="base" theme="arrow-red" withoutHover>
-        {title} case study
-      </Link>
-    </Link>
+    </div>
   );
 };
 
@@ -74,7 +66,6 @@ Card.propTypes = {
   }).isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
   githubStars: PropTypes.string,
   isWrapperInView: PropTypes.bool,
 };
@@ -146,7 +137,7 @@ const CaseStudies = ({ title, itemsType, activeItemSlug, withoutTitleLink }) => 
             </Link>
           )}
         </h2>
-        <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-16 lg:mt-14 lg:gap-y-14 md:mt-11 md:grid-cols-2 md:gap-y-11 sm:mt-10 sm:block sm:space-y-10">
+        <ul className="grid-gap-x mt-16 grid grid-cols-3 gap-y-12 lg:mt-14 lg:gap-y-10 md:mt-11 md:grid-cols-2 md:gap-y-9 sm:mt-10 sm:block sm:space-y-8">
           {itemsToRender.map(({ fields: { slug }, frontmatter, githubStars }, index) => (
             <li key={index}>
               <Card
