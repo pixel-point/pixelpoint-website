@@ -67,6 +67,7 @@ const icons = {
   solarpunk: [FingerprintSquareIcon, LayoutIcon, ProductHuntIcon],
   invertase: [FingerprintSquareIcon, LayoutIcon, EditingSquarePinkIcon],
   cluely: [FingerprintIcon, LayoutIcon, EditingSquareWhiteIcon],
+  vantage: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
