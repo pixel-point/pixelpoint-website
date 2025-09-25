@@ -31,7 +31,7 @@ keynotes:
   - Maintained product-brand coherence through refined UI illustrations
 cover: cover.jpg
 isFeatured: true
-position: 1
+position: 3
 ---
 
 Vantage is a leading platform for cloud cost optimization, offering engineering and finance teams deep visibility and control over their cloud spend. As the company scaled and matured, they approached us to refresh their brand and redesign their website with the goal of elevating their identity without straying from the trust they've built among developers and enterprise clients.
