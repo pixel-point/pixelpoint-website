@@ -7,11 +7,11 @@ title: Vantage
 description: FinOps for modern engineering teams
 websiteUrl: https://www.vantage.sh/
 
-# quote:
-#   text: Time and again, Pixel Point proved to me that we made the right choice to entrust them with our rebrand. Their collaborative approach, organization, and creative process was excellent, but what I enjoyed most was their commitment to over-deliver!
-#   authorName: CJ Cenizal
-#   authorPosition: Head of Front-end Engineering
-#   authorPhoto: author-photo.jpg
+quote:
+  text: The PixelPoint team was collaborative and responsive, iterating on our feedback until the details matched our vision. The finished website is clean, professional, and exactly what we hoped for.
+  authorName: Emily Dunenfeld
+  authorPosition: Senior Technical Growth Manager
+  authorPhoto: author-photo.jpg
 overview: Vantage is a platform for cloud cost optimization, offering engineering and finance teams visibility and control over their cloud spend.
 services:
   - Brand Refresh
