@@ -58,7 +58,7 @@ const icons = {
   bytebase: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
   terzo: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
   harness: [FingerprintSquareIcon, IntegrationsIcon, PerformanceIcon],
-  gitness: [LikeIcon, IntegrationsIcon, PerformanceIcon],
+  gitness: [FingerprintSquareIcon, IntegrationsIcon, PerformanceIcon],
   taipy: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
   huly: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
   agentql: [FingerprintIcon, WebsiteIcon, ProductHuntIcon],
