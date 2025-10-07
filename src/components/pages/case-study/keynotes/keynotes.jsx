@@ -68,6 +68,7 @@ const icons = {
   invertase: [FingerprintSquareIcon, LayoutIcon, EditingSquarePinkIcon],
   cluely: [FingerprintIcon, LayoutIcon, EditingSquareWhiteIcon],
   vantage: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
+  scoutos: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
