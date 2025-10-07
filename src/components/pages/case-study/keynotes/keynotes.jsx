@@ -58,7 +58,7 @@ const icons = {
   bytebase: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
   terzo: [WebsiteIcon, EditingCirclePinkIcon, PerformanceIcon],
   harness: [FingerprintSquareIcon, IntegrationsIcon, PerformanceIcon],
-  gitness: [LikeIcon, IntegrationsIcon, PerformanceIcon],
+  gitness: [FingerprintSquareIcon, IntegrationsIcon, PerformanceIcon],
   taipy: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
   huly: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
   agentql: [FingerprintIcon, WebsiteIcon, ProductHuntIcon],
@@ -68,6 +68,7 @@ const icons = {
   invertase: [FingerprintSquareIcon, LayoutIcon, EditingSquarePinkIcon],
   cluely: [FingerprintIcon, LayoutIcon, EditingSquareWhiteIcon],
   vantage: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
+  scoutos: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (

@@ -6,6 +6,7 @@ logo:
 title: Vectara
 description: The AI Agent and Assistant platform for enterprises
 websiteUrl: https://www.vectara.com/
+# TODO: update preview link
 
 quote:
   text: Time and again, Pixel Point proved to me that we made the right choice to entrust them with our rebrand. Their collaborative approach, organization, and creative process was excellent, but what I enjoyed most was their commitment to over-deliver!
