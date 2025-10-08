@@ -6,6 +6,11 @@ logo:
 title: ScoutOS
 description: The platform for sales workflows automation with AI agents
 websiteUrl: https://scoutos.com/
+quote:
+  text: Pixel Point has been an outstanding partner for Scout. Their talented team consistently delivers exceptional results. What truly sets them apart is their ability to understand complex tech concepts and translate them into compelling visuals.
+  authorName: Bryan Chappell
+  authorPosition: CEO
+  authorPhoto: author-photo.jpg
 overview: ScoutOS is a fast-evolving AI platform for building and deploying LLM-powered sales workflows that helps teams get AI into production faster and with less friction.
 services:
   - Brand Identity
