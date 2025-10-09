@@ -69,6 +69,7 @@ const icons = {
   cluely: [FingerprintIcon, LayoutIcon, EditingSquareWhiteIcon],
   vantage: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
   scoutos: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
+  searchparty: [FingerprintIcon, SpeakerIcon, EditingSquareWhiteIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
