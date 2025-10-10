@@ -33,7 +33,7 @@ keynotes:
   - Built a Sanity-based content managing pipeline for all the website pages
 cover: cover.jpg
 isFeatured: true
-position: 2
+position: 5
 ---
 
 Vectara is an innovative company specializing in Generative AI with a focus on Retrieval Augmented Generation (RAG). Their platform empowers developers to integrate sophisticated AI-driven search and question-answering functionalities into their applications, delivering a reliable, privacy-centric solution that spans various use cases, from semantic search to AI-powered assistants. With a mission to help the world find meaning through technology, Vectara combines the best of AI with seamless user experiences.
