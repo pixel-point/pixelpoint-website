@@ -6,11 +6,6 @@ logo:
 title: Search Party
 description: The platform to take control over your brand's AI visibility
 websiteUrl: https://www.searchparty.com/
-# quote:
-#   text: Pixel Point has been an outstanding partner for Scout. Their talented team consistently delivers exceptional results. What truly sets them apart is their ability to understand complex tech concepts and translate them into compelling visuals.
-#   authorName: Bryan Chappell
-#   authorPosition: CEO
-#   authorPhoto: author-photo.jpg
 overview: Search Party helps you track, analyze, and control how your brand appears in AI-generated answers across large language models like ChatGPT, Gemini, and Claude.
 services:
   - Brand Identity
@@ -43,4 +38,4 @@ Around that time, the creative input from the Search PArty team changed as they 
 
 Once the brand direction was set, we designed and developed the core website experience. Built with Next.js and a Sanity-based CMS, the site is fully modular, giving the Search Party team complete control over content publishing and iteration. We designed explanatory product illustrations and interactive visuals to guide users through Search Party's value proposition, from AI benchmarking to agent strategy recommendations. The final octopus logo was also created at this stage: intelligent, adaptive, and reaching across networks.
 
-Our collaboration with Search Party is ongoing. As the company continues to trailblaze in the rapidly evolving generative engine optimization space, we're proud to support their creative evolution and digital presence, helping them stay not just visible, but unforgettable.
+Search Party continues to trailblaze in the rapidly evolving generative engine optimization space supported by the modern brand image, and we're wishing them success on the journey!
