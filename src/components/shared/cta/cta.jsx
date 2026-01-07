@@ -48,9 +48,7 @@ const CTA = ({ className, withTopMargin }) => {
         </div>
         <div className="sm:mt-4.5" ref={animationWrapperRef}>
           <ImagePlaceholder className="sm:w-full" width={592} height={560}>
-            {isWrapperInView && (
-              <RiveComponent width={592} height={560} className="w-full h-full" />
-            )}
+            {isWrapperInView && <RiveComponent width={592} height={560} />}
           </ImagePlaceholder>
         </div>
       </div>
