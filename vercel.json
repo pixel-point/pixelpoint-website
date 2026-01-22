@@ -6,6 +6,11 @@
       "permanent": true
     },
     {
+      "source": "/careers/",
+      "destination": "https://pixelpoint.notion.site/join-the-team",
+      "permanent": true
+    },
+    {
       "source": "/youtube/",
       "destination": "https://www.youtube.com/@pixelpoint-io?sub_confirmation=1",
       "permanent": true
