@@ -5,7 +5,7 @@ logo:
   height: 44
 title: Search Party
 description: The platform to take control over your brand's AI visibility
-websiteUrl: https://www.searchparty.com/
+websiteUrl: https://search-party-next.vercel.app/
 overview: Search Party helps you track, analyze, and control how your brand appears in AI-generated answers across large language models like ChatGPT, Gemini, and Claude.
 services:
   - Brand Identity
