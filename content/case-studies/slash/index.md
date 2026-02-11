@@ -5,7 +5,7 @@ logo:
   height: 44
 title: Slash
 description: Banking built for entrepreneurs
-websiteUrl: https://www.slash.com/
+websiteUrl: https://slash-next-git-card-hero-pixelpoint.vercel.app/
 
 quote:
   text: The Pixelpoint team is diligent, fast, and pays attention to detail. We couldn't be happier with the final product and look forward to continuing to work with them.
