@@ -25,7 +25,7 @@ keynotes:
   - Implemented a CMS-backed content delivery flow for fast updates
 cover: cover.jpg
 isFeatured: true
-position: 2
+position: 3
 ---
 
 Search Party is pioneering AI-native performance marketing and GEO. Built for the post-Google era, the platform helps enterprise brands become discoverable and framed correctly across large language models like ChatGPT, Gemini, and Claude. Rather than just reporting on visibility, Search Party goes further—prescribing exact content, prompts, and agent strategies to boost brand presence inside AI systems.
