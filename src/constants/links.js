@@ -10,4 +10,5 @@ export default {
   getInTouch: 'https://surveys.pixelpoint.io/work-with-us',
   gatsbyStarter: 'https://github.com/pixel-point/gatsby-tailwind-starter',
   nextjsStarter: 'https://github.com/pixel-point/nextjs-tailwind-starter',
+  primeui: 'https://primeui.com/',
 };

@@ -45,6 +45,7 @@ export default {
     [
       { text: 'About Us', to: LINKS.about },
       { text: 'Blog', to: LINKS.blog },
+      { text: 'Prime UI', to: LINKS.primeui },
     ],
     [
       { text: 'GitHub', to: LINKS.github },
