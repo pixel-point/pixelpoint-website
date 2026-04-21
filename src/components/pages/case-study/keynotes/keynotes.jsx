@@ -50,7 +50,7 @@ const icons = {
   ],
   novu: [WebsiteIcon, FingerprintIcon, EditingSquareBlueIcon],
   revenuecat: [WebsiteIcon, IntegrationsIcon, PerformanceIcon],
-  unkey: [WebsiteIcon, FingerprintIcon, EditingSquarePinkIcon],
+  unkey: [FingerprintIcon, WebsiteIcon, EditingSquarePinkIcon],
   neon: [WebsiteIcon, EditingSquarePinkIcon, FingerprintIcon],
   parca: [WebsiteIcon, EditingSquarePinkIcon, PerformanceIcon],
   nayms: [WebsiteIcon, EditingSquarePinkIcon, PerformanceIcon],
