@@ -30,6 +30,14 @@
       "destination": "https://pixel-point-next.vercel.app/learn/:path*"
     },
     {
+      "source": "/skills/animate-text/",
+      "destination": "https://animate-text-orcin.vercel.app/skills/animate-text"
+    },
+    {
+      "source": "/skills/animate-text/:path*/",
+      "destination": "https://animate-text-orcin.vercel.app/skills/animate-text/:path*"
+    },
+    {
       "source": "/sign-up/",
       "destination": "https://pixel-point-next.vercel.app/sign-up"
     },
