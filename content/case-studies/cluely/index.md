@@ -23,7 +23,7 @@ keynotes:
   - Designed a premium branding for an ambitious AI startup of the future
   - Integrated feature updates from a rapidly evolving product into the website
   - Created explanatory product animations to boost engagement
-position: 1
+position: 2
 cover: cover.jpg
 isFeatured: true
 ---

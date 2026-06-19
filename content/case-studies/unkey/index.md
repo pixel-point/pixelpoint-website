@@ -31,6 +31,8 @@ isFeatured: true
 position: 1
 ---
 
+[Watch the full video breakdown of the project on YouTube](https://youtu.be/DP5SoQRf2Gk?si=pilP4y4Z1amGHhpx)
+
 Unkey is the developer platform for modern APIs, unifying key management, rate limiting, gateways, and observability into a single control plane. Open-source and built for engineers, Unkey solves the fragmented API infrastructure problem that forces teams to juggle multiple vendors for hosting, access control, and monitoring.
 
 The Unkey team gave us their full trust from the start, and that creative freedom made all the difference. With carte blanche to shape the visual direction, we developed a comprehensive branding system designed to scale alongside a fast-moving product. The identity balances technical precision with modern personality: clean typography, a restrained palette, and purposeful motion that communicates sophistication without clutter. Every element was built as part of a cohesive system, from the marketing site down to blog layouts and social assets, so the brand stays consistent as the platform grows.

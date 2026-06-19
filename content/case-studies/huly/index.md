@@ -27,7 +27,7 @@ keynotes:
 cover: cover.jpg
 isFeatured: true
 isOpenSource: true
-position: 1
+position: 2
 ---
 
 Huly, an innovative open-source platform, combines the functionalities of Linear, Jira, Slack, and Notion into one comprehensive tool for process, project, time, and knowledge management.
