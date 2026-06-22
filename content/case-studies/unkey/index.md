@@ -8,6 +8,11 @@ description: The Developer Platform for Modern APIs
 websiteUrl: https://unkey.dev
 githubUsername: unkeyed
 githubRepoName: unkey
+quote:
+  text: Best $90k I've ever spent. The design, the brand and the story telling are more than I could ever imagine.
+  authorName: James Perkins
+  authorPosition: CEO
+  authorPhoto: author-photo.jpg
 overview: Unkey is the developer platform for modern APIs, unifying key management, rate limiting, gateways, and observability into a single control plane. With their full trust, we built a scalable branding system from the ground up and developed custom tooling to accelerate creative workflows.
 services:
   - Brand Identity
@@ -33,7 +38,7 @@ position: 1
 
 Unkey is the developer platform for modern APIs, unifying key management, rate limiting, gateways, and observability into a single control plane. Open-source and built for engineers, Unkey solves the fragmented API infrastructure problem that forces teams to juggle multiple vendors for hosting, access control, and monitoring.
 
-We have posted the full video breakdown of the project on our channel: [Watch on YouTube](https://youtu.be/DP5SoQRf2Gk?si=pilP4y4Z1amGHhpx)
+We have posted the full video breakdown of the project: [Watch it on YouTube](https://youtu.be/DP5SoQRf2Gk?si=pilP4y4Z1amGHhpx)
 
 The Unkey team gave us their full trust from the start, and that creative freedom made all the difference. With carte blanche to shape the visual direction, we developed a comprehensive branding system designed to scale alongside a fast-moving product. The identity balances technical precision with modern personality: clean typography, a restrained palette, and purposeful motion that communicates sophistication without clutter. Every element was built as part of a cohesive system, from the marketing site down to blog layouts and social assets, so the brand stays consistent as the platform grows.
 
