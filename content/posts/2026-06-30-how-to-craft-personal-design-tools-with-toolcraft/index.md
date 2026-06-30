@@ -43,7 +43,7 @@ The process is very simple. And with Toolcraft, you spend more time designing th
 
 If that sounds interesting, I also recommend watching the YouTube tutorial once it is available. It shows Toolcraft in more detail and walks through the process of creating a creative app with it.
 
-[Watch video on YouTube](https://youtu.be/DP5SoQRf2Gk?si=aNCKlc6x08qsIXTa)
+[Watch video on YouTube](https://youtu.be/-QlmkGZLzFo)
 
 But before we go deeper into Toolcraft, let’s take a step back. Why would you even need to build your own design tools?
 
