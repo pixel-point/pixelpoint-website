@@ -1,5 +1,5 @@
 ---
-title: 'How to craft personal design tools with AI'
+title: 'Build personal design tools with AI using Toolcraft'
 summary: Toolcraft is a starter kit and UI library by Pixel Point for building creative tools with AI faster, better, and more predictably.
 author: Alex Barashkov
 cover: cover.png
