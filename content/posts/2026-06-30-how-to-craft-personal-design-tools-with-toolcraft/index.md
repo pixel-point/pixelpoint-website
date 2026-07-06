@@ -41,7 +41,7 @@ You can try a few examples of apps we built with Toolcraft here:
 
 The process is very simple. And with Toolcraft, you spend more time designing the thing you actually want to build, instead of babysitting AI while it fixes bugs in the tool environment.
 
-If that sounds interesting, I also recommend watching the YouTube tutorial once it is available. It shows Toolcraft in more detail and walks through the process of creating a creative app with it.
+To see Toolcraft in more detail and follow the process of creating a creative app with it, watch the YouTube video:
 
 [Watch video on YouTube](https://youtu.be/-QlmkGZLzFo)
 
@@ -127,11 +127,15 @@ Then you open that folder with your AI agent and write a prompt. The prompt shou
 For example, you can find an interesting animation on Pinterest or X, record a video, and give it to the agent. Then you can add a simple explanation:
 
 ```text
-Build a creative tool inspired by this animation.
+Build an app that creates an animation inspired by this video.
 
-I want to upload an image, apply this kind of visual effect, and control the density, speed, colors, distortion, and export size.
+Use ffmpeg to split the video into frames, analyze how the animation works, and use that analysis as the reference for the effect.
 
-Do not copy the reference exactly. Use it as a starting point and make the result feel more unique.
+I want the app to generate a similar animation and let me customize the radius of the outer circle, the density of the inner circles, the waveform amplitude, and the overall speed.
+
+Add a thickness control so the outer circle can be built from 1, 2, 3, 4, or more rows of circles instead of a single row.
+
+I also want to customize the background color, set the main circle color, and add multiple accent colors that are randomly distributed across the circles.
 ```
 
 That is usually enough to start. AI typically works on the initial prompt for 30–60 minutes. During this time, it builds the app, runs checks, optimizes performance, and tries to create the tool you described.
