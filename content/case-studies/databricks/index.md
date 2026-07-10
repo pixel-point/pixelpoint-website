@@ -35,7 +35,7 @@ position: 1
 
 Databricks is the data and AI company behind the Data Intelligence Platform, used by thousands of organizations worldwide to build, deploy, and govern data and AI applications. In 2025, Databricks acquired Neon, the serverless Postgres company, in a landmark deal aimed at helping developers ship AI systems faster.
 
-That acquisition is how our collaboration began. We had partnered with Neon since 2021 — through several brand evolutions, a Series B, and ultimately the Databricks deal — and the relationship carried straight through: shortly after the acquisition, the Databricks team brought us in for our first project together, the new [Databricks Developer Hub](https://developers.databricks.com/).
+That acquisition is how our collaboration began. We had partnered with Neon since day one in 2021 — through several brand evolutions, a Series B, and ultimately the Databricks deal — and the relationship carried straight through: shortly after the acquisition, the Databricks team brought us in for our first project together, the new [Databricks Developer Hub](https://developers.databricks.com/).
 
 The Developer Hub is built for the agentic era. Its promise — build agentic applications in minutes, not months — lets developers copy a single prompt into Cursor, Claude Code, or any coding agent and get walked through building a complete app on Databricks, backed by a library of ready-to-use templates for Lakebase, Model Serving, and AI Gateway. Our challenge was to make that speed felt, not just claimed. We designed custom interactive animations for the experience, including a hero sequence that plays out the entire journey — from prompt to scaffolding to a live, deployed app — before the visitor even scrolls.
 
