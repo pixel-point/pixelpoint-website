@@ -71,6 +71,8 @@ const icons = {
   vantage: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
   scoutos: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
   searchparty: [FingerprintIcon, SpeakerIcon, EditingSquareWhiteIcon],
+  polarSignals: [FingerprintIcon, IntegrationsIcon, PerformanceIcon],
+  databricks: [FingerprintSquareIcon, WebsiteIcon, PerformanceIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
