@@ -19,7 +19,7 @@ const CaseStudiesPage = ({
   <Layout headerTheme="black">
     <CaseStudies items={nodes} />
     <SharedCaseStudies
-      title="More open-source projects we’ve worked on:"
+      title="Trusted for years by dozens of tech companies"
       itemsType="not-featured"
       withoutTitleLink
     />

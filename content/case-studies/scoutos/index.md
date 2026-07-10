@@ -30,8 +30,7 @@ keynotes:
   - Designed and developed a modular website with scalable visual style
   - Implemented a CMS-backed content system with reusable components to accelerate delivery
 cover: cover.jpg
-isFeatured: true
-position: 4
+position: 10
 ---
 
 ScoutOS is a fast-evolving AI platform for building and deploying LLM-powered workflows. With a fully integrated stack from ingestion to benchmarking, ScoutOS helps teams get AI into production faster and with less friction.

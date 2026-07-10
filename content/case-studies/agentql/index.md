@@ -30,8 +30,7 @@ keynotes:
   - Built a Markdown-based docs portal
   - Supported the Product Hunt launch
 cover: cover.jpg
-isFeatured: true
-position: 7
+position: 13
 ---
 
 AgentQL is an AI-powered semantic framework that enables seamless web scraping through natural language-like queries. Designed for reliability, AgentQL adapts to changes in website structures, making it a vital tool for developers who need precise data extraction as websites evolve.

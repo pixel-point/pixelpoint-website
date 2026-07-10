@@ -30,8 +30,7 @@ keynotes:
   - Developed a landing page with explanatory animations
   - Supported the Product Hunt launch
 cover: cover.jpg
-isFeatured: true
-position: 7
+position: 16
 ---
 
 Solarpunk is a platform revolutionizing farming with agrivoltaics — the dual use of land for solar energy and agriculture. Their mission is to simplify solar deployment for farmers, reducing bureaucracy, planning, and financing hurdles. This approach boosts yields (up to 160%), creates microclimates to protect crops, and generates new revenue streams.
