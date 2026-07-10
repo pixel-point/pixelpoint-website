@@ -71,7 +71,7 @@ const icons = {
   vantage: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
   scoutos: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
   searchparty: [FingerprintIcon, SpeakerIcon, EditingSquareWhiteIcon],
-  polarSignals: [FingerprintIcon, IntegrationsIcon, PerformanceIcon],
+  polarsignals: [FingerprintIcon, IntegrationsIcon, PerformanceIcon],
   databricks: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
 };
 
