@@ -72,7 +72,7 @@ const icons = {
   scoutos: [FingerprintSquareIcon, LayoutIcon, IntegrationsIcon],
   searchparty: [FingerprintIcon, SpeakerIcon, EditingSquareWhiteIcon],
   polarSignals: [FingerprintIcon, IntegrationsIcon, PerformanceIcon],
-  databricks: [FingerprintSquareIcon, WebsiteIcon, PerformanceIcon],
+  databricks: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
