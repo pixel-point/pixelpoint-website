@@ -21,21 +21,24 @@ services:
   - Motion Design
 stack:
   - React
-  - Gatsby
+  - Next.js
   - TailwindCSS
-  - Strapi
-  - Mailchimp
+  - Sanity CMS
+  - Rive
 keynotes:
   - Designed & built animation-rich marketing website
   - Reimagined brand identity
-  - Introduced custom blog platform powered by Strapi
+  - Introduced a custom blog platform powered by Sanity CMS
 cover: cover.jpg
 isFeatured: true
 isOpenSource: true
 position: 8
 ---
 
-Since 2021 Novu team has been building an open-source notification infrastructure for developers. They’ve already got a live, engaged community and a solid list of contributors. Having raised seed round, they reached out to us, asking for help with establishing a new brand image and getting a marketing website based on that.
+Novu is the open-source notification infrastructure that turns multi-channel delivery — in-app, email, push, SMS, and chat — into a single unified API and a drop-in Inbox component. Instead of stitching together a provider for every channel, developers define workflows once and let Novu handle the rest.
 
-We began as usual: learned what the project was about, the long-term vision, and gathered a massive moodboard based on style preferences.
-The layout structure and the core message got approved very quickly, and we moved on to the visual direction. Novu wanted to make the website developer-centric, so we prepared a gorgeous dark theme, enriched with graphics, custom icons and a prominent color palette. Every single piece of UI now screams it was made by developers and for developers, proving our goal is accomplished.
+We joined early, when Novu was a fast-growing open-source project that needed a website matching its developer-first DNA. The brief was simple to state and hard to execute: every piece of UI should feel made by developers, for developers. We designed and built a site where the product speaks in its own language — real code, real components, no marketing gloss between the visitor and the API.
+
+The community responded. Novu has grown into one of the most recognized open-source projects in the developer ecosystem: over 39,000 GitHub stars, 400+ contributors, a Product Hunt Golden Kitty Award, and a #1 spot on Hacker News. As the product expanded — from notification infrastructure toward communication infrastructure for agents and products — our partnership expanded with it.
+
+Today we work with Novu on an ongoing retainer covering far more than the website: launch videos, product explainers, ad campaigns, and landing pages for new product lines like Novu Agent Communication Infrastructure. It's the kind of long-term collaboration we value most: one where we know the product deeply enough to move at the team's lightning fast speed.

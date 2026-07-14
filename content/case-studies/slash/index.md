@@ -27,7 +27,7 @@ stack:
   - Vercel
   - Rive
 keynotes:
-  - Established a sharp brand identity aligned with Slash's market positioning
+  - Delivered a website positioning Slash as a premium financial platform
   - Designed a high-conversion website for a vertical-first fintech company
   - Implemented a scalable CMS for ongoing content updates and blog posts
 cover: cover.jpg
@@ -43,4 +43,4 @@ We delivered a sleek, performance-optimized website built on Next.js and Sanity 
 
 The new digital presence is more than a facelift — it is a growth platform. It supports Slash's ambitious plans to scale its marketing efforts, launch campaigns, and expand its reach into new verticals. The site is designed to convert visitors into customers, with clear calls to action and a user-friendly experience that guides entrepreneurs through the onboarding process.
 
-This project sets the stage for Slash to lead in fintech for underserved verticals — one high-spend niche at a time. We continue to support them on a retainer basis, creating new pages and ensuring their website evolves alongside their business.
+Our work with Slash coincided with the fastest growth phase in the company's history. Since the redesign, Slash has grown from $10 million to $250 million in annualized revenue, surpassed $30 billion in annualized payment volume, and in 2026 reached unicorn status with a $100 million Series C led by Ribbit Capital at a $1.4 billion valuation. Our engagement concluded in early 2026, with a complete brand and design system in place for the team to build on.

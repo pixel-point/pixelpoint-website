@@ -34,4 +34,6 @@ With a product evolving quickly and targeting market disruption, Cluely needed a
 
 We structured the site around the pillars of the user experience brought to life through top-notch motion design. Scroll-triggered UI animations explain how Cluely handles most common scenarios with minimal friction and maximum clarity. We also extended the visual system to support the Enterprise, Pricing, and Manifesto pages — all while maintaining a strong, minimal aesthetic built on contrast, clarity, and modern typography.
 
-This collaboration resulted in a lightweight, responsive, and future-facing site that communicates Cluely's value in seconds — and supports its ambition to reshape how people interact with AI in live settings.
+Speed mattered: Cluely was one of the most talked-about consumer AI startups of 2025, and the website needed to convert attention into understanding in seconds. Shortly after launch, the company closed a $15 million Series A led by Andreessen Horowitz at a reported $120 million valuation — just two months after its seed round.
+
+The collaboration resulted in a lightweight, responsive, and future-facing site that communicates Cluely's value in seconds — and supports its ambition to reshape how people interact with AI in live settings.
