@@ -6,11 +6,11 @@ logo:
 title: Polar Signals
 description: Always-on continuous profiling for CPU, GPU, and memory
 websiteUrl: https://www.polarsignals.com/
-# quote:
-#   text: Best $90k I've ever spent. The design, the brand and the story telling are more than I could ever imagine.
-#   authorName: James Perkins
-#   authorPosition: CEO
-#   authorPhoto: author-photo.jpg
+quote:
+  text: We shipped features for years but neglected our website presence. PixelPoint has been an awesome partner to help us now keep it up to date. I particularly enjoy that the team is very technical so it has been a breeze working with them without us having to explain much. I also enjoyed that we could leave them fairly hands off and come back with very high quality results.
+  authorName: Frederic Branczyk
+  authorPosition: CEO and Founder
+  authorPhoto: author-photo.jpeg
 overview: Polar Signals provides always-on continuous profiling for CPU, GPU, and memory, helping engineering teams improve performance and cut infrastructure costs. We evolved their brand and website with motion-rich design while keeping the logo and developer recognition intact.
 services:
   - Brand Identity

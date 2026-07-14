@@ -40,6 +40,4 @@ Our work began with a careful brand refresh. We preserved the existing logo but 
 
 A major focus of the redesign was content depth and scalability. We redesigned core pages like the homepage, pricing, and blog and also updated a large number of feature and integration pages. Each was rebuilt using a library of custom illustrations and reusable components, ensuring consistency and faster iterations.
 
-Subtle visual effects and animations were used to add engagement without distraction. We also used product screen illustrations to ground the experience in the Vantage interface.
-
-We're proud to have supported Vantage during this key stage of their growth, and to have delivered a digital experience that balances trust, clarity, and technical sophistication.
+We're proud to have supported Vantage during this key stage of their growth. The redesign reflected where Vantage was heading: deeper into the enterprise. The company's platform is trusted by more than 300 organizations — including NASA, Square, PBS, and Ripple — managing over $1 billion in annualized cloud costs, backed by $25 million from Scale Venture Partners and Andreessen Horowitz.

@@ -19,21 +19,26 @@ services:
   - Web Development
 stack:
   - React
-  - Gatsby
+  - Next.js
+  - TypeScript
+  - Rive
   - TailwindCSS
-  - Headless WordPress
-  - Netlify
+  - Sanity CMS
+  - Vercel
 keynotes:
-  - Designed & developed a brand-new marketing website
-  - Diligently migrated all the content and integrations from Webflow
-  - Increased the performance score up to 97 points despite animation-heavy content
+  - Designed & developed a brand new multilingual marketing website
+  - Diligently migrated all the content and integrations to a new stack
+  - Created a full set of reusable templates and components for page creation
 cover: cover.jpg
 isFeatured: true
 position: 9
 ---
 
-Almost 5 straight years RevenueCat has been represented to their customers via a simple website built with Webflow. While it was just enough for the beginning, the company expansion made it obvious that they had outgrown the no-code platform, which appeared to be slow, had limited code customization, and confusing traffic plan variations. They've started to look for an agency that could help with the redesign and migration to a modern JAMStack-based website and found us.
+Almost five years RevenueCat have been using a simple website built with Webflow. While it was just enough for the beginning, the company expansion made it obvious that they had outgrown the no-code platform, which appeared to be slow, had limited code customization, and confusing traffic plan variations. In 2021, they've started to look for an agency that could help with the redesign and migration to a modern JAMStack-based website and found us.
 
 We came up with a brand-new look for the upcoming platform quite fast as the guys already had wonderful company history and tons of content to dig through and learn. However, the "what" and "how" visualization of the in-app subscriptions service by the means of illustrations and complex animations is not an easy thing to do, so it took us a good deal of iteration to make it perfect.
 
-We reimagined a whole bunch of product, pricing, and customer pages, all the time working side-by-side with the RevenueCat’s product designer to make sure the assets and visual direction we were introducing would fit into the product app neatly. The website was powered yet again by Gatsby and Headless WP, ensuring the sweatless pages creation and editing experience without compromising on performance.
+We reimagined a whole bunch of product, comparison, and customer pages, all the time working side-by-side with the RevenueCat's product team to make sure the assets and visual direction we were introducing would fit into the product app neatly. The initial website was powered by Gatsby and WordPress, ensuring the easy pages creation and editing experience.
+In 2026, we have supported RevenueCat through a full migration to a modern Next.js, TypeScript, and Sanity CMS stack, following the industry-standard best practices.
+
+During our collaboration, RevenueCat has become core infrastructure for the app economy: the platform now processes over $8 billion in annual transactions, powers monetization for apps including OpenAI's ChatGPT, Notion, and VSCO, and ships under the hood of more than one in three new subscription apps launched worldwide. In 2025, the company raised a $50 million Series C led by Bain Capital Ventures, bringing total funding to $100 million — and our collaboration continues to this day.

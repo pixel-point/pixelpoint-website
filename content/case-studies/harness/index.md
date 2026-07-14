@@ -39,4 +39,4 @@ We have been working with the Harness team on various projects since 2019, so th
 
 However, despite the detailed execution and the client's initial positive feedback, the website was ultimately not launched due to a radical shift in product messaging at Harness, which occurred just as we were adding the finishing touches. This late-stage pivot made it clear that the new strategic direction required a different approach to website design, leading to the decision to shelf the project.
 
-Nevertheless, the Harness project remains a benchmark within our portfolio, demonstrating our commitment to pushing the boundaries of design and user interaction in web development. In the meantime, we continue to work with Harness on product design for their platform.
+While the site never shipped, the engagement remains a benchmark for enterprise-scale design work in our portfolio. Harness has continued its remarkable run since: in December 2025, the company raised $240 million at a $5.5 billion valuation, on track to exceed $250 million in ARR with more than 1,000 enterprise engineering teams, including United Airlines and Morningstar, on the platform.
