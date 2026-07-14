@@ -16,7 +16,7 @@ You can write a more detailed prompt. You can ask AI to use a UI library. You ca
 
 Until today.
 
-We’re happy to announce **Toolcraft by Pixel Point** — our starter kit and UI library for building creative tools faster, better, and more predictably.
+We’re happy to announce **[Toolcraft](https://toolcraft.sh) by Pixel Point** — our starter kit and UI library for building creative tools faster, better, and more predictably.
 
 To start, run:
 
@@ -77,7 +77,7 @@ Technically, we could have used another animation tool for that. But for this sp
 
 ## What is Toolcraft?
 
-Toolcraft is a starter kit and UI library that we created at Pixel Point. Its goal is to solve the common problems designers face when building creative apps with AI.
+[Toolcraft](https://toolcraft.sh) is a starter kit and UI library that we created at Pixel Point. Its goal is to solve the common problems designers face when building creative apps with AI.
 
 It comes with many different components: sliders, dropdowns, textareas, font pickers, color pickers, curves, toolbars, layers, keyframe controls, and more. But components are only one part of Toolcraft. The bigger part is the system around them.
 
@@ -112,7 +112,7 @@ It also works well for reverse-engineering tasks. For example, you can take a vi
 
 ## How to use Toolcraft
 
-Using Toolcraft is very simple. You start with the command-line tool. Run this command in your terminal:
+Using [Toolcraft](https://toolcraft.sh) is very simple. You start with the command-line tool. Run this command in your terminal:
 
 ```bash
 npx @pixel-point/toolcraft create
