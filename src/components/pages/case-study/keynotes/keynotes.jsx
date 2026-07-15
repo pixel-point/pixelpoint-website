@@ -73,6 +73,9 @@ const icons = {
   searchparty: [FingerprintIcon, SpeakerIcon, EditingSquareWhiteIcon],
   polarsignals: [FingerprintIcon, IntegrationsIcon, PerformanceIcon],
   databricks: [FingerprintIcon, WebsiteIcon, PerformanceIcon],
+  railway: [IntegrationsIcon, WebsiteIcon, SpeakerIcon],
+  interhuman: [FingerprintIcon, WebsiteIcon, SpeakerIcon],
+  bfl: [FingerprintIcon, WebsiteIcon, SpeakerIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
