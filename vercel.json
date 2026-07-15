@@ -18,6 +18,18 @@
   ],
   "rewrites": [
     {
+      "source": "/aval",
+      "destination": "https://aval-demo-ten.vercel.app/aval"
+    },
+    {
+      "source": "/aval/",
+      "destination": "https://aval-demo-ten.vercel.app/aval/"
+    },
+    {
+      "source": "/aval/:path*",
+      "destination": "https://aval-demo-ten.vercel.app/aval/:path*"
+    },
+    {
       "source": "/links/",
       "destination": "https://pixel-point-next.vercel.app/links"
     },
