@@ -21,6 +21,7 @@ const Content = ({
   services,
   stack,
   githubStars,
+  isVideo,
 }) => (
   <article className="safe-paddings bg-black pt-40 text-white lg:pt-36 sm:pt-24">
     <div className="container grid-gap-x grid grid-cols-12 items-start md:block">
@@ -37,7 +38,7 @@ const Content = ({
           target="_blank"
           rel="noopener noreferrer"
         >
-          Visit {title}
+          {isVideo ? 'Watch video' : `Visit ${title}`}
         </Link>
         {quote && (
           <figure className="mt-12">
@@ -150,6 +151,7 @@ Content.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   websiteUrl: PropTypes.string.isRequired,
+  isVideo: PropTypes.bool,
   githubUsername: PropTypes.string,
   githubRepoName: PropTypes.string,
   quote: PropTypes.exact({
@@ -170,6 +172,7 @@ Content.propTypes = {
 
 Content.defaultProps = {
   githubUsername: null,
+  isVideo: false,
   githubRepoName: null,
   quote: null,
   githubStars: null,

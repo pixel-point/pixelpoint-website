@@ -27,6 +27,7 @@ const CaseStudyTemplate = ({
     title: frontmatter.title,
     description: frontmatter.description,
     websiteUrl: frontmatter.websiteUrl,
+    isVideo: frontmatter.isVideo,
     githubUsername: frontmatter.githubUsername,
     githubRepoName: frontmatter.githubRepoName,
     quote: frontmatter.quote,
@@ -68,6 +69,7 @@ export const query = graphql`
         title
         description
         websiteUrl
+        isVideo
         githubUsername
         githubRepoName
         quote {

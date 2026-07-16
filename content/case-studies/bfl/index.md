@@ -5,7 +5,8 @@ logo:
   height: 44
 title: Black Forest Labs
 description: Frontier visual intelligence — the lab behind FLUX
-websiteUrl: https://bfl.ai/
+websiteUrl: https://x.com/bfl_ai/status/1993345470945804563
+isVideo: true
 overview: Black Forest Labs is the frontier AI lab behind FLUX, one of the most widely adopted image model families in the world, integrated by Adobe, Canva, and Meta. We produced launch videos for two of their flagship releases — FLUX.1 Kontext and FLUX 2 — translating frontier research into stories anyone can watch and understand.
 services:
   - Video Production

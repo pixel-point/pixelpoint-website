@@ -5,7 +5,8 @@ logo:
   height: 44
 title: Railway
 description: The infrastructure platform for deploying anything
-websiteUrl: https://railway.com/mobile
+websiteUrl: https://x.com/Railway/status/2067230889713475877
+isVideo: true
 overview: Railway is the infrastructure platform developers use to deploy anything — from side projects to production systems — without touching servers. When the team brought their platform to mobile, they needed a launch video for the new app, plus a campaign landing page delivered on a ten-day deadline.
 services:
   - Video Production

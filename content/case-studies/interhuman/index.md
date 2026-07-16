@@ -5,7 +5,8 @@ logo:
   height: 44
 title: Interhuman AI
 description: The social intelligence layer for AI
-websiteUrl: https://www.interhuman.ai/
+websiteUrl: https://x.com/InterhumanAI/status/2044416351859622363
+isVideo: true
 overview: Interhuman AI is building the social intelligence layer for AI to let machines read the human communication that happens beyond words. For the launch of Inter-1, their omni-modal model detecting social signals from video, audio, and text, we produced a product video that shows what it means for AI to finally read the room.
 services:
   - Video Production
