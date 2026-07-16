@@ -33,8 +33,8 @@ Our collaboration with Railway spans formats. For the <a href="https://railway.c
 
 When Railway brought its platform to <a href="https://railway.com/mobile">mobile</a>, we produced the launch video announcing the new app, which lets developers deploy, monitor, and manage services from anywhere, including spinning up new projects through the Railway Agent from 3,000+ templates. We handled the video production end to end — storyboarding, motion design, and final edit.
 
-<blockquote class="twitter-tweet">
+<!-- <blockquote class="twitter-tweet">
   <a href="https://twitter.com/Railway/status/2067230889713475877"></a>
-</blockquote>
+</blockquote> -->
 
 The video launched alongside the iOS app in 2026, marking Railway's expansion beyond the desktop for the first time. It's part of an ongoing collaboration with one of the most recognized brands in developer tooling, and we're proud to be the team Railway trusts when a launch needs to land.

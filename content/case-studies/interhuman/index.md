@@ -29,8 +29,8 @@ The video concept was to make the social signals visible: showing a conversation
 
 For a company whose entire thesis is that meaning lives beyond words, the video had to embody the message — every cut, pause, and motion choice carrying tone the script alone couldn't. That made it as much a communication-design challenge as a production one.
 
-<blockquote class="twitter-tweet">
+<!-- <blockquote class="twitter-tweet">
   <a href="https://x.com/InterhumanAI/status/2044416351859622363"></a>
-</blockquote>
+</blockquote> -->
 
 The video anchored Inter-1's public launch, introducing a new category — social intelligence for AI — to developers and the broader market. It's the kind of work we love most: giving shape to a product the world hasn't seen before.
