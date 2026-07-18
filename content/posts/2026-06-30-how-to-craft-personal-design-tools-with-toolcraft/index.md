@@ -34,10 +34,12 @@ Wait 30–60 minutes and get a nicely working app out of it.
 
 You can try a few examples of apps we built with Toolcraft here:
 
-- [draw-tool](https://draw-tool-one.vercel.app)
-- [3d-dots](https://3d-dotts.vercel.app)
-- [bricks](https://bricks-test-hazel.vercel.app)
-- [liquid-glass](https://glass-lemon.vercel.app)
+- [Textures](https://toolcraft.sh/demos/liquid-metal)
+- [Watercolor](https://toolcraft.sh/demos/draw-tool)
+- [ASCII](https://toolcraft.sh/demos/ascii)
+- [Bricks](https://toolcraft.sh/demos/bricks)
+- [Shaders](https://toolcraft.sh/demos/glass)
+- [Frozen](https://toolcraft.sh/demos/frozen)
 
 The process is very simple. And with Toolcraft, you spend more time designing the thing you actually want to build, instead of babysitting AI while it fixes bugs in the tool environment.
 
