@@ -1,0 +1,30 @@
+# .github/workflows/monthly-blog-draft.yml
+name: Monthly Blog Draft
+
+on:
+  schedule:
+    - cron: '0 9 1 * *'
+  workflow_dispatch: {}
+
+jobs:
+  generate-draft:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: node scripts/blog-pipeline/run.js
+        env:
+          X_API_BEARER_TOKEN: ${{ secrets.X_API_BEARER_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_AUTHOR_NAME: 'blog-pipeline-bot'
+          GIT_AUTHOR_EMAIL: 'bot@pixelpoint.io'
+          GIT_COMMITTER_NAME: 'blog-pipeline-bot'
+          GIT_COMMITTER_EMAIL: 'bot@pixelpoint.io'
