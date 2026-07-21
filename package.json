@@ -30,7 +30,7 @@
     "lint:md": "markdownlint --ignore-path .gitignore .",
     "lint:md:fix": "markdownlint --fix --ignore-path .gitignore .",
     "prepare": "husky install",
-    "test": "node --test scripts/ src/constants/"
+    "test": "node --test 'scripts/**/*.test.js' 'src/constants/**/*.test.js'"
   },
   "dependencies": {
     "@code-hike/mdx": "^0.9.0",
