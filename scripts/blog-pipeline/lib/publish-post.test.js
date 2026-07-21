@@ -21,6 +21,7 @@ test('writes index.md with frontmatter and copies the cover image', () => {
   assert.equal(folderName, '2026-07-21-alex-update');
   const written = fs.readFileSync(path.join(postDir, 'index.md'), 'utf8');
   assert.ok(written.includes("title: 'Alex''s Update'") || written.includes("title: 'Alex\\'s Update'"));
+  assert.ok(written.includes("summary: 'Summary text'"));
   assert.ok(written.includes('author: Alex Barashkov'));
   assert.ok(written.includes('category: Updates'));
   assert.ok(written.includes('Body text'));

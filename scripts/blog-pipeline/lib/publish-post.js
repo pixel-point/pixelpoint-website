@@ -10,15 +10,17 @@ function publishPost({
   author = 'Alex Barashkov',
   category = 'Updates',
 }) {
-  const folderName = `${publishDate}-${draft.slug}`;
+  const slug = draft.slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const folderName = `${publishDate}-${slug}`;
   const postDir = path.join(repoRoot, 'content', 'posts', folderName);
   fs.mkdirSync(postDir, { recursive: true });
 
   const escapedTitle = draft.title.replace(/'/g, "''");
+  const escapedSummary = draft.summary.replace(/'/g, "''");
   const frontmatter = [
     '---',
     `title: '${escapedTitle}'`,
-    `summary: ${draft.summary}`,
+    `summary: '${escapedSummary}'`,
     `author: ${author}`,
     'cover: cover.png',
     `category: ${category}`,
