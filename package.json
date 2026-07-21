@@ -29,7 +29,8 @@
     "lint:js:fix": "eslint --fix --ext .js,.jsx --ignore-path .gitignore .",
     "lint:md": "markdownlint --ignore-path .gitignore .",
     "lint:md:fix": "markdownlint --fix --ignore-path .gitignore .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "node --test scripts/ src/constants/"
   },
   "dependencies": {
     "@code-hike/mdx": "^0.9.0",
@@ -45,7 +46,9 @@
     "gatsby-plugin-twitter": "^5.12.3",
     "gatsby-remark-embed-video": "^3.2.1",
     "gatsby-remark-embedder": "^7.0.0",
+    "gray-matter": "^4.0.3",
     "lodash.get": "^4.4.2",
+    "openai": "^6.48.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
