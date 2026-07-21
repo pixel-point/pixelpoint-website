@@ -38,18 +38,20 @@ export default {
   ],
   footer: [
     [
+      { text: 'About Us', to: LINKS.about },
+      { text: 'Blog', to: LINKS.blog },
+      { text: 'Prime UI', to: LINKS.primeui },
+      { text: 'Toolcraft', to: LINKS.toolcraft },
+    ],
+    [
       { text: 'Web Design', to: LINKS.webDesign },
       { text: 'Web Development', to: LINKS.webDevelopment },
       { text: 'Case Studies', to: LINKS.caseStudies },
     ],
     [
-      { text: 'About Us', to: LINKS.about },
-      { text: 'Blog', to: LINKS.blog },
-      { text: 'Prime UI', to: LINKS.primeui },
-    ],
-    [
       { text: 'GitHub', to: LINKS.github },
       { text: 'Twitter', to: LINKS.twitter },
+      { text: 'YouTube', to: LINKS.youtube },
     ],
   ],
   footerSm: [

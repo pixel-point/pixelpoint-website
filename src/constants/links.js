@@ -6,9 +6,11 @@ export default {
   about: '/about/',
   github: 'https://github.com/pixel-point',
   twitter: 'https://twitter.com/alex_barashkov',
+  youtube: 'https://www.youtube.com/@pixelpoint-io?sub_confirmation=1',
   email: 'mailto:info@pixelpoint.io',
   getInTouch: 'https://surveys.pixelpoint.io/work-with-us',
   gatsbyStarter: 'https://github.com/pixel-point/gatsby-tailwind-starter',
   nextjsStarter: 'https://github.com/pixel-point/nextjs-tailwind-starter',
   primeui: 'https://primeui.com/',
+  toolcraft: 'https://toolcraft.sh',
 };
