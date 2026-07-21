@@ -7,9 +7,12 @@ qualifying X posts into a company-blog PR in a new "Updates" category, gated
 on his informal review before merge.
 
 **Architecture:** A single Node script (`scripts/blog-pipeline/run.js`),
-composed of small pure/injectable modules (fetch, filter, classify+dedup,
-draft, publish, git/PR, Slack), run by a GitHub Actions workflow on a
-monthly cron (plus manual `workflow_dispatch`). No new service, no database.
+composed of small pure/injectable modules (fetch, one-liner filter,
+classify+dedup+group, draft, publish, git/PR, Slack), run by a GitHub
+Actions workflow on a monthly cron (plus manual `workflow_dispatch`). A run
+can produce zero, one, or several posts in a single PR depending on how the
+classify step groups the month's qualifying posts. No new service, no
+database.
 
 **Tech Stack:** Node 22 (matches `engines.node` already pinned in
 `package.json`), Node's built-in `node:test` runner (zero new test-framework
@@ -239,6 +242,14 @@ git commit -m "feat: add X API fetch module for blog pipeline"
 
 ### Task 4: `filter-posts` module
 
+This is deliberately a *cheap noise filter*, not a substance judgment — a dry
+run against real June 2026 posts showed that a strict length cutoff (the
+original design used 200 chars) drops genuinely good short posts (e.g. a
+~115-character "behind the scenes" client note). Substance is judged by the
+classify step (Task 7) instead; this step only exists to skip obvious
+one-liners like "People are having fun with Toolcraft." before spending an
+LLM call on them.
+
 **Files:**
 - Create: `scripts/blog-pipeline/lib/filter-posts.js`
 - Test: `scripts/blog-pipeline/lib/filter-posts.test.js`
@@ -251,10 +262,10 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { filterCandidates } = require('./filter-posts');
 
-test('drops posts shorter than the minimum length', () => {
+test('drops one-liners with no real content', () => {
   const posts = [
     { id: '1', text: 'People are having fun with Toolcraft.' },
-    { id: '2', text: 'x'.repeat(250) },
+    { id: '2', text: 'Behind the scenes of the launch video production for Railway. From initial request to final release in less than two weeks.' },
   ];
   const result = filterCandidates(posts);
   assert.deepEqual(result.map((p) => p.id), ['2']);
@@ -276,7 +287,7 @@ Expected: FAIL with "Cannot find module './filter-posts'"
 
 ```js
 // scripts/blog-pipeline/lib/filter-posts.js
-const MIN_LENGTH = 200;
+const MIN_LENGTH = 60;
 
 function filterCandidates(posts, { minLength = MIN_LENGTH } = {}) {
   return posts.filter((post) => post.text.trim().length >= minLength);
@@ -294,7 +305,7 @@ Expected: PASS (2 tests)
 
 ```bash
 git add scripts/blog-pipeline/lib/filter-posts.js scripts/blog-pipeline/lib/filter-posts.test.js
-git commit -m "feat: add heuristic length filter for blog pipeline"
+git commit -m "feat: add cheap one-liner filter for blog pipeline"
 ```
 
 ---
@@ -455,6 +466,13 @@ git commit -m "feat: read X handle from post-authors.json"
 
 ### Task 7: `classify-posts` module
 
+This step carries the actual quality bar (see the design doc's "Content
+quality bar" section): not just "is this on-topic," but "would this stand
+alone as worth reading for someone with zero context on Alex's X feed." It
+also decides how the survivors split into one or more article groups, so a
+single big story doesn't get diluted by being bundled with unrelated small
+updates.
+
 **Files:**
 - Create: `scripts/blog-pipeline/lib/classify-posts.js`
 - Test: `scripts/blog-pipeline/lib/classify-posts.test.js`
@@ -465,7 +483,7 @@ git commit -m "feat: read X handle from post-authors.json"
 // scripts/blog-pipeline/lib/classify-posts.test.js
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { classifyPosts, buildClassifyPrompt } = require('./classify-posts');
+const { classifyAndGroupPosts, buildClassifyPrompt } = require('./classify-posts');
 
 test('buildClassifyPrompt lists existing posts and candidate ids', () => {
   const prompt = buildClassifyPrompt(
@@ -473,31 +491,38 @@ test('buildClassifyPrompt lists existing posts and candidate ids', () => {
     [{ title: 'Toolcraft', summary: 'A design tool' }]
   );
   assert.ok(prompt.includes('Toolcraft: A design tool'));
+  assert.ok(prompt.includes('zero context'));
+  assert.ok(prompt.includes('personal side project'));
   assert.ok(prompt.includes('"id":"1"') || prompt.includes('"id": "1"'));
 });
 
-test('classifyPosts returns only posts the model marks qualifying', async () => {
+test('classifyAndGroupPosts returns groups of full post objects', async () => {
   const fakeClient = {
     chat: {
       completions: {
         create: async () => ({
-          choices: [{ message: { content: JSON.stringify({ qualifying_post_ids: ['2'] }) } }],
+          choices: [{ message: { content: JSON.stringify({ groups: [{ post_ids: ['2'] }, { post_ids: ['3', '4'] }] }) } }],
         }),
       },
     },
   };
   const candidates = [
     { id: '1', text: 'skip me' },
-    { id: '2', text: 'keep me' },
+    { id: '2', text: 'standalone story' },
+    { id: '3', text: 'small update one' },
+    { id: '4', text: 'small update two' },
   ];
-  const result = await classifyPosts({ candidates, existingPosts: [], openaiClient: fakeClient });
-  assert.deepEqual(result.map((p) => p.id), ['2']);
+  const result = await classifyAndGroupPosts({ candidates, existingPosts: [], openaiClient: fakeClient });
+  assert.deepEqual(
+    result.map((group) => group.map((p) => p.id)),
+    [['2'], ['3', '4']]
+  );
 });
 
-test('classifyPosts returns empty array without calling the model when there are no candidates', async () => {
+test('classifyAndGroupPosts returns no groups without calling the model when there are no candidates', async () => {
   let called = false;
   const fakeClient = { chat: { completions: { create: async () => { called = true; } } } };
-  const result = await classifyPosts({ candidates: [], existingPosts: [], openaiClient: fakeClient });
+  const result = await classifyAndGroupPosts({ candidates: [], existingPosts: [], openaiClient: fakeClient });
   assert.deepEqual(result, []);
   assert.equal(called, false);
 });
@@ -515,7 +540,9 @@ Expected: FAIL with "Cannot find module './classify-posts'"
 function buildClassifyPrompt(candidates, existingPosts) {
   return [
     'You are screening X posts for a company blog "Updates" category.',
-    'Keep only posts that describe genuine design-process notes, product announcements, or release videos.',
+    'The bar is not just "is this on-topic" — keep a post only if it would stand alone as worth reading for someone with zero context on the author\'s X feed: a real design-process note, product announcement, or release, not a status update that only makes sense to an existing follower.',
+    'Personal side projects (open-source tools, solo builds) count and should be kept if they clear that bar — they still reflect the team\'s expertise even when not officially branded company work.',
+    'Exclude opinion or thought-leadership essays not tied to a specific project or release, for now.',
     "Drop posts that are just commentary on someone else's work, one-line reactions, or posts already covered by an existing blog post.",
     '',
     'Existing blog posts (do not re-cover these topics):',
@@ -524,11 +551,12 @@ function buildClassifyPrompt(candidates, existingPosts) {
     'Candidate posts (JSON):',
     JSON.stringify(candidates.map((p) => ({ id: p.id, text: p.text }))),
     '',
-    'Respond with JSON: { "qualifying_post_ids": ["..."] }',
+    'Group the posts that qualify into one or more article topics: a single substantial story should be its own group; several smaller updates can share one group as a bundled roundup.',
+    'Respond with JSON: { "groups": [{ "post_ids": ["..."] }, ...] } — omit any post id that does not qualify.',
   ].join('\n');
 }
 
-async function classifyPosts({ candidates, existingPosts, openaiClient }) {
+async function classifyAndGroupPosts({ candidates, existingPosts, openaiClient }) {
   if (candidates.length === 0) return [];
 
   const completion = await openaiClient.chat.completions.create({
@@ -537,11 +565,12 @@ async function classifyPosts({ candidates, existingPosts, openaiClient }) {
     response_format: { type: 'json_object' },
   });
 
-  const { qualifying_post_ids: qualifyingIds } = JSON.parse(completion.choices[0].message.content);
-  return candidates.filter((post) => qualifyingIds.includes(post.id));
+  const { groups } = JSON.parse(completion.choices[0].message.content);
+  const postsById = new Map(candidates.map((post) => [post.id, post]));
+  return groups.map((group) => group.post_ids.map((id) => postsById.get(id)).filter(Boolean));
 }
 
-module.exports = { classifyPosts, buildClassifyPrompt };
+module.exports = { classifyAndGroupPosts, buildClassifyPrompt };
 ```
 
 **Step 4: Run tests to verify they pass**
@@ -553,7 +582,7 @@ Expected: PASS (3 tests)
 
 ```bash
 git add scripts/blog-pipeline/lib/classify-posts.js scripts/blog-pipeline/lib/classify-posts.test.js
-git commit -m "feat: add LLM classify+dedup step for blog pipeline"
+git commit -m "feat: add LLM classify+dedup+group step for blog pipeline"
 ```
 
 ---
@@ -572,10 +601,11 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { draftPost, buildDraftPrompt } = require('./draft-post');
 
-test('buildDraftPrompt tells the model to preserve I/we framing', () => {
+test('buildDraftPrompt tells the model to preserve I/we framing and write editorially', () => {
   const prompt = buildDraftPrompt([{ text: 'I built a tool', url: 'https://x.com/1' }]);
   assert.ok(prompt.includes('keep it first-person'));
   assert.ok(prompt.includes('I built a tool'));
+  assert.ok(prompt.includes("Don't just reformat"));
 });
 
 test('draftPost parses the model JSON response into a draft object', async () => {
@@ -606,9 +636,9 @@ Expected: FAIL with "Cannot find module './draft-post'"
 // scripts/blog-pipeline/lib/draft-post.js
 function buildDraftPrompt(posts) {
   return [
-    'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO).',
+    'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
     'Preserve his framing: if a post says "I built X," keep it first-person; if it credits the team ("our design process"), keep that framing. Do not force everything into "we."',
-    'Combine multiple posts into one cohesive monthly update if there is more than one.',
+    "Don't just reformat the source posts into blog-post shape — write editorially: explain the problem being solved, translate any jargon into plain language, and add a concrete example if it helps a reader with zero context on these posts understand why this matters. The goal is a piece that reads as genuinely worth someone's time, not a tidied-up repost.",
     '',
     'Source posts (JSON):',
     JSON.stringify(posts.map((p) => ({ text: p.text, url: p.url }))),
@@ -836,9 +866,11 @@ function run(cmd, args, options) {
   return execFileSync(cmd, args, { stdio: 'pipe', encoding: 'utf8', ...options });
 }
 
-function openDraftPr({ repoRoot, branchName, postDir, prTitle, prBody }) {
+function openDraftPr({ repoRoot, branchName, postDirs, prTitle, prBody }) {
   run('git', ['checkout', '-b', branchName], { cwd: repoRoot });
-  run('git', ['add', postDir], { cwd: repoRoot });
+  for (const postDir of postDirs) {
+    run('git', ['add', postDir], { cwd: repoRoot });
+  }
   run('git', ['commit', '-m', prTitle], { cwd: repoRoot });
   run('git', ['push', '-u', 'origin', branchName], { cwd: repoRoot });
   const prUrl = run(
@@ -876,7 +908,7 @@ const path = require('node:path');
 const OpenAI = require('openai');
 const { getUserId, fetchRecentPosts } = require('./lib/fetch-posts');
 const { filterCandidates } = require('./lib/filter-posts');
-const { classifyPosts } = require('./lib/classify-posts');
+const { classifyAndGroupPosts } = require('./lib/classify-posts');
 const { draftPost } = require('./lib/draft-post');
 const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
@@ -902,9 +934,9 @@ async function main() {
 
   const candidates = filterCandidates(posts);
   const existingPosts = readExistingPosts(REPO_ROOT);
-  const qualifying = await classifyPosts({ candidates, existingPosts, openaiClient });
+  const groups = await classifyAndGroupPosts({ candidates, existingPosts, openaiClient });
 
-  if (qualifying.length === 0) {
+  if (groups.length === 0) {
     console.log('No qualifying posts this month — skipping.');
     if (!dryRun) {
       await notifySlack({ webhookUrl: SLACK_WEBHOOK_URL, text: 'No qualifying posts this month — skipping.' });
@@ -912,32 +944,50 @@ async function main() {
     return;
   }
 
-  const draft = await draftPost({ qualifyingPosts: qualifying, openaiClient });
+  const drafts = [];
+  for (const group of groups) {
+    drafts.push(await draftPost({ qualifyingPosts: group, openaiClient }));
+  }
 
   if (dryRun) {
-    console.log('--- DRY RUN: drafted post (nothing written or published) ---');
-    console.log(JSON.stringify(draft, null, 2));
+    console.log(`--- DRY RUN: ${drafts.length} drafted post(s) (nothing written or published) ---`);
+    console.log(JSON.stringify(drafts, null, 2));
     return;
   }
 
   const publishDate = new Date().toISOString().slice(0, 10);
-  const { postDir } = publishPost({
-    draft,
-    publishDate,
-    repoRoot: REPO_ROOT,
-    coverImageSourcePath: COVER_IMAGE_PATH,
-  });
+  const postDirs = drafts.map(
+    (draft) =>
+      publishPost({
+        draft,
+        publishDate,
+        repoRoot: REPO_ROOT,
+        coverImageSourcePath: COVER_IMAGE_PATH,
+      }).postDir
+  );
 
   const branchName = `blog-draft/${publishDate.slice(0, 7)}`;
+  const prTitle =
+    drafts.length === 1
+      ? `Updates: ${drafts[0].title}`
+      : `Updates: ${drafts.length} new posts for ${publishDate.slice(0, 7)}`;
   const { prUrl } = openDraftPr({
     repoRoot: REPO_ROOT,
     branchName,
-    postDir,
-    prTitle: `Updates: ${draft.title}`,
-    prBody: 'Auto-generated monthly Updates draft. Review the Vercel preview before merging.',
+    postDirs,
+    prTitle,
+    prBody: [
+      'Auto-generated monthly Updates draft(s). Review the Vercel preview(s) before merging.',
+      '',
+      ...drafts.map((draft) => `- ${draft.title}`),
+    ].join('\n'),
   });
 
-  await notifySlack({ webhookUrl: SLACK_WEBHOOK_URL, text: `New monthly blog draft ready for review: ${prUrl}` });
+  const summary =
+    drafts.length === 1
+      ? `New monthly blog draft ready for review: ${prUrl}`
+      : `${drafts.length} new monthly blog drafts ready for review: ${prUrl}`;
+  await notifySlack({ webhookUrl: SLACK_WEBHOOK_URL, text: summary });
 }
 
 main().catch(async (err) => {
@@ -1008,15 +1058,16 @@ git commit -m "feat: wire up monthly blog pipeline orchestrator and workflow"
 3. Locally, with real credentials exported as env vars, run:
    `node scripts/blog-pipeline/run.js --dry-run`
    Expected: prints either "No qualifying posts this month — skipping." or
-   a JSON draft object — nothing written to disk, no branch/PR/Slack
-   message created. Confirms the fetch/filter/classify/draft chain works
-   against the real APIs before ever touching the repo.
+   a JSON array of one or more drafted posts — nothing written to disk, no
+   branch/PR/Slack message created. Confirms the
+   fetch/filter/classify+group/draft chain works against the real APIs
+   before ever touching the repo.
 4. Trigger the real workflow once via GitHub Actions → "Monthly Blog Draft"
    → "Run workflow" (`workflow_dispatch`).
    Expected: either the "nothing found" Slack message, or a Slack message
-   with a PR link; opening the PR should show a `content/posts/...`
-   folder, and within ~30–60 seconds a Vercel bot comment with the preview
-   URL.
+   with a PR link; opening the PR should show one `content/posts/...`
+   folder per drafted post, and within ~30–60 seconds a Vercel bot comment
+   with the preview URL.
 5. Open the preview link, confirm the post renders under `/blog/updates/`
    with the fixed cover image, then close/decline the PR (or merge it) —
    your call, this was just a pipeline test.

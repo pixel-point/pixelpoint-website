@@ -10,10 +10,13 @@ being written — just on the wrong platform.
 
 ## Goal
 
-Once a month, automatically turn his qualifying X posts into a single blog
-post in a new **Updates** category — preserving whether he framed it as his
+Once a month, automatically turn his qualifying X posts into one or more blog
+posts in a new **Updates** category — preserving whether he framed it as his
 own work or the team's — and get it in front of him as a reviewable draft,
-without ever publishing anything without his sign-off.
+without ever publishing anything without his sign-off. A month with one big
+story (e.g. a major project) and several small updates should produce a
+standalone post for the big story and one bundled post for the rest, not one
+post trying to cover everything.
 
 ## Non-goals
 
@@ -45,11 +48,12 @@ long-running infra.
 ```
 cron (monthly) ─▶ GitHub Action job
                      ├─ 1. Fetch @alex_barashkov's recent posts (X API)
-                     ├─ 2. Filter to real candidates (heuristics + LLM)
-                     ├─ 3. Check against existing blog posts (dedup)
+                     ├─ 2. Drop near-empty one-liners (cheap length check)
+                     ├─ 3. LLM: classify, dedup against existing posts, and
+                     │      group survivors into one or more article topics
                      ├─ 4. If nothing qualifies → Slack "nothing found" → stop
-                     ├─ 5. Draft the post in company voice (LLM)
-                     ├─ 6. Commit to a new branch, open a PR
+                     ├─ 5. Draft one post per group, editorial style (LLM)
+                     ├─ 6. Commit all new post folders to one branch, open one PR
                      └─ 7. Slack message with the PR link
                             (Vercel's GitHub bot auto-comments the preview
                              link on that PR — no separate Vercel API call
@@ -64,30 +68,75 @@ cron (monthly) ─▶ GitHub Action job
   for Alex's entry in
   [`content/posts/post-authors.json`](../../../content/posts/post-authors.json)
   rather than hardcoding it elsewhere.
-- **Filter** — drops posts too short/thin to be real content, then sends
-  survivors to an LLM to keep only genuine design-process/announcement/
-  release posts (catches quote-tweets or borderline cases the query-level
-  exclude might miss).
-- **Dedup check** — in the same LLM call, passes the list of existing post
-  titles/summaries (read from `content/posts/*/index.md` frontmatter) so it
-  skips anything already covered. This is a confirmed real case: the June
-  2026 Toolcraft launch already has its own post at
+- **Filter** — drops only near-empty one-liners (a cheap length check, just
+  enough to skip obvious noise like "People are having fun with Toolcraft"
+  before spending an LLM call on it). Substance is *not* judged here — a
+  short-but-real post (e.g. a two-sentence client-project note) must survive
+  this step and reach the classify step below, which is the actual quality
+  gate.
+- **Classify + dedup + group** — one LLM call that: (1) keeps only posts
+  that would stand alone as something worth reading for someone with zero
+  context on Alex's X feed — not just "on topic," but genuinely informative
+  without the original thread; (2) includes his personal side projects
+  (e.g. an open-source tool he built solo) since those still reflect the
+  team's work and expertise, but excludes opinion/thought-leadership essays
+  not tied to a specific project, at least for v1; (3) checks survivors
+  against existing post titles/summaries (read from `content/posts/*/index.md`
+  frontmatter) and drops anything already covered — confirmed real case: the
+  June 2026 Toolcraft launch already has its own post at
   `content/posts/2026-06-30-how-to-craft-personal-design-tools-with-toolcraft/`,
-  so a naive pipeline would have re-announced it.
-- **Drafter** — generates the MDX body plus frontmatter (`title`, `summary`,
-  `author: Alex Barashkov`, `cover`, `category: Updates`), preserving the
-  ownership framing from the source posts rather than forcing a blanket
-  rewrite: if he says "I built X," the draft stays first-person (the post is
-  already bylined to him, so this reads naturally); if he says "our design
-  process" or credits the team, the draft keeps that team framing. The LLM
-  prompt carries this rule explicitly rather than defaulting to one voice.
-- **Publisher** — creates `content/posts/<YYYY-MM-DD>-<slug>/index.md`
-  (matching the existing folder-per-post convention, date-prefixed slug so
-  `getBlogPostDateFromSlug` keeps working), copies in the fixed default
-  cover image, commits to branch `blog-draft/<YYYY-MM>`, pushes, opens a PR
-  against `main`.
-- **Notifier** — posts one Slack message: either the PR link, or "No
-  qualifying posts this month — skipping."
+  so a naive pipeline would have re-announced it; (4) groups whatever
+  survives into one or more article topics — a single substantial story
+  (e.g. a major open-source release) becomes its own group, several smaller
+  updates get grouped into one bundle.
+- **Drafter** — runs once per group from the step above, generating the MDX
+  body plus frontmatter (`title`, `summary`, `author: Alex Barashkov`,
+  `cover`, `category: Updates`) for that group. Two rules carried explicitly
+  in the prompt: (1) preserve the source's ownership framing rather than
+  forcing a blanket rewrite — "I built X" stays first-person (the post is
+  already bylined to him, so this reads naturally), "our design process"
+  keeps that team framing; (2) write editorially, not as a transcription —
+  add the context a reader unfamiliar with the original posts would need
+  (what problem this solves, plain-language explanation of any jargon, a
+  concrete example if useful), rather than reformatting the source text in
+  its original order. See "Content quality bar" below for why this rule
+  exists.
+- **Publisher** — for each drafted group, creates
+  `content/posts/<YYYY-MM-DD>-<slug>/index.md` (matching the existing
+  folder-per-post convention, date-prefixed slug so `getBlogPostDateFromSlug`
+  keeps working) and copies in the fixed default cover image. All of a run's
+  post folders are committed together to one branch (`blog-draft/<YYYY-MM>`),
+  which is pushed as a single PR against `main` — even in a multi-post month,
+  Alex reviews one PR, not several.
+- **Notifier** — posts one Slack message: either the PR link (mentioning how
+  many posts it contains), or "No qualifying posts this month — skipping."
+
+## Content quality bar
+
+Alex's main concern reviewing this idea: some source posts are thin enough
+that turning them into a blog post would read as filler — nothing worth a
+reader's time. A manual dry run against real June 2026 posts confirmed this
+is real (several one-liners like "People are having fun with Toolcraft" or
+"Testing design capabilities of GPT 5.6 Sol" carry no standalone content),
+and also surfaced a second-order version of the same problem: even a
+qualifying post, drafted as a close paraphrase of the source tweet, doesn't
+add anything a reader couldn't get from the tweet itself.
+
+Two design decisions address this directly:
+
+- The classify step's bar is "would this stand alone as worth reading for
+  someone with no X context," not just "is this on-topic." This is a higher
+  bar than length or topic-matching alone, and is why the length-based
+  filter step was scaled back to just catching near-empty one-liners rather
+  than trying to judge substance.
+- The draft step is explicitly instructed to write editorially — explaining
+  the problem being solved, translating jargon, adding a concrete example
+  where useful — rather than reorganizing the source posts' own sentences.
+  This is a real trade-off worth remembering: an editorial rewrite reads
+  better for an outside audience but sounds less like Alex's own voice than
+  a close paraphrase would. If the blog's appeal partly rests on posts
+  sounding authentically like him, this is worth revisiting after a few
+  real posts go out.
 
 ## Cover image
 
@@ -104,18 +153,24 @@ before merge — the pipeline itself never tries to generate one.
    `workflow_dispatch`.
 2. Fetch posts from the last ~35 days via the X API, excluding
    replies/retweets at the query level.
-3. Run heuristic filter (drop anything too short/thin).
+3. Drop near-empty one-liners (cheap length check only, not a substance
+   judgment).
 4. Send survivors + existing post titles/summaries to the LLM in one call —
-   it returns which posts qualify *and* aren't already covered.
+   it returns which posts qualify (stand-alone-for-an-outsider bar, dedup'd
+   against existing posts) *and* how they group into one or more article
+   topics.
 5. If nothing qualifies → Slack: "No qualifying posts this month —
    skipping." → job ends here.
-6. Otherwise, LLM drafts the post body + frontmatter in company voice.
-7. Create branch `blog-draft/<YYYY-MM>`, write the post folder (`index.md` +
-   fixed cover image), commit, push.
-8. Open a PR against `main`.
+6. Otherwise, for each group: LLM drafts the post body + frontmatter,
+   editorially (not a reformatted transcription), preserving I/we framing
+   from the source.
+7. Create branch `blog-draft/<YYYY-MM>`, write every group's post folder
+   (`index.md` + fixed cover image), commit, push.
+8. Open one PR against `main` containing all of the run's post folders.
 9. Slack message with the PR link.
-10. Alex reviews the Vercel preview (auto-linked inside the PR by Vercel's
-    bot), gives an informal thumbs-up outside GitHub; the developer merges.
+10. Alex reviews the Vercel preview(s) (auto-linked inside the PR by
+    Vercel's bot), gives an informal thumbs-up outside GitHub; the developer
+    merges.
 
 ## Error handling
 
@@ -132,14 +187,16 @@ before merge — the pipeline itself never tries to generate one.
 
 ## Testing / validation
 
-- The script is broken into isolated functions (fetch / filter+dedup /
-  draft / publish), so each can be unit-tested with canned input (e.g., feed
-  a fixed list of fake posts into the filter step and assert what survives)
-  without hitting real APIs.
+- The script is broken into isolated functions (fetch / length-filter /
+  classify+dedup+group / draft / publish), so each can be unit-tested with
+  canned input (e.g., feed a fixed list of fake posts into the length filter
+  and assert what survives) without hitting real APIs.
 - A `--dry-run` flag runs the whole thing locally against the real X API and
-  prints the filtered posts + drafted post to the terminal, without
+  prints the qualifying groups + drafted posts to the terminal, without
   creating a branch, PR, or Slack message — for sanity-checking a month's
-  output before the schedule is ever turned on.
+  output before the schedule is ever turned on. This is also how the
+  classify/draft prompts were validated against real June 2026 posts before
+  any code was written (see "Content quality bar" above).
 - The `workflow_dispatch` trigger also allows running the *real* end-to-end
   flow (including opening a real PR) on demand, instead of waiting a month
   between test cycles.
