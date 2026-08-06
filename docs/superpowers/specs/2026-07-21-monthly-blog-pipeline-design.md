@@ -207,3 +207,43 @@ before merge — the pipeline itself never tries to generate one.
   workaround for now)
 - Automating the X API cost/volume monitoring (expected cost is well under
   $1/month at this volume, so not worth building alerting for yet)
+- **Carrying media (photos, video) from the source X posts into the drafted
+  article.** Today a post's images and video are dropped: `fetch-posts.js`
+  requests only `tweet.fields=created_at,text`, so media never enters the
+  pipeline, and the drafted body is text-only. Worth doing — a design-process
+  or release post is usually carried by its screenshot — but the two media
+  types have very different costs, so they should be split:
+
+  - *Photos are a clean fit.* Fetching needs
+    `expansions=attachments.media_keys` plus
+    `media.fields=type,url,preview_image_url,alt_text` on the timeline call.
+    Publishing then matches what every existing post already does: download
+    the file into the post folder next to `index.md` and reference it as
+    `![alt](filename.png)`, which `gatsby-remark-images` turns into
+    responsive WebP with a caption drawn from the alt text. X's `alt_text`
+    should be used when the author set it, with the draft model asked to
+    write one otherwise, since it becomes the visible caption. Watch file
+    size on the way in — the repo already carries a 7.2 MB placeholder cover,
+    and per-post media makes that pattern worse.
+  - *Video does not fit, and is the reason this is deferred.* The site's
+    convention is a custom MDX component,
+    `<Video src="https://pixel-point-website.s3.amazonaws.com/posts/<slug>/video.mp4" poster="./cover.jpg">`,
+    with the file hosted on S3 rather than committed to git. That means the
+    pipeline would need S3 write credentials it does not have today, plus a
+    generated poster frame — and `video.jsx:20` *throws during the Gatsby
+    build* when the poster is missing, so one bad draft breaks the whole site
+    build rather than just rendering a broken post. Hotlinking the
+    `video.twimg.com` variant URLs from X avoids S3 but is fragile and
+    bypasses the component entirely.
+
+  The draft step would also need reworking, not just the fetch step: the
+  model currently receives `{text, url}` per post and writes prose, so it
+  would need the media list passed in and an instruction to place each item
+  in the body where it earns its spot. Appending images blindly at the end
+  would undercut the "write editorially, not a tidied-up repost" bar this
+  design already sets. Licensing is not a concern — the posts are the
+  author's own.
+
+  Suggested split when picked up: ship photos first as its own change, and
+  treat video as a separate decision that depends on whether the pipeline
+  should get S3 credentials at all.
