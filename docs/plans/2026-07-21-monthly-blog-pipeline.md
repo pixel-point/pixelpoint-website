@@ -1944,6 +1944,43 @@ test('throws when the webhook responds with an error', async () => {
     /Slack webhook failed: 500/
   );
 });
+
+const { buildDraftsMessage } = require('./notify-slack');
+
+const DRAFTS = [{ title: 'Toolcraft update: a leaner AI harness' }, { title: 'Introducing Aval' }];
+
+test('buildDraftsMessage leads with the PR link and lists every title', () => {
+  const text = buildDraftsMessage({ drafts: DRAFTS, prUrl: 'https://github.com/o/r/pull/9' });
+  assert.ok(text.startsWith('2 new monthly blog drafts ready for review: https://github.com/o/r/pull/9'));
+  assert.ok(text.includes('• Toolcraft update: a leaner AI harness'));
+  assert.ok(text.includes('• Introducing Aval'));
+  assert.ok(text.includes('Vercel comments the preview link'));
+});
+
+test('buildDraftsMessage uses the singular for one draft', () => {
+  const text = buildDraftsMessage({ drafts: [DRAFTS[0]], prUrl: 'https://x/1' });
+  assert.ok(text.startsWith('New monthly blog draft ready for review:'));
+});
+
+test('buildDraftsMessage mentions skipped posts when there were any', () => {
+  const text = buildDraftsMessage({
+    drafts: DRAFTS,
+    prUrl: 'https://x/1',
+    skipped: [{ posts: [{}, {}] }, { posts: [{}] }],
+  });
+  assert.ok(text.includes('3 post(s) skipped as already covered'));
+});
+
+test('buildDraftsMessage says nothing about skips when there were none', () => {
+  assert.ok(!buildDraftsMessage({ drafts: DRAFTS, prUrl: 'https://x/1' }).includes('skipped'));
+});
+
+test('the message never contains undefined', () => {
+  // openDraftPr became async for the PR-create retry and run.js kept
+  // destructuring it synchronously, so a real run posted "...review: undefined".
+  const text = buildDraftsMessage({ drafts: DRAFTS, prUrl: 'https://x/1' });
+  assert.ok(!text.includes('undefined'), text);
+});
 ```
 
 **Step 2: Run tests to verify they fail**
@@ -1955,6 +1992,26 @@ Expected: FAIL with "Cannot find module './notify-slack'"
 
 ```js
 // scripts/blog-pipeline/lib/notify-slack.js
+// The preview URL is not knowable here: Vercel posts it as a comment on the
+// PR moments after the branch is pushed, so the message points at the PR and
+// lets the reviewer follow the bot comment from there.
+function buildDraftsMessage({ drafts, prUrl, skipped = [] }) {
+  const lead =
+    drafts.length === 1
+      ? 'New monthly blog draft ready for review'
+      : `${drafts.length} new monthly blog drafts ready for review`;
+
+  const lines = [`${lead}: ${prUrl}`, '', ...drafts.map((draft) => `• ${draft.title}`)];
+
+  if (skipped.length > 0) {
+    const posts = skipped.reduce((total, group) => total + group.posts.length, 0);
+    lines.push('', `${posts} post(s) skipped as already covered — listed in the PR.`);
+  }
+
+  lines.push('', 'Vercel comments the preview link on the PR once the build finishes.');
+  return lines.join('\n');
+}
+
 async function notifySlack({ webhookUrl, text, fetchImpl = fetch }) {
   const res = await fetchImpl(webhookUrl, {
     method: 'POST',
@@ -1966,7 +2023,7 @@ async function notifySlack({ webhookUrl, text, fetchImpl = fetch }) {
   }
 }
 
-module.exports = { notifySlack };
+module.exports = { notifySlack, buildDraftsMessage };
 ```
 
 **Step 4: Run tests to verify they pass**
@@ -2322,7 +2379,7 @@ const { publishPost } = require('./lib/publish-post');
 const { collectPhotos, collectVideos } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
-const { notifySlack } = require('./lib/notify-slack');
+const { notifySlack, buildDraftsMessage } = require('./lib/notify-slack');
 const { usageSummary } = require('./lib/anthropic-json');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
@@ -2430,7 +2487,7 @@ async function main() {
     drafts.length === 1
       ? `Updates: ${drafts[0].title}`
       : `Updates: ${drafts.length} new posts for ${publishDate.slice(0, 7)}`;
-  const { prUrl } = openDraftPr({
+  const { prUrl } = await openDraftPr({
     repoRoot: REPO_ROOT,
     branchName,
     postDirs,
@@ -2438,11 +2495,10 @@ async function main() {
     prBody: buildPrBody({ drafts, skipped }),
   });
 
-  const summary =
-    drafts.length === 1
-      ? `New monthly blog draft ready for review: ${prUrl}`
-      : `${drafts.length} new monthly blog drafts ready for review: ${prUrl}`;
-  await notifySlack({ webhookUrl: SLACK_WEBHOOK_URL, text: summary });
+  await notifySlack({
+    webhookUrl: SLACK_WEBHOOK_URL,
+    text: buildDraftsMessage({ drafts, prUrl, skipped }),
+  });
 }
 
 main().catch(async (err) => {

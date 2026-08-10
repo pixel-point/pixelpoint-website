@@ -11,7 +11,7 @@ const { publishPost } = require('./lib/publish-post');
 const { collectPhotos, collectVideos } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
-const { notifySlack } = require('./lib/notify-slack');
+const { notifySlack, buildDraftsMessage } = require('./lib/notify-slack');
 const { usageSummary } = require('./lib/anthropic-json');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
@@ -119,7 +119,7 @@ async function main() {
     drafts.length === 1
       ? `Updates: ${drafts[0].title}`
       : `Updates: ${drafts.length} new posts for ${publishDate.slice(0, 7)}`;
-  const { prUrl } = openDraftPr({
+  const { prUrl } = await openDraftPr({
     repoRoot: REPO_ROOT,
     branchName,
     postDirs,
@@ -127,11 +127,10 @@ async function main() {
     prBody: buildPrBody({ drafts, skipped }),
   });
 
-  const summary =
-    drafts.length === 1
-      ? `New monthly blog draft ready for review: ${prUrl}`
-      : `${drafts.length} new monthly blog drafts ready for review: ${prUrl}`;
-  await notifySlack({ webhookUrl: SLACK_WEBHOOK_URL, text: summary });
+  await notifySlack({
+    webhookUrl: SLACK_WEBHOOK_URL,
+    text: buildDraftsMessage({ drafts, prUrl, skipped }),
+  });
 }
 
 main().catch(async (err) => {
