@@ -183,6 +183,7 @@ test('fetchRecentPosts maps API posts to the pipeline shape', async () => {
     bearerToken: 'token',
     sinceISODate: '2026-06-01T00:00:00Z',
     fetchImpl: fakeFetch,
+    selfReplyPages: 0,
   });
   assert.deepEqual(posts, [
     {
@@ -192,6 +193,7 @@ test('fetchRecentPosts maps API posts to the pipeline shape', async () => {
       url: 'https://x.com/i/web/status/999',
       media: [],
       quoted: null,
+      thread: [],
     },
   ]);
 });
@@ -230,6 +232,7 @@ test('fetchRecentPosts attaches expanded media to the post that references it', 
     bearerToken: 't',
     sinceISODate: '2026-06-01T00:00:00Z',
     fetchImpl: fakeFetch,
+    selfReplyPages: 0,
   });
   assert.deepEqual(posts[0].media, [
     {
@@ -301,6 +304,7 @@ test('fetchRecentPosts carries quoted text and borrows the quoted media', async 
     bearerToken: 't',
     sinceISODate: '2026-06-01T00:00:00Z',
     fetchImpl: fakeFetch,
+    selfReplyPages: 0,
   });
   // The announcement post has no media of its own; the screenshot is in the
   // post it quotes, which is exactly the Novu case that shipped without one.
@@ -327,7 +331,7 @@ test('a post with its own media does not borrow from the quoted post', async () 
       },
     }),
   });
-  const posts = await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch });
+  const posts = await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 0 });
   assert.equal(posts[0].media.length, 1);
   assert.equal(posts[0].media[0].url, 'https://pbs.twimg.com/ours.jpg');
 });
@@ -372,8 +376,82 @@ test('fetchRecentPosts requests note_tweet', async () => {
     requested = url;
     return { ok: true, json: async () => ({ data: [], includes: {} }) };
   };
-  await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch });
+  await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 0 });
   assert.ok(requested.includes('note_tweet'), 'without it, half the posts arrive truncated');
+});
+
+const { fetchSelfReplies } = require('./fetch-posts');
+
+test('fetchSelfReplies keeps replies to self and discards replies to others', async () => {
+  // Roughly 4 in 5 items on the reply-inclusive timeline are replies to other
+  // people; only the author's own follow-ups belong to the announcement.
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      data: [
+        { id: '2', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'https://t.co/A',
+          entities: { urls: [{ url: 'https://t.co/A', expanded_url: 'https://pixelpoint.io/aval/' }] } },
+        { id: '3', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'https://t.co/B',
+          entities: { urls: [{ url: 'https://t.co/B', expanded_url: 'https://github.com/pixel-point/aval' }] } },
+        { id: '4', conversation_id: 'c9', in_reply_to_user_id: 'someone-else', text: 'thanks!' },
+      ],
+      meta: {},
+    }),
+  });
+  const threads = await fetchSelfReplies({
+    userId: 'me', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, maxPages: 1,
+  });
+  assert.equal(threads.get('c1').length, 2);
+  assert.equal(threads.has('c9'), false);
+  assert.ok(threads.get('c1')[0].text.includes('pixelpoint.io/aval'));
+});
+
+test('fetchSelfReplies gives up quietly rather than failing the run', async () => {
+  const threads = await fetchSelfReplies({
+    userId: 'me', bearerToken: 't', sinceISODate: 'x',
+    fetchImpl: async () => ({ ok: false, status: 429 }), maxPages: 3,
+  });
+  // The originals are already in hand; losing follow-up context is not worth
+  // discarding the month's run over.
+  assert.equal(threads.size, 0);
+});
+
+test('fetchRecentPosts attaches self-replies to their parent post', async () => {
+  const fakeFetch = async (url) => {
+    if (url.includes('exclude=replies')) {
+      return { ok: true, json: async () => ({
+        data: [{ id: '1', text: 'Introducing Aval', created_at: 'x', conversation_id: 'c1' }],
+        includes: {},
+      }) };
+    }
+    return { ok: true, json: async () => ({
+      data: [{ id: '2', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'https://github.com/pixel-point/aval' }],
+      meta: {},
+    }) };
+  };
+  const posts = await fetchRecentPosts({
+    userId: 'me', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 1,
+  });
+  assert.equal(posts[0].thread.length, 1);
+  assert.ok(posts[0].thread[0].text.includes('github.com/pixel-point/aval'));
+});
+
+test('a post is never its own follow-up, and follow-ups are capped oldest-first', async () => {
+  const replies = (ids) => ids.map((id) => ({
+    id, conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'reply ' + id,
+  }));
+  const fakeFetch = async (url) =>
+    url.includes('exclude=replies')
+      ? { ok: true, json: async () => ({ data: [{ id: '100', text: 'announcement', conversation_id: 'c1' }], includes: {} }) }
+        // X returns newest first and counts the parent in the same conversation.
+      : { ok: true, json: async () => ({ data: replies(['107','106','105','104','103','102','101','100']), meta: {} }) };
+
+  const posts = await fetchRecentPosts({
+    userId: 'me', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 1,
+  });
+  const ids = posts[0].thread.map((r) => r.url.split('/').pop());
+  assert.deepEqual(ids, ['101', '102', '103', '104', '105'], 'oldest five, excluding the post itself');
+  assert.ok(!ids.includes('100'));
 });
 ```
 
@@ -438,13 +516,72 @@ function mapMedia(keys, mediaByKey) {
     }));
 }
 
-async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl = fetch }) {
+// Announcements are routinely followed by a self-reply carrying the links —
+// the Aval launch put its landing page and its repo in two replies, neither of
+// which the pipeline could see. They can only be found by fetching with
+// replies included, where roughly 4 in 5 items are replies to other people, so
+// this pages through and keeps only replies to himself. Each page is 100 post
+// reads, hence the cap: raising it finds older threads and costs proportionally
+// more.
+const SELF_REPLY_PAGES = 3;
+
+// The links land in the first few replies; anything after that is conversation
+// with other people rather than part of the announcement.
+const MAX_FOLLOW_UPS = 5;
+
+async function fetchSelfReplies({ userId, bearerToken, sinceISODate, fetchImpl, maxPages }) {
+  const byConversation = new Map();
+  let token;
+
+  for (let page = 0; page < maxPages; page += 1) {
+    const url = new URL(`https://api.twitter.com/2/users/${userId}/tweets`);
+    url.searchParams.set('exclude', 'retweets');
+    url.searchParams.set('start_time', sinceISODate);
+    url.searchParams.set(
+      'tweet.fields',
+      'text,entities,note_tweet,conversation_id,in_reply_to_user_id'
+    );
+    url.searchParams.set('max_results', '100');
+    if (token) url.searchParams.set('pagination_token', token);
+
+    const res = await fetchImpl(url.toString(), {
+      headers: { Authorization: `Bearer ${bearerToken}` },
+    });
+    // A failure here costs context, not the run — the originals are already in
+    // hand and are what the article is actually built from.
+    if (!res.ok) return byConversation;
+
+    const body = await res.json();
+    for (const item of body.data || []) {
+      if (item.in_reply_to_user_id !== userId) continue;
+      const list = byConversation.get(item.conversation_id) || [];
+      list.push({ id: item.id, text: expandLinks(item), url: `https://x.com/i/web/status/${item.id}` });
+      byConversation.set(item.conversation_id, list);
+    }
+
+    token = body.meta && body.meta.next_token;
+    if (!token) break;
+  }
+
+  return byConversation;
+}
+
+async function fetchRecentPosts({
+  userId,
+  bearerToken,
+  sinceISODate,
+  fetchImpl = fetch,
+  selfReplyPages = SELF_REPLY_PAGES,
+}) {
   const url = new URL(`https://api.twitter.com/2/users/${userId}/tweets`);
   url.searchParams.set('exclude', 'replies,retweets');
   url.searchParams.set('start_time', sinceISODate);
   // `entities` carries the real destination behind each t.co link.
   // `note_tweet` carries the untruncated body of posts longer than ~280 chars.
-  url.searchParams.set('tweet.fields', 'created_at,text,entities,referenced_tweets,note_tweet');
+  url.searchParams.set(
+    'tweet.fields',
+    'created_at,text,entities,referenced_tweets,note_tweet,conversation_id'
+  );
   url.searchParams.set('max_results', '100');
   // Media arrives in a separate `includes.media` list keyed by media_key, not
   // inline on the post — the expansion is what populates it at all.
@@ -463,6 +600,13 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
     throw new Error(`X API posts fetch failed: ${res.status} ${await res.text()}`);
   }
   const { data = [], includes = {} } = await res.json();
+  const threadsByConversation = await fetchSelfReplies({
+    userId,
+    bearerToken,
+    sinceISODate,
+    fetchImpl,
+    maxPages: selfReplyPages,
+  });
   const mediaByKey = new Map((includes.media || []).map((item) => [item.media_key, item]));
   const tweetsById = new Map((includes.tweets || []).map((item) => [item.id, item]));
 
@@ -485,11 +629,21 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
       quoted: quoted
         ? { text: expandLinks(quoted), url: `https://x.com/i/web/status/${quoted.id}` }
         : null,
+      // Replies the author made to his own post — where the links usually are.
+      // Oldest first and capped: X returns newest first, and a conversation
+      // drifts into replying to other people after the first few.
+      thread: (threadsByConversation.get(post.conversation_id) || [])
+        // X counts a self-thread continuation as an original too, so a post can
+        // otherwise turn up as its own follow-up.
+        .filter((reply) => reply.id !== post.id)
+        .sort((a, b) => (BigInt(a.id) < BigInt(b.id) ? -1 : 1))
+        .slice(0, MAX_FOLLOW_UPS)
+        .map(({ text, url }) => ({ text, url })),
     };
   });
 }
 
-module.exports = { getUserId, fetchRecentPosts, expandLinks, fullText };
+module.exports = { getUserId, fetchRecentPosts, fetchSelfReplies, expandLinks, fullText, SELF_REPLY_PAGES, MAX_FOLLOW_UPS };
 ```
 
 **Step 4: Run tests to verify they pass**
@@ -1431,6 +1585,7 @@ function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts 
     'Write the title and every heading in sentence case, like the rest of this blog: capitalise the first word, and after that only proper nouns, product names, and acronyms. Write "Toolcraft: five creative tools we built to prove AI demos can be more than toys", not "Toolcraft: Five Creative Tools We Built to Prove AI Demos Can Be More Than Toys". Note that AI, Blender, and Novu stay capitalised because of what they are, not because of where they sit in the sentence.',
     '',
     'Keep any exact command, package name, or code snippet from the source posts verbatim, in a fenced code block — an install line a reader can copy is the most useful thing an announcement post can carry, and paraphrasing it makes it wrong.',
+    'A post\'s "followUps" are the author\'s own replies to it, and are usually where the landing page or repository link was posted. Treat them as part of the same announcement and use those links in the article.',
     'When a source post links to something — a launched page, a repo, a demo — link to it from the article at the point you mention it, using the real URL from the post. Do not describe a thing as launched or shipped without linking it if the link is available.',
     'Where a source post quotes another post, that quoted text is background so you know what is being pointed at. Write about our work, not about the other person\'s post, and do not quote them.',
     '',
@@ -1440,6 +1595,9 @@ function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts 
         text: p.text,
         url: p.url,
         ...(p.quoted ? { quotedForContext: p.quoted.text } : {}),
+        // Follow-up replies by the same author, which is usually where the
+        // landing page and repo links live.
+        ...(p.thread && p.thread.length ? { followUps: p.thread.map((r) => r.text) } : {}),
       }))
     ),
     ...buildRelatedPostsInstructions(relatedExistingPosts),

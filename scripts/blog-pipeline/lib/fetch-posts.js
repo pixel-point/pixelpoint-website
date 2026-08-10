@@ -50,13 +50,72 @@ function mapMedia(keys, mediaByKey) {
     }));
 }
 
-async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl = fetch }) {
+// Announcements are routinely followed by a self-reply carrying the links —
+// the Aval launch put its landing page and its repo in two replies, neither of
+// which the pipeline could see. They can only be found by fetching with
+// replies included, where roughly 4 in 5 items are replies to other people, so
+// this pages through and keeps only replies to himself. Each page is 100 post
+// reads, hence the cap: raising it finds older threads and costs proportionally
+// more.
+const SELF_REPLY_PAGES = 3;
+
+// The links land in the first few replies; anything after that is conversation
+// with other people rather than part of the announcement.
+const MAX_FOLLOW_UPS = 5;
+
+async function fetchSelfReplies({ userId, bearerToken, sinceISODate, fetchImpl, maxPages }) {
+  const byConversation = new Map();
+  let token;
+
+  for (let page = 0; page < maxPages; page += 1) {
+    const url = new URL(`https://api.twitter.com/2/users/${userId}/tweets`);
+    url.searchParams.set('exclude', 'retweets');
+    url.searchParams.set('start_time', sinceISODate);
+    url.searchParams.set(
+      'tweet.fields',
+      'text,entities,note_tweet,conversation_id,in_reply_to_user_id'
+    );
+    url.searchParams.set('max_results', '100');
+    if (token) url.searchParams.set('pagination_token', token);
+
+    const res = await fetchImpl(url.toString(), {
+      headers: { Authorization: `Bearer ${bearerToken}` },
+    });
+    // A failure here costs context, not the run — the originals are already in
+    // hand and are what the article is actually built from.
+    if (!res.ok) return byConversation;
+
+    const body = await res.json();
+    for (const item of body.data || []) {
+      if (item.in_reply_to_user_id !== userId) continue;
+      const list = byConversation.get(item.conversation_id) || [];
+      list.push({ id: item.id, text: expandLinks(item), url: `https://x.com/i/web/status/${item.id}` });
+      byConversation.set(item.conversation_id, list);
+    }
+
+    token = body.meta && body.meta.next_token;
+    if (!token) break;
+  }
+
+  return byConversation;
+}
+
+async function fetchRecentPosts({
+  userId,
+  bearerToken,
+  sinceISODate,
+  fetchImpl = fetch,
+  selfReplyPages = SELF_REPLY_PAGES,
+}) {
   const url = new URL(`https://api.twitter.com/2/users/${userId}/tweets`);
   url.searchParams.set('exclude', 'replies,retweets');
   url.searchParams.set('start_time', sinceISODate);
   // `entities` carries the real destination behind each t.co link.
   // `note_tweet` carries the untruncated body of posts longer than ~280 chars.
-  url.searchParams.set('tweet.fields', 'created_at,text,entities,referenced_tweets,note_tweet');
+  url.searchParams.set(
+    'tweet.fields',
+    'created_at,text,entities,referenced_tweets,note_tweet,conversation_id'
+  );
   url.searchParams.set('max_results', '100');
   // Media arrives in a separate `includes.media` list keyed by media_key, not
   // inline on the post — the expansion is what populates it at all.
@@ -75,6 +134,13 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
     throw new Error(`X API posts fetch failed: ${res.status} ${await res.text()}`);
   }
   const { data = [], includes = {} } = await res.json();
+  const threadsByConversation = await fetchSelfReplies({
+    userId,
+    bearerToken,
+    sinceISODate,
+    fetchImpl,
+    maxPages: selfReplyPages,
+  });
   const mediaByKey = new Map((includes.media || []).map((item) => [item.media_key, item]));
   const tweetsById = new Map((includes.tweets || []).map((item) => [item.id, item]));
 
@@ -97,8 +163,18 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
       quoted: quoted
         ? { text: expandLinks(quoted), url: `https://x.com/i/web/status/${quoted.id}` }
         : null,
+      // Replies the author made to his own post — where the links usually are.
+      // Oldest first and capped: X returns newest first, and a conversation
+      // drifts into replying to other people after the first few.
+      thread: (threadsByConversation.get(post.conversation_id) || [])
+        // X counts a self-thread continuation as an original too, so a post can
+        // otherwise turn up as its own follow-up.
+        .filter((reply) => reply.id !== post.id)
+        .sort((a, b) => (BigInt(a.id) < BigInt(b.id) ? -1 : 1))
+        .slice(0, MAX_FOLLOW_UPS)
+        .map(({ text, url }) => ({ text, url })),
     };
   });
 }
 
-module.exports = { getUserId, fetchRecentPosts, expandLinks, fullText };
+module.exports = { getUserId, fetchRecentPosts, fetchSelfReplies, expandLinks, fullText, SELF_REPLY_PAGES, MAX_FOLLOW_UPS };
