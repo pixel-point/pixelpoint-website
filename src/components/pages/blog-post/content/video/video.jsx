@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import ImagePlaceholder from 'components/shared/image-placeholder';
@@ -32,12 +32,29 @@ const VideoWithCover = (props) => {
 
   const videoRef = useRef(null);
 
-  const handlePlay = async () => {
-    await setIsPlaying(true);
-    await setIsVideoLoading(true);
-    await videoRef.current.play();
-    await setShowCover(false);
+  const handlePlay = () => {
+    setIsPlaying(true);
+    setIsVideoLoading(true);
   };
+
+  // play() has to wait for the element to exist. The <video> below is only
+  // rendered once isPlaying is true, so calling play() inside the click
+  // handler dereferences a ref that is still null — awaiting a setState call
+  // does not wait for the re-render. That threw on the first click, leaving
+  // the cover up and the video unplayed.
+  useEffect(() => {
+    if (!isPlaying || !videoRef.current) return;
+
+    videoRef.current
+      .play()
+      .then(() => setShowCover(false))
+      .catch(() => {
+        // Autoplay policies can still refuse; restore the cover so the reader
+        // gets a play button back rather than a dead frame.
+        setIsPlaying(false);
+        setIsVideoLoading(false);
+      });
+  }, [isPlaying]);
 
   return (
     <div className="relative my-5">
