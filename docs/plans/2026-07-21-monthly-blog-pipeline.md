@@ -1158,7 +1158,16 @@ const COVER_IMAGE_PATH = path.join(REPO_ROOT, 'static', 'blog-updates-cover.png'
 const AUTHOR_NAME = 'Alex Barashkov';
 const LOOKBACK_DAYS = 35;
 
+function assertRequiredEnv(names) {
+  const missing = names.filter((name) => !process.env[name]);
+  if (missing.length > 0) {
+    throw new Error(`Missing required environment variable(s): ${missing.join(', ')}`);
+  }
+}
+
 async function main() {
+  assertRequiredEnv(['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL']);
+
   const dryRun = process.argv.includes('--dry-run');
   const { X_API_BEARER_TOKEN, ANTHROPIC_API_KEY, SLACK_WEBHOOK_URL } = process.env;
 
@@ -1171,7 +1180,11 @@ async function main() {
 
   const candidates = filterCandidates(posts);
   const existingPosts = readExistingPosts(REPO_ROOT);
-  const groups = await classifyAndGroupPosts({ candidates, existingPosts, anthropicClient });
+  const rawGroups = await classifyAndGroupPosts({ candidates, existingPosts, anthropicClient });
+  // classifyAndGroupPosts can return a group that ends up empty (e.g. the model
+  // returns a hallucinated/unknown post id that the id-to-post mapping filters
+  // out), so drop any empty group before it reaches drafting.
+  const groups = rawGroups.filter((group) => group.length > 0);
 
   if (groups.length === 0) {
     console.log('No qualifying posts this month — skipping.');
@@ -1203,7 +1216,8 @@ async function main() {
       }).postDir
   );
 
-  const branchName = `blog-draft/${publishDate.slice(0, 7)}`;
+  const runId = process.env.GITHUB_RUN_ID || Date.now().toString();
+  const branchName = `blog-draft/${publishDate.slice(0, 7)}-${runId}`;
   const prTitle =
     drafts.length === 1
       ? `Updates: ${drafts[0].title}`
