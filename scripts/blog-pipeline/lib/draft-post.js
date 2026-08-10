@@ -58,6 +58,10 @@ function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts 
     'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
     'Preserve his framing: if a post says "I built X," keep it first-person; if it credits the team ("our design process"), keep that framing. Do not force everything into "we."',
     "Don't just reformat the source posts into blog-post shape — write editorially: explain the problem being solved, translate any jargon into plain language, and add a concrete example if it helps a reader with zero context on these posts understand why this matters. The goal is a piece that reads as genuinely worth someone's time, not a tidied-up repost.",
+    // The rest of the blog is sentence case ("Taking automated web page
+    // screenshots with Puppeteer and Sharp"), but drafts drifted into title
+    // case on roughly a third of titles.
+    'Write the title and every heading in sentence case, like the rest of this blog: capitalise the first word, and after that only proper nouns, product names, and acronyms. Write "Toolcraft: five creative tools we built to prove AI demos can be more than toys", not "Toolcraft: Five Creative Tools We Built to Prove AI Demos Can Be More Than Toys". Note that AI, Blender, and Novu stay capitalised because of what they are, not because of where they sit in the sentence.',
     '',
     'Source posts (JSON):',
     JSON.stringify(posts.map((p) => ({ text: p.text, url: p.url }))),

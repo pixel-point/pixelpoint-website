@@ -75,3 +75,12 @@ test('buildDraftPrompt says nothing about related posts when there are none', ()
   const prompt = buildDraftPrompt([{ text: 'x', url: 'https://x.com/1' }]);
   assert.ok(!prompt.includes('Already published on this subject'));
 });
+
+test('buildDraftPrompt asks for sentence case, matching the rest of the blog', () => {
+  const prompt = buildDraftPrompt([{ text: 'x', url: 'https://x.com/1' }]);
+  assert.ok(prompt.includes('sentence case'));
+  // The counter-example matters as much as the rule: without it, drafts kept
+  // producing Title Case On Every Word.
+  assert.ok(prompt.includes('five creative tools we built'));
+  assert.ok(prompt.includes('Five Creative Tools We Built'));
+});
