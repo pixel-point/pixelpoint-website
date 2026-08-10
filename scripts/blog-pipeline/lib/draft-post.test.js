@@ -13,15 +13,36 @@ test('buildDraftPrompt tells the model to preserve I/we framing and write editor
 test('draftPost parses the model JSON response into a draft object', async () => {
   const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
   const fakeClient = {
-    chat: {
-      completions: {
-        create: async () => ({ choices: [{ message: { content: JSON.stringify(fakeDraft) } }] }),
-      },
+    messages: {
+      create: async () => ({
+        stop_reason: 'end_turn',
+        content: [{ type: 'text', text: JSON.stringify(fakeDraft) }],
+      }),
     },
   };
   const result = await draftPost({
     qualifyingPosts: [{ text: 'I built X', url: 'https://x.com/1' }],
-    openaiClient: fakeClient,
+    anthropicClient: fakeClient,
+  });
+  assert.deepEqual(result, fakeDraft);
+});
+
+test('draftPost ignores thinking blocks when reading the JSON', async () => {
+  const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
+  const fakeClient = {
+    messages: {
+      create: async () => ({
+        stop_reason: 'end_turn',
+        content: [
+          { type: 'thinking', thinking: 'Let me consider the framing...' },
+          { type: 'text', text: JSON.stringify(fakeDraft) },
+        ],
+      }),
+    },
+  };
+  const result = await draftPost({
+    qualifyingPosts: [{ text: 'I built X', url: 'https://x.com/1' }],
+    anthropicClient: fakeClient,
   });
   assert.deepEqual(result, fakeDraft);
 });

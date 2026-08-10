@@ -1,3 +1,24 @@
+const { requestJson } = require('./anthropic-json');
+
+const CLASSIFY_SCHEMA = {
+  type: 'object',
+  properties: {
+    groups: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          post_ids: { type: 'array', items: { type: 'string' } },
+        },
+        required: ['post_ids'],
+        additionalProperties: false,
+      },
+    },
+  },
+  required: ['groups'],
+  additionalProperties: false,
+};
+
 function buildClassifyPrompt(candidates, existingPosts) {
   return [
     'You are screening X posts for a company blog "Updates" category.',
@@ -17,18 +38,17 @@ function buildClassifyPrompt(candidates, existingPosts) {
   ].join('\n');
 }
 
-async function classifyAndGroupPosts({ candidates, existingPosts, openaiClient }) {
+async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClient }) {
   if (candidates.length === 0) return [];
 
-  const completion = await openaiClient.chat.completions.create({
-    model: 'gpt-4.1',
-    messages: [{ role: 'user', content: buildClassifyPrompt(candidates, existingPosts) }],
-    response_format: { type: 'json_object' },
+  const { groups } = await requestJson({
+    anthropicClient,
+    prompt: buildClassifyPrompt(candidates, existingPosts),
+    schema: CLASSIFY_SCHEMA,
   });
 
-  const { groups } = JSON.parse(completion.choices[0].message.content);
   const postsById = new Map(candidates.map((post) => [post.id, post]));
   return groups.map((group) => group.post_ids.map((id) => postsById.get(id)).filter(Boolean));
 }
 
-module.exports = { classifyAndGroupPosts, buildClassifyPrompt };
+module.exports = { classifyAndGroupPosts, buildClassifyPrompt, CLASSIFY_SCHEMA };

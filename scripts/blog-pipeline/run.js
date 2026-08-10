@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const path = require('node:path');
-const OpenAI = require('openai');
+const Anthropic = require('@anthropic-ai/sdk');
 const { getUserId, fetchRecentPosts } = require('./lib/fetch-posts');
 const { filterCandidates } = require('./lib/filter-posts');
 const { classifyAndGroupPosts } = require('./lib/classify-posts');
@@ -24,12 +24,12 @@ function assertRequiredEnv(names) {
 }
 
 async function main() {
-  assertRequiredEnv(['X_API_BEARER_TOKEN', 'OPENAI_API_KEY', 'SLACK_WEBHOOK_URL']);
+  assertRequiredEnv(['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL']);
 
   const dryRun = process.argv.includes('--dry-run');
-  const { X_API_BEARER_TOKEN, OPENAI_API_KEY, SLACK_WEBHOOK_URL } = process.env;
+  const { X_API_BEARER_TOKEN, ANTHROPIC_API_KEY, SLACK_WEBHOOK_URL } = process.env;
 
-  const openaiClient = new OpenAI({ apiKey: OPENAI_API_KEY });
+  const anthropicClient = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
   const username = readAuthorHandle(REPO_ROOT, AUTHOR_NAME);
   const userId = await getUserId({ username, bearerToken: X_API_BEARER_TOKEN });
 
@@ -38,7 +38,7 @@ async function main() {
 
   const candidates = filterCandidates(posts);
   const existingPosts = readExistingPosts(REPO_ROOT);
-  const rawGroups = await classifyAndGroupPosts({ candidates, existingPosts, openaiClient });
+  const rawGroups = await classifyAndGroupPosts({ candidates, existingPosts, anthropicClient });
   // classifyAndGroupPosts can return a group that ends up empty (e.g. the model
   // returns a hallucinated/unknown post id that the id-to-post mapping filters
   // out), so drop any empty group before it reaches drafting.
@@ -54,7 +54,7 @@ async function main() {
 
   const drafts = [];
   for (const group of groups) {
-    drafts.push(await draftPost({ qualifyingPosts: group, openaiClient }));
+    drafts.push(await draftPost({ qualifyingPosts: group, anthropicClient }));
   }
 
   if (dryRun) {

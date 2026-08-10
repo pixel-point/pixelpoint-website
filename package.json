@@ -33,6 +33,7 @@
     "test": "node --test 'scripts/**/*.test.js' 'src/constants/**/*.test.js'"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.116.0",
     "@code-hike/mdx": "^0.9.0",
     "@mdx-js/react": "^2.0.0",
     "@rive-app/react-canvas": "^4.9.2",
@@ -48,7 +49,6 @@
     "gatsby-remark-embedder": "^7.0.0",
     "gray-matter": "^4.0.3",
     "lodash.get": "^4.4.2",
-    "openai": "^6.48.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

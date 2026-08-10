@@ -1,4 +1,18 @@
 // scripts/blog-pipeline/lib/draft-post.js
+const { requestJson } = require('./anthropic-json');
+
+const DRAFT_SCHEMA = {
+  type: 'object',
+  properties: {
+    title: { type: 'string' },
+    summary: { type: 'string' },
+    slug: { type: 'string' },
+    body: { type: 'string' },
+  },
+  required: ['title', 'summary', 'slug', 'body'],
+  additionalProperties: false,
+};
+
 function buildDraftPrompt(posts) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
@@ -12,15 +26,14 @@ function buildDraftPrompt(posts) {
   ].join('\n');
 }
 
-async function draftPost({ qualifyingPosts, openaiClient }) {
-  const completion = await openaiClient.chat.completions.create({
-    model: 'gpt-4.1',
-    messages: [{ role: 'user', content: buildDraftPrompt(qualifyingPosts) }],
-    response_format: { type: 'json_object' },
+async function draftPost({ qualifyingPosts, anthropicClient }) {
+  const draft = await requestJson({
+    anthropicClient,
+    prompt: buildDraftPrompt(qualifyingPosts),
+    schema: DRAFT_SCHEMA,
   });
 
-  const draft = JSON.parse(completion.choices[0].message.content);
   return { title: draft.title, summary: draft.summary, slug: draft.slug, body: draft.body };
 }
 
-module.exports = { draftPost, buildDraftPrompt };
+module.exports = { draftPost, buildDraftPrompt, DRAFT_SCHEMA };
