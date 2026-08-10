@@ -9,6 +9,7 @@ const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
 const { openDraftPr } = require('./lib/git-pr');
+const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack } = require('./lib/notify-slack');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
@@ -45,11 +46,17 @@ async function main() {
 
   const candidates = filterCandidates(posts);
   const existingPosts = readExistingPosts(REPO_ROOT);
-  const rawGroups = await classifyAndGroupPosts({ candidates, existingPosts, anthropicClient });
-  // classifyAndGroupPosts can return a group that ends up empty (e.g. the model
-  // returns a hallucinated/unknown post id that the id-to-post mapping filters
-  // out), so drop any empty group before it reaches drafting.
-  const groups = rawGroups.filter((group) => group.length > 0);
+  const { groups, skipped } = await classifyAndGroupPosts({
+    candidates,
+    existingPosts,
+    anthropicClient,
+  });
+
+  for (const { posts, existingPostTitle } of skipped) {
+    console.log(
+      `Skipped ${posts.length} post(s) as already covered by "${existingPostTitle || 'an existing post'}".`
+    );
+  }
 
   if (groups.length === 0) {
     console.log('No qualifying posts this month — skipping.');
@@ -92,22 +99,7 @@ async function main() {
     branchName,
     postDirs,
     prTitle,
-    prBody: [
-      'Auto-generated monthly Updates draft(s). Review the Vercel preview(s) before merging.',
-      '',
-      ...drafts.map((draft) => `- ${draft.title}`),
-      '',
-      '### Before merging',
-      '',
-      // These are the failure modes an actual dry run produced, not
-      // hypotheticals. The classify step screens for the first one but will
-      // not settle a near-duplicate with a genuinely fresh angle — that call
-      // is why this PR gate exists.
-      '- [ ] Does any draft re-cover ground an existing post already made?',
-      '- [ ] Is each draft carried by real substance, or is it a short post padded out to article length?',
-      '- [ ] Does the voice read as the author writing, rather than an article written about them?',
-      '- [ ] Should any of these get their own cover image instead of the shared placeholder?',
-    ].join('\n'),
+    prBody: buildPrBody({ drafts, skipped }),
   });
 
   const summary =

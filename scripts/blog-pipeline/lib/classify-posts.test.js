@@ -38,9 +38,10 @@ test('classifyAndGroupPosts returns groups of full post objects', async () => {
   ];
   const result = await classifyAndGroupPosts({ candidates, existingPosts: [], anthropicClient: fakeClient });
   assert.deepEqual(
-    result.map((group) => group.map((p) => p.id)),
+    result.groups.map((group) => group.map((p) => p.id)),
     [['2'], ['3', '4']]
   );
+  assert.deepEqual(result.skipped, []);
 });
 
 test('classifyAndGroupPosts drops groups the model flagged as already covered', async () => {
@@ -59,8 +60,18 @@ test('classifyAndGroupPosts drops groups the model flagged as already covered', 
     anthropicClient: fakeClient,
   });
   assert.deepEqual(
-    result.map((g) => g.map((p) => p.id)),
+    result.groups.map((g) => g.map((p) => p.id)),
     [['2']]
+  );
+  // The skipped group is reported, not discarded, so the PR can show it.
+  assert.equal(result.skipped.length, 1);
+  assert.deepEqual(
+    result.skipped[0].posts.map((p) => p.id),
+    ['3']
+  );
+  assert.equal(
+    result.skipped[0].existingPostTitle,
+    'Build personal design tools with AI using Toolcraft'
   );
 });
 
@@ -72,9 +83,21 @@ test('classifyAndGroupPosts drops post ids the model invented', async () => {
     anthropicClient: fakeClient,
   });
   assert.deepEqual(
-    result.map((group) => group.map((p) => p.id)),
+    result.groups.map((group) => group.map((p) => p.id)),
     [['2']]
   );
+});
+
+test('classifyAndGroupPosts reports neither a group nor a skip when no ids resolve', async () => {
+  const fakeClient = fakeClientReturning({
+    groups: [group(['nope'], { already_covered: true, existing_post_title: 'Some post' })],
+  });
+  const result = await classifyAndGroupPosts({
+    candidates: [{ id: '2', text: 'a real post' }],
+    existingPosts: [],
+    anthropicClient: fakeClient,
+  });
+  assert.deepEqual(result, { groups: [], skipped: [] });
 });
 
 test('classifyAndGroupPosts sends the request with a json_schema output format', async () => {
@@ -123,6 +146,6 @@ test('classifyAndGroupPosts returns no groups without calling the model when the
     },
   };
   const result = await classifyAndGroupPosts({ candidates: [], existingPosts: [], anthropicClient: fakeClient });
-  assert.deepEqual(result, []);
+  assert.deepEqual(result, { groups: [], skipped: [] });
   assert.equal(called, false);
 });

@@ -65,7 +65,16 @@ Expected: FAIL (assertion `BLOG_CATEGORIES.includes('Updates')` is `false`)
 
 ```js
 // src/constants/blog.js
+const BLOG_BASE_PATH = '/blog/';
 const BLOG_CATEGORIES = ['Development', 'Design', 'Misc', 'Updates'];
+const BLOG_POSTS_PER_PAGE = 15;
+
+// We are using ES modules here in order to be able to import variables from this file in gatsby-node.js
+module.exports = {
+  BLOG_BASE_PATH,
+  BLOG_CATEGORIES,
+  BLOG_POSTS_PER_PAGE,
+};
 ```
 
 **Step 4: Run test to verify it passes**
@@ -558,10 +567,18 @@ Expected: FAIL with "Cannot find module './anthropic-json'"
 
 ```js
 // scripts/blog-pipeline/lib/anthropic-json.js
+// Shared request shape for the two LLM steps (classify, draft).
+//
+// Both steps want the same thing: send one prompt, get back JSON in a known
+// shape. Structured outputs (`output_config.format`) constrain the response to
+// `schema` at the API level, so callers can JSON.parse the result without
+// defensive checks — unlike the old json_object mode, which only asked politely.
 const MODEL = 'claude-opus-5';
 const MAX_TOKENS = 16000;
 
 function extractText(message) {
+  // Thinking is on by default on this model, so content holds thinking blocks
+  // alongside the text ones. Only the text blocks carry the JSON.
   return message.content
     .filter((block) => block.type === 'text')
     .map((block) => block.text)
@@ -577,6 +594,9 @@ async function requestJson({ anthropicClient, prompt, schema }) {
     messages: [{ role: 'user', content: prompt }],
   });
 
+  // A refused request returns HTTP 200 with empty or partial content, so this
+  // has to be checked before reading content — otherwise it surfaces as a
+  // confusing JSON parse error instead of the real reason.
   if (message.stop_reason === 'refusal') {
     const category = (message.stop_details && message.stop_details.category) || 'unspecified';
     throw new Error(`Claude declined this request (category: ${category})`);
@@ -626,17 +646,6 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { classifyAndGroupPosts, buildClassifyPrompt } = require('./classify-posts');
 
-test('buildClassifyPrompt lists existing posts and candidate ids', () => {
-  const prompt = buildClassifyPrompt(
-    [{ id: '1', text: 'design update' }],
-    [{ title: 'Toolcraft', summary: 'A design tool' }]
-  );
-  assert.ok(prompt.includes('Toolcraft: A design tool'));
-  assert.ok(prompt.includes('zero context'));
-  assert.ok(prompt.includes('personal side project'));
-  assert.ok(prompt.includes('"id":"1"') || prompt.includes('"id": "1"'));
-});
-
 function fakeClientReturning(payload) {
   return {
     messages: {
@@ -648,8 +657,23 @@ function fakeClientReturning(payload) {
   };
 }
 
+test('buildClassifyPrompt lists existing posts and candidate ids', () => {
+  const prompt = buildClassifyPrompt(
+    [{ id: '1', text: 'design update' }],
+    [{ title: 'Toolcraft', summary: 'A design tool' }]
+  );
+  assert.ok(prompt.includes('Toolcraft: A design tool'));
+  assert.ok(prompt.includes('zero context'));
+  assert.ok(prompt.includes('personal side project'));
+  assert.ok(prompt.includes('"id":"1"') || prompt.includes('"id": "1"'));
+});
+
+function group(postIds, extra = {}) {
+  return { post_ids: postIds, already_covered: false, existing_post_title: '', ...extra };
+}
+
 test('classifyAndGroupPosts returns groups of full post objects', async () => {
-  const fakeClient = fakeClientReturning({ groups: [{ post_ids: ['2'] }, { post_ids: ['3', '4'] }] });
+  const fakeClient = fakeClientReturning({ groups: [group(['2']), group(['3', '4'])] });
   const candidates = [
     { id: '1', text: 'skip me' },
     { id: '2', text: 'standalone story' },
@@ -658,22 +682,66 @@ test('classifyAndGroupPosts returns groups of full post objects', async () => {
   ];
   const result = await classifyAndGroupPosts({ candidates, existingPosts: [], anthropicClient: fakeClient });
   assert.deepEqual(
-    result.map((group) => group.map((p) => p.id)),
+    result.groups.map((group) => group.map((p) => p.id)),
     [['2'], ['3', '4']]
+  );
+  assert.deepEqual(result.skipped, []);
+});
+
+test('classifyAndGroupPosts drops groups the model flagged as already covered', async () => {
+  const fakeClient = fakeClientReturning({
+    groups: [
+      group(['2']),
+      group(['3'], { already_covered: true, existing_post_title: 'Build personal design tools with AI using Toolcraft' }),
+    ],
+  });
+  const result = await classifyAndGroupPosts({
+    candidates: [
+      { id: '2', text: 'a genuinely new topic' },
+      { id: '3', text: 'a restatement of an existing post' },
+    ],
+    existingPosts: [],
+    anthropicClient: fakeClient,
+  });
+  assert.deepEqual(
+    result.groups.map((g) => g.map((p) => p.id)),
+    [['2']]
+  );
+  // The skipped group is reported, not discarded, so the PR can show it.
+  assert.equal(result.skipped.length, 1);
+  assert.deepEqual(
+    result.skipped[0].posts.map((p) => p.id),
+    ['3']
+  );
+  assert.equal(
+    result.skipped[0].existingPostTitle,
+    'Build personal design tools with AI using Toolcraft'
   );
 });
 
 test('classifyAndGroupPosts drops post ids the model invented', async () => {
-  const fakeClient = fakeClientReturning({ groups: [{ post_ids: ['2', 'not-a-real-id'] }] });
+  const fakeClient = fakeClientReturning({ groups: [group(['2', 'not-a-real-id'])] });
   const result = await classifyAndGroupPosts({
     candidates: [{ id: '2', text: 'real post' }],
     existingPosts: [],
     anthropicClient: fakeClient,
   });
   assert.deepEqual(
-    result.map((group) => group.map((p) => p.id)),
+    result.groups.map((group) => group.map((p) => p.id)),
     [['2']]
   );
+});
+
+test('classifyAndGroupPosts reports neither a group nor a skip when no ids resolve', async () => {
+  const fakeClient = fakeClientReturning({
+    groups: [group(['nope'], { already_covered: true, existing_post_title: 'Some post' })],
+  });
+  const result = await classifyAndGroupPosts({
+    candidates: [{ id: '2', text: 'a real post' }],
+    existingPosts: [],
+    anthropicClient: fakeClient,
+  });
+  assert.deepEqual(result, { groups: [], skipped: [] });
 });
 
 test('classifyAndGroupPosts sends the request with a json_schema output format', async () => {
@@ -694,6 +762,22 @@ test('classifyAndGroupPosts sends the request with a json_schema output format',
   assert.equal(sentParams.model, 'claude-opus-5');
   assert.equal(sentParams.output_config.format.type, 'json_schema');
   assert.deepEqual(sentParams.output_config.format.schema.required, ['groups']);
+  // The dedup verdict has to be required, or the model can omit it and every
+  // group silently defaults to "not covered".
+  assert.deepEqual(sentParams.output_config.format.schema.properties.groups.items.required, [
+    'post_ids',
+    'already_covered',
+    'existing_post_title',
+  ]);
+});
+
+test('buildClassifyPrompt asks for a per-group check against the existing posts', () => {
+  const prompt = buildClassifyPrompt(
+    [{ id: '1', text: 'a candidate' }],
+    [{ title: 'Toolcraft', summary: 'A design tool' }]
+  );
+  assert.ok(prompt.includes('already_covered'));
+  assert.ok(prompt.includes('restating an existing thesis'));
 });
 
 test('classifyAndGroupPosts returns no groups without calling the model when there are no candidates', async () => {
@@ -706,7 +790,7 @@ test('classifyAndGroupPosts returns no groups without calling the model when the
     },
   };
   const result = await classifyAndGroupPosts({ candidates: [], existingPosts: [], anthropicClient: fakeClient });
-  assert.deepEqual(result, []);
+  assert.deepEqual(result, { groups: [], skipped: [] });
   assert.equal(called, false);
 });
 ```
@@ -731,8 +815,16 @@ const CLASSIFY_SCHEMA = {
         type: 'object',
         properties: {
           post_ids: { type: 'array', items: { type: 'string' } },
+          // Asking for an explicit verdict per group, rather than trusting the
+          // model to silently drop covered topics, is deliberate: a dry run
+          // against real June 2026 posts produced a second article on
+          // Toolcraft that an existing post already covered, even though the
+          // prompt listed it. A required field forces the comparison to
+          // happen, and the filtering below makes it the code's decision.
+          already_covered: { type: 'boolean' },
+          existing_post_title: { type: 'string' },
         },
-        required: ['post_ids'],
+        required: ['post_ids', 'already_covered', 'existing_post_title'],
         additionalProperties: false,
       },
     },
@@ -745,7 +837,7 @@ function buildClassifyPrompt(candidates, existingPosts) {
   return [
     'You are screening X posts for a company blog "Updates" category.',
     'The bar is not just "is this on-topic" — keep a post only if it would stand alone as worth reading for someone with zero context on the author\'s X feed: a real design-process note, product announcement, or release, not a status update that only makes sense to an existing follower.',
-    'Personal side projects (open-source tools, solo builds) count and should be kept if they clear that bar — they still reflect the team\'s expertise even when not officially branded company work.',
+    'Personal side projects (open-source tools, solo builds; examples of personal side project work) count and should be kept if they clear that bar — they still reflect the team\'s expertise even when not officially branded company work.',
     'Exclude opinion or thought-leadership essays not tied to a specific project or release, for now.',
     "Drop posts that are just commentary on someone else's work, one-line reactions, or posts already covered by an existing blog post.",
     '',
@@ -756,12 +848,17 @@ function buildClassifyPrompt(candidates, existingPosts) {
     JSON.stringify(candidates.map((p) => ({ id: p.id, text: p.text }))),
     '',
     'Group the posts that qualify into one or more article topics: a single substantial story should be its own group; several smaller updates can share one group as a bundled roundup.',
-    'Respond with JSON: { "groups": [{ "post_ids": ["..."] }, ...] } — omit any post id that does not qualify.',
+    'Then check every group you propose against the existing blog posts listed above, one at a time. Set "already_covered" to true and put that post\'s title in "existing_post_title" when an existing post already makes the same argument about the same subject — restating an existing thesis in new words counts as covered. A genuinely new release, update, or development for a product that already has a post does not count as covered; set "already_covered" to false and leave "existing_post_title" empty.',
+    'Respond with JSON: { "groups": [{ "post_ids": ["..."], "already_covered": false, "existing_post_title": "" }, ...] } — omit any post id that does not qualify.',
   ].join('\n');
 }
 
+// Returns { groups, skipped }. `skipped` carries the groups the model judged
+// as already covered so the caller can surface them for review — dropping them
+// silently would hide a wrong call, which is the same blind spot as letting a
+// duplicate through, just pointing the other way.
 async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClient }) {
-  if (candidates.length === 0) return [];
+  if (candidates.length === 0) return { groups: [], skipped: [] };
 
   const { groups } = await requestJson({
     anthropicClient,
@@ -770,7 +867,23 @@ async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClien
   });
 
   const postsById = new Map(candidates.map((post) => [post.id, post]));
-  return groups.map((group) => group.post_ids.map((id) => postsById.get(id)).filter(Boolean));
+  const kept = [];
+  const skipped = [];
+
+  for (const group of groups) {
+    // A group can resolve to nothing when the model returns a post id that
+    // was never a candidate; there is no article to draft or to report.
+    const posts = group.post_ids.map((id) => postsById.get(id)).filter(Boolean);
+    if (posts.length === 0) continue;
+
+    if (group.already_covered) {
+      skipped.push({ posts, existingPostTitle: group.existing_post_title });
+    } else {
+      kept.push(posts);
+    }
+  }
+
+  return { groups: kept, skipped };
 }
 
 module.exports = { classifyAndGroupPosts, buildClassifyPrompt, CLASSIFY_SCHEMA };
@@ -809,6 +922,15 @@ test('buildDraftPrompt tells the model to preserve I/we framing and write editor
   assert.ok(prompt.includes('keep it first-person'));
   assert.ok(prompt.includes('I built a tool'));
   assert.ok(prompt.includes("Don't just reformat"));
+});
+
+test('buildDraftPrompt tells the model it is writing under the author\'s own byline', () => {
+  // A dry run against real posts produced drafts that referred to "Alex
+  // Barashkov, our CEO" in the third person while being published under his
+  // byline, so the narrator has to be stated explicitly.
+  const prompt = buildDraftPrompt([{ text: 'I built a tool', url: 'https://x.com/1' }]);
+  assert.ok(prompt.includes("under Alex's own byline"));
+  assert.ok(prompt.includes('never refer to'));
 });
 
 test('draftPost parses the model JSON response into a draft object', async () => {
@@ -875,6 +997,7 @@ const DRAFT_SCHEMA = {
 function buildDraftPrompt(posts) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
+    'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
     'Preserve his framing: if a post says "I built X," keep it first-person; if it credits the team ("our design process"), keep that framing. Do not force everything into "we."',
     "Don't just reformat the source posts into blog-post shape — write editorially: explain the problem being solved, translate any jargon into plain language, and add a concrete example if it helps a reader with zero context on these posts understand why this matters. The goal is a piece that reads as genuinely worth someone's time, not a tidied-up repost.",
     '',
@@ -927,6 +1050,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const matter = require('gray-matter');
 const { publishPost } = require('./publish-post');
 
 test('writes index.md with frontmatter and copies the cover image', () => {
@@ -944,10 +1068,33 @@ test('writes index.md with frontmatter and copies the cover image', () => {
   assert.equal(folderName, '2026-07-21-alex-update');
   const written = fs.readFileSync(path.join(postDir, 'index.md'), 'utf8');
   assert.ok(written.includes("title: 'Alex''s Update'") || written.includes("title: 'Alex\\'s Update'"));
+  assert.ok(written.includes("summary: 'Summary text'"));
   assert.ok(written.includes('author: Alex Barashkov'));
   assert.ok(written.includes('category: Updates'));
   assert.ok(written.includes('Body text'));
   assert.ok(fs.existsSync(path.join(postDir, 'cover.png')));
+});
+
+test('produces valid YAML frontmatter when the summary contains a colon', () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-publish-colon-'));
+  const coverImageSourcePath = path.join(repoRoot, 'source-cover.png');
+  fs.writeFileSync(coverImageSourcePath, 'fake-png-bytes');
+
+  const { postDir } = publishPost({
+    draft: {
+      title: 'New Tool',
+      summary: 'New AI tool: what it means for designers',
+      slug: 'new-tool',
+      body: 'Body text',
+    },
+    publishDate: '2026-07-21',
+    repoRoot,
+    coverImageSourcePath,
+  });
+
+  const written = fs.readFileSync(path.join(postDir, 'index.md'), 'utf8');
+  const { data } = matter(written);
+  assert.equal(data.summary, 'New AI tool: what it means for designers');
 });
 ```
 
@@ -971,15 +1118,17 @@ function publishPost({
   author = 'Alex Barashkov',
   category = 'Updates',
 }) {
-  const folderName = `${publishDate}-${draft.slug}`;
+  const slug = draft.slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const folderName = `${publishDate}-${slug}`;
   const postDir = path.join(repoRoot, 'content', 'posts', folderName);
   fs.mkdirSync(postDir, { recursive: true });
 
   const escapedTitle = draft.title.replace(/'/g, "''");
+  const escapedSummary = draft.summary.replace(/'/g, "''");
   const frontmatter = [
     '---',
     `title: '${escapedTitle}'`,
-    `summary: ${draft.summary}`,
+    `summary: '${escapedSummary}'`,
     `author: ${author}`,
     'cover: cover.png',
     `category: ${category}`,
@@ -1133,8 +1282,116 @@ git commit -m "feat: add git/PR module for blog pipeline"
 ### Task 13: Orchestrator + GitHub Actions workflow
 
 **Files:**
+- Create: `scripts/blog-pipeline/lib/pr-body.js`
+- Test: `scripts/blog-pipeline/lib/pr-body.test.js`
 - Create: `scripts/blog-pipeline/run.js`
 - Create: `.github/workflows/monthly-blog-draft.yml`
+
+**Step 0: Write the PR body builder**
+
+The PR is the review gate, so its body is the one place a human reliably
+reads. It carries both halves of the classify decision — the drafts that were
+written, and the groups dropped as duplicates. Without the second half a wrong
+drop is invisible, which is the same blind spot as letting a duplicate
+through, just pointing the other way.
+
+```js
+// scripts/blog-pipeline/lib/pr-body.test.js
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const { buildPrBody } = require('./pr-body');
+
+const DRAFTS = [{ title: 'Introducing Aval' }, { title: "Toolcraft's New Release" }];
+
+test('lists every draft title and the review checklist', () => {
+  const body = buildPrBody({ drafts: DRAFTS });
+  assert.ok(body.includes('- Introducing Aval'));
+  assert.ok(body.includes("- Toolcraft's New Release"));
+  assert.ok(body.includes('### Before merging'));
+  assert.equal((body.match(/^- \[ \] /gm) || []).length, 4);
+});
+
+test('omits the skipped section entirely when nothing was skipped', () => {
+  const body = buildPrBody({ drafts: DRAFTS, skipped: [] });
+  assert.ok(!body.includes('Skipped as already covered'));
+});
+
+test('defaults to no skipped section when the caller omits the field', () => {
+  assert.ok(!buildPrBody({ drafts: DRAFTS }).includes('Skipped as already covered'));
+});
+
+test('reports skipped groups with their source post urls and the overlapping title', () => {
+  const body = buildPrBody({
+    drafts: DRAFTS,
+    skipped: [
+      {
+        posts: [{ url: 'https://x.com/i/web/status/1' }, { url: 'https://x.com/i/web/status/2' }],
+        existingPostTitle: 'Build personal design tools with AI using Toolcraft',
+      },
+    ],
+  });
+  assert.ok(body.includes('### Skipped as already covered'));
+  assert.ok(body.includes('https://x.com/i/web/status/1, https://x.com/i/web/status/2'));
+  assert.ok(body.includes('overlaps "Build personal design tools with AI using Toolcraft"'));
+  // Checklist items plus one per skipped group, so the reviewer ticks it off.
+  assert.equal((body.match(/^- \[ \] /gm) || []).length, 5);
+});
+
+test('falls back to a readable phrase when the model names no overlapping post', () => {
+  const body = buildPrBody({
+    drafts: DRAFTS,
+    skipped: [{ posts: [{ url: 'https://x.com/i/web/status/1' }], existingPostTitle: '' }],
+  });
+  assert.ok(body.includes('overlaps "an existing post"'));
+});
+```
+
+```js
+// scripts/blog-pipeline/lib/pr-body.js
+// The PR is the review gate, so its body is the only place a human reliably
+// reads. It has to carry both halves of the classify decision: the drafts that
+// were written, and the groups that were dropped as duplicates — a wrong drop
+// is invisible otherwise.
+function buildPrBody({ drafts, skipped = [] }) {
+  const lines = [
+    'Auto-generated monthly Updates draft(s). Review the Vercel preview(s) before merging.',
+    '',
+    ...drafts.map((draft) => `- ${draft.title}`),
+    '',
+    '### Before merging',
+    '',
+    // These are the failure modes a dry run against real posts produced, not
+    // hypotheticals. The classify step screens for the first one but will not
+    // settle a near-duplicate with a genuinely fresh angle — that call is why
+    // this gate exists.
+    '- [ ] Does any draft re-cover ground an existing post already made?',
+    '- [ ] Is each draft carried by real substance, or is it a short post padded out to article length?',
+    '- [ ] Does the voice read as the author writing, rather than an article written about them?',
+    '- [ ] Should any of these get their own cover image instead of the shared placeholder?',
+  ];
+
+  if (skipped.length > 0) {
+    lines.push(
+      '',
+      '### Skipped as already covered',
+      '',
+      'These were judged to repeat an existing post, so no draft was written. Worth a look — a wrong call here loses a post silently.',
+      '',
+      ...skipped.map(
+        ({ posts, existingPostTitle }) =>
+          `- [ ] ${posts.map((post) => post.url).join(', ')} — overlaps "${existingPostTitle || 'an existing post'}"`
+      )
+    );
+  }
+
+  return lines.join('\n');
+}
+
+module.exports = { buildPrBody };
+```
+
+Run: `node --test scripts/blog-pipeline/lib/pr-body.test.js`
+Expected: PASS (5 tests)
 
 **Step 1: Write the orchestrator**
 
@@ -1151,6 +1408,7 @@ const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
 const { openDraftPr } = require('./lib/git-pr');
+const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack } = require('./lib/notify-slack');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
@@ -1187,11 +1445,17 @@ async function main() {
 
   const candidates = filterCandidates(posts);
   const existingPosts = readExistingPosts(REPO_ROOT);
-  const rawGroups = await classifyAndGroupPosts({ candidates, existingPosts, anthropicClient });
-  // classifyAndGroupPosts can return a group that ends up empty (e.g. the model
-  // returns a hallucinated/unknown post id that the id-to-post mapping filters
-  // out), so drop any empty group before it reaches drafting.
-  const groups = rawGroups.filter((group) => group.length > 0);
+  const { groups, skipped } = await classifyAndGroupPosts({
+    candidates,
+    existingPosts,
+    anthropicClient,
+  });
+
+  for (const { posts, existingPostTitle } of skipped) {
+    console.log(
+      `Skipped ${posts.length} post(s) as already covered by "${existingPostTitle || 'an existing post'}".`
+    );
+  }
 
   if (groups.length === 0) {
     console.log('No qualifying posts this month — skipping.');
@@ -1234,22 +1498,7 @@ async function main() {
     branchName,
     postDirs,
     prTitle,
-    prBody: [
-      'Auto-generated monthly Updates draft(s). Review the Vercel preview(s) before merging.',
-      '',
-      ...drafts.map((draft) => `- ${draft.title}`),
-      '',
-      '### Before merging',
-      '',
-      // These are the failure modes an actual dry run produced, not
-      // hypotheticals. The classify step screens for the first one but will
-      // not settle a near-duplicate with a genuinely fresh angle — that call
-      // is why this PR gate exists.
-      '- [ ] Does any draft re-cover ground an existing post already made?',
-      '- [ ] Is each draft carried by real substance, or is it a short post padded out to article length?',
-      '- [ ] Does the voice read as the author writing, rather than an article written about them?',
-      '- [ ] Should any of these get their own cover image instead of the shared placeholder?',
-    ].join('\n'),
+    prBody: buildPrBody({ drafts, skipped }),
   });
 
   const summary =

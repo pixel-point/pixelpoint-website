@@ -47,8 +47,12 @@ function buildClassifyPrompt(candidates, existingPosts) {
   ].join('\n');
 }
 
+// Returns { groups, skipped }. `skipped` carries the groups the model judged
+// as already covered so the caller can surface them for review — dropping them
+// silently would hide a wrong call, which is the same blind spot as letting a
+// duplicate through, just pointing the other way.
 async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClient }) {
-  if (candidates.length === 0) return [];
+  if (candidates.length === 0) return { groups: [], skipped: [] };
 
   const { groups } = await requestJson({
     anthropicClient,
@@ -58,18 +62,22 @@ async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClien
 
   const postsById = new Map(candidates.map((post) => [post.id, post]));
   const kept = [];
+  const skipped = [];
 
   for (const group of groups) {
+    // A group can resolve to nothing when the model returns a post id that
+    // was never a candidate; there is no article to draft or to report.
+    const posts = group.post_ids.map((id) => postsById.get(id)).filter(Boolean);
+    if (posts.length === 0) continue;
+
     if (group.already_covered) {
-      console.log(
-        `Skipping a group already covered by "${group.existing_post_title || 'an existing post'}".`
-      );
-      continue;
+      skipped.push({ posts, existingPostTitle: group.existing_post_title });
+    } else {
+      kept.push(posts);
     }
-    kept.push(group.post_ids.map((id) => postsById.get(id)).filter(Boolean));
   }
 
-  return kept;
+  return { groups: kept, skipped };
 }
 
 module.exports = { classifyAndGroupPosts, buildClassifyPrompt, CLASSIFY_SCHEMA };
