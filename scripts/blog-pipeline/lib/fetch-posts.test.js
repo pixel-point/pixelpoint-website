@@ -51,6 +51,7 @@ test('fetchRecentPosts maps API posts to the pipeline shape', async () => {
       createdAt: '2026-07-01T00:00:00Z',
       url: 'https://x.com/i/web/status/999',
       media: [],
+      quoted: null,
     },
   ]);
 });
@@ -109,4 +110,84 @@ test('fetchRecentPosts attaches expanded media to the post that references it', 
     },
   ]);
   assert.deepEqual(posts[1].media, []);
+  assert.equal(posts[1].quoted, null);
+});
+
+const { expandLinks } = require('./fetch-posts');
+
+test('expandLinks replaces t.co shortlinks with where they actually go', () => {
+  // Handed an opaque t.co link the model cannot tell what it points at, so it
+  // drops it — which is why drafts carried no outbound links at all.
+  const text = expandLinks({
+    text: 'Meet the new Novu and its new homepage. https://t.co/wdVPM9aH66',
+    entities: {
+      urls: [{ url: 'https://t.co/wdVPM9aH66', expanded_url: 'https://novu.co/' }],
+    },
+  });
+  assert.equal(text, 'Meet the new Novu and its new homepage. https://novu.co/');
+});
+
+test('expandLinks leaves text alone when there are no entities', () => {
+  assert.equal(expandLinks({ text: 'no links here' }), 'no links here');
+});
+
+test('fetchRecentPosts carries quoted text and borrows the quoted media', async () => {
+  const fakeFetch = async (url) => {
+    assert.ok(url.includes('referenced_tweets.id'));
+    assert.ok(url.includes('entities'));
+    return {
+      ok: true,
+      json: async () => ({
+        data: [
+          {
+            id: '1',
+            text: 'Meet the new Novu. https://t.co/abc',
+            created_at: 'x',
+            entities: { urls: [{ url: 'https://t.co/abc', expanded_url: 'https://x.com/dima/status/9' }] },
+            referenced_tweets: [{ type: 'quoted', id: '9' }],
+          },
+        ],
+        includes: {
+          tweets: [
+            { id: '9', text: 'The new homepage is live', attachments: { media_keys: ['k1'] } },
+          ],
+          media: [{ media_key: 'k1', type: 'photo', url: 'https://pbs.twimg.com/shot.jpg' }],
+        },
+      }),
+    };
+  };
+  const posts = await fetchRecentPosts({
+    userId: '1',
+    bearerToken: 't',
+    sinceISODate: '2026-06-01T00:00:00Z',
+    fetchImpl: fakeFetch,
+  });
+  // The announcement post has no media of its own; the screenshot is in the
+  // post it quotes, which is exactly the Novu case that shipped without one.
+  assert.equal(posts[0].media.length, 1);
+  assert.equal(posts[0].media[0].url, 'https://pbs.twimg.com/shot.jpg');
+  assert.equal(posts[0].quoted.text, 'The new homepage is live');
+  assert.ok(posts[0].text.includes('https://x.com/dima/status/9'));
+  assert.ok(!posts[0].text.includes('t.co'));
+});
+
+test('a post with its own media does not borrow from the quoted post', async () => {
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      data: [
+        { id: '1', text: 'ours', created_at: 'x', attachments: { media_keys: ['own'] }, referenced_tweets: [{ type: 'quoted', id: '9' }] },
+      ],
+      includes: {
+        tweets: [{ id: '9', text: 'theirs', attachments: { media_keys: ['other'] } }],
+        media: [
+          { media_key: 'own', type: 'photo', url: 'https://pbs.twimg.com/ours.jpg' },
+          { media_key: 'other', type: 'photo', url: 'https://pbs.twimg.com/theirs.jpg' },
+        ],
+      },
+    }),
+  });
+  const posts = await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch });
+  assert.equal(posts[0].media.length, 1);
+  assert.equal(posts[0].media[0].url, 'https://pbs.twimg.com/ours.jpg');
 });

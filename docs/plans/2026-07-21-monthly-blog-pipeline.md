@@ -191,6 +191,7 @@ test('fetchRecentPosts maps API posts to the pipeline shape', async () => {
       createdAt: '2026-07-01T00:00:00Z',
       url: 'https://x.com/i/web/status/999',
       media: [],
+      quoted: null,
     },
   ]);
 });
@@ -249,6 +250,86 @@ test('fetchRecentPosts attaches expanded media to the post that references it', 
     },
   ]);
   assert.deepEqual(posts[1].media, []);
+  assert.equal(posts[1].quoted, null);
+});
+
+const { expandLinks } = require('./fetch-posts');
+
+test('expandLinks replaces t.co shortlinks with where they actually go', () => {
+  // Handed an opaque t.co link the model cannot tell what it points at, so it
+  // drops it — which is why drafts carried no outbound links at all.
+  const text = expandLinks({
+    text: 'Meet the new Novu and its new homepage. https://t.co/wdVPM9aH66',
+    entities: {
+      urls: [{ url: 'https://t.co/wdVPM9aH66', expanded_url: 'https://novu.co/' }],
+    },
+  });
+  assert.equal(text, 'Meet the new Novu and its new homepage. https://novu.co/');
+});
+
+test('expandLinks leaves text alone when there are no entities', () => {
+  assert.equal(expandLinks({ text: 'no links here' }), 'no links here');
+});
+
+test('fetchRecentPosts carries quoted text and borrows the quoted media', async () => {
+  const fakeFetch = async (url) => {
+    assert.ok(url.includes('referenced_tweets.id'));
+    assert.ok(url.includes('entities'));
+    return {
+      ok: true,
+      json: async () => ({
+        data: [
+          {
+            id: '1',
+            text: 'Meet the new Novu. https://t.co/abc',
+            created_at: 'x',
+            entities: { urls: [{ url: 'https://t.co/abc', expanded_url: 'https://x.com/dima/status/9' }] },
+            referenced_tweets: [{ type: 'quoted', id: '9' }],
+          },
+        ],
+        includes: {
+          tweets: [
+            { id: '9', text: 'The new homepage is live', attachments: { media_keys: ['k1'] } },
+          ],
+          media: [{ media_key: 'k1', type: 'photo', url: 'https://pbs.twimg.com/shot.jpg' }],
+        },
+      }),
+    };
+  };
+  const posts = await fetchRecentPosts({
+    userId: '1',
+    bearerToken: 't',
+    sinceISODate: '2026-06-01T00:00:00Z',
+    fetchImpl: fakeFetch,
+  });
+  // The announcement post has no media of its own; the screenshot is in the
+  // post it quotes, which is exactly the Novu case that shipped without one.
+  assert.equal(posts[0].media.length, 1);
+  assert.equal(posts[0].media[0].url, 'https://pbs.twimg.com/shot.jpg');
+  assert.equal(posts[0].quoted.text, 'The new homepage is live');
+  assert.ok(posts[0].text.includes('https://x.com/dima/status/9'));
+  assert.ok(!posts[0].text.includes('t.co'));
+});
+
+test('a post with its own media does not borrow from the quoted post', async () => {
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      data: [
+        { id: '1', text: 'ours', created_at: 'x', attachments: { media_keys: ['own'] }, referenced_tweets: [{ type: 'quoted', id: '9' }] },
+      ],
+      includes: {
+        tweets: [{ id: '9', text: 'theirs', attachments: { media_keys: ['other'] } }],
+        media: [
+          { media_key: 'own', type: 'photo', url: 'https://pbs.twimg.com/ours.jpg' },
+          { media_key: 'other', type: 'photo', url: 'https://pbs.twimg.com/theirs.jpg' },
+        ],
+      },
+    }),
+  });
+  const posts = await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch });
+  assert.equal(posts[0].media.length, 1);
+  assert.equal(posts[0].media[0].url, 'https://pbs.twimg.com/ours.jpg');
 });
 ```
 
@@ -272,15 +353,47 @@ async function getUserId({ username, bearerToken, fetchImpl = fetch }) {
   return data.id;
 }
 
+// X rewrites every link in a post as an opaque t.co shortlink. Handed one of
+// those, the model can't tell what it points at and drops it — which is why
+// drafts carried no outbound links at all. entities.urls maps each back to
+// where it actually goes.
+function expandLinks(post) {
+  const urls = (post.entities && post.entities.urls) || [];
+  return urls.reduce(
+    (text, link) => (link.expanded_url ? text.split(link.url).join(link.expanded_url) : text),
+    post.text || ''
+  );
+}
+
+function mapMedia(keys, mediaByKey) {
+  return (keys || [])
+    .map((key) => mediaByKey.get(key))
+    .filter(Boolean)
+    .map((item) => ({
+      type: item.type,
+      // Photos carry `url`; video and animated_gif carry only a poster in
+      // `preview_image_url` (the mp4 itself lives in `variants`).
+      url: item.url || item.preview_image_url,
+      altText: item.alt_text || '',
+      variants: item.variants || [],
+      width: item.width,
+      height: item.height,
+    }));
+}
+
 async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl = fetch }) {
   const url = new URL(`https://api.twitter.com/2/users/${userId}/tweets`);
   url.searchParams.set('exclude', 'replies,retweets');
   url.searchParams.set('start_time', sinceISODate);
-  url.searchParams.set('tweet.fields', 'created_at,text');
+  // `entities` carries the real destination behind each t.co link.
+  url.searchParams.set('tweet.fields', 'created_at,text,entities,referenced_tweets');
   url.searchParams.set('max_results', '100');
   // Media arrives in a separate `includes.media` list keyed by media_key, not
   // inline on the post — the expansion is what populates it at all.
-  url.searchParams.set('expansions', 'attachments.media_keys');
+  // `referenced_tweets.id` pulls in quoted posts: announcing work by quoting
+  // someone else is common, and without this the screenshot and the link being
+  // pointed at are both invisible to the pipeline.
+  url.searchParams.set('expansions', 'attachments.media_keys,referenced_tweets.id');
   // `variants` carries the playable mp4 urls for video; width/height are
   // required props on the site's <Video> component.
   url.searchParams.set('media.fields', 'type,url,preview_image_url,alt_text,variants,width,height');
@@ -293,29 +406,32 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
   }
   const { data = [], includes = {} } = await res.json();
   const mediaByKey = new Map((includes.media || []).map((item) => [item.media_key, item]));
+  const tweetsById = new Map((includes.tweets || []).map((item) => [item.id, item]));
 
-  return data.map((post) => ({
-    id: post.id,
-    text: post.text,
-    createdAt: post.created_at,
-    url: `https://x.com/i/web/status/${post.id}`,
-    media: ((post.attachments && post.attachments.media_keys) || [])
-      .map((key) => mediaByKey.get(key))
-      .filter(Boolean)
-      .map((item) => ({
-        type: item.type,
-        // Photos carry `url`; video and animated_gif carry only a poster in
-        // `preview_image_url` (the mp4 itself lives in `variants`).
-        url: item.url || item.preview_image_url,
-        altText: item.alt_text || '',
-        variants: item.variants || [],
-        width: item.width,
-        height: item.height,
-      })),
-  }));
+  return data.map((post) => {
+    const quotedRef = (post.referenced_tweets || []).find((ref) => ref.type === 'quoted');
+    const quoted = quotedRef && tweetsById.get(quotedRef.id);
+    const ownMedia = mapMedia((post.attachments || {}).media_keys, mediaByKey);
+    // A quote post usually carries no media of its own — the screenshot lives
+    // in the post being quoted, so treat that as this post's media when there
+    // is none. The quoted text stays separate: it is someone else's writing
+    // and is context for the draft, not material to rewrite.
+    const quotedMedia = quoted ? mapMedia((quoted.attachments || {}).media_keys, mediaByKey) : [];
+
+    return {
+      id: post.id,
+      text: expandLinks(post),
+      createdAt: post.created_at,
+      url: `https://x.com/i/web/status/${post.id}`,
+      media: ownMedia.length > 0 ? ownMedia : quotedMedia,
+      quoted: quoted
+        ? { text: expandLinks(quoted), url: `https://x.com/i/web/status/${quoted.id}` }
+        : null,
+    };
+  });
 }
 
-module.exports = { getUserId, fetchRecentPosts };
+module.exports = { getUserId, fetchRecentPosts, expandLinks };
 ```
 
 **Step 4: Run tests to verify they pass**
@@ -1251,8 +1367,17 @@ function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts 
     // case on roughly a third of titles.
     'Write the title and every heading in sentence case, like the rest of this blog: capitalise the first word, and after that only proper nouns, product names, and acronyms. Write "Toolcraft: five creative tools we built to prove AI demos can be more than toys", not "Toolcraft: Five Creative Tools We Built to Prove AI Demos Can Be More Than Toys". Note that AI, Blender, and Novu stay capitalised because of what they are, not because of where they sit in the sentence.',
     '',
+    'When a source post links to something — a launched page, a repo, a demo — link to it from the article at the point you mention it, using the real URL from the post. Do not describe a thing as launched or shipped without linking it if the link is available.',
+    'Where a source post quotes another post, that quoted text is background so you know what is being pointed at. Write about our work, not about the other person\'s post, and do not quote them.',
+    '',
     'Source posts (JSON):',
-    JSON.stringify(posts.map((p) => ({ text: p.text, url: p.url }))),
+    JSON.stringify(
+      posts.map((p) => ({
+        text: p.text,
+        url: p.url,
+        ...(p.quoted ? { quotedForContext: p.quoted.text } : {}),
+      }))
+    ),
     ...buildRelatedPostsInstructions(relatedExistingPosts),
     ...buildImageInstructions(photos),
     ...buildVideoInstructions(videos),
