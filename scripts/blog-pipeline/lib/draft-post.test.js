@@ -55,3 +55,23 @@ test('draftPost ignores thinking blocks when reading the JSON', async () => {
   });
   assert.deepEqual(result, fakeDraft);
 });
+
+test('buildDraftPrompt tells the model to link existing coverage instead of restating it', () => {
+  // A real run produced a second Toolcraft post whose summary reused the
+  // existing post's own "starter kit and UI library" framing. The classify
+  // verdict was defensible — there was genuine news — so the fix belongs here.
+  const prompt = buildDraftPrompt(
+    [{ text: 'New Toolcraft release', url: 'https://x.com/1' }],
+    [],
+    [],
+    [{ title: 'Build personal design tools with AI using Toolcraft', path: '/blog/how-to-craft/' }]
+  );
+  assert.ok(prompt.includes('do not reintroduce or re-explain'));
+  assert.ok(prompt.includes('/blog/how-to-craft/'));
+  assert.ok(prompt.includes('Open with what is actually new'));
+});
+
+test('buildDraftPrompt says nothing about related posts when there are none', () => {
+  const prompt = buildDraftPrompt([{ text: 'x', url: 'https://x.com/1' }]);
+  assert.ok(!prompt.includes('Already published on this subject'));
+});

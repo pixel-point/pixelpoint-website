@@ -70,11 +70,17 @@ async function main() {
   // Filenames are assigned before drafting so the model can be given the exact
   // names to reference, rather than inventing them and needing reconciliation.
   const drafted = [];
-  for (const group of groups) {
+  for (const { posts: group, relatedExistingPosts } of groups) {
     const photos = collectPhotos(group);
     const videos = collectVideos(group);
     drafted.push({
-      draft: await draftPost({ qualifyingPosts: group, photos, videos, anthropicClient }),
+      draft: await draftPost({
+        qualifyingPosts: group,
+        photos,
+        videos,
+        relatedExistingPosts,
+        anthropicClient,
+      }),
       photos,
       videos,
     });

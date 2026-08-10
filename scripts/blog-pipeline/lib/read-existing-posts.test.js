@@ -16,5 +16,7 @@ test('reads title/summary from every post folder', () => {
   );
 
   const posts = readExistingPosts(repoRoot);
-  assert.deepEqual(posts, [{ title: 'Toolcraft', summary: 'A design tool' }]);
+  assert.deepEqual(posts, [
+    { title: 'Toolcraft', summary: 'A design tool', path: '/blog/toolcraft' },
+  ]);
 });

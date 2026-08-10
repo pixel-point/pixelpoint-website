@@ -429,7 +429,9 @@ test('reads title/summary from every post folder', () => {
   );
 
   const posts = readExistingPosts(repoRoot);
-  assert.deepEqual(posts, [{ title: 'Toolcraft', summary: 'A design tool' }]);
+  assert.deepEqual(posts, [
+    { title: 'Toolcraft', summary: 'A design tool', path: '/blog/toolcraft' },
+  ]);
 });
 ```
 
@@ -445,6 +447,9 @@ Expected: FAIL with "Cannot find module './read-existing-posts'"
 const fs = require('node:fs');
 const path = require('node:path');
 const matter = require('gray-matter');
+// Reused rather than reimplemented so the pipeline's links stay correct if
+// BLOG_BASE_PATH or the date-prefix convention ever changes.
+const getBlogPostPath = require('../../../src/utils/get-blog-post-path');
 
 function readExistingPosts(repoRoot) {
   const postsDir = path.join(repoRoot, 'content', 'posts');
@@ -455,7 +460,9 @@ function readExistingPosts(repoRoot) {
       const indexPath = path.join(postsDir, entry.name, 'index.md');
       if (!fs.existsSync(indexPath)) return null;
       const { data } = matter(fs.readFileSync(indexPath, 'utf8'));
-      return { title: data.title, summary: data.summary };
+      // The path lets a draft link to an existing post instead of
+      // re-explaining what it already covers.
+      return { title: data.title, summary: data.summary, path: getBlogPostPath(entry.name) };
     })
     .filter(Boolean);
 }
@@ -747,7 +754,13 @@ test('buildClassifyPrompt lists existing posts and candidate ids', () => {
 });
 
 function group(postIds, extra = {}) {
-  return { post_ids: postIds, already_covered: false, existing_post_title: '', ...extra };
+  return {
+    post_ids: postIds,
+    already_covered: false,
+    existing_post_title: '',
+    related_existing_post_titles: [],
+    ...extra,
+  };
 }
 
 test('classifyAndGroupPosts returns groups of full post objects', async () => {
@@ -760,7 +773,7 @@ test('classifyAndGroupPosts returns groups of full post objects', async () => {
   ];
   const result = await classifyAndGroupPosts({ candidates, existingPosts: [], anthropicClient: fakeClient });
   assert.deepEqual(
-    result.groups.map((group) => group.map((p) => p.id)),
+    result.groups.map((group) => group.posts.map((p) => p.id)),
     [['2'], ['3', '4']]
   );
   assert.deepEqual(result.skipped, []);
@@ -782,7 +795,7 @@ test('classifyAndGroupPosts drops groups the model flagged as already covered', 
     anthropicClient: fakeClient,
   });
   assert.deepEqual(
-    result.groups.map((g) => g.map((p) => p.id)),
+    result.groups.map((g) => g.posts.map((p) => p.id)),
     [['2']]
   );
   // The skipped group is reported, not discarded, so the PR can show it.
@@ -805,7 +818,7 @@ test('classifyAndGroupPosts drops post ids the model invented', async () => {
     anthropicClient: fakeClient,
   });
   assert.deepEqual(
-    result.groups.map((group) => group.map((p) => p.id)),
+    result.groups.map((group) => group.posts.map((p) => p.id)),
     [['2']]
   );
 });
@@ -846,6 +859,7 @@ test('classifyAndGroupPosts sends the request with a json_schema output format',
     'post_ids',
     'already_covered',
     'existing_post_title',
+    'related_existing_post_titles',
   ]);
 });
 
@@ -870,6 +884,35 @@ test('classifyAndGroupPosts returns no groups without calling the model when the
   const result = await classifyAndGroupPosts({ candidates: [], existingPosts: [], anthropicClient: fakeClient });
   assert.deepEqual(result, { groups: [], skipped: [] });
   assert.equal(called, false);
+});
+
+test('classifyAndGroupPosts resolves related existing posts so the draft can link them', async () => {
+  const existingPosts = [
+    { title: 'Build personal design tools with AI using Toolcraft', summary: 'x', path: '/blog/how-to-craft/' },
+  ];
+  const fakeClient = fakeClientReturning({
+    groups: [
+      group(['2'], {
+        related_existing_post_titles: [
+          'Build personal design tools with AI using Toolcraft',
+          'A post that does not exist',
+        ],
+      }),
+    ],
+  });
+  const result = await classifyAndGroupPosts({
+    candidates: [{ id: '2', text: 'a new Toolcraft release' }],
+    existingPosts,
+    anthropicClient: fakeClient,
+  });
+  // An invented title must not become a dead link in a published post.
+  assert.deepEqual(result.groups[0].relatedExistingPosts, [existingPosts[0]]);
+});
+
+test('buildClassifyPrompt asks for related posts separately from the covered verdict', () => {
+  const prompt = buildClassifyPrompt([{ id: '1', text: 'x' }], [{ title: 'T', summary: 'S' }]);
+  assert.ok(prompt.includes('related_existing_post_titles'));
+  assert.ok(prompt.includes('rather than reintroducing the product'));
 });
 ```
 
@@ -901,8 +944,14 @@ const CLASSIFY_SCHEMA = {
           // happen, and the filtering below makes it the code's decision.
           already_covered: { type: 'boolean' },
           existing_post_title: { type: 'string' },
+          // Distinct from already_covered: a group can be genuinely new (a
+          // release, an update) while still touching a product an existing
+          // post explains. Naming those lets the draft link to them instead
+          // of reintroducing the subject from scratch — the actual source of
+          // the near-duplicate a real run produced.
+          related_existing_post_titles: { type: 'array', items: { type: 'string' } },
         },
-        required: ['post_ids', 'already_covered', 'existing_post_title'],
+        required: ['post_ids', 'already_covered', 'existing_post_title', 'related_existing_post_titles'],
         additionalProperties: false,
       },
     },
@@ -927,7 +976,8 @@ function buildClassifyPrompt(candidates, existingPosts) {
     '',
     'Group the posts that qualify into one or more article topics: a single substantial story should be its own group; several smaller updates can share one group as a bundled roundup.',
     'Then check every group you propose against the existing blog posts listed above, one at a time. Set "already_covered" to true and put that post\'s title in "existing_post_title" when an existing post already makes the same argument about the same subject — restating an existing thesis in new words counts as covered. A genuinely new release, update, or development for a product that already has a post does not count as covered; set "already_covered" to false and leave "existing_post_title" empty.',
-    'Respond with JSON: { "groups": [{ "post_ids": ["..."], "already_covered": false, "existing_post_title": "" }, ...] } — omit any post id that does not qualify.',
+    'Separately from that verdict, list in "related_existing_post_titles" the titles of any existing posts that already explain the same product or subject, even when the group is genuinely new. A release announcement for a product with an existing post should name that post here, so the article can link to it rather than reintroducing the product.',
+    'Respond with JSON: { "groups": [{ "post_ids": ["..."], "already_covered": false, "existing_post_title": "", "related_existing_post_titles": [] }, ...] } — omit any post id that does not qualify.',
   ].join('\n');
 }
 
@@ -945,6 +995,7 @@ async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClien
   });
 
   const postsById = new Map(candidates.map((post) => [post.id, post]));
+  const existingByTitle = new Map(existingPosts.map((post) => [post.title, post]));
   const kept = [];
   const skipped = [];
 
@@ -957,7 +1008,14 @@ async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClien
     if (group.already_covered) {
       skipped.push({ posts, existingPostTitle: group.existing_post_title });
     } else {
-      kept.push(posts);
+      kept.push({
+        posts,
+        // Resolved against the real list so an invented title can't become a
+        // dead link in a published post.
+        relatedExistingPosts: (group.related_existing_post_titles || [])
+          .map((title) => existingByTitle.get(title))
+          .filter(Boolean),
+      });
     }
   }
 
@@ -1047,6 +1105,26 @@ test('draftPost ignores thinking blocks when reading the JSON', async () => {
   });
   assert.deepEqual(result, fakeDraft);
 });
+
+test('buildDraftPrompt tells the model to link existing coverage instead of restating it', () => {
+  // A real run produced a second Toolcraft post whose summary reused the
+  // existing post's own "starter kit and UI library" framing. The classify
+  // verdict was defensible — there was genuine news — so the fix belongs here.
+  const prompt = buildDraftPrompt(
+    [{ text: 'New Toolcraft release', url: 'https://x.com/1' }],
+    [],
+    [],
+    [{ title: 'Build personal design tools with AI using Toolcraft', path: '/blog/how-to-craft/' }]
+  );
+  assert.ok(prompt.includes('do not reintroduce or re-explain'));
+  assert.ok(prompt.includes('/blog/how-to-craft/'));
+  assert.ok(prompt.includes('Open with what is actually new'));
+});
+
+test('buildDraftPrompt says nothing about related posts when there are none', () => {
+  const prompt = buildDraftPrompt([{ text: 'x', url: 'https://x.com/1' }]);
+  assert.ok(!prompt.includes('Already published on this subject'));
+});
 ```
 
 **Step 2: Run tests to verify they fail**
@@ -1071,6 +1149,17 @@ const DRAFT_SCHEMA = {
   required: ['title', 'summary', 'slug', 'body'],
   additionalProperties: false,
 };
+
+function buildRelatedPostsInstructions(relatedExistingPosts) {
+  if (relatedExistingPosts.length === 0) return [];
+  return [
+    '',
+    'The blog has already published the posts below on this same subject. Assume the reader can be sent there: do not reintroduce or re-explain what these posts already cover, and do not restate their framing in new words. Open with what is actually new here, and link to the relevant post inline in markdown the first time you refer to the background — for example, "the starter kit [we introduced earlier](/blog/some-post/)".',
+    '',
+    'Already published on this subject (JSON):',
+    JSON.stringify(relatedExistingPosts.map((post) => ({ title: post.title, path: post.path }))),
+  ];
+}
 
 function buildVideoInstructions(videos) {
   if (videos.length === 0) return [];
@@ -1100,7 +1189,7 @@ function buildImageInstructions(photos) {
   ];
 }
 
-function buildDraftPrompt(posts, photos = [], videos = []) {
+function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts = []) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
     'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
@@ -1109,6 +1198,7 @@ function buildDraftPrompt(posts, photos = [], videos = []) {
     '',
     'Source posts (JSON):',
     JSON.stringify(posts.map((p) => ({ text: p.text, url: p.url }))),
+    ...buildRelatedPostsInstructions(relatedExistingPosts),
     ...buildImageInstructions(photos),
     ...buildVideoInstructions(videos),
     '',
@@ -1116,10 +1206,16 @@ function buildDraftPrompt(posts, photos = [], videos = []) {
   ].join('\n');
 }
 
-async function draftPost({ qualifyingPosts, photos = [], videos = [], anthropicClient }) {
+async function draftPost({
+  qualifyingPosts,
+  photos = [],
+  videos = [],
+  relatedExistingPosts = [],
+  anthropicClient,
+}) {
   const draft = await requestJson({
     anthropicClient,
-    prompt: buildDraftPrompt(qualifyingPosts, photos, videos),
+    prompt: buildDraftPrompt(qualifyingPosts, photos, videos, relatedExistingPosts),
     schema: DRAFT_SCHEMA,
   });
 
@@ -2117,11 +2213,17 @@ async function main() {
   // Filenames are assigned before drafting so the model can be given the exact
   // names to reference, rather than inventing them and needing reconciliation.
   const drafted = [];
-  for (const group of groups) {
+  for (const { posts: group, relatedExistingPosts } of groups) {
     const photos = collectPhotos(group);
     const videos = collectVideos(group);
     drafted.push({
-      draft: await draftPost({ qualifyingPosts: group, photos, videos, anthropicClient }),
+      draft: await draftPost({
+        qualifyingPosts: group,
+        photos,
+        videos,
+        relatedExistingPosts,
+        anthropicClient,
+      }),
       photos,
       videos,
     });

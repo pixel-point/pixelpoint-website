@@ -13,6 +13,17 @@ const DRAFT_SCHEMA = {
   additionalProperties: false,
 };
 
+function buildRelatedPostsInstructions(relatedExistingPosts) {
+  if (relatedExistingPosts.length === 0) return [];
+  return [
+    '',
+    'The blog has already published the posts below on this same subject. Assume the reader can be sent there: do not reintroduce or re-explain what these posts already cover, and do not restate their framing in new words. Open with what is actually new here, and link to the relevant post inline in markdown the first time you refer to the background — for example, "the starter kit [we introduced earlier](/blog/some-post/)".',
+    '',
+    'Already published on this subject (JSON):',
+    JSON.stringify(relatedExistingPosts.map((post) => ({ title: post.title, path: post.path }))),
+  ];
+}
+
 function buildVideoInstructions(videos) {
   if (videos.length === 0) return [];
   return [
@@ -41,7 +52,7 @@ function buildImageInstructions(photos) {
   ];
 }
 
-function buildDraftPrompt(posts, photos = [], videos = []) {
+function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts = []) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
     'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
@@ -50,6 +61,7 @@ function buildDraftPrompt(posts, photos = [], videos = []) {
     '',
     'Source posts (JSON):',
     JSON.stringify(posts.map((p) => ({ text: p.text, url: p.url }))),
+    ...buildRelatedPostsInstructions(relatedExistingPosts),
     ...buildImageInstructions(photos),
     ...buildVideoInstructions(videos),
     '',
@@ -57,10 +69,16 @@ function buildDraftPrompt(posts, photos = [], videos = []) {
   ].join('\n');
 }
 
-async function draftPost({ qualifyingPosts, photos = [], videos = [], anthropicClient }) {
+async function draftPost({
+  qualifyingPosts,
+  photos = [],
+  videos = [],
+  relatedExistingPosts = [],
+  anthropicClient,
+}) {
   const draft = await requestJson({
     anthropicClient,
-    prompt: buildDraftPrompt(qualifyingPosts, photos, videos),
+    prompt: buildDraftPrompt(qualifyingPosts, photos, videos, relatedExistingPosts),
     schema: DRAFT_SCHEMA,
   });
 

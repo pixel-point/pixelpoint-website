@@ -17,8 +17,14 @@ const CLASSIFY_SCHEMA = {
           // happen, and the filtering below makes it the code's decision.
           already_covered: { type: 'boolean' },
           existing_post_title: { type: 'string' },
+          // Distinct from already_covered: a group can be genuinely new (a
+          // release, an update) while still touching a product an existing
+          // post explains. Naming those lets the draft link to them instead
+          // of reintroducing the subject from scratch — the actual source of
+          // the near-duplicate a real run produced.
+          related_existing_post_titles: { type: 'array', items: { type: 'string' } },
         },
-        required: ['post_ids', 'already_covered', 'existing_post_title'],
+        required: ['post_ids', 'already_covered', 'existing_post_title', 'related_existing_post_titles'],
         additionalProperties: false,
       },
     },
@@ -43,7 +49,8 @@ function buildClassifyPrompt(candidates, existingPosts) {
     '',
     'Group the posts that qualify into one or more article topics: a single substantial story should be its own group; several smaller updates can share one group as a bundled roundup.',
     'Then check every group you propose against the existing blog posts listed above, one at a time. Set "already_covered" to true and put that post\'s title in "existing_post_title" when an existing post already makes the same argument about the same subject — restating an existing thesis in new words counts as covered. A genuinely new release, update, or development for a product that already has a post does not count as covered; set "already_covered" to false and leave "existing_post_title" empty.',
-    'Respond with JSON: { "groups": [{ "post_ids": ["..."], "already_covered": false, "existing_post_title": "" }, ...] } — omit any post id that does not qualify.',
+    'Separately from that verdict, list in "related_existing_post_titles" the titles of any existing posts that already explain the same product or subject, even when the group is genuinely new. A release announcement for a product with an existing post should name that post here, so the article can link to it rather than reintroducing the product.',
+    'Respond with JSON: { "groups": [{ "post_ids": ["..."], "already_covered": false, "existing_post_title": "", "related_existing_post_titles": [] }, ...] } — omit any post id that does not qualify.',
   ].join('\n');
 }
 
@@ -61,6 +68,7 @@ async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClien
   });
 
   const postsById = new Map(candidates.map((post) => [post.id, post]));
+  const existingByTitle = new Map(existingPosts.map((post) => [post.title, post]));
   const kept = [];
   const skipped = [];
 
@@ -73,7 +81,14 @@ async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClien
     if (group.already_covered) {
       skipped.push({ posts, existingPostTitle: group.existing_post_title });
     } else {
-      kept.push(posts);
+      kept.push({
+        posts,
+        // Resolved against the real list so an invented title can't become a
+        // dead link in a published post.
+        relatedExistingPosts: (group.related_existing_post_titles || [])
+          .map((title) => existingByTitle.get(title))
+          .filter(Boolean),
+      });
     }
   }
 
