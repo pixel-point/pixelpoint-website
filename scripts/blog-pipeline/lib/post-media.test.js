@@ -145,7 +145,7 @@ test('bestMp4 does not pick a 4K encode over one that covers the column', () => 
   assert.match(chosen.url, /1600x/);
 });
 
-test('collectVideos builds a poster filename and hotlinked src', () => {
+test('collectVideos builds a poster filename and a proxied src', () => {
   const videos = collectVideos([
     {
       media: [
@@ -155,7 +155,7 @@ test('collectVideos builds a poster filename and hotlinked src', () => {
   ]);
   assert.equal(videos.length, 1);
   assert.equal(videos[0].posterFilename, 'video-cover-1.jpg');
-  assert.equal(videos[0].src, 'https://video.twimg.com/high.mp4');
+  assert.equal(videos[0].src, '/x-video/high.mp4');
   assert.equal(videos[0].width, '1920');
   assert.equal(videos[0].isGif, false);
 });
@@ -206,4 +206,42 @@ test('poster filenames match the regex gatsby-node uses to collect them', () => 
       `${video.posterFilename} would be invisible to gatsby-node's allFile query`
     );
   });
+});
+
+const { proxiedVideoSrc } = require('./post-media');
+
+test('proxiedVideoSrc routes twimg through the site so no Referer reaches X', () => {
+  // X 403s any request with a Referer from another domain, and referrerPolicy
+  // is ignored on <video> — so the mp4 has to be fetched server-side.
+  assert.equal(
+    proxiedVideoSrc('https://video.twimg.com/amplify_video/1/vid/avc1/1280x720/a.mp4'),
+    '/x-video/amplify_video/1/vid/avc1/1280x720/a.mp4'
+  );
+});
+
+test('proxiedVideoSrc leaves a non-twimg url alone', () => {
+  const other = 'https://pixel-point-website.s3.amazonaws.com/posts/x/video.mp4';
+  assert.equal(proxiedVideoSrc(other), other);
+});
+
+test('collectVideos emits a proxied src, never a bare twimg url', () => {
+  const videos = collectVideos([
+    {
+      media: [
+        {
+          type: 'video',
+          url: 'https://pbs.twimg.com/poster.jpg',
+          variants: [
+            {
+              content_type: 'video/mp4',
+              bit_rate: 2176000,
+              url: 'https://video.twimg.com/amplify_video/1/vid/avc1/1920x1080/v.mp4',
+            },
+          ],
+        },
+      ],
+    },
+  ]);
+  assert.equal(videos[0].src, '/x-video/amplify_video/1/vid/avc1/1920x1080/v.mp4');
+  assert.ok(!videos[0].src.includes('video.twimg.com'));
 });

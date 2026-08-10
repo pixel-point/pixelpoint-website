@@ -213,11 +213,15 @@ before merge — the pipeline itself never tries to generate one.
   component. A survey of 35 days of posts found no author-supplied alt text on
   any of 42 media items, so the model writes all of it.
 
-  Video is **hotlinked** rather than rehosted: the pipeline has no write access
-  to the `pixel-point-website` S3 bucket that existing posts use, so `src`
-  points straight at `video.twimg.com`. Those URLs are not contractually
-  stable, so a published post's video can stop playing later with no warning
-  and no build failure. The poster frame is downloaded locally, so a dead link
+  Video is **proxied** rather than rehosted: the pipeline has no write access
+  to the `pixel-point-website` S3 bucket that existing posts use. It cannot be
+  linked directly either — X returns **403 for any request carrying a Referer
+  from another domain**, browsers always send one, and `referrerPolicy` is not
+  honoured on `<video>`. So `src` points at `/x-video/...`, a rewrite in
+  `vercel.json` that fetches server-side and therefore without the browser's
+  Referer, alongside the `/aval` and `/api` proxies already there. The upstream
+  URLs are still not contractually stable, so a published post's video can stop
+  playing later with no warning and no build failure. The poster frame is downloaded locally, so a dead link
   degrades to a still image rather than an empty box, and the PR checklist asks
   the reviewer to play each video before merging.
 

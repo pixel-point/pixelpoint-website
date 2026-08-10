@@ -61,10 +61,22 @@ function bestMp4(variants) {
   return bigEnough || byWidthAscending[byWidthAscending.length - 1];
 }
 
-// The mp4 is hotlinked from video.twimg.com rather than rehosted — the site's
-// S3 bucket isn't writable from here. Those urls are not contractually stable,
-// so a video can silently stop playing later; the poster is downloaded locally
-// so at least a still frame survives that.
+const VIDEO_ORIGIN = 'https://video.twimg.com/';
+const VIDEO_PROXY_PATH = '/x-video/';
+
+// X returns 403 for any request carrying a Referer from another domain, and a
+// browser always sends one — referrerPolicy is not honoured on <video>. So the
+// mp4 cannot be linked directly; it goes through the Vercel rewrite in
+// vercel.json, which fetches server-side and therefore without the browser's
+// Referer. Same pattern as the /aval and /api proxies already in that file.
+function proxiedVideoSrc(url) {
+  return url.startsWith(VIDEO_ORIGIN) ? VIDEO_PROXY_PATH + url.slice(VIDEO_ORIGIN.length) : url;
+}
+
+// The mp4 is proxied rather than rehosted — the site's S3 bucket isn't
+// writable from here. The upstream urls are not contractually stable, so a
+// video can still stop playing later; the poster is downloaded locally so at
+// least a still frame survives that.
 function collectVideos(posts) {
   const videos = [];
   for (const post of posts) {
@@ -81,7 +93,7 @@ function collectVideos(posts) {
         // and fails the whole site build. `video-1-cover` does not match.
         posterFilename: `video-cover-${index}${extensionFor(item.url)}`,
         posterUrl: item.url,
-        src: variant.url,
+        src: proxiedVideoSrc(variant.url),
         width: String(item.width || 1280),
         height: String(item.height || 720),
         // animated_gif has no audio track and should loop like the gif it replaced.
@@ -139,6 +151,7 @@ module.exports = {
   stripUnknownImages,
   stripUnusableVideos,
   bestMp4,
+  proxiedVideoSrc,
   SUPPORTED_TYPES,
   VIDEO_TYPES,
 };
