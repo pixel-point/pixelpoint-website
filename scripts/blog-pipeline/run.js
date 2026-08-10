@@ -96,6 +96,17 @@ async function main() {
       'Auto-generated monthly Updates draft(s). Review the Vercel preview(s) before merging.',
       '',
       ...drafts.map((draft) => `- ${draft.title}`),
+      '',
+      '### Before merging',
+      '',
+      // These are the failure modes an actual dry run produced, not
+      // hypotheticals. The classify step screens for the first one but will
+      // not settle a near-duplicate with a genuinely fresh angle — that call
+      // is why this PR gate exists.
+      '- [ ] Does any draft re-cover ground an existing post already made?',
+      '- [ ] Is each draft carried by real substance, or is it a short post padded out to article length?',
+      '- [ ] Does the voice read as the author writing, rather than an article written about them?',
+      '- [ ] Should any of these get their own cover image instead of the shared placeholder?',
     ].join('\n'),
   });
 
