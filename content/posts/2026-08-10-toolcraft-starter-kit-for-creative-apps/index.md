@@ -12,7 +12,7 @@ Almost none of those tools get built. Not because the idea is hard, but because 
 
 That's the problem Toolcraft solves. It's a free, open-source starter kit and UI library for building personal creative apps, and it now has a proper home at [toolcraft.sh](https://toolcraft.sh).
 
-<Video src="https://video.twimg.com/amplify_video/2077041819334963200/vid/avc1/3840x2160/i7EbGbdUsVgrf9Uc.mp4" width="3840" height="2160" controls muted poster="./video-5-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2077041819334963200/vid/avc1/3840x2160/i7EbGbdUsVgrf9Uc.mp4" width="3840" height="2160" controls muted poster="./video-cover-5.jpg"></Video>
 
 ## One command, then you're building
 
@@ -28,7 +28,7 @@ That's it. Bring your coding agent, bring an idea, and start being creative. The
 
 Buttons, toggles, sliders, curves, color pickers, a timeline, a font picker, layers, uploads, canvas, toolbar — and plenty more — ship with Toolcraft. These aren't generic form widgets; they're the controls creative tools actually need, built to sit together in a single coherent workspace.
 
-<Video src="https://video.twimg.com/amplify_video/2082153948287262721/vid/avc1/3840x2160/E5nX-xZB8mb7Y1hz.mp4" width="3840" height="2160" controls muted poster="./video-6-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2082153948287262721/vid/avc1/3840x2160/E5nX-xZB8mb7Y1hz.mp4" width="3840" height="2160" controls muted poster="./video-cover-6.jpg"></Video>
 
 Here's what that changes in practice. Say you want a tool that renders a shader — a small program that draws pixels on the GPU, the thing behind most animated gradients and noise textures you see on modern websites. The interesting work is the shader itself: playing with the math until it looks good. Without a starter kit, you spend the first two days building the surrounding app so you can play at all. With Toolcraft, you drop in a canvas, wire a few sliders and a curve editor to your uniforms, add a timeline to scrub the animation, and you're tweaking the visuals within the hour.
 
@@ -42,13 +42,13 @@ If that term means nothing to you: the harness is everything in the project that
 
 The rebuilt harness is leaner. It consumes fewer tokens, which means cheaper and faster runs, and it spends far less time re-testing performance on subsequent runs instead of repeating the same expensive checks every time you ask for a change. Alongside that, this release includes several smaller component improvements and bug fixes.
 
-<Video src="https://video.twimg.com/amplify_video/2083512258513027072/vid/avc1/1440x1080/QaAMFW64yTsayPOo.mp4" width="1440" height="1080" controls muted poster="./video-1-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2083512258513027072/vid/avc1/1440x1080/QaAMFW64yTsayPOo.mp4" width="1440" height="1080" controls muted poster="./video-cover-1.jpg"></Video>
 
-<Video src="https://video.twimg.com/amplify_video/2083512352150802432/vid/avc1/1440x1080/7ZOuEl0AsF3vEj5m.mp4" width="1440" height="1080" controls muted poster="./video-2-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2083512352150802432/vid/avc1/1440x1080/7ZOuEl0AsF3vEj5m.mp4" width="1440" height="1080" controls muted poster="./video-cover-2.jpg"></Video>
 
-<Video src="https://video.twimg.com/amplify_video/2083512425114972160/vid/avc1/1440x1080/elsXOt7myIXd1FrV.mp4" width="1440" height="1080" controls muted poster="./video-3-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2083512425114972160/vid/avc1/1440x1080/elsXOt7myIXd1FrV.mp4" width="1440" height="1080" controls muted poster="./video-cover-3.jpg"></Video>
 
-<Video src="https://video.twimg.com/amplify_video/2083512454131159040/vid/avc1/1440x1080/J_YeA5bxcTy_-OFK.mp4" width="1440" height="1080" controls muted poster="./video-4-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2083512454131159040/vid/avc1/1440x1080/J_YeA5bxcTy_-OFK.mp4" width="1440" height="1080" controls muted poster="./video-cover-4.jpg"></Video>
 
 ## 100% free, MIT-licensed, and yours
 

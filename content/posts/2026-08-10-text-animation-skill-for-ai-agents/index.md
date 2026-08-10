@@ -10,7 +10,7 @@ Ask an AI agent to animate a headline and you'll almost always get the same thin
 
 That gap is the reason we built a text animation skill for AI agents, and it's framework and language agnostic on purpose.
 
-<Video src="https://video.twimg.com/amplify_video/2081762526258176000/vid/avc1/3840x2160/Jnc5QPvPHeAxhGO1.mp4" width="3840" height="2160" controls muted poster="./video-1-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2081762526258176000/vid/avc1/3840x2160/Jnc5QPvPHeAxhGO1.mp4" width="3840" height="2160" controls muted poster="./video-cover-1.jpg"></Video>
 
 ## The problem isn't code, it's taste
 

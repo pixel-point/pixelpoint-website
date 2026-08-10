@@ -14,7 +14,7 @@ We've spent the last stretch building the opposite: small, sharp creative tools 
 
 If you think this is just another silly demo made with AI, stay with me — because this one is about MATH.
 
-<Video src="https://video.twimg.com/amplify_video/2078121239156064256/vid/avc1/3840x2160/hKysjY-IaYAeGe10.mp4" width="3840" height="2160" controls muted poster="./video-1-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2078121239156064256/vid/avc1/3840x2160/hKysjY-IaYAeGe10.mp4" width="3840" height="2160" controls muted poster="./video-cover-1.jpg"></Video>
 
 What you see on screen is not a render from Blender. (Obviously — it's not that good.) It's a Three.js app, meaning it runs live in your browser on your GPU, built with Toolcraft.
 
@@ -28,7 +28,7 @@ The reason this is worth caring about: real-time means interactive. A hero secti
 
 That's what it cost me to build a web-native grass simulation.
 
-<Video src="https://video.twimg.com/amplify_video/2080310614300164096/vid/avc1/3840x2160/tOnsdTZwG9Z3UB3j.mp4" width="3840" height="2160" controls muted poster="./video-2-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2080310614300164096/vid/avc1/3840x2160/tOnsdTZwG9Z3UB3j.mp4" width="3840" height="2160" controls muted poster="./video-cover-2.jpg"></Video>
 
 Here's the unlock. Epic Games owns Quixel, which produces Megascans — a library of photorealistic assets scanned from the real world, the kind of thing normally used to build environments in Unreal Engine and film VFX pipelines. Most web people never touch that library because they assume it belongs to game engines. It doesn't. You can use those assets in Three.js, and that's exactly what we did.
 
@@ -40,7 +40,7 @@ So instead of hand-modelling a blade of grass and hoping it reads as believable,
 
 No Three.js. No fake web-based depth-of-field or focal-length emulation.
 
-<Video src="https://video.twimg.com/amplify_video/2074492600862568448/vid/avc1/3840x2160/jAsgCrGo2tZ4Dv29.mp4" width="3840" height="2160" controls muted poster="./video-3-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2074492600862568448/vid/avc1/3840x2160/jAsgCrGo2tZ4Dv29.mp4" width="3840" height="2160" controls muted poster="./video-cover-3.jpg"></Video>
 
 Real-time rendering is a series of clever lies. When a browser gives you "depth of field" — that soft blur behind a sharp subject — it isn't simulating a lens. It's blurring pixels based on how far away they are and hoping you don't look too closely. Same with focal length: it's an approximation of what a 35mm or 85mm lens would do, not the real thing. It's fine for a website. It is not fine when the output needs to hold up as a photograph.
 
@@ -56,7 +56,7 @@ While everyone is vibe-coding flat pattern generators, or at most Three.js scene
 
 While working on Toolcraft's site, we built another little app — this one inspired by a post from [@FonsMans](https://x.com/FonsMans) and mixed with [Paper Shaders](https://x.com/paper).
 
-<Video src="https://video.twimg.com/amplify_video/2077096663953408000/vid/avc1/3840x2160/DQGFY-Ji6WButLah.mp4" width="3840" height="2160" controls muted poster="./video-4-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2077096663953408000/vid/avc1/3840x2160/DQGFY-Ji6WButLah.mp4" width="3840" height="2160" controls muted poster="./video-cover-4.jpg"></Video>
 
 Upload a 3D model, add your stickers, tweak the shader settings, and create some cool-looking shots. Shaders, if the word is new to you, are small programs that run on the graphics card and decide how a surface looks — glossy, iridescent, grainy, dissolving. Normally getting them right means editing code and refreshing. Here they're just settings you drag.
 
@@ -66,7 +66,7 @@ It took an afternoon, it's on the site, and it's a genuinely useful way to gener
 
 I typically don't share work in progress, but this is a great example of what these tools are really for.
 
-<Video src="https://video.twimg.com/amplify_video/2079925057673994240/vid/avc1/2880x2160/oaOPNgsyXH_ubvxl.mp4" width="3840" height="2880" controls muted poster="./video-5-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2079925057673994240/vid/avc1/2880x2160/oaOPNgsyXH_ubvxl.mp4" width="3840" height="2880" controls muted poster="./video-cover-5.jpg"></Video>
 
 This is a creative tool we built specifically for designing and animating a single section of a single website. Not a general-purpose animation editor. One section.
 

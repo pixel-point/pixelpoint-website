@@ -14,7 +14,7 @@ Novu now has a new homepage, and it's a milestone I'm glad to have been part of 
 
 Four years is a long time in this industry. Novu started as an open-source notification infrastructure project and has grown considerably since. Over that period, the product changed, the audience shifted, and the story the website needed to tell changed with it. That's the part people underestimate about developer marketing sites: a homepage isn't a one-time deliverable. It's the most heavily edited document a company owns.
 
-<Video src="https://video.twimg.com/amplify_video/2084312850378391552/vid/avc1/3840x2160/cLJxsWrzNTynBbOn.mp4" width="3840" height="2160" controls muted poster="./video-2-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2084312850378391552/vid/avc1/3840x2160/cLJxsWrzNTynBbOn.mp4" width="3840" height="2160" controls muted poster="./video-cover-2.jpg"></Video>
 
 What a long partnership buys you is context. When a new positioning idea comes up, we already know which parts of the site carry the most weight for developers, which sections historically confused people, and what the engineering constraints are on the other side. We don't need three weeks of discovery to relearn the product. That shows up in the work as fewer wrong turns and, honestly, better arguments — after four years, we can push back on an idea with actual evidence rather than taste.
 
@@ -24,7 +24,7 @@ If you're evaluating agencies, this is the argument for continuity over one-off 
 
 We also released our brand and design project for the Databricks Developer Portal.
 
-<Video src="https://video.twimg.com/amplify_video/2079181347784884224/vid/avc1/3840x2160/WI9dK8QDUzoAG0Lm.mp4" width="3840" height="2160" controls muted poster="./video-1-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2079181347784884224/vid/avc1/3840x2160/WI9dK8QDUzoAG0Lm.mp4" width="3840" height="2160" controls muted poster="./video-cover-1.jpg"></Video>
 
 A developer portal is a specific kind of problem. It isn't a marketing page trying to convert a stranger, and it isn't documentation either. It's the front door for people who already have a job to do — find the SDK, find the API reference, find the tutorial that matches their stack — and its main job is to get them to the right place with as little friction as possible. Visual design here is mostly in service of navigation and hierarchy: what's a starting point, what's a reference, what's optional. Get that wrong and no amount of polish saves it.
 
@@ -42,7 +42,7 @@ Where it goes wrong is treating that afternoon's output as the finished product.
 
 The third project is a launch video we produced for [Railway](https://railway.com) — and the headline for me is the timeline. From the initial request to the final release took less than two weeks.
 
-<Video src="https://video.twimg.com/amplify_video/2074843533224103936/vid/avc1/3840x2160/3dwFfHmMdahwtDw9.mp4" width="3840" height="2160" controls muted poster="./video-3-cover.jpg"></Video>
+<Video src="https://video.twimg.com/amplify_video/2074843533224103936/vid/avc1/3840x2160/3dwFfHmMdahwtDw9.mp4" width="3840" height="2160" controls muted poster="./video-cover-3.jpg"></Video>
 
 Launch videos are a scheduling problem as much as a creative one. The launch date is fixed by engineering, not by the video team, and the details of what's actually shipping often firm up late. So the traditional agency rhythm — a week of concepting, a round of scripts, another round, then production — simply doesn't fit. By the time it's done, the launch has happened without it.
 
