@@ -1,9 +1,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-// Only photos for now. Video needs a hosting decision the pipeline can't make
-// on its own — see the deferred item in the design doc.
 const SUPPORTED_TYPES = ['photo'];
+const VIDEO_TYPES = ['video', 'animated_gif'];
 
 function extensionFor(url) {
   const ext = path.extname(new URL(url).pathname).toLowerCase();
@@ -26,6 +25,41 @@ function collectPhotos(posts) {
     }
   }
   return photos;
+}
+
+// X serves several encodings per video; take the highest-bitrate mp4, since
+// the others are lower-resolution transcodes of the same clip.
+function bestMp4(variants) {
+  return (variants || [])
+    .filter((variant) => variant.content_type === 'video/mp4' && variant.url)
+    .sort((a, b) => (b.bit_rate || 0) - (a.bit_rate || 0))[0];
+}
+
+// The mp4 is hotlinked from video.twimg.com rather than rehosted — the site's
+// S3 bucket isn't writable from here. Those urls are not contractually stable,
+// so a video can silently stop playing later; the poster is downloaded locally
+// so at least a still frame survives that.
+function collectVideos(posts) {
+  const videos = [];
+  for (const post of posts) {
+    for (const item of post.media || []) {
+      if (!VIDEO_TYPES.includes(item.type)) continue;
+      const variant = bestMp4(item.variants);
+      // No playable mp4 and no poster means there is nothing to render.
+      if (!variant || !item.url) continue;
+      const index = videos.length + 1;
+      videos.push({
+        posterFilename: `video-${index}-cover${extensionFor(item.url)}`,
+        posterUrl: item.url,
+        src: variant.url,
+        width: String(item.width || 1280),
+        height: String(item.height || 720),
+        // animated_gif has no audio track and should loop like the gif it replaced.
+        isGif: item.type === 'animated_gif',
+      });
+    }
+  }
+  return videos;
 }
 
 // Drops a photo rather than failing the run: a dead image URL should cost one
@@ -58,4 +92,23 @@ function stripUnknownImages(body, savedFilenames) {
   );
 }
 
-module.exports = { collectPhotos, downloadPhotos, stripUnknownImages, SUPPORTED_TYPES };
+// A <Video> whose poster never downloaded throws during the Gatsby build
+// (video.jsx:20) rather than degrading, so it takes the whole site down — drop
+// the block entirely instead of shipping one.
+function stripUnusableVideos(body, savedPosterFilenames) {
+  return body.replace(/<Video\b[^>]*>(?:<\/Video>)?\n?/g, (match) => {
+    const poster = match.match(/poster="\.\/([^"]+)"/);
+    return poster && savedPosterFilenames.includes(poster[1]) ? match : '';
+  });
+}
+
+module.exports = {
+  collectPhotos,
+  collectVideos,
+  downloadPhotos,
+  stripUnknownImages,
+  stripUnusableVideos,
+  bestMp4,
+  SUPPORTED_TYPES,
+  VIDEO_TYPES,
+};

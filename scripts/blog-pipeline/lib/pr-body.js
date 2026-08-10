@@ -18,6 +18,9 @@ function buildPrBody({ drafts, skipped = [] }) {
     '- [ ] Is each draft carried by real substance, or is it a short post padded out to article length?',
     '- [ ] Does the voice read as the author writing, rather than an article written about them?',
     '- [ ] Should any of these get their own cover image instead of the shared placeholder?',
+    // Video is hotlinked from video.twimg.com because the site's S3 bucket
+    // isn't writable from here. Those urls are not contractually stable.
+    '- [ ] Do the embedded videos actually play? Their URLs point at X and can rot without warning.',
   ];
 
   if (skipped.length > 0) {

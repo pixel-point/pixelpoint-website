@@ -95,3 +95,55 @@ test('stripUnknownImages removes every image when nothing was saved', () => {
   assert.ok(!result.includes('image-1.jpg'));
   assert.ok(result.includes('Text.'));
 });
+
+const { collectVideos, bestMp4, stripUnusableVideos } = require('./post-media');
+
+const VARIANTS = [
+  { content_type: 'application/x-mpegURL', url: 'https://video.twimg.com/x.m3u8' },
+  { content_type: 'video/mp4', bit_rate: 632000, url: 'https://video.twimg.com/low.mp4' },
+  { content_type: 'video/mp4', bit_rate: 2176000, url: 'https://video.twimg.com/high.mp4' },
+];
+
+test('bestMp4 picks the highest-bitrate mp4 and ignores streaming variants', () => {
+  assert.equal(bestMp4(VARIANTS).url, 'https://video.twimg.com/high.mp4');
+  assert.equal(bestMp4([]), undefined);
+});
+
+test('collectVideos builds a poster filename and hotlinked src', () => {
+  const videos = collectVideos([
+    {
+      media: [
+        { type: 'video', url: 'https://pbs.twimg.com/poster.jpg', variants: VARIANTS, width: 1920, height: 1080 },
+      ],
+    },
+  ]);
+  assert.equal(videos.length, 1);
+  assert.equal(videos[0].posterFilename, 'video-1-cover.jpg');
+  assert.equal(videos[0].src, 'https://video.twimg.com/high.mp4');
+  assert.equal(videos[0].width, '1920');
+  assert.equal(videos[0].isGif, false);
+});
+
+test('collectVideos flags animated_gif so it loops without controls', () => {
+  const videos = collectVideos([
+    { media: [{ type: 'animated_gif', url: 'https://pbs.twimg.com/p.jpg', variants: VARIANTS }] },
+  ]);
+  assert.equal(videos[0].isGif, true);
+  assert.equal(videos[0].width, '1280'); // falls back when X omits dimensions
+});
+
+test('collectVideos skips media with no playable mp4', () => {
+  assert.deepEqual(
+    collectVideos([{ media: [{ type: 'video', url: 'https://pbs.twimg.com/p.jpg', variants: [] }] }]),
+    []
+  );
+});
+
+test('stripUnusableVideos removes a Video whose poster never downloaded', () => {
+  const body =
+    'A.\n\n<Video src="https://video.twimg.com/a.mp4" poster="./video-1-cover.jpg"></Video>\n\nB.\n\n<Video src="https://video.twimg.com/b.mp4" poster="./video-2-cover.jpg"></Video>\n\nC.';
+  const result = stripUnusableVideos(body, ['video-1-cover.jpg']);
+  assert.ok(result.includes('video-1-cover.jpg'));
+  assert.ok(!result.includes('video-2-cover.jpg'));
+  assert.ok(result.includes('B.') && result.includes('C.'));
+});

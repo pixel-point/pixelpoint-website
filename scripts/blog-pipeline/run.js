@@ -8,7 +8,7 @@ const { draftPost } = require('./lib/draft-post');
 const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
-const { collectPhotos } = require('./lib/post-media');
+const { collectPhotos, collectVideos } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack } = require('./lib/notify-slack');
@@ -72,7 +72,12 @@ async function main() {
   const drafted = [];
   for (const group of groups) {
     const photos = collectPhotos(group);
-    drafted.push({ draft: await draftPost({ qualifyingPosts: group, photos, anthropicClient }), photos });
+    const videos = collectVideos(group);
+    drafted.push({
+      draft: await draftPost({ qualifyingPosts: group, photos, videos, anthropicClient }),
+      photos,
+      videos,
+    });
   }
   const drafts = drafted.map((item) => item.draft);
 
@@ -84,15 +89,18 @@ async function main() {
 
   const publishDate = new Date().toISOString().slice(0, 10);
   const postDirs = [];
-  for (const { draft, photos } of drafted) {
+  for (const { draft, photos, videos } of drafted) {
     const published = await publishPost({
       draft,
       publishDate,
       repoRoot: REPO_ROOT,
       coverImageSourcePath: COVER_IMAGE_PATH,
       photos,
+      videos,
     });
-    console.log(`Wrote ${published.folderName} with ${published.photos.length} image(s).`);
+    console.log(
+      `Wrote ${published.folderName} with ${published.photos.length} image(s) and ${published.videos.length} video(s).`
+    );
     postDirs.push(published.postDir);
   }
 

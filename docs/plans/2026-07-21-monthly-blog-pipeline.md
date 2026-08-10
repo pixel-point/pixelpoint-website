@@ -198,7 +198,8 @@ test('fetchRecentPosts maps API posts to the pipeline shape', async () => {
 test('fetchRecentPosts attaches expanded media to the post that references it', async () => {
   const fakeFetch = async (url) => {
     assert.ok(url.includes('expansions=attachments.media_keys'));
-    assert.ok(url.includes('media.fields=type%2Curl%2Cpreview_image_url%2Calt_text'));
+    assert.ok(url.includes('variants'));
+    assert.ok(url.includes('width'));
     return {
       ok: true,
       json: async () => ({
@@ -210,7 +211,14 @@ test('fetchRecentPosts attaches expanded media to the post that references it', 
           media: [
             { media_key: 'k1', type: 'photo', url: 'https://pbs.twimg.com/media/a.jpg', alt_text: 'a chart' },
             // Video carries no `url` — only a poster in preview_image_url.
-            { media_key: 'k2', type: 'video', preview_image_url: 'https://pbs.twimg.com/poster.jpg' },
+            {
+              media_key: 'k2',
+              type: 'video',
+              preview_image_url: 'https://pbs.twimg.com/poster.jpg',
+              variants: [{ content_type: 'video/mp4', bit_rate: 1, url: 'https://video.twimg.com/v.mp4' }],
+              width: 1280,
+              height: 720,
+            },
           ],
         },
       }),
@@ -223,8 +231,22 @@ test('fetchRecentPosts attaches expanded media to the post that references it', 
     fetchImpl: fakeFetch,
   });
   assert.deepEqual(posts[0].media, [
-    { type: 'photo', url: 'https://pbs.twimg.com/media/a.jpg', altText: 'a chart' },
-    { type: 'video', url: 'https://pbs.twimg.com/poster.jpg', altText: '' },
+    {
+      type: 'photo',
+      url: 'https://pbs.twimg.com/media/a.jpg',
+      altText: 'a chart',
+      variants: [],
+      width: undefined,
+      height: undefined,
+    },
+    {
+      type: 'video',
+      url: 'https://pbs.twimg.com/poster.jpg',
+      altText: '',
+      variants: [{ content_type: 'video/mp4', bit_rate: 1, url: 'https://video.twimg.com/v.mp4' }],
+      width: 1280,
+      height: 720,
+    },
   ]);
   assert.deepEqual(posts[1].media, []);
 });
@@ -259,7 +281,9 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
   // Media arrives in a separate `includes.media` list keyed by media_key, not
   // inline on the post — the expansion is what populates it at all.
   url.searchParams.set('expansions', 'attachments.media_keys');
-  url.searchParams.set('media.fields', 'type,url,preview_image_url,alt_text');
+  // `variants` carries the playable mp4 urls for video; width/height are
+  // required props on the site's <Video> component.
+  url.searchParams.set('media.fields', 'type,url,preview_image_url,alt_text,variants,width,height');
 
   const res = await fetchImpl(url.toString(), {
     headers: { Authorization: `Bearer ${bearerToken}` },
@@ -284,6 +308,9 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
         // `preview_image_url` (the mp4 itself lives in `variants`).
         url: item.url || item.preview_image_url,
         altText: item.alt_text || '',
+        variants: item.variants || [],
+        width: item.width,
+        height: item.height,
       })),
   }));
 }
@@ -1045,6 +1072,22 @@ const DRAFT_SCHEMA = {
   additionalProperties: false,
 };
 
+function buildVideoInstructions(videos) {
+  if (videos.length === 0) return [];
+  return [
+    '',
+    'These videos come from the source posts. Place each one at the point it illustrates using exactly the markup listed below, copied verbatim on its own line — it is a component, not markdown, and altering the attributes will break the page. Leave a video out if it does not earn its place.',
+    '',
+    'Videos available (use these lines exactly):',
+    ...videos.map(
+      (video) =>
+        `<Video src="${video.src}" width="${video.width}" height="${video.height}"${
+          video.isGif ? ' autoPlay muted loop playsInline' : ' controls muted'
+        } poster="./${video.posterFilename}"></Video>`
+    ),
+  ];
+}
+
 function buildImageInstructions(photos) {
   if (photos.length === 0) return [];
   return [
@@ -1057,7 +1100,7 @@ function buildImageInstructions(photos) {
   ];
 }
 
-function buildDraftPrompt(posts, photos = []) {
+function buildDraftPrompt(posts, photos = [], videos = []) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
     'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
@@ -1067,15 +1110,16 @@ function buildDraftPrompt(posts, photos = []) {
     'Source posts (JSON):',
     JSON.stringify(posts.map((p) => ({ text: p.text, url: p.url }))),
     ...buildImageInstructions(photos),
+    ...buildVideoInstructions(videos),
     '',
     'Respond with JSON: { "title": "...", "summary": "...", "slug": "kebab-case-slug", "body": "markdown body" }',
   ].join('\n');
 }
 
-async function draftPost({ qualifyingPosts, photos = [], anthropicClient }) {
+async function draftPost({ qualifyingPosts, photos = [], videos = [], anthropicClient }) {
   const draft = await requestJson({
     anthropicClient,
-    prompt: buildDraftPrompt(qualifyingPosts, photos),
+    prompt: buildDraftPrompt(qualifyingPosts, photos, videos),
     schema: DRAFT_SCHEMA,
   });
 
@@ -1220,6 +1264,58 @@ test('stripUnknownImages removes every image when nothing was saved', () => {
   assert.ok(!result.includes('image-1.jpg'));
   assert.ok(result.includes('Text.'));
 });
+
+const { collectVideos, bestMp4, stripUnusableVideos } = require('./post-media');
+
+const VARIANTS = [
+  { content_type: 'application/x-mpegURL', url: 'https://video.twimg.com/x.m3u8' },
+  { content_type: 'video/mp4', bit_rate: 632000, url: 'https://video.twimg.com/low.mp4' },
+  { content_type: 'video/mp4', bit_rate: 2176000, url: 'https://video.twimg.com/high.mp4' },
+];
+
+test('bestMp4 picks the highest-bitrate mp4 and ignores streaming variants', () => {
+  assert.equal(bestMp4(VARIANTS).url, 'https://video.twimg.com/high.mp4');
+  assert.equal(bestMp4([]), undefined);
+});
+
+test('collectVideos builds a poster filename and hotlinked src', () => {
+  const videos = collectVideos([
+    {
+      media: [
+        { type: 'video', url: 'https://pbs.twimg.com/poster.jpg', variants: VARIANTS, width: 1920, height: 1080 },
+      ],
+    },
+  ]);
+  assert.equal(videos.length, 1);
+  assert.equal(videos[0].posterFilename, 'video-1-cover.jpg');
+  assert.equal(videos[0].src, 'https://video.twimg.com/high.mp4');
+  assert.equal(videos[0].width, '1920');
+  assert.equal(videos[0].isGif, false);
+});
+
+test('collectVideos flags animated_gif so it loops without controls', () => {
+  const videos = collectVideos([
+    { media: [{ type: 'animated_gif', url: 'https://pbs.twimg.com/p.jpg', variants: VARIANTS }] },
+  ]);
+  assert.equal(videos[0].isGif, true);
+  assert.equal(videos[0].width, '1280'); // falls back when X omits dimensions
+});
+
+test('collectVideos skips media with no playable mp4', () => {
+  assert.deepEqual(
+    collectVideos([{ media: [{ type: 'video', url: 'https://pbs.twimg.com/p.jpg', variants: [] }] }]),
+    []
+  );
+});
+
+test('stripUnusableVideos removes a Video whose poster never downloaded', () => {
+  const body =
+    'A.\n\n<Video src="https://video.twimg.com/a.mp4" poster="./video-1-cover.jpg"></Video>\n\nB.\n\n<Video src="https://video.twimg.com/b.mp4" poster="./video-2-cover.jpg"></Video>\n\nC.';
+  const result = stripUnusableVideos(body, ['video-1-cover.jpg']);
+  assert.ok(result.includes('video-1-cover.jpg'));
+  assert.ok(!result.includes('video-2-cover.jpg'));
+  assert.ok(result.includes('B.') && result.includes('C.'));
+});
 ```
 
 ```js
@@ -1227,9 +1323,8 @@ test('stripUnknownImages removes every image when nothing was saved', () => {
 const fs = require('node:fs');
 const path = require('node:path');
 
-// Only photos for now. Video needs a hosting decision the pipeline can't make
-// on its own — see the deferred item in the design doc.
 const SUPPORTED_TYPES = ['photo'];
+const VIDEO_TYPES = ['video', 'animated_gif'];
 
 function extensionFor(url) {
   const ext = path.extname(new URL(url).pathname).toLowerCase();
@@ -1252,6 +1347,41 @@ function collectPhotos(posts) {
     }
   }
   return photos;
+}
+
+// X serves several encodings per video; take the highest-bitrate mp4, since
+// the others are lower-resolution transcodes of the same clip.
+function bestMp4(variants) {
+  return (variants || [])
+    .filter((variant) => variant.content_type === 'video/mp4' && variant.url)
+    .sort((a, b) => (b.bit_rate || 0) - (a.bit_rate || 0))[0];
+}
+
+// The mp4 is hotlinked from video.twimg.com rather than rehosted — the site's
+// S3 bucket isn't writable from here. Those urls are not contractually stable,
+// so a video can silently stop playing later; the poster is downloaded locally
+// so at least a still frame survives that.
+function collectVideos(posts) {
+  const videos = [];
+  for (const post of posts) {
+    for (const item of post.media || []) {
+      if (!VIDEO_TYPES.includes(item.type)) continue;
+      const variant = bestMp4(item.variants);
+      // No playable mp4 and no poster means there is nothing to render.
+      if (!variant || !item.url) continue;
+      const index = videos.length + 1;
+      videos.push({
+        posterFilename: `video-${index}-cover${extensionFor(item.url)}`,
+        posterUrl: item.url,
+        src: variant.url,
+        width: String(item.width || 1280),
+        height: String(item.height || 720),
+        // animated_gif has no audio track and should loop like the gif it replaced.
+        isGif: item.type === 'animated_gif',
+      });
+    }
+  }
+  return videos;
 }
 
 // Drops a photo rather than failing the run: a dead image URL should cost one
@@ -1284,7 +1414,26 @@ function stripUnknownImages(body, savedFilenames) {
   );
 }
 
-module.exports = { collectPhotos, downloadPhotos, stripUnknownImages, SUPPORTED_TYPES };
+// A <Video> whose poster never downloaded throws during the Gatsby build
+// (video.jsx:20) rather than degrading, so it takes the whole site down — drop
+// the block entirely instead of shipping one.
+function stripUnusableVideos(body, savedPosterFilenames) {
+  return body.replace(/<Video\b[^>]*>(?:<\/Video>)?\n?/g, (match) => {
+    const poster = match.match(/poster="\.\/([^"]+)"/);
+    return poster && savedPosterFilenames.includes(poster[1]) ? match : '';
+  });
+}
+
+module.exports = {
+  collectPhotos,
+  collectVideos,
+  downloadPhotos,
+  stripUnknownImages,
+  stripUnusableVideos,
+  bestMp4,
+  SUPPORTED_TYPES,
+  VIDEO_TYPES,
+};
 ```
 
 Run: `node --test scripts/blog-pipeline/lib/post-media.test.js`
@@ -1393,7 +1542,7 @@ Expected: FAIL with "Cannot find module './publish-post'"
 // scripts/blog-pipeline/lib/publish-post.js
 const fs = require('node:fs');
 const path = require('node:path');
-const { downloadPhotos, stripUnknownImages } = require('./post-media');
+const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
 
 // Async because it owns the post's images as well as its text: the body can
 // only be finalised once we know which downloads actually succeeded, so
@@ -1404,6 +1553,7 @@ async function publishPost({
   repoRoot,
   coverImageSourcePath,
   photos = [],
+  videos = [],
   fetchImpl,
   author = 'Alex Barashkov',
   category = 'Updates',
@@ -1427,17 +1577,28 @@ async function publishPost({
   ].join('\n');
 
   const saved = await downloadPhotos({ photos, destDir: postDir, fetchImpl });
+  // Video posters are ordinary images as far as the site is concerned — they
+  // live in the post folder and gatsby-node picks them up by filename.
+  const savedPosters = await downloadPhotos({
+    photos: videos.map((video) => ({ filename: video.posterFilename, url: video.posterUrl })),
+    destDir: postDir,
+    fetchImpl,
+  });
+
   // Drop references to images that never landed — a download that 404s should
   // cost one image, not ship a broken image tag into a published post.
-  const body = stripUnknownImages(
-    draft.body,
-    saved.map((photo) => photo.filename)
+  const body = stripUnusableVideos(
+    stripUnknownImages(
+      draft.body,
+      saved.map((photo) => photo.filename)
+    ),
+    savedPosters.map((poster) => poster.filename)
   );
 
   fs.writeFileSync(path.join(postDir, 'index.md'), `${frontmatter}\n${body}\n`, 'utf8');
   fs.copyFileSync(coverImageSourcePath, path.join(postDir, 'cover.png'));
 
-  return { postDir, folderName, photos: saved };
+  return { postDir, folderName, photos: saved, videos: savedPosters };
 }
 
 module.exports = { publishPost };
@@ -1606,7 +1767,7 @@ test('lists every draft title and the review checklist', () => {
   assert.ok(body.includes('- Introducing Aval'));
   assert.ok(body.includes("- Toolcraft's New Release"));
   assert.ok(body.includes('### Before merging'));
-  assert.equal((body.match(/^- \[ \] /gm) || []).length, 4);
+  assert.equal((body.match(/^- \[ \] /gm) || []).length, 5);
 });
 
 test('omits the skipped section entirely when nothing was skipped', () => {
@@ -1632,7 +1793,7 @@ test('reports skipped groups with their source post urls and the overlapping tit
   assert.ok(body.includes('https://x.com/i/web/status/1, https://x.com/i/web/status/2'));
   assert.ok(body.includes('overlaps "Build personal design tools with AI using Toolcraft"'));
   // Checklist items plus one per skipped group, so the reviewer ticks it off.
-  assert.equal((body.match(/^- \[ \] /gm) || []).length, 5);
+  assert.equal((body.match(/^- \[ \] /gm) || []).length, 6);
 });
 
 test('falls back to a readable phrase when the model names no overlapping post', () => {
@@ -1666,6 +1827,9 @@ function buildPrBody({ drafts, skipped = [] }) {
     '- [ ] Is each draft carried by real substance, or is it a short post padded out to article length?',
     '- [ ] Does the voice read as the author writing, rather than an article written about them?',
     '- [ ] Should any of these get their own cover image instead of the shared placeholder?',
+    // Video is hotlinked from video.twimg.com because the site's S3 bucket
+    // isn't writable from here. Those urls are not contractually stable.
+    '- [ ] Do the embedded videos actually play? Their URLs point at X and can rot without warning.',
   ];
 
   if (skipped.length > 0) {
@@ -1705,7 +1869,7 @@ const { draftPost } = require('./lib/draft-post');
 const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
-const { collectPhotos } = require('./lib/post-media');
+const { collectPhotos, collectVideos } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack } = require('./lib/notify-slack');
@@ -1769,7 +1933,12 @@ async function main() {
   const drafted = [];
   for (const group of groups) {
     const photos = collectPhotos(group);
-    drafted.push({ draft: await draftPost({ qualifyingPosts: group, photos, anthropicClient }), photos });
+    const videos = collectVideos(group);
+    drafted.push({
+      draft: await draftPost({ qualifyingPosts: group, photos, videos, anthropicClient }),
+      photos,
+      videos,
+    });
   }
   const drafts = drafted.map((item) => item.draft);
 
@@ -1781,15 +1950,18 @@ async function main() {
 
   const publishDate = new Date().toISOString().slice(0, 10);
   const postDirs = [];
-  for (const { draft, photos } of drafted) {
+  for (const { draft, photos, videos } of drafted) {
     const published = await publishPost({
       draft,
       publishDate,
       repoRoot: REPO_ROOT,
       coverImageSourcePath: COVER_IMAGE_PATH,
       photos,
+      videos,
     });
-    console.log(`Wrote ${published.folderName} with ${published.photos.length} image(s).`);
+    console.log(
+      `Wrote ${published.folderName} with ${published.photos.length} image(s) and ${published.videos.length} video(s).`
+    );
     postDirs.push(published.postDir);
   }
 

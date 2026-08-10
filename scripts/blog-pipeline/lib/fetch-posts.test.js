@@ -58,7 +58,8 @@ test('fetchRecentPosts maps API posts to the pipeline shape', async () => {
 test('fetchRecentPosts attaches expanded media to the post that references it', async () => {
   const fakeFetch = async (url) => {
     assert.ok(url.includes('expansions=attachments.media_keys'));
-    assert.ok(url.includes('media.fields=type%2Curl%2Cpreview_image_url%2Calt_text'));
+    assert.ok(url.includes('variants'));
+    assert.ok(url.includes('width'));
     return {
       ok: true,
       json: async () => ({
@@ -70,7 +71,14 @@ test('fetchRecentPosts attaches expanded media to the post that references it', 
           media: [
             { media_key: 'k1', type: 'photo', url: 'https://pbs.twimg.com/media/a.jpg', alt_text: 'a chart' },
             // Video carries no `url` — only a poster in preview_image_url.
-            { media_key: 'k2', type: 'video', preview_image_url: 'https://pbs.twimg.com/poster.jpg' },
+            {
+              media_key: 'k2',
+              type: 'video',
+              preview_image_url: 'https://pbs.twimg.com/poster.jpg',
+              variants: [{ content_type: 'video/mp4', bit_rate: 1, url: 'https://video.twimg.com/v.mp4' }],
+              width: 1280,
+              height: 720,
+            },
           ],
         },
       }),
@@ -83,8 +91,22 @@ test('fetchRecentPosts attaches expanded media to the post that references it', 
     fetchImpl: fakeFetch,
   });
   assert.deepEqual(posts[0].media, [
-    { type: 'photo', url: 'https://pbs.twimg.com/media/a.jpg', altText: 'a chart' },
-    { type: 'video', url: 'https://pbs.twimg.com/poster.jpg', altText: '' },
+    {
+      type: 'photo',
+      url: 'https://pbs.twimg.com/media/a.jpg',
+      altText: 'a chart',
+      variants: [],
+      width: undefined,
+      height: undefined,
+    },
+    {
+      type: 'video',
+      url: 'https://pbs.twimg.com/poster.jpg',
+      altText: '',
+      variants: [{ content_type: 'video/mp4', bit_rate: 1, url: 'https://video.twimg.com/v.mp4' }],
+      width: 1280,
+      height: 720,
+    },
   ]);
   assert.deepEqual(posts[1].media, []);
 });

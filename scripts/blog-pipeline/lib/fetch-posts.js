@@ -18,7 +18,9 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
   // Media arrives in a separate `includes.media` list keyed by media_key, not
   // inline on the post — the expansion is what populates it at all.
   url.searchParams.set('expansions', 'attachments.media_keys');
-  url.searchParams.set('media.fields', 'type,url,preview_image_url,alt_text');
+  // `variants` carries the playable mp4 urls for video; width/height are
+  // required props on the site's <Video> component.
+  url.searchParams.set('media.fields', 'type,url,preview_image_url,alt_text,variants,width,height');
 
   const res = await fetchImpl(url.toString(), {
     headers: { Authorization: `Bearer ${bearerToken}` },
@@ -43,6 +45,9 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
         // `preview_image_url` (the mp4 itself lives in `variants`).
         url: item.url || item.preview_image_url,
         altText: item.alt_text || '',
+        variants: item.variants || [],
+        width: item.width,
+        height: item.height,
       })),
   }));
 }

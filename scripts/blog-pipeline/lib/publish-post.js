@@ -1,7 +1,7 @@
 // scripts/blog-pipeline/lib/publish-post.js
 const fs = require('node:fs');
 const path = require('node:path');
-const { downloadPhotos, stripUnknownImages } = require('./post-media');
+const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
 
 // Async because it owns the post's images as well as its text: the body can
 // only be finalised once we know which downloads actually succeeded, so
@@ -12,6 +12,7 @@ async function publishPost({
   repoRoot,
   coverImageSourcePath,
   photos = [],
+  videos = [],
   fetchImpl,
   author = 'Alex Barashkov',
   category = 'Updates',
@@ -35,17 +36,28 @@ async function publishPost({
   ].join('\n');
 
   const saved = await downloadPhotos({ photos, destDir: postDir, fetchImpl });
+  // Video posters are ordinary images as far as the site is concerned — they
+  // live in the post folder and gatsby-node picks them up by filename.
+  const savedPosters = await downloadPhotos({
+    photos: videos.map((video) => ({ filename: video.posterFilename, url: video.posterUrl })),
+    destDir: postDir,
+    fetchImpl,
+  });
+
   // Drop references to images that never landed — a download that 404s should
   // cost one image, not ship a broken image tag into a published post.
-  const body = stripUnknownImages(
-    draft.body,
-    saved.map((photo) => photo.filename)
+  const body = stripUnusableVideos(
+    stripUnknownImages(
+      draft.body,
+      saved.map((photo) => photo.filename)
+    ),
+    savedPosters.map((poster) => poster.filename)
   );
 
   fs.writeFileSync(path.join(postDir, 'index.md'), `${frontmatter}\n${body}\n`, 'utf8');
   fs.copyFileSync(coverImageSourcePath, path.join(postDir, 'cover.png'));
 
-  return { postDir, folderName, photos: saved };
+  return { postDir, folderName, photos: saved, videos: savedPosters };
 }
 
 module.exports = { publishPost };

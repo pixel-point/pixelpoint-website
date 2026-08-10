@@ -13,6 +13,22 @@ const DRAFT_SCHEMA = {
   additionalProperties: false,
 };
 
+function buildVideoInstructions(videos) {
+  if (videos.length === 0) return [];
+  return [
+    '',
+    'These videos come from the source posts. Place each one at the point it illustrates using exactly the markup listed below, copied verbatim on its own line — it is a component, not markdown, and altering the attributes will break the page. Leave a video out if it does not earn its place.',
+    '',
+    'Videos available (use these lines exactly):',
+    ...videos.map(
+      (video) =>
+        `<Video src="${video.src}" width="${video.width}" height="${video.height}"${
+          video.isGif ? ' autoPlay muted loop playsInline' : ' controls muted'
+        } poster="./${video.posterFilename}"></Video>`
+    ),
+  ];
+}
+
 function buildImageInstructions(photos) {
   if (photos.length === 0) return [];
   return [
@@ -25,7 +41,7 @@ function buildImageInstructions(photos) {
   ];
 }
 
-function buildDraftPrompt(posts, photos = []) {
+function buildDraftPrompt(posts, photos = [], videos = []) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
     'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
@@ -35,15 +51,16 @@ function buildDraftPrompt(posts, photos = []) {
     'Source posts (JSON):',
     JSON.stringify(posts.map((p) => ({ text: p.text, url: p.url }))),
     ...buildImageInstructions(photos),
+    ...buildVideoInstructions(videos),
     '',
     'Respond with JSON: { "title": "...", "summary": "...", "slug": "kebab-case-slug", "body": "markdown body" }',
   ].join('\n');
 }
 
-async function draftPost({ qualifyingPosts, photos = [], anthropicClient }) {
+async function draftPost({ qualifyingPosts, photos = [], videos = [], anthropicClient }) {
   const draft = await requestJson({
     anthropicClient,
-    prompt: buildDraftPrompt(qualifyingPosts, photos),
+    prompt: buildDraftPrompt(qualifyingPosts, photos, videos),
     schema: DRAFT_SCHEMA,
   });
 
