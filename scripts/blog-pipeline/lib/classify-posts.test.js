@@ -24,8 +24,12 @@ test('buildClassifyPrompt lists existing posts and candidate ids', () => {
   assert.ok(prompt.includes('"id":"1"') || prompt.includes('"id": "1"'));
 });
 
+function group(postIds, extra = {}) {
+  return { post_ids: postIds, already_covered: false, existing_post_title: '', ...extra };
+}
+
 test('classifyAndGroupPosts returns groups of full post objects', async () => {
-  const fakeClient = fakeClientReturning({ groups: [{ post_ids: ['2'] }, { post_ids: ['3', '4'] }] });
+  const fakeClient = fakeClientReturning({ groups: [group(['2']), group(['3', '4'])] });
   const candidates = [
     { id: '1', text: 'skip me' },
     { id: '2', text: 'standalone story' },
@@ -39,8 +43,29 @@ test('classifyAndGroupPosts returns groups of full post objects', async () => {
   );
 });
 
+test('classifyAndGroupPosts drops groups the model flagged as already covered', async () => {
+  const fakeClient = fakeClientReturning({
+    groups: [
+      group(['2']),
+      group(['3'], { already_covered: true, existing_post_title: 'Build personal design tools with AI using Toolcraft' }),
+    ],
+  });
+  const result = await classifyAndGroupPosts({
+    candidates: [
+      { id: '2', text: 'a genuinely new topic' },
+      { id: '3', text: 'a restatement of an existing post' },
+    ],
+    existingPosts: [],
+    anthropicClient: fakeClient,
+  });
+  assert.deepEqual(
+    result.map((g) => g.map((p) => p.id)),
+    [['2']]
+  );
+});
+
 test('classifyAndGroupPosts drops post ids the model invented', async () => {
-  const fakeClient = fakeClientReturning({ groups: [{ post_ids: ['2', 'not-a-real-id'] }] });
+  const fakeClient = fakeClientReturning({ groups: [group(['2', 'not-a-real-id'])] });
   const result = await classifyAndGroupPosts({
     candidates: [{ id: '2', text: 'real post' }],
     existingPosts: [],
@@ -70,6 +95,22 @@ test('classifyAndGroupPosts sends the request with a json_schema output format',
   assert.equal(sentParams.model, 'claude-opus-5');
   assert.equal(sentParams.output_config.format.type, 'json_schema');
   assert.deepEqual(sentParams.output_config.format.schema.required, ['groups']);
+  // The dedup verdict has to be required, or the model can omit it and every
+  // group silently defaults to "not covered".
+  assert.deepEqual(sentParams.output_config.format.schema.properties.groups.items.required, [
+    'post_ids',
+    'already_covered',
+    'existing_post_title',
+  ]);
+});
+
+test('buildClassifyPrompt asks for a per-group check against the existing posts', () => {
+  const prompt = buildClassifyPrompt(
+    [{ id: '1', text: 'a candidate' }],
+    [{ title: 'Toolcraft', summary: 'A design tool' }]
+  );
+  assert.ok(prompt.includes('already_covered'));
+  assert.ok(prompt.includes('restating an existing thesis'));
 });
 
 test('classifyAndGroupPosts returns no groups without calling the model when there are no candidates', async () => {

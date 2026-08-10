@@ -9,8 +9,16 @@ const CLASSIFY_SCHEMA = {
         type: 'object',
         properties: {
           post_ids: { type: 'array', items: { type: 'string' } },
+          // Asking for an explicit verdict per group, rather than trusting the
+          // model to silently drop covered topics, is deliberate: a dry run
+          // against real June 2026 posts produced a second article on
+          // Toolcraft that an existing post already covered, even though the
+          // prompt listed it. A required field forces the comparison to
+          // happen, and the filtering below makes it the code's decision.
+          already_covered: { type: 'boolean' },
+          existing_post_title: { type: 'string' },
         },
-        required: ['post_ids'],
+        required: ['post_ids', 'already_covered', 'existing_post_title'],
         additionalProperties: false,
       },
     },
@@ -34,7 +42,8 @@ function buildClassifyPrompt(candidates, existingPosts) {
     JSON.stringify(candidates.map((p) => ({ id: p.id, text: p.text }))),
     '',
     'Group the posts that qualify into one or more article topics: a single substantial story should be its own group; several smaller updates can share one group as a bundled roundup.',
-    'Respond with JSON: { "groups": [{ "post_ids": ["..."] }, ...] } — omit any post id that does not qualify.',
+    'Then check every group you propose against the existing blog posts listed above, one at a time. Set "already_covered" to true and put that post\'s title in "existing_post_title" when an existing post already makes the same argument about the same subject — restating an existing thesis in new words counts as covered. A genuinely new release, update, or development for a product that already has a post does not count as covered; set "already_covered" to false and leave "existing_post_title" empty.',
+    'Respond with JSON: { "groups": [{ "post_ids": ["..."], "already_covered": false, "existing_post_title": "" }, ...] } — omit any post id that does not qualify.',
   ].join('\n');
 }
 
@@ -48,7 +57,19 @@ async function classifyAndGroupPosts({ candidates, existingPosts, anthropicClien
   });
 
   const postsById = new Map(candidates.map((post) => [post.id, post]));
-  return groups.map((group) => group.post_ids.map((id) => postsById.get(id)).filter(Boolean));
+  const kept = [];
+
+  for (const group of groups) {
+    if (group.already_covered) {
+      console.log(
+        `Skipping a group already covered by "${group.existing_post_title || 'an existing post'}".`
+      );
+      continue;
+    }
+    kept.push(group.post_ids.map((id) => postsById.get(id)).filter(Boolean));
+  }
+
+  return kept;
 }
 
 module.exports = { classifyAndGroupPosts, buildClassifyPrompt, CLASSIFY_SCHEMA };

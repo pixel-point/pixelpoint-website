@@ -10,6 +10,15 @@ test('buildDraftPrompt tells the model to preserve I/we framing and write editor
   assert.ok(prompt.includes("Don't just reformat"));
 });
 
+test('buildDraftPrompt tells the model it is writing under the author\'s own byline', () => {
+  // A dry run against real posts produced drafts that referred to "Alex
+  // Barashkov, our CEO" in the third person while being published under his
+  // byline, so the narrator has to be stated explicitly.
+  const prompt = buildDraftPrompt([{ text: 'I built a tool', url: 'https://x.com/1' }]);
+  assert.ok(prompt.includes("under Alex's own byline"));
+  assert.ok(prompt.includes('never refer to'));
+});
+
 test('draftPost parses the model JSON response into a draft object', async () => {
   const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
   const fakeClient = {
