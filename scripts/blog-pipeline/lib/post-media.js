@@ -27,12 +27,38 @@ function collectPhotos(posts) {
   return photos;
 }
 
-// X serves several encodings per video; take the highest-bitrate mp4, since
-// the others are lower-resolution transcodes of the same clip.
+// Blog posts render in a 696px column (see blog-post.jsx), so 2x that is all
+// the resolution a reader can actually see.
+const TARGET_WIDTH = 696 * 2;
+
+function variantWidth(variant) {
+  // X encodes the dimensions in the path: .../vid/avc1/1280x720/name.mp4
+  const match = /\/(\d+)x(\d+)\//.exec(variant.url || '');
+  return match ? Number(match[1]) : 0;
+}
+
+// X publishes a ladder of encodings per video — one clip offered 1600x1200 at
+// 10,368 kbps alongside 960x720 at 2,176. Taking the top of the ladder shipped
+// 4K files into a 696px column: slower to start, far more expensive on mobile,
+// and indistinguishable once scaled down. Take the smallest variant that still
+// covers the column at 2x, and only fall back to the largest available when
+// every option is smaller than that.
 function bestMp4(variants) {
-  return (variants || [])
-    .filter((variant) => variant.content_type === 'video/mp4' && variant.url)
-    .sort((a, b) => (b.bit_rate || 0) - (a.bit_rate || 0))[0];
+  const mp4s = (variants || []).filter(
+    (variant) => variant.content_type === 'video/mp4' && variant.url
+  );
+  if (mp4s.length === 0) return undefined;
+
+  const byWidthAscending = [...mp4s].sort((a, b) => variantWidth(a) - variantWidth(b));
+  const bigEnough = byWidthAscending.find((variant) => variantWidth(variant) >= TARGET_WIDTH);
+
+  // Width is unknown when the URL doesn't carry dimensions; bit rate is then
+  // the only ordering signal available.
+  if (!bigEnough && byWidthAscending.every((variant) => variantWidth(variant) === 0)) {
+    return [...mp4s].sort((a, b) => (b.bit_rate || 0) - (a.bit_rate || 0))[0];
+  }
+
+  return bigEnough || byWidthAscending[byWidthAscending.length - 1];
 }
 
 // The mp4 is hotlinked from video.twimg.com rather than rehosted — the site's

@@ -104,9 +104,45 @@ const VARIANTS = [
   { content_type: 'video/mp4', bit_rate: 2176000, url: 'https://video.twimg.com/high.mp4' },
 ];
 
-test('bestMp4 picks the highest-bitrate mp4 and ignores streaming variants', () => {
+test('bestMp4 falls back to bit rate when the urls carry no dimensions', () => {
   assert.equal(bestMp4(VARIANTS).url, 'https://video.twimg.com/high.mp4');
   assert.equal(bestMp4([]), undefined);
+});
+
+// X encodes dimensions in the path: .../vid/avc1/1280x720/name.mp4
+const ladder = (widths) =>
+  widths.map((w, i) => ({
+    content_type: 'video/mp4',
+    bit_rate: (i + 1) * 1000000,
+    url: `https://video.twimg.com/amplify_video/1/vid/avc1/${w}x${Math.round(w * 0.5625)}/v.mp4`,
+  }));
+
+test('bestMp4 takes the smallest variant that still covers the column at 2x', () => {
+  // The post column is 696px, so 1392 is the target. 1280 is too small; 1920
+  // covers it; 3840 is waste a reader cannot see.
+  const chosen = bestMp4(ladder([480, 1280, 1920, 3840]));
+  assert.match(chosen.url, /1920x/);
+});
+
+test('bestMp4 takes the largest available when every variant is below the target', () => {
+  const chosen = bestMp4(ladder([320, 480, 960]));
+  assert.match(chosen.url, /960x/);
+});
+
+test('bestMp4 ignores non-mp4 streaming variants entirely', () => {
+  const chosen = bestMp4([
+    { content_type: 'application/x-mpegURL', url: 'https://video.twimg.com/x.m3u8' },
+    ...ladder([1920]),
+  ]);
+  assert.match(chosen.url, /1920x/);
+  assert.ok(!chosen.url.endsWith('.m3u8'));
+});
+
+test('bestMp4 does not pick a 4K encode over one that covers the column', () => {
+  // The regression this exists for: a real post shipped a 3840x2160 file into
+  // a 696px column because it was the top of the ladder.
+  const chosen = bestMp4(ladder([960, 1600, 3840]));
+  assert.match(chosen.url, /1600x/);
 });
 
 test('collectVideos builds a poster filename and hotlinked src', () => {
