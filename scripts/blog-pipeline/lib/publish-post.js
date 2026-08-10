@@ -1,12 +1,18 @@
 // scripts/blog-pipeline/lib/publish-post.js
 const fs = require('node:fs');
 const path = require('node:path');
+const { downloadPhotos, stripUnknownImages } = require('./post-media');
 
-function publishPost({
+// Async because it owns the post's images as well as its text: the body can
+// only be finalised once we know which downloads actually succeeded, so
+// fetching has to happen before index.md is written, not after.
+async function publishPost({
   draft,
   publishDate,
   repoRoot,
   coverImageSourcePath,
+  photos = [],
+  fetchImpl,
   author = 'Alex Barashkov',
   category = 'Updates',
 }) {
@@ -28,10 +34,18 @@ function publishPost({
     '',
   ].join('\n');
 
-  fs.writeFileSync(path.join(postDir, 'index.md'), `${frontmatter}\n${draft.body}\n`, 'utf8');
+  const saved = await downloadPhotos({ photos, destDir: postDir, fetchImpl });
+  // Drop references to images that never landed — a download that 404s should
+  // cost one image, not ship a broken image tag into a published post.
+  const body = stripUnknownImages(
+    draft.body,
+    saved.map((photo) => photo.filename)
+  );
+
+  fs.writeFileSync(path.join(postDir, 'index.md'), `${frontmatter}\n${body}\n`, 'utf8');
   fs.copyFileSync(coverImageSourcePath, path.join(postDir, 'cover.png'));
 
-  return { postDir, folderName };
+  return { postDir, folderName, photos: saved };
 }
 
 module.exports = { publishPost };

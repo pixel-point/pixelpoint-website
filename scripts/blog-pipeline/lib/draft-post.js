@@ -13,7 +13,19 @@ const DRAFT_SCHEMA = {
   additionalProperties: false,
 };
 
-function buildDraftPrompt(posts) {
+function buildImageInstructions(photos) {
+  if (photos.length === 0) return [];
+  return [
+    '',
+    'These images come from the source posts and are saved alongside the article. Place each one in the body at the point it illustrates, not collected at the end, using exactly this markdown: ![alt text](filename). Use the filenames exactly as listed — a filename you invent renders as a broken image. Leave an image out entirely if it does not earn its place.',
+    'Write the alt text yourself. The site renders it as the visible caption under the image, so describe what the image actually shows instead of restating the sentence next to it.',
+    '',
+    'Images available (JSON):',
+    JSON.stringify(photos.map((photo) => ({ filename: photo.filename }))),
+  ];
+}
+
+function buildDraftPrompt(posts, photos = []) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
     'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
@@ -22,15 +34,16 @@ function buildDraftPrompt(posts) {
     '',
     'Source posts (JSON):',
     JSON.stringify(posts.map((p) => ({ text: p.text, url: p.url }))),
+    ...buildImageInstructions(photos),
     '',
     'Respond with JSON: { "title": "...", "summary": "...", "slug": "kebab-case-slug", "body": "markdown body" }',
   ].join('\n');
 }
 
-async function draftPost({ qualifyingPosts, anthropicClient }) {
+async function draftPost({ qualifyingPosts, photos = [], anthropicClient }) {
   const draft = await requestJson({
     anthropicClient,
-    prompt: buildDraftPrompt(qualifyingPosts),
+    prompt: buildDraftPrompt(qualifyingPosts, photos),
     schema: DRAFT_SCHEMA,
   });
 

@@ -8,6 +8,7 @@ const { draftPost } = require('./lib/draft-post');
 const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
+const { collectPhotos } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack } = require('./lib/notify-slack');
@@ -66,10 +67,14 @@ async function main() {
     return;
   }
 
-  const drafts = [];
+  // Filenames are assigned before drafting so the model can be given the exact
+  // names to reference, rather than inventing them and needing reconciliation.
+  const drafted = [];
   for (const group of groups) {
-    drafts.push(await draftPost({ qualifyingPosts: group, anthropicClient }));
+    const photos = collectPhotos(group);
+    drafted.push({ draft: await draftPost({ qualifyingPosts: group, photos, anthropicClient }), photos });
   }
+  const drafts = drafted.map((item) => item.draft);
 
   if (dryRun) {
     console.log(`--- DRY RUN: ${drafts.length} drafted post(s) (nothing written or published) ---`);
@@ -78,15 +83,18 @@ async function main() {
   }
 
   const publishDate = new Date().toISOString().slice(0, 10);
-  const postDirs = drafts.map(
-    (draft) =>
-      publishPost({
-        draft,
-        publishDate,
-        repoRoot: REPO_ROOT,
-        coverImageSourcePath: COVER_IMAGE_PATH,
-      }).postDir
-  );
+  const postDirs = [];
+  for (const { draft, photos } of drafted) {
+    const published = await publishPost({
+      draft,
+      publishDate,
+      repoRoot: REPO_ROOT,
+      coverImageSourcePath: COVER_IMAGE_PATH,
+      photos,
+    });
+    console.log(`Wrote ${published.folderName} with ${published.photos.length} image(s).`);
+    postDirs.push(published.postDir);
+  }
 
   const runId = process.env.GITHUB_RUN_ID || Date.now().toString();
   const branchName = `blog-draft/${publishDate.slice(0, 7)}-${runId}`;

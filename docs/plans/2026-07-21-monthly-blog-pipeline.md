@@ -190,8 +190,43 @@ test('fetchRecentPosts maps API posts to the pipeline shape', async () => {
       text: 'hello world',
       createdAt: '2026-07-01T00:00:00Z',
       url: 'https://x.com/i/web/status/999',
+      media: [],
     },
   ]);
+});
+
+test('fetchRecentPosts attaches expanded media to the post that references it', async () => {
+  const fakeFetch = async (url) => {
+    assert.ok(url.includes('expansions=attachments.media_keys'));
+    assert.ok(url.includes('media.fields=type%2Curl%2Cpreview_image_url%2Calt_text'));
+    return {
+      ok: true,
+      json: async () => ({
+        data: [
+          { id: '1', text: 'with a photo', created_at: 'x', attachments: { media_keys: ['k1', 'k2'] } },
+          { id: '2', text: 'no media', created_at: 'x' },
+        ],
+        includes: {
+          media: [
+            { media_key: 'k1', type: 'photo', url: 'https://pbs.twimg.com/media/a.jpg', alt_text: 'a chart' },
+            // Video carries no `url` — only a poster in preview_image_url.
+            { media_key: 'k2', type: 'video', preview_image_url: 'https://pbs.twimg.com/poster.jpg' },
+          ],
+        },
+      }),
+    };
+  };
+  const posts = await fetchRecentPosts({
+    userId: '123',
+    bearerToken: 't',
+    sinceISODate: '2026-06-01T00:00:00Z',
+    fetchImpl: fakeFetch,
+  });
+  assert.deepEqual(posts[0].media, [
+    { type: 'photo', url: 'https://pbs.twimg.com/media/a.jpg', altText: 'a chart' },
+    { type: 'video', url: 'https://pbs.twimg.com/poster.jpg', altText: '' },
+  ]);
+  assert.deepEqual(posts[1].media, []);
 });
 ```
 
@@ -221,6 +256,10 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
   url.searchParams.set('start_time', sinceISODate);
   url.searchParams.set('tweet.fields', 'created_at,text');
   url.searchParams.set('max_results', '100');
+  // Media arrives in a separate `includes.media` list keyed by media_key, not
+  // inline on the post — the expansion is what populates it at all.
+  url.searchParams.set('expansions', 'attachments.media_keys');
+  url.searchParams.set('media.fields', 'type,url,preview_image_url,alt_text');
 
   const res = await fetchImpl(url.toString(), {
     headers: { Authorization: `Bearer ${bearerToken}` },
@@ -228,12 +267,24 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
   if (!res.ok) {
     throw new Error(`X API posts fetch failed: ${res.status} ${await res.text()}`);
   }
-  const { data = [] } = await res.json();
+  const { data = [], includes = {} } = await res.json();
+  const mediaByKey = new Map((includes.media || []).map((item) => [item.media_key, item]));
+
   return data.map((post) => ({
     id: post.id,
     text: post.text,
     createdAt: post.created_at,
     url: `https://x.com/i/web/status/${post.id}`,
+    media: ((post.attachments && post.attachments.media_keys) || [])
+      .map((key) => mediaByKey.get(key))
+      .filter(Boolean)
+      .map((item) => ({
+        type: item.type,
+        // Photos carry `url`; video and animated_gif carry only a poster in
+        // `preview_image_url` (the mp4 itself lives in `variants`).
+        url: item.url || item.preview_image_url,
+        altText: item.alt_text || '',
+      })),
   }));
 }
 
@@ -994,7 +1045,19 @@ const DRAFT_SCHEMA = {
   additionalProperties: false,
 };
 
-function buildDraftPrompt(posts) {
+function buildImageInstructions(photos) {
+  if (photos.length === 0) return [];
+  return [
+    '',
+    'These images come from the source posts and are saved alongside the article. Place each one in the body at the point it illustrates, not collected at the end, using exactly this markdown: ![alt text](filename). Use the filenames exactly as listed — a filename you invent renders as a broken image. Leave an image out entirely if it does not earn its place.',
+    'Write the alt text yourself. The site renders it as the visible caption under the image, so describe what the image actually shows instead of restating the sentence next to it.',
+    '',
+    'Images available (JSON):',
+    JSON.stringify(photos.map((photo) => ({ filename: photo.filename }))),
+  ];
+}
+
+function buildDraftPrompt(posts, photos = []) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
     'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
@@ -1003,15 +1066,16 @@ function buildDraftPrompt(posts) {
     '',
     'Source posts (JSON):',
     JSON.stringify(posts.map((p) => ({ text: p.text, url: p.url }))),
+    ...buildImageInstructions(photos),
     '',
     'Respond with JSON: { "title": "...", "summary": "...", "slug": "kebab-case-slug", "body": "markdown body" }',
   ].join('\n');
 }
 
-async function draftPost({ qualifyingPosts, anthropicClient }) {
+async function draftPost({ qualifyingPosts, photos = [], anthropicClient }) {
   const draft = await requestJson({
     anthropicClient,
-    prompt: buildDraftPrompt(qualifyingPosts),
+    prompt: buildDraftPrompt(qualifyingPosts, photos),
     schema: DRAFT_SCHEMA,
   });
 
@@ -1035,11 +1099,196 @@ git commit -m "feat: add LLM drafting step for blog pipeline"
 
 ---
 
-### Task 10: `publish-post` module
+### Task 10: `publish-post` and `post-media` modules
 
 **Files:**
+- Create: `scripts/blog-pipeline/lib/post-media.js`
+- Test: `scripts/blog-pipeline/lib/post-media.test.js`
 - Create: `scripts/blog-pipeline/lib/publish-post.js`
 - Test: `scripts/blog-pipeline/lib/publish-post.test.js`
+
+**Step 0: Write the media collector and downloader**
+
+Photos from the source posts are committed next to `index.md` and referenced
+as `![alt](filename)`, matching what every existing post on the site already
+does — `gatsby-remark-images` turns those into responsive WebP with the alt
+text as the visible caption. Filenames are assigned *before* drafting so the
+model can be handed the exact names; letting it invent them would mean
+reconciling made-up references against downloaded files afterwards.
+
+A survey of 35 days of real posts found 42 media items — 19 photos, 23 videos
+— and **none** carried author-supplied alt text, so the model writes all of
+it. Video is excluded here pending a hosting decision (see the design doc's
+deferred items).
+
+```js
+// scripts/blog-pipeline/lib/post-media.test.js
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { collectPhotos, downloadPhotos, stripUnknownImages } = require('./post-media');
+
+function tmpDir() {
+  return fs.mkdtempSync(path.join(os.tmpdir(), 'pp-media-'));
+}
+
+test('collectPhotos numbers photos across every post in the group', () => {
+  const photos = collectPhotos([
+    { media: [{ type: 'photo', url: 'https://pbs.twimg.com/media/a.jpg', altText: '' }] },
+    { media: [{ type: 'photo', url: 'https://pbs.twimg.com/media/b.png', altText: 'a chart' }] },
+  ]);
+  assert.deepEqual(
+    photos.map((p) => p.filename),
+    ['image-1.jpg', 'image-2.png']
+  );
+  assert.equal(photos[1].altText, 'a chart');
+});
+
+test('collectPhotos ignores video and posts with no media', () => {
+  const photos = collectPhotos([
+    { media: [{ type: 'video', url: 'https://pbs.twimg.com/preview.jpg' }] },
+    { media: [{ type: 'animated_gif', url: 'https://pbs.twimg.com/gif.jpg' }] },
+    {},
+  ]);
+  assert.deepEqual(photos, []);
+});
+
+test('collectPhotos falls back to .jpg for a url with no usable extension', () => {
+  const photos = collectPhotos([{ media: [{ type: 'photo', url: 'https://pbs.twimg.com/media/abc' }] }]);
+  assert.equal(photos[0].filename, 'image-1.jpg');
+});
+
+test('downloadPhotos writes each image and reports what landed', async () => {
+  const destDir = tmpDir();
+  const fakeFetch = async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('png-bytes').buffer });
+  const saved = await downloadPhotos({
+    photos: [{ filename: 'image-1.jpg', url: 'https://example.com/a.jpg' }],
+    destDir,
+    fetchImpl: fakeFetch,
+  });
+  assert.equal(saved.length, 1);
+  assert.equal(fs.readFileSync(path.join(destDir, 'image-1.jpg'), 'utf8'), 'png-bytes');
+});
+
+test('downloadPhotos drops a failed image instead of failing the run', async () => {
+  const destDir = tmpDir();
+  const fakeFetch = async (url) =>
+    url.includes('good')
+      ? { ok: true, arrayBuffer: async () => new TextEncoder().encode('ok').buffer }
+      : { ok: false, status: 404 };
+  const saved = await downloadPhotos({
+    photos: [
+      { filename: 'image-1.jpg', url: 'https://example.com/good.jpg' },
+      { filename: 'image-2.jpg', url: 'https://example.com/gone.jpg' },
+    ],
+    destDir,
+    fetchImpl: fakeFetch,
+  });
+  assert.deepEqual(
+    saved.map((p) => p.filename),
+    ['image-1.jpg']
+  );
+  assert.equal(fs.existsSync(path.join(destDir, 'image-2.jpg')), false);
+});
+
+test('downloadPhotos survives a network error', async () => {
+  const destDir = tmpDir();
+  const fakeFetch = async () => {
+    throw new Error('ECONNRESET');
+  };
+  const saved = await downloadPhotos({
+    photos: [{ filename: 'image-1.jpg', url: 'https://example.com/a.jpg' }],
+    destDir,
+    fetchImpl: fakeFetch,
+  });
+  assert.deepEqual(saved, []);
+});
+
+test('stripUnknownImages keeps references that resolve and removes ones that do not', () => {
+  const body = 'Intro.\n\n![a chart](image-1.jpg)\n\nMiddle.\n\n![invented](image-9.jpg)\n\nEnd.';
+  const result = stripUnknownImages(body, ['image-1.jpg']);
+  assert.ok(result.includes('![a chart](image-1.jpg)'));
+  assert.ok(!result.includes('image-9.jpg'));
+  assert.ok(result.includes('Middle.'));
+  assert.ok(result.includes('End.'));
+});
+
+test('stripUnknownImages removes every image when nothing was saved', () => {
+  const result = stripUnknownImages('![a](image-1.jpg)\n\nText.', []);
+  assert.ok(!result.includes('image-1.jpg'));
+  assert.ok(result.includes('Text.'));
+});
+```
+
+```js
+// scripts/blog-pipeline/lib/post-media.js
+const fs = require('node:fs');
+const path = require('node:path');
+
+// Only photos for now. Video needs a hosting decision the pipeline can't make
+// on its own — see the deferred item in the design doc.
+const SUPPORTED_TYPES = ['photo'];
+
+function extensionFor(url) {
+  const ext = path.extname(new URL(url).pathname).toLowerCase();
+  return ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext) ? ext : '.jpg';
+}
+
+// Names are assigned here, before drafting, so the model can be told exactly
+// which filenames to reference. Letting it invent them would mean reconciling
+// made-up names against downloaded files afterwards.
+function collectPhotos(posts) {
+  const photos = [];
+  for (const post of posts) {
+    for (const item of post.media || []) {
+      if (!SUPPORTED_TYPES.includes(item.type) || !item.url) continue;
+      photos.push({
+        filename: `image-${photos.length + 1}${extensionFor(item.url)}`,
+        url: item.url,
+        altText: item.altText || '',
+      });
+    }
+  }
+  return photos;
+}
+
+// Drops a photo rather than failing the run: a dead image URL should cost one
+// image, not the whole month's PR. Returns the ones that actually landed.
+async function downloadPhotos({ photos, destDir, fetchImpl = fetch }) {
+  const saved = [];
+  for (const photo of photos) {
+    try {
+      const res = await fetchImpl(photo.url);
+      if (!res.ok) {
+        console.warn(`Skipping ${photo.filename}: ${photo.url} returned ${res.status}`);
+        continue;
+      }
+      const buffer = Buffer.from(await res.arrayBuffer());
+      fs.writeFileSync(path.join(destDir, photo.filename), buffer);
+      saved.push(photo);
+    } catch (err) {
+      console.warn(`Skipping ${photo.filename}: ${err.message}`);
+    }
+  }
+  return saved;
+}
+
+// The model is told which filenames exist, but nothing stops it inventing one.
+// An unresolvable image reference renders as a broken image in Gatsby, so drop
+// any that don't match a file we actually saved.
+function stripUnknownImages(body, savedFilenames) {
+  return body.replace(/!\[[^\]]*\]\(([^)]+)\)\n?/g, (match, target) =>
+    savedFilenames.includes(target) ? match : ''
+  );
+}
+
+module.exports = { collectPhotos, downloadPhotos, stripUnknownImages, SUPPORTED_TYPES };
+```
+
+Run: `node --test scripts/blog-pipeline/lib/post-media.test.js`
+Expected: PASS (8 tests)
 
 **Step 1: Write the failing test**
 
@@ -1053,12 +1302,12 @@ const path = require('node:path');
 const matter = require('gray-matter');
 const { publishPost } = require('./publish-post');
 
-test('writes index.md with frontmatter and copies the cover image', () => {
+test('writes index.md with frontmatter and copies the cover image', async () => {
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-publish-'));
   const coverImageSourcePath = path.join(repoRoot, 'source-cover.png');
   fs.writeFileSync(coverImageSourcePath, 'fake-png-bytes');
 
-  const { postDir, folderName } = publishPost({
+  const { postDir, folderName } = await publishPost({
     draft: { title: "Alex's Update", summary: 'Summary text', slug: 'alex-update', body: 'Body text' },
     publishDate: '2026-07-21',
     repoRoot,
@@ -1075,12 +1324,12 @@ test('writes index.md with frontmatter and copies the cover image', () => {
   assert.ok(fs.existsSync(path.join(postDir, 'cover.png')));
 });
 
-test('produces valid YAML frontmatter when the summary contains a colon', () => {
+test('produces valid YAML frontmatter when the summary contains a colon', async () => {
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-publish-colon-'));
   const coverImageSourcePath = path.join(repoRoot, 'source-cover.png');
   fs.writeFileSync(coverImageSourcePath, 'fake-png-bytes');
 
-  const { postDir } = publishPost({
+  const { postDir } = await publishPost({
     draft: {
       title: 'New Tool',
       summary: 'New AI tool: what it means for designers',
@@ -1096,6 +1345,41 @@ test('produces valid YAML frontmatter when the summary contains a colon', () => 
   const { data } = matter(written);
   assert.equal(data.summary, 'New AI tool: what it means for designers');
 });
+
+test('downloads photos into the post folder and drops references that failed', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-publish-media-'));
+  const coverImageSourcePath = path.join(repoRoot, 'source-cover.png');
+  fs.writeFileSync(coverImageSourcePath, 'fake-png-bytes');
+
+  const fakeFetch = async (url) =>
+    url.includes('good')
+      ? { ok: true, arrayBuffer: async () => new TextEncoder().encode('img').buffer }
+      : { ok: false, status: 404 };
+
+  const { postDir, photos } = await publishPost({
+    draft: {
+      title: 'With images',
+      summary: 'Summary',
+      slug: 'with-images',
+      body: 'Intro.\n\n![kept](image-1.jpg)\n\n![lost](image-2.jpg)\n\nEnd.',
+    },
+    publishDate: '2026-07-21',
+    repoRoot,
+    coverImageSourcePath,
+    photos: [
+      { filename: 'image-1.jpg', url: 'https://pbs.twimg.com/good.jpg' },
+      { filename: 'image-2.jpg', url: 'https://pbs.twimg.com/gone.jpg' },
+    ],
+    fetchImpl: fakeFetch,
+  });
+
+  assert.deepEqual(photos.map((p) => p.filename), ['image-1.jpg']);
+  assert.ok(fs.existsSync(path.join(postDir, 'image-1.jpg')));
+  const written = fs.readFileSync(path.join(postDir, 'index.md'), 'utf8');
+  assert.ok(written.includes('![kept](image-1.jpg)'));
+  assert.ok(!written.includes('image-2.jpg'));
+  assert.ok(written.includes('End.'));
+});
 ```
 
 **Step 2: Run test to verify it fails**
@@ -1109,12 +1393,18 @@ Expected: FAIL with "Cannot find module './publish-post'"
 // scripts/blog-pipeline/lib/publish-post.js
 const fs = require('node:fs');
 const path = require('node:path');
+const { downloadPhotos, stripUnknownImages } = require('./post-media');
 
-function publishPost({
+// Async because it owns the post's images as well as its text: the body can
+// only be finalised once we know which downloads actually succeeded, so
+// fetching has to happen before index.md is written, not after.
+async function publishPost({
   draft,
   publishDate,
   repoRoot,
   coverImageSourcePath,
+  photos = [],
+  fetchImpl,
   author = 'Alex Barashkov',
   category = 'Updates',
 }) {
@@ -1136,10 +1426,18 @@ function publishPost({
     '',
   ].join('\n');
 
-  fs.writeFileSync(path.join(postDir, 'index.md'), `${frontmatter}\n${draft.body}\n`, 'utf8');
+  const saved = await downloadPhotos({ photos, destDir: postDir, fetchImpl });
+  // Drop references to images that never landed — a download that 404s should
+  // cost one image, not ship a broken image tag into a published post.
+  const body = stripUnknownImages(
+    draft.body,
+    saved.map((photo) => photo.filename)
+  );
+
+  fs.writeFileSync(path.join(postDir, 'index.md'), `${frontmatter}\n${body}\n`, 'utf8');
   fs.copyFileSync(coverImageSourcePath, path.join(postDir, 'cover.png'));
 
-  return { postDir, folderName };
+  return { postDir, folderName, photos: saved };
 }
 
 module.exports = { publishPost };
@@ -1407,6 +1705,7 @@ const { draftPost } = require('./lib/draft-post');
 const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
+const { collectPhotos } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack } = require('./lib/notify-slack');
@@ -1465,10 +1764,14 @@ async function main() {
     return;
   }
 
-  const drafts = [];
+  // Filenames are assigned before drafting so the model can be given the exact
+  // names to reference, rather than inventing them and needing reconciliation.
+  const drafted = [];
   for (const group of groups) {
-    drafts.push(await draftPost({ qualifyingPosts: group, anthropicClient }));
+    const photos = collectPhotos(group);
+    drafted.push({ draft: await draftPost({ qualifyingPosts: group, photos, anthropicClient }), photos });
   }
+  const drafts = drafted.map((item) => item.draft);
 
   if (dryRun) {
     console.log(`--- DRY RUN: ${drafts.length} drafted post(s) (nothing written or published) ---`);
@@ -1477,15 +1780,18 @@ async function main() {
   }
 
   const publishDate = new Date().toISOString().slice(0, 10);
-  const postDirs = drafts.map(
-    (draft) =>
-      publishPost({
-        draft,
-        publishDate,
-        repoRoot: REPO_ROOT,
-        coverImageSourcePath: COVER_IMAGE_PATH,
-      }).postDir
-  );
+  const postDirs = [];
+  for (const { draft, photos } of drafted) {
+    const published = await publishPost({
+      draft,
+      publishDate,
+      repoRoot: REPO_ROOT,
+      coverImageSourcePath: COVER_IMAGE_PATH,
+      photos,
+    });
+    console.log(`Wrote ${published.folderName} with ${published.photos.length} image(s).`);
+    postDirs.push(published.postDir);
+  }
 
   const runId = process.env.GITHUB_RUN_ID || Date.now().toString();
   const branchName = `blog-draft/${publishDate.slice(0, 7)}-${runId}`;
