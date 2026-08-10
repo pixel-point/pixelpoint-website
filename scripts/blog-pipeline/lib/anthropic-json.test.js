@@ -50,3 +50,20 @@ test('requestJson reports truncation instead of failing to parse partial JSON', 
     /token limit; the returned JSON is truncated/
   );
 });
+
+test('usage accumulates across calls so a run can report what it cost', async () => {
+  const { usage, costUsd, usageSummary } = require('./anthropic-json');
+  const before = { ...usage };
+  const client = clientReturning({
+    stop_reason: 'end_turn',
+    content: [{ type: 'text', text: '{"ok":true}' }],
+    usage: { input_tokens: 10000, output_tokens: 40000 },
+  });
+  await requestJson({ anthropicClient: client, prompt: 'hi', schema: SCHEMA });
+  assert.equal(usage.calls, before.calls + 1);
+  assert.equal(usage.inputTokens, before.inputTokens + 10000);
+  assert.equal(usage.outputTokens, before.outputTokens + 40000);
+  // 10k in at $5/Mtok + 40k out at $25/Mtok = $0.05 + $1.00
+  assert.ok(costUsd() >= 1.05, `expected at least $1.05, got ${costUsd()}`);
+  assert.ok(usageSummary().includes('model call'));
+});

@@ -7,6 +7,25 @@
 const MODEL = 'claude-opus-5';
 const MAX_TOKENS = 16000;
 
+// claude.com/pricing, per million tokens. Thinking bills as output, and with
+// adaptive thinking on it dominates the bill — which is why a run costs about
+// ten times what the input alone suggests.
+const USD_PER_MTOK_INPUT = 5;
+const USD_PER_MTOK_OUTPUT = 25;
+
+const usage = { calls: 0, inputTokens: 0, outputTokens: 0 };
+
+function costUsd() {
+  return (
+    (usage.inputTokens / 1e6) * USD_PER_MTOK_INPUT +
+    (usage.outputTokens / 1e6) * USD_PER_MTOK_OUTPUT
+  );
+}
+
+function usageSummary() {
+  return `${usage.calls} model call(s), ${usage.inputTokens.toLocaleString()} in / ${usage.outputTokens.toLocaleString()} out — about $${costUsd().toFixed(2)}`;
+}
+
 function extractText(message) {
   // Thinking is on by default on this model, so content holds thinking blocks
   // alongside the text ones. Only the text blocks carry the JSON.
@@ -25,6 +44,12 @@ async function requestJson({ anthropicClient, prompt, schema }) {
     messages: [{ role: 'user', content: prompt }],
   });
 
+  if (message.usage) {
+    usage.calls += 1;
+    usage.inputTokens += message.usage.input_tokens || 0;
+    usage.outputTokens += message.usage.output_tokens || 0;
+  }
+
   // A refused request returns HTTP 200 with empty or partial content, so this
   // has to be checked before reading content — otherwise it surfaces as a
   // confusing JSON parse error instead of the real reason.
@@ -39,4 +64,4 @@ async function requestJson({ anthropicClient, prompt, schema }) {
   return JSON.parse(extractText(message));
 }
 
-module.exports = { requestJson, extractText, MODEL, MAX_TOKENS };
+module.exports = { requestJson, extractText, usage, costUsd, usageSummary, MODEL, MAX_TOKENS };

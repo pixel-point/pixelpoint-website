@@ -12,6 +12,7 @@ const { collectPhotos, collectVideos } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack } = require('./lib/notify-slack');
+const { usageSummary } = require('./lib/anthropic-json');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const COVER_IMAGE_PATH = path.join(REPO_ROOT, 'static', 'blog-updates-cover.png');
@@ -86,6 +87,8 @@ async function main() {
     });
   }
   const drafts = drafted.map((item) => item.draft);
+
+  console.log(`Model usage: ${usageSummary()}`);
 
   if (dryRun) {
     console.log(`--- DRY RUN: ${drafts.length} drafted post(s) (nothing written or published) ---`);

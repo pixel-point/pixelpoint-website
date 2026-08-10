@@ -641,6 +641,23 @@ test('requestJson reports truncation instead of failing to parse partial JSON', 
     /token limit; the returned JSON is truncated/
   );
 });
+
+test('usage accumulates across calls so a run can report what it cost', async () => {
+  const { usage, costUsd, usageSummary } = require('./anthropic-json');
+  const before = { ...usage };
+  const client = clientReturning({
+    stop_reason: 'end_turn',
+    content: [{ type: 'text', text: '{"ok":true}' }],
+    usage: { input_tokens: 10000, output_tokens: 40000 },
+  });
+  await requestJson({ anthropicClient: client, prompt: 'hi', schema: SCHEMA });
+  assert.equal(usage.calls, before.calls + 1);
+  assert.equal(usage.inputTokens, before.inputTokens + 10000);
+  assert.equal(usage.outputTokens, before.outputTokens + 40000);
+  // 10k in at $5/Mtok + 40k out at $25/Mtok = $0.05 + $1.00
+  assert.ok(costUsd() >= 1.05, `expected at least $1.05, got ${costUsd()}`);
+  assert.ok(usageSummary().includes('model call'));
+});
 ```
 
 **Step 2: Run tests to verify they fail**
@@ -661,6 +678,25 @@ Expected: FAIL with "Cannot find module './anthropic-json'"
 const MODEL = 'claude-opus-5';
 const MAX_TOKENS = 16000;
 
+// claude.com/pricing, per million tokens. Thinking bills as output, and with
+// adaptive thinking on it dominates the bill — which is why a run costs about
+// ten times what the input alone suggests.
+const USD_PER_MTOK_INPUT = 5;
+const USD_PER_MTOK_OUTPUT = 25;
+
+const usage = { calls: 0, inputTokens: 0, outputTokens: 0 };
+
+function costUsd() {
+  return (
+    (usage.inputTokens / 1e6) * USD_PER_MTOK_INPUT +
+    (usage.outputTokens / 1e6) * USD_PER_MTOK_OUTPUT
+  );
+}
+
+function usageSummary() {
+  return `${usage.calls} model call(s), ${usage.inputTokens.toLocaleString()} in / ${usage.outputTokens.toLocaleString()} out — about $${costUsd().toFixed(2)}`;
+}
+
 function extractText(message) {
   // Thinking is on by default on this model, so content holds thinking blocks
   // alongside the text ones. Only the text blocks carry the JSON.
@@ -679,6 +715,12 @@ async function requestJson({ anthropicClient, prompt, schema }) {
     messages: [{ role: 'user', content: prompt }],
   });
 
+  if (message.usage) {
+    usage.calls += 1;
+    usage.inputTokens += message.usage.input_tokens || 0;
+    usage.outputTokens += message.usage.output_tokens || 0;
+  }
+
   // A refused request returns HTTP 200 with empty or partial content, so this
   // has to be checked before reading content — otherwise it surfaces as a
   // confusing JSON parse error instead of the real reason.
@@ -693,7 +735,7 @@ async function requestJson({ anthropicClient, prompt, schema }) {
   return JSON.parse(extractText(message));
 }
 
-module.exports = { requestJson, extractText, MODEL, MAX_TOKENS };
+module.exports = { requestJson, extractText, usage, costUsd, usageSummary, MODEL, MAX_TOKENS };
 ```
 
 **Step 4: Run tests to verify they pass**
@@ -2168,6 +2210,7 @@ const { collectPhotos, collectVideos } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack } = require('./lib/notify-slack');
+const { usageSummary } = require('./lib/anthropic-json');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 const COVER_IMAGE_PATH = path.join(REPO_ROOT, 'static', 'blog-updates-cover.png');
@@ -2242,6 +2285,8 @@ async function main() {
     });
   }
   const drafts = drafted.map((item) => item.draft);
+
+  console.log(`Model usage: ${usageSummary()}`);
 
   if (dryRun) {
     console.log(`--- DRY RUN: ${drafts.length} drafted post(s) (nothing written or published) ---`);
