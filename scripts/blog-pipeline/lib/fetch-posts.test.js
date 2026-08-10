@@ -191,3 +191,47 @@ test('a post with its own media does not borrow from the quoted post', async () 
   assert.equal(posts[0].media.length, 1);
   assert.equal(posts[0].media[0].url, 'https://pbs.twimg.com/ours.jpg');
 });
+
+const { fullText } = require('./fetch-posts');
+
+test('fullText prefers note_tweet — `text` is truncated at ~280 chars', () => {
+  // 24 of 51 real posts were truncated this way. The animation-skill post lost
+  // its `npx skills add ...` install line off the end of `text`.
+  const post = {
+    text: 'Don’t miss our text animation skill. Every animation includes timing, curves, and specifications crafted by designers - not',
+    entities: { urls: [] },
+    note_tweet: {
+      text: 'Don’t miss our text animation skill. Every animation includes timing, curves, and specifications crafted by designers - not AI.\n\nnpx skills add pixel-point/animate-text --skill animate-text',
+      entities: { urls: [] },
+    },
+  };
+  assert.ok(fullText(post).text.includes('npx skills add pixel-point/animate-text'));
+});
+
+test('fullText falls back to text when there is no note_tweet', () => {
+  assert.equal(fullText({ text: 'short post' }).text, 'short post');
+});
+
+test('expandLinks uses the note_tweet entities, not the short-form ones', () => {
+  // The two forms carry different entity lists; reading the wrong one leaves
+  // a t.co link unexpanded in the text actually handed to the model.
+  const text = expandLinks({
+    text: 'short https://t.co/AAA',
+    entities: { urls: [{ url: 'https://t.co/AAA', expanded_url: 'https://wrong.example' }] },
+    note_tweet: {
+      text: 'the full post links https://t.co/BBB',
+      entities: { urls: [{ url: 'https://t.co/BBB', expanded_url: 'https://right.example' }] },
+    },
+  });
+  assert.equal(text, 'the full post links https://right.example');
+});
+
+test('fetchRecentPosts requests note_tweet', async () => {
+  let requested;
+  const fakeFetch = async (url) => {
+    requested = url;
+    return { ok: true, json: async () => ({ data: [], includes: {} }) };
+  };
+  await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch });
+  assert.ok(requested.includes('note_tweet'), 'without it, half the posts arrive truncated');
+});

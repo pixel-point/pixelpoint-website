@@ -84,3 +84,8 @@ test('buildDraftPrompt asks for sentence case, matching the rest of the blog', (
   assert.ok(prompt.includes('five creative tools we built'));
   assert.ok(prompt.includes('Five Creative Tools We Built'));
 });
+
+test('buildDraftPrompt asks for commands to survive verbatim', () => {
+  const prompt = buildDraftPrompt([{ text: 'npx skills add x', url: 'https://x.com/1' }]);
+  assert.ok(prompt.includes('verbatim, in a fenced code block'));
+});

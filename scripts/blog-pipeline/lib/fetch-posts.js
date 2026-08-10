@@ -9,15 +9,28 @@ async function getUserId({ username, bearerToken, fetchImpl = fetch }) {
   return data.id;
 }
 
+// `text` is capped at ~280 characters. Anything longer is truncated there and
+// the full version lives in note_tweet — 24 of 51 recent posts. Reading only
+// `text` silently fed the model half a post: the one announcing the animation
+// skill lost its `npx skills add ...` install command off the end.
+function fullText(post) {
+  const note = post.note_tweet;
+  return note && note.text
+    ? { text: note.text, entities: note.entities }
+    : { text: post.text || '', entities: post.entities };
+}
+
 // X rewrites every link in a post as an opaque t.co shortlink. Handed one of
 // those, the model can't tell what it points at and drops it — which is why
 // drafts carried no outbound links at all. entities.urls maps each back to
-// where it actually goes.
+// where it actually goes. Note the entities differ between the short and long
+// forms, so they have to be read from whichever text is used.
 function expandLinks(post) {
-  const urls = (post.entities && post.entities.urls) || [];
+  const { text, entities } = fullText(post);
+  const urls = (entities && entities.urls) || [];
   return urls.reduce(
-    (text, link) => (link.expanded_url ? text.split(link.url).join(link.expanded_url) : text),
-    post.text || ''
+    (acc, link) => (link.expanded_url ? acc.split(link.url).join(link.expanded_url) : acc),
+    text
   );
 }
 
@@ -42,7 +55,8 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
   url.searchParams.set('exclude', 'replies,retweets');
   url.searchParams.set('start_time', sinceISODate);
   // `entities` carries the real destination behind each t.co link.
-  url.searchParams.set('tweet.fields', 'created_at,text,entities,referenced_tweets');
+  // `note_tweet` carries the untruncated body of posts longer than ~280 chars.
+  url.searchParams.set('tweet.fields', 'created_at,text,entities,referenced_tweets,note_tweet');
   url.searchParams.set('max_results', '100');
   // Media arrives in a separate `includes.media` list keyed by media_key, not
   // inline on the post — the expansion is what populates it at all.
@@ -87,4 +101,4 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
   });
 }
 
-module.exports = { getUserId, fetchRecentPosts, expandLinks };
+module.exports = { getUserId, fetchRecentPosts, expandLinks, fullText };

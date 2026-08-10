@@ -331,6 +331,50 @@ test('a post with its own media does not borrow from the quoted post', async () 
   assert.equal(posts[0].media.length, 1);
   assert.equal(posts[0].media[0].url, 'https://pbs.twimg.com/ours.jpg');
 });
+
+const { fullText } = require('./fetch-posts');
+
+test('fullText prefers note_tweet — `text` is truncated at ~280 chars', () => {
+  // 24 of 51 real posts were truncated this way. The animation-skill post lost
+  // its `npx skills add ...` install line off the end of `text`.
+  const post = {
+    text: 'Don’t miss our text animation skill. Every animation includes timing, curves, and specifications crafted by designers - not',
+    entities: { urls: [] },
+    note_tweet: {
+      text: 'Don’t miss our text animation skill. Every animation includes timing, curves, and specifications crafted by designers - not AI.\n\nnpx skills add pixel-point/animate-text --skill animate-text',
+      entities: { urls: [] },
+    },
+  };
+  assert.ok(fullText(post).text.includes('npx skills add pixel-point/animate-text'));
+});
+
+test('fullText falls back to text when there is no note_tweet', () => {
+  assert.equal(fullText({ text: 'short post' }).text, 'short post');
+});
+
+test('expandLinks uses the note_tweet entities, not the short-form ones', () => {
+  // The two forms carry different entity lists; reading the wrong one leaves
+  // a t.co link unexpanded in the text actually handed to the model.
+  const text = expandLinks({
+    text: 'short https://t.co/AAA',
+    entities: { urls: [{ url: 'https://t.co/AAA', expanded_url: 'https://wrong.example' }] },
+    note_tweet: {
+      text: 'the full post links https://t.co/BBB',
+      entities: { urls: [{ url: 'https://t.co/BBB', expanded_url: 'https://right.example' }] },
+    },
+  });
+  assert.equal(text, 'the full post links https://right.example');
+});
+
+test('fetchRecentPosts requests note_tweet', async () => {
+  let requested;
+  const fakeFetch = async (url) => {
+    requested = url;
+    return { ok: true, json: async () => ({ data: [], includes: {} }) };
+  };
+  await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch });
+  assert.ok(requested.includes('note_tweet'), 'without it, half the posts arrive truncated');
+});
 ```
 
 **Step 2: Run tests to verify they fail**
@@ -353,15 +397,28 @@ async function getUserId({ username, bearerToken, fetchImpl = fetch }) {
   return data.id;
 }
 
+// `text` is capped at ~280 characters. Anything longer is truncated there and
+// the full version lives in note_tweet — 24 of 51 recent posts. Reading only
+// `text` silently fed the model half a post: the one announcing the animation
+// skill lost its `npx skills add ...` install command off the end.
+function fullText(post) {
+  const note = post.note_tweet;
+  return note && note.text
+    ? { text: note.text, entities: note.entities }
+    : { text: post.text || '', entities: post.entities };
+}
+
 // X rewrites every link in a post as an opaque t.co shortlink. Handed one of
 // those, the model can't tell what it points at and drops it — which is why
 // drafts carried no outbound links at all. entities.urls maps each back to
-// where it actually goes.
+// where it actually goes. Note the entities differ between the short and long
+// forms, so they have to be read from whichever text is used.
 function expandLinks(post) {
-  const urls = (post.entities && post.entities.urls) || [];
+  const { text, entities } = fullText(post);
+  const urls = (entities && entities.urls) || [];
   return urls.reduce(
-    (text, link) => (link.expanded_url ? text.split(link.url).join(link.expanded_url) : text),
-    post.text || ''
+    (acc, link) => (link.expanded_url ? acc.split(link.url).join(link.expanded_url) : acc),
+    text
   );
 }
 
@@ -386,7 +443,8 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
   url.searchParams.set('exclude', 'replies,retweets');
   url.searchParams.set('start_time', sinceISODate);
   // `entities` carries the real destination behind each t.co link.
-  url.searchParams.set('tweet.fields', 'created_at,text,entities,referenced_tweets');
+  // `note_tweet` carries the untruncated body of posts longer than ~280 chars.
+  url.searchParams.set('tweet.fields', 'created_at,text,entities,referenced_tweets,note_tweet');
   url.searchParams.set('max_results', '100');
   // Media arrives in a separate `includes.media` list keyed by media_key, not
   // inline on the post — the expansion is what populates it at all.
@@ -431,7 +489,7 @@ async function fetchRecentPosts({ userId, bearerToken, sinceISODate, fetchImpl =
   });
 }
 
-module.exports = { getUserId, fetchRecentPosts, expandLinks };
+module.exports = { getUserId, fetchRecentPosts, expandLinks, fullText };
 ```
 
 **Step 4: Run tests to verify they pass**
@@ -1292,6 +1350,11 @@ test('buildDraftPrompt asks for sentence case, matching the rest of the blog', (
   assert.ok(prompt.includes('five creative tools we built'));
   assert.ok(prompt.includes('Five Creative Tools We Built'));
 });
+
+test('buildDraftPrompt asks for commands to survive verbatim', () => {
+  const prompt = buildDraftPrompt([{ text: 'npx skills add x', url: 'https://x.com/1' }]);
+  assert.ok(prompt.includes('verbatim, in a fenced code block'));
+});
 ```
 
 **Step 2: Run tests to verify they fail**
@@ -1367,6 +1430,7 @@ function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts 
     // case on roughly a third of titles.
     'Write the title and every heading in sentence case, like the rest of this blog: capitalise the first word, and after that only proper nouns, product names, and acronyms. Write "Toolcraft: five creative tools we built to prove AI demos can be more than toys", not "Toolcraft: Five Creative Tools We Built to Prove AI Demos Can Be More Than Toys". Note that AI, Blender, and Novu stay capitalised because of what they are, not because of where they sit in the sentence.',
     '',
+    'Keep any exact command, package name, or code snippet from the source posts verbatim, in a fenced code block — an install line a reader can copy is the most useful thing an announcement post can carry, and paraphrasing it makes it wrong.',
     'When a source post links to something — a launched page, a repo, a demo — link to it from the article at the point you mention it, using the real URL from the post. Do not describe a thing as launched or shipped without linking it if the link is available.',
     'Where a source post quotes another post, that quoted text is background so you know what is being pointed at. Write about our work, not about the other person\'s post, and do not quote them.',
     '',
