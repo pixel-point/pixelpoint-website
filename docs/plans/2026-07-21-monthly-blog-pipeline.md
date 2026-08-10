@@ -1166,9 +1166,16 @@ function assertRequiredEnv(names) {
 }
 
 async function main() {
-  assertRequiredEnv(['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL']);
-
   const dryRun = process.argv.includes('--dry-run');
+
+  // A dry run stops after drafting — it never opens a PR or posts to Slack —
+  // so requiring a webhook it will not use just blocks local testing.
+  assertRequiredEnv(
+    dryRun
+      ? ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY']
+      : ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL']
+  );
+
   const { X_API_BEARER_TOKEN, ANTHROPIC_API_KEY, SLACK_WEBHOOK_URL } = process.env;
 
   const anthropicClient = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
@@ -1243,13 +1250,18 @@ async function main() {
 
 main().catch(async (err) => {
   console.error(err);
-  try {
-    await notifySlack({
-      webhookUrl: process.env.SLACK_WEBHOOK_URL,
-      text: `Monthly blog draft pipeline failed: ${err.message}`,
-    });
-  } catch (notifyErr) {
-    console.error('Also failed to notify Slack:', notifyErr);
+  // No webhook configured (a dry run, typically) — the console error above is
+  // the whole report, so don't bury it under a second failure from posting to
+  // an undefined URL.
+  if (process.env.SLACK_WEBHOOK_URL) {
+    try {
+      await notifySlack({
+        webhookUrl: process.env.SLACK_WEBHOOK_URL,
+        text: `Monthly blog draft pipeline failed: ${err.message}`,
+      });
+    } catch (notifyErr) {
+      console.error('Also failed to notify Slack:', notifyErr);
+    }
   }
   process.exitCode = 1;
 });
