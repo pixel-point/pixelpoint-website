@@ -49,7 +49,11 @@ function collectVideos(posts) {
       if (!variant || !item.url) continue;
       const index = videos.length + 1;
       videos.push({
-        posterFilename: `video-${index}-cover${extensionFor(item.url)}`,
+        // Must contain the literal "video-cover": gatsby-node.js:135 collects
+        // posters with `name: { regex: "/video-cover/" }`, and a poster the
+        // query misses leaves videoCovers empty, which makes video.jsx throw
+        // and fails the whole site build. `video-1-cover` does not match.
+        posterFilename: `video-cover-${index}${extensionFor(item.url)}`,
         posterUrl: item.url,
         src: variant.url,
         width: String(item.width || 1280),

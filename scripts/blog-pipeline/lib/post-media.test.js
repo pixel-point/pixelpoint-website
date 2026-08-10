@@ -118,7 +118,7 @@ test('collectVideos builds a poster filename and hotlinked src', () => {
     },
   ]);
   assert.equal(videos.length, 1);
-  assert.equal(videos[0].posterFilename, 'video-1-cover.jpg');
+  assert.equal(videos[0].posterFilename, 'video-cover-1.jpg');
   assert.equal(videos[0].src, 'https://video.twimg.com/high.mp4');
   assert.equal(videos[0].width, '1920');
   assert.equal(videos[0].isGif, false);
@@ -141,9 +141,33 @@ test('collectVideos skips media with no playable mp4', () => {
 
 test('stripUnusableVideos removes a Video whose poster never downloaded', () => {
   const body =
-    'A.\n\n<Video src="https://video.twimg.com/a.mp4" poster="./video-1-cover.jpg"></Video>\n\nB.\n\n<Video src="https://video.twimg.com/b.mp4" poster="./video-2-cover.jpg"></Video>\n\nC.';
-  const result = stripUnusableVideos(body, ['video-1-cover.jpg']);
-  assert.ok(result.includes('video-1-cover.jpg'));
-  assert.ok(!result.includes('video-2-cover.jpg'));
+    'A.\n\n<Video src="https://video.twimg.com/a.mp4" poster="./video-cover-1.jpg"></Video>\n\nB.\n\n<Video src="https://video.twimg.com/b.mp4" poster="./video-cover-2.jpg"></Video>\n\nC.';
+  const result = stripUnusableVideos(body, ['video-cover-1.jpg']);
+  assert.ok(result.includes('video-cover-1.jpg'));
+  assert.ok(!result.includes('video-cover-2.jpg'));
   assert.ok(result.includes('B.') && result.includes('C.'));
+});
+
+// Pins the naming to the site's own query. gatsby-node.js collects posters
+// with `name: { regex: "/video-cover/" }`; a name that misses the filter
+// downloads fine but leaves videoCovers empty, and video.jsx then throws and
+// fails the entire site build rather than degrading. Caught by a real build.
+test('poster filenames match the regex gatsby-node uses to collect them', () => {
+  const SITE_POSTER_REGEX = /video-cover/;
+  const videos = collectVideos([
+    {
+      media: [
+        { type: 'video', url: 'https://pbs.twimg.com/a.jpg', variants: VARIANTS },
+        { type: 'video', url: 'https://pbs.twimg.com/b.png', variants: VARIANTS },
+      ],
+    },
+  ]);
+  assert.equal(videos.length, 2);
+  videos.forEach((video) => {
+    const nameWithoutExt = video.posterFilename.replace(/\.[^.]+$/, '');
+    assert.ok(
+      SITE_POSTER_REGEX.test(nameWithoutExt),
+      `${video.posterFilename} would be invisible to gatsby-node's allFile query`
+    );
+  });
 });
