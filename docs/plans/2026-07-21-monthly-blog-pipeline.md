@@ -1691,42 +1691,200 @@ git commit -m "feat: add Slack notifier for blog pipeline"
 
 ---
 
-### Task 12: `git-pr` module (manually verified, not unit tested)
+### Task 12: `git-pr` module
 
-This module shells out to `git`/`gh` against the real repo checkout — there's
-no meaningful way to unit test it without either mocking `child_process`
-(low-value, tests the mock) or standing up a throwaway git remote. It's
-verified end-to-end in Task 14 instead.
+Originally written untested on the reasoning that mocking `child_process`
+would only test the mock. A real end-to-end run disproved that: `git push`
+returns before GitHub has indexed the new ref, so the `gh pr create`
+immediately after failed with `GraphQL: not all refs are readable`. The retry
+that fixes it is real logic worth pinning, so `runImpl`/`sleepImpl` are
+injectable and the retry policy is unit tested. The shell-out itself is still
+verified end-to-end in Task 14.
 
 **Files:**
 - Create: `scripts/blog-pipeline/lib/git-pr.js`
+- Test: `scripts/blog-pipeline/lib/git-pr.test.js`
 
-**Step 1: Write the implementation directly**
+**Step 1: Write the tests**
+
+```js
+// scripts/blog-pipeline/lib/git-pr.test.js
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const { openDraftPr, createPrWithRetry } = require('./git-pr');
+
+const REF_RACE = Object.assign(new Error('exit 1'), {
+  stderr: 'pull request create failed: GraphQL: not all refs are readable (createPullRequest)\n',
+});
+
+test('createPrWithRetry retries the ref-visibility race and returns the url', async () => {
+  let calls = 0;
+  const slept = [];
+  const url = await createPrWithRetry({
+    args: ['pr', 'create'],
+    cwd: '/repo',
+    runImpl: () => {
+      calls += 1;
+      if (calls < 3) throw REF_RACE;
+      return 'https://github.com/o/r/pull/1\n';
+    },
+    sleepImpl: async (ms) => slept.push(ms),
+  });
+  assert.equal(url, 'https://github.com/o/r/pull/1');
+  assert.equal(calls, 3);
+  assert.deepEqual(slept, [3000, 6000]); // backs off rather than hammering
+});
+
+test('createPrWithRetry does not retry an unrelated failure', async () => {
+  let calls = 0;
+  await assert.rejects(
+    () =>
+      createPrWithRetry({
+        args: ['pr', 'create'],
+        cwd: '/repo',
+        runImpl: () => {
+          calls += 1;
+          throw Object.assign(new Error('exit 1'), { stderr: 'HTTP 401: Bad credentials\n' });
+        },
+        sleepImpl: async () => {},
+      }),
+    /exit 1/
+  );
+  assert.equal(calls, 1, 'a bad token fails the same way every time — retrying only delays the alert');
+});
+
+test('createPrWithRetry gives up after the last attempt', async () => {
+  let calls = 0;
+  await assert.rejects(
+    () =>
+      createPrWithRetry({
+        args: ['pr', 'create'],
+        cwd: '/repo',
+        runImpl: () => {
+          calls += 1;
+          throw REF_RACE;
+        },
+        sleepImpl: async () => {},
+        attempts: 3,
+      }),
+    // The race text lives on stderr; the thrown error's own message is the
+    // exec failure, so match that and check stderr separately.
+    (err) => err.message === 'exit 1' && err.stderr.includes('not all refs are readable')
+  );
+  assert.equal(calls, 3);
+});
+
+test('openDraftPr commits each post folder and targets main explicitly', async () => {
+  const commands = [];
+  const { prUrl } = await openDraftPr({
+    repoRoot: '/repo',
+    branchName: 'blog-draft/2026-08-1',
+    postDirs: ['/repo/content/posts/a', '/repo/content/posts/b'],
+    prTitle: 'Updates: 2 new posts',
+    prBody: 'body',
+    runImpl: (cmd, args) => {
+      commands.push(`${cmd} ${args[0]}`);
+      return 'https://github.com/o/r/pull/9\n';
+    },
+    sleepImpl: async () => {},
+  });
+  assert.equal(prUrl, 'https://github.com/o/r/pull/9');
+  assert.deepEqual(commands, ['git checkout', 'git add', 'git add', 'git commit', 'git push', 'gh pr']);
+});
+
+test('openDraftPr passes an explicit base so it does not depend on repo defaults', async () => {
+  let prArgs;
+  await openDraftPr({
+    repoRoot: '/repo',
+    branchName: 'b',
+    postDirs: [],
+    prTitle: 't',
+    prBody: 'b',
+    runImpl: (cmd, args) => {
+      if (cmd === 'gh') prArgs = args;
+      return 'url\n';
+    },
+    sleepImpl: async () => {},
+  });
+  assert.ok(prArgs.includes('--base'));
+  assert.equal(prArgs[prArgs.indexOf('--base') + 1], 'main');
+});
+```
+
+**Step 2: Write the implementation**
 
 ```js
 // scripts/blog-pipeline/lib/git-pr.js
 const { execFileSync } = require('node:child_process');
 
-function run(cmd, args, options) {
+function defaultRun(cmd, args, options) {
   return execFileSync(cmd, args, { stdio: 'pipe', encoding: 'utf8', ...options });
 }
 
-function openDraftPr({ repoRoot, branchName, postDirs, prTitle, prBody }) {
-  run('git', ['checkout', '-b', branchName], { cwd: repoRoot });
-  for (const postDir of postDirs) {
-    run('git', ['add', postDir], { cwd: repoRoot });
+const defaultSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// `git push` returns before GitHub has finished indexing the new ref, so a
+// `gh pr create` fired immediately after can fail with "not all refs are
+// readable". Observed on a real run; a CI runner is faster than a laptop, so
+// it is more likely there, not less. The same command succeeds moments later,
+// so retry rather than fail the month's run.
+const PR_CREATE_ATTEMPTS = 4;
+const PR_CREATE_BACKOFF_MS = 3000;
+
+async function createPrWithRetry({
+  args,
+  cwd,
+  runImpl,
+  sleepImpl,
+  attempts = PR_CREATE_ATTEMPTS,
+  backoffMs = PR_CREATE_BACKOFF_MS,
+}) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      return runImpl('gh', args, { cwd }).trim();
+    } catch (err) {
+      lastError = err;
+      const output = `${err.stderr || ''}${err.stdout || ''}`;
+      // Only the ref-visibility race is worth retrying. A bad token or a
+      // malformed request will fail identically every time, and retrying just
+      // delays a failure the Slack alert should report now.
+      if (!output.includes('not all refs are readable') || attempt === attempts) throw err;
+      await sleepImpl(backoffMs * attempt);
+    }
   }
-  run('git', ['commit', '-m', prTitle], { cwd: repoRoot });
-  run('git', ['push', '-u', 'origin', branchName], { cwd: repoRoot });
-  const prUrl = run(
-    'gh',
-    ['pr', 'create', '--title', prTitle, '--body', prBody, '--head', branchName],
-    { cwd: repoRoot }
-  ).trim();
+  throw lastError;
+}
+
+async function openDraftPr({
+  repoRoot,
+  branchName,
+  postDirs,
+  prTitle,
+  prBody,
+  runImpl = defaultRun,
+  sleepImpl = defaultSleep,
+}) {
+  runImpl('git', ['checkout', '-b', branchName], { cwd: repoRoot });
+  for (const postDir of postDirs) {
+    runImpl('git', ['add', postDir], { cwd: repoRoot });
+  }
+  runImpl('git', ['commit', '-m', prTitle], { cwd: repoRoot });
+  runImpl('git', ['push', '-u', 'origin', branchName], { cwd: repoRoot });
+
+  const prUrl = await createPrWithRetry({
+    // --base is explicit so the PR target does not depend on the repo's
+    // configured default branch changing underneath the pipeline.
+    args: ['pr', 'create', '--title', prTitle, '--body', prBody, '--base', 'main', '--head', branchName],
+    cwd: repoRoot,
+    runImpl,
+    sleepImpl,
+  });
+
   return { prUrl };
 }
 
-module.exports = { openDraftPr };
+module.exports = { openDraftPr, createPrWithRetry };
 ```
 
 **Step 2: Commit**
