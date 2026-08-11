@@ -28,6 +28,7 @@ function collectPhotos(posts) {
         filename: `image-${photos.length + 1}${extensionFor(item.url)}`,
         url: item.url,
         altText: item.altText || '',
+        sourceUrl: post.url,
       });
     }
   }
@@ -105,6 +106,9 @@ function collectVideos(posts) {
         height: String(item.height || 720),
         // animated_gif has no audio track and should loop like the gif it replaced.
         isGif: item.type === 'animated_gif',
+        // Which post published it. Four clips attached to one post are a set
+        // the author posted at once, not four separate illustrations.
+        sourceUrl: post.url,
       });
     }
   }

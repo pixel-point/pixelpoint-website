@@ -89,3 +89,54 @@ test('buildDraftPrompt asks for commands to survive verbatim', () => {
   const prompt = buildDraftPrompt([{ text: 'npx skills add x', url: 'https://x.com/1' }]);
   assert.ok(prompt.includes('verbatim, in a fenced code block'));
 });
+
+const VID = (n, sourceUrl) => ({
+  src: `/x-video/amplify_video/${n}/v.mp4`,
+  width: '1440',
+  height: '1080',
+  posterFilename: `video-cover-${n}.jpg`,
+  isGif: false,
+  sourceUrl,
+});
+
+test('videos from one post are presented as a set to keep together', () => {
+  // Four clips on a single post came out scattered across four sections with
+  // headings between them, reading as four unrelated demos.
+  const prompt = buildDraftPrompt(
+    [{ text: 'New version is out', url: 'https://x.com/1' }],
+    [],
+    [VID(1, 'https://x.com/1'), VID(2, 'https://x.com/1'), VID(3, 'https://x.com/1')]
+  );
+  assert.ok(prompt.includes('Set 1 — 3 video(s) published together'));
+  assert.ok(prompt.includes('Keep such a set together'));
+  assert.ok(prompt.includes('one exhibit'));
+});
+
+test('videos from different posts are listed as separate sets', () => {
+  const prompt = buildDraftPrompt(
+    [{ text: 'a', url: 'https://x.com/1' }],
+    [],
+    [VID(1, 'https://x.com/1'), VID(2, 'https://x.com/2')]
+  );
+  assert.ok(prompt.includes('Set 1 — 1 video(s)'));
+  assert.ok(prompt.includes('Set 2 — 1 video(s)'));
+});
+
+test('a single video is not dressed up as a set', () => {
+  const prompt = buildDraftPrompt(
+    [{ text: 'a', url: 'https://x.com/1' }],
+    [],
+    [VID(1, 'https://x.com/1')]
+  );
+  assert.ok(!prompt.includes('Set 1'));
+  assert.ok(!prompt.includes('Keep such a set together'));
+});
+
+test('images carry the post that published them', () => {
+  const prompt = buildDraftPrompt(
+    [{ text: 'a', url: 'https://x.com/1' }],
+    [{ filename: 'image-1.jpg', sourceUrl: 'https://x.com/1' }]
+  );
+  assert.ok(prompt.includes('sourcePost'));
+  assert.ok(prompt.includes('belong together in the article'));
+});

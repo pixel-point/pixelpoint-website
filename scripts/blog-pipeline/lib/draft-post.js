@@ -24,19 +24,46 @@ function buildRelatedPostsInstructions(relatedExistingPosts) {
   ];
 }
 
+function videoTag(video) {
+  return `<Video src="${video.src}" width="${video.width}" height="${video.height}"${
+    video.isGif ? ' autoPlay muted loop playsInline' : ' controls muted'
+  } poster="./${video.posterFilename}"></Video>`;
+}
+
+// Grouped by the post that published them. Flattening the list lost the fact
+// that four clips attached to a single post are one set the author posted at
+// once — the article then scattered them across four sections with headings in
+// between, which reads as four unrelated demos rather than one release.
+function groupBySource(items) {
+  const groups = new Map();
+  for (const item of items) {
+    const key = item.sourceUrl || '';
+    groups.set(key, [...(groups.get(key) || []), item]);
+  }
+  return [...groups.values()];
+}
+
 function buildVideoInstructions(videos) {
   if (videos.length === 0) return [];
+  const sets = groupBySource(videos);
+  const multiple = sets.some((set) => set.length > 1);
+
   return [
     '',
     'These videos come from the source posts. Place each one at the point it illustrates using exactly the markup listed below, copied verbatim on its own line — it is a component, not markdown, and altering the attributes will break the page. Leave a video out if it does not earn its place.',
+    ...(multiple
+      ? [
+          'Videos listed under one heading below were published together in a single post, with no caption of their own. Keep such a set together in the article and in the order given — they are one exhibit, not separate illustrations to spread across sections.',
+        ]
+      : []),
     '',
     'Videos available (use these lines exactly):',
-    ...videos.map(
-      (video) =>
-        `<Video src="${video.src}" width="${video.width}" height="${video.height}"${
-          video.isGif ? ' autoPlay muted loop playsInline' : ' controls muted'
-        } poster="./${video.posterFilename}"></Video>`
-    ),
+    ...sets.flatMap((set, index) => [
+      sets.length > 1 || set.length > 1
+        ? `Set ${index + 1} — ${set.length} video(s) published together:`
+        : '',
+      ...set.map(videoTag),
+    ]).filter(Boolean),
   ];
 }
 
@@ -47,8 +74,10 @@ function buildImageInstructions(photos) {
     'These images come from the source posts and are saved alongside the article. Place each one in the body at the point it illustrates, not collected at the end, using exactly this markdown: ![alt text](filename). Use the filenames exactly as listed — a filename you invent renders as a broken image. Leave an image out entirely if it does not earn its place.',
     'Write the alt text yourself. The site renders it as the visible caption under the image, so describe what the image actually shows instead of restating the sentence next to it.',
     '',
-    'Images available (JSON):',
-    JSON.stringify(photos.map((photo) => ({ filename: photo.filename }))),
+    'Images available (JSON) — images sharing a sourcePost were published together and belong together in the article:',
+    JSON.stringify(
+      photos.map((photo) => ({ filename: photo.filename, sourcePost: photo.sourceUrl }))
+    ),
   ];
 }
 

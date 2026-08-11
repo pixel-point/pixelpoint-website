@@ -1645,6 +1645,57 @@ test('buildDraftPrompt asks for commands to survive verbatim', () => {
   const prompt = buildDraftPrompt([{ text: 'npx skills add x', url: 'https://x.com/1' }]);
   assert.ok(prompt.includes('verbatim, in a fenced code block'));
 });
+
+const VID = (n, sourceUrl) => ({
+  src: `/x-video/amplify_video/${n}/v.mp4`,
+  width: '1440',
+  height: '1080',
+  posterFilename: `video-cover-${n}.jpg`,
+  isGif: false,
+  sourceUrl,
+});
+
+test('videos from one post are presented as a set to keep together', () => {
+  // Four clips on a single post came out scattered across four sections with
+  // headings between them, reading as four unrelated demos.
+  const prompt = buildDraftPrompt(
+    [{ text: 'New version is out', url: 'https://x.com/1' }],
+    [],
+    [VID(1, 'https://x.com/1'), VID(2, 'https://x.com/1'), VID(3, 'https://x.com/1')]
+  );
+  assert.ok(prompt.includes('Set 1 — 3 video(s) published together'));
+  assert.ok(prompt.includes('Keep such a set together'));
+  assert.ok(prompt.includes('one exhibit'));
+});
+
+test('videos from different posts are listed as separate sets', () => {
+  const prompt = buildDraftPrompt(
+    [{ text: 'a', url: 'https://x.com/1' }],
+    [],
+    [VID(1, 'https://x.com/1'), VID(2, 'https://x.com/2')]
+  );
+  assert.ok(prompt.includes('Set 1 — 1 video(s)'));
+  assert.ok(prompt.includes('Set 2 — 1 video(s)'));
+});
+
+test('a single video is not dressed up as a set', () => {
+  const prompt = buildDraftPrompt(
+    [{ text: 'a', url: 'https://x.com/1' }],
+    [],
+    [VID(1, 'https://x.com/1')]
+  );
+  assert.ok(!prompt.includes('Set 1'));
+  assert.ok(!prompt.includes('Keep such a set together'));
+});
+
+test('images carry the post that published them', () => {
+  const prompt = buildDraftPrompt(
+    [{ text: 'a', url: 'https://x.com/1' }],
+    [{ filename: 'image-1.jpg', sourceUrl: 'https://x.com/1' }]
+  );
+  assert.ok(prompt.includes('sourcePost'));
+  assert.ok(prompt.includes('belong together in the article'));
+});
 ```
 
 **Step 2: Run tests to verify they fail**
@@ -1681,19 +1732,46 @@ function buildRelatedPostsInstructions(relatedExistingPosts) {
   ];
 }
 
+function videoTag(video) {
+  return `<Video src="${video.src}" width="${video.width}" height="${video.height}"${
+    video.isGif ? ' autoPlay muted loop playsInline' : ' controls muted'
+  } poster="./${video.posterFilename}"></Video>`;
+}
+
+// Grouped by the post that published them. Flattening the list lost the fact
+// that four clips attached to a single post are one set the author posted at
+// once — the article then scattered them across four sections with headings in
+// between, which reads as four unrelated demos rather than one release.
+function groupBySource(items) {
+  const groups = new Map();
+  for (const item of items) {
+    const key = item.sourceUrl || '';
+    groups.set(key, [...(groups.get(key) || []), item]);
+  }
+  return [...groups.values()];
+}
+
 function buildVideoInstructions(videos) {
   if (videos.length === 0) return [];
+  const sets = groupBySource(videos);
+  const multiple = sets.some((set) => set.length > 1);
+
   return [
     '',
     'These videos come from the source posts. Place each one at the point it illustrates using exactly the markup listed below, copied verbatim on its own line — it is a component, not markdown, and altering the attributes will break the page. Leave a video out if it does not earn its place.',
+    ...(multiple
+      ? [
+          'Videos listed under one heading below were published together in a single post, with no caption of their own. Keep such a set together in the article and in the order given — they are one exhibit, not separate illustrations to spread across sections.',
+        ]
+      : []),
     '',
     'Videos available (use these lines exactly):',
-    ...videos.map(
-      (video) =>
-        `<Video src="${video.src}" width="${video.width}" height="${video.height}"${
-          video.isGif ? ' autoPlay muted loop playsInline' : ' controls muted'
-        } poster="./${video.posterFilename}"></Video>`
-    ),
+    ...sets.flatMap((set, index) => [
+      sets.length > 1 || set.length > 1
+        ? `Set ${index + 1} — ${set.length} video(s) published together:`
+        : '',
+      ...set.map(videoTag),
+    ]).filter(Boolean),
   ];
 }
 
@@ -1704,8 +1782,10 @@ function buildImageInstructions(photos) {
     'These images come from the source posts and are saved alongside the article. Place each one in the body at the point it illustrates, not collected at the end, using exactly this markdown: ![alt text](filename). Use the filenames exactly as listed — a filename you invent renders as a broken image. Leave an image out entirely if it does not earn its place.',
     'Write the alt text yourself. The site renders it as the visible caption under the image, so describe what the image actually shows instead of restating the sentence next to it.',
     '',
-    'Images available (JSON):',
-    JSON.stringify(photos.map((photo) => ({ filename: photo.filename }))),
+    'Images available (JSON) — images sharing a sourcePost were published together and belong together in the article:',
+    JSON.stringify(
+      photos.map((photo) => ({ filename: photo.filename, sourcePost: photo.sourceUrl }))
+    ),
   ];
 }
 
@@ -2165,6 +2245,7 @@ function collectPhotos(posts) {
         filename: `image-${photos.length + 1}${extensionFor(item.url)}`,
         url: item.url,
         altText: item.altText || '',
+        sourceUrl: post.url,
       });
     }
   }
@@ -2242,6 +2323,9 @@ function collectVideos(posts) {
         height: String(item.height || 720),
         // animated_gif has no audio track and should loop like the gif it replaced.
         isGif: item.type === 'animated_gif',
+        // Which post published it. Four clips attached to one post are a set
+        // the author posted at once, not four separate illustrations.
+        sourceUrl: post.url,
       });
     }
   }
