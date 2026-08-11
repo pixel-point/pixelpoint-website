@@ -1,6 +1,12 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 const { main } = require('./run');
+
+// Never let a test write the cache the developer is actually using.
+const cachePath = () => path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cache-')), 'drafts.json');
 
 const ENV = {
   X_API_BEARER_TOKEN: 'x',
@@ -35,6 +41,8 @@ function deps(over = {}) {
     notifySlack: async () => {},
     collectPhotos: () => [],
     collectVideos: () => [],
+    dedupeVideosByPoster: async ({ videos }) => videos,
+    draftCachePath: cachePath(),
     ...over,
   };
 }
@@ -164,4 +172,18 @@ test('open draft PRs are consulted by default', async () => {
     process.argv = process.argv.filter((a) => a !== '--dry-run');
   }
   assert.ok(consulted, 'a real run must not re-draft what is already awaiting review');
+});
+
+test('a run never writes the cache outside the path it was given', async () => {
+  // The suite once overwrote the developer's real cache with a fixture,
+  // silently replacing 7 drafted posts with one named "slug".
+  const target = cachePath();
+  await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () => {
+    process.argv.push('--local');
+    return main(deps({ draftCachePath: target })).finally(() => {
+      process.argv = process.argv.filter((a) => a !== '--local');
+    });
+  });
+  assert.ok(fs.existsSync(target));
+  assert.equal(JSON.parse(fs.readFileSync(target, 'utf8')).drafted.length, 1);
 });

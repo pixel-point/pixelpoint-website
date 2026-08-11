@@ -3178,6 +3178,8 @@ const defaultDeps = {
   collectPhotos,
   collectVideos,
   dedupeVideosByPoster,
+  // Overridable so tests never write into the real repo.
+  draftCachePath: DRAFT_CACHE_PATH,
 };
 
 async function main(overrides = {}) {
@@ -3196,6 +3198,7 @@ async function main(overrides = {}) {
     collectPhotos,
     collectVideos,
     dedupeVideosByPoster,
+    draftCachePath,
   } = { ...defaultDeps, ...overrides };
 
   const dryRun = process.argv.includes('--dry-run');
@@ -3228,10 +3231,10 @@ async function main(overrides = {}) {
   const { X_API_BEARER_TOKEN, ANTHROPIC_API_KEY, SLACK_WEBHOOK_URL } = process.env;
 
   if (replay) {
-    if (!fs.existsSync(DRAFT_CACHE_PATH)) {
-      throw new Error(`No cached drafts at ${DRAFT_CACHE_PATH} — run once without --replay first.`);
+    if (!fs.existsSync(draftCachePath)) {
+      throw new Error(`No cached drafts at ${draftCachePath} — run once without --replay first.`);
     }
-    const cached = JSON.parse(fs.readFileSync(DRAFT_CACHE_PATH, 'utf8'));
+    const cached = JSON.parse(fs.readFileSync(draftCachePath, 'utf8'));
     console.log(`Replaying ${cached.drafted.length} cached draft(s) from ${cached.generatedAt}.`);
     return publishAndMaybeOpenPr({
       drafted: cached.drafted,
@@ -3316,7 +3319,7 @@ async function main(overrides = {}) {
   // publishing, media, frontmatter, the PR body — without paying for drafting
   // again or opening a pull request to look at the result.
   fs.writeFileSync(
-    DRAFT_CACHE_PATH,
+    draftCachePath,
     JSON.stringify({ generatedAt: new Date().toISOString(), drafted, skipped }, null, 2)
   );
 
