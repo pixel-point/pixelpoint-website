@@ -40,6 +40,7 @@ parsing, `gh` CLI (preinstalled on GitHub-hosted runners) for PR creation.
 ### Task 1: Add the "Updates" blog category
 
 **Files:**
+
 - Modify: `src/constants/blog.js`
 - Test: `src/constants/blog.test.js`
 
@@ -94,6 +95,7 @@ git commit -m "feat: add Updates blog category"
 ### Task 2: Add the fixed cover image and pipeline dependencies
 
 **Files:**
+
 - Create: `static/blog-updates-cover.png` (manual — see note below)
 - Modify: `package.json`
 
@@ -131,6 +133,7 @@ git commit -m "chore: add @anthropic-ai/sdk and gray-matter for blog pipeline"
 ### Task 3: `fetch-posts` module
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/fetch-posts.js`
 - Test: `scripts/blog-pipeline/lib/fetch-posts.test.js`
 
@@ -138,9 +141,16 @@ git commit -m "chore: add @anthropic-ai/sdk and gray-matter for blog pipeline"
 
 ```js
 // scripts/blog-pipeline/lib/fetch-posts.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
-const { getUserId, fetchRecentPosts } = require('./fetch-posts');
+const test = require('node:test');
+
+const {
+  getUserId,
+  fetchRecentPosts,
+  expandLinks,
+  fullText,
+  fetchSelfReplies,
+} = require('./fetch-posts');
 
 test('getUserId returns the id from the X API response', async () => {
   const fakeFetch = async (url) => {
@@ -207,18 +217,30 @@ test('fetchRecentPosts attaches expanded media to the post that references it', 
       ok: true,
       json: async () => ({
         data: [
-          { id: '1', text: 'with a photo', created_at: 'x', attachments: { media_keys: ['k1', 'k2'] } },
+          {
+            id: '1',
+            text: 'with a photo',
+            created_at: 'x',
+            attachments: { media_keys: ['k1', 'k2'] },
+          },
           { id: '2', text: 'no media', created_at: 'x' },
         ],
         includes: {
           media: [
-            { media_key: 'k1', type: 'photo', url: 'https://pbs.twimg.com/media/a.jpg', alt_text: 'a chart' },
+            {
+              media_key: 'k1',
+              type: 'photo',
+              url: 'https://pbs.twimg.com/media/a.jpg',
+              alt_text: 'a chart',
+            },
             // Video carries no `url` — only a poster in preview_image_url.
             {
               media_key: 'k2',
               type: 'video',
               preview_image_url: 'https://pbs.twimg.com/poster.jpg',
-              variants: [{ content_type: 'video/mp4', bit_rate: 1, url: 'https://video.twimg.com/v.mp4' }],
+              variants: [
+                { content_type: 'video/mp4', bit_rate: 1, url: 'https://video.twimg.com/v.mp4' },
+              ],
               width: 1280,
               height: 720,
             },
@@ -256,8 +278,6 @@ test('fetchRecentPosts attaches expanded media to the post that references it', 
   assert.equal(posts[1].quoted, null);
 });
 
-const { expandLinks } = require('./fetch-posts');
-
 test('expandLinks replaces t.co shortlinks with where they actually go', () => {
   // Handed an opaque t.co link the model cannot tell what it points at, so it
   // drops it — which is why drafts carried no outbound links at all.
@@ -286,7 +306,9 @@ test('fetchRecentPosts carries quoted text and borrows the quoted media', async 
             id: '1',
             text: 'Meet the new Novu. https://t.co/abc',
             created_at: 'x',
-            entities: { urls: [{ url: 'https://t.co/abc', expanded_url: 'https://x.com/dima/status/9' }] },
+            entities: {
+              urls: [{ url: 'https://t.co/abc', expanded_url: 'https://x.com/dima/status/9' }],
+            },
             referenced_tweets: [{ type: 'quoted', id: '9' }],
           },
         ],
@@ -320,7 +342,13 @@ test('a post with its own media does not borrow from the quoted post', async () 
     ok: true,
     json: async () => ({
       data: [
-        { id: '1', text: 'ours', created_at: 'x', attachments: { media_keys: ['own'] }, referenced_tweets: [{ type: 'quoted', id: '9' }] },
+        {
+          id: '1',
+          text: 'ours',
+          created_at: 'x',
+          attachments: { media_keys: ['own'] },
+          referenced_tweets: [{ type: 'quoted', id: '9' }],
+        },
       ],
       includes: {
         tweets: [{ id: '9', text: 'theirs', attachments: { media_keys: ['other'] } }],
@@ -331,12 +359,16 @@ test('a post with its own media does not borrow from the quoted post', async () 
       },
     }),
   });
-  const posts = await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 0 });
+  const posts = await fetchRecentPosts({
+    userId: '1',
+    bearerToken: 't',
+    sinceISODate: 'x',
+    fetchImpl: fakeFetch,
+    selfReplyPages: 0,
+  });
   assert.equal(posts[0].media.length, 1);
   assert.equal(posts[0].media[0].url, 'https://pbs.twimg.com/ours.jpg');
 });
-
-const { fullText } = require('./fetch-posts');
 
 test('fullText prefers note_tweet — `text` is truncated at ~280 chars', () => {
   // 24 of 51 real posts were truncated this way. The animation-skill post lost
@@ -376,11 +408,15 @@ test('fetchRecentPosts requests note_tweet', async () => {
     requested = url;
     return { ok: true, json: async () => ({ data: [], includes: {} }) };
   };
-  await fetchRecentPosts({ userId: '1', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 0 });
+  await fetchRecentPosts({
+    userId: '1',
+    bearerToken: 't',
+    sinceISODate: 'x',
+    fetchImpl: fakeFetch,
+    selfReplyPages: 0,
+  });
   assert.ok(requested.includes('note_tweet'), 'without it, half the posts arrive truncated');
 });
-
-const { fetchSelfReplies } = require('./fetch-posts');
 
 test('fetchSelfReplies keeps replies to self and discards replies to others', async () => {
   // Roughly 4 in 5 items on the reply-inclusive timeline are replies to other
@@ -389,17 +425,35 @@ test('fetchSelfReplies keeps replies to self and discards replies to others', as
     ok: true,
     json: async () => ({
       data: [
-        { id: '2', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'https://t.co/A',
-          entities: { urls: [{ url: 'https://t.co/A', expanded_url: 'https://pixelpoint.io/aval/' }] } },
-        { id: '3', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'https://t.co/B',
-          entities: { urls: [{ url: 'https://t.co/B', expanded_url: 'https://github.com/pixel-point/aval' }] } },
+        {
+          id: '2',
+          conversation_id: 'c1',
+          in_reply_to_user_id: 'me',
+          text: 'https://t.co/A',
+          entities: {
+            urls: [{ url: 'https://t.co/A', expanded_url: 'https://pixelpoint.io/aval/' }],
+          },
+        },
+        {
+          id: '3',
+          conversation_id: 'c1',
+          in_reply_to_user_id: 'me',
+          text: 'https://t.co/B',
+          entities: {
+            urls: [{ url: 'https://t.co/B', expanded_url: 'https://github.com/pixel-point/aval' }],
+          },
+        },
         { id: '4', conversation_id: 'c9', in_reply_to_user_id: 'someone-else', text: 'thanks!' },
       ],
       meta: {},
     }),
   });
   const threads = await fetchSelfReplies({
-    userId: 'me', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, maxPages: 1,
+    userId: 'me',
+    bearerToken: 't',
+    sinceISODate: 'x',
+    fetchImpl: fakeFetch,
+    maxPages: 1,
   });
   assert.equal(threads.get('c1').length, 2);
   assert.equal(threads.has('c9'), false);
@@ -408,8 +462,11 @@ test('fetchSelfReplies keeps replies to self and discards replies to others', as
 
 test('fetchSelfReplies gives up quietly rather than failing the run', async () => {
   const threads = await fetchSelfReplies({
-    userId: 'me', bearerToken: 't', sinceISODate: 'x',
-    fetchImpl: async () => ({ ok: false, status: 429 }), maxPages: 3,
+    userId: 'me',
+    bearerToken: 't',
+    sinceISODate: 'x',
+    fetchImpl: async () => ({ ok: false, status: 429 }),
+    maxPages: 3,
   });
   // The originals are already in hand; losing follow-up context is not worth
   // discarding the month's run over.
@@ -419,38 +476,79 @@ test('fetchSelfReplies gives up quietly rather than failing the run', async () =
 test('fetchRecentPosts attaches self-replies to their parent post', async () => {
   const fakeFetch = async (url) => {
     if (url.includes('exclude=replies')) {
-      return { ok: true, json: async () => ({
-        data: [{ id: '1', text: 'Introducing Aval', created_at: 'x', conversation_id: 'c1' }],
-        includes: {},
-      }) };
+      return {
+        ok: true,
+        json: async () => ({
+          data: [{ id: '1', text: 'Introducing Aval', created_at: 'x', conversation_id: 'c1' }],
+          includes: {},
+        }),
+      };
     }
-    return { ok: true, json: async () => ({
-      data: [{ id: '2', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'https://github.com/pixel-point/aval' }],
-      meta: {},
-    }) };
+    return {
+      ok: true,
+      json: async () => ({
+        data: [
+          {
+            id: '2',
+            conversation_id: 'c1',
+            in_reply_to_user_id: 'me',
+            text: 'https://github.com/pixel-point/aval',
+          },
+        ],
+        meta: {},
+      }),
+    };
   };
   const posts = await fetchRecentPosts({
-    userId: 'me', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 1,
+    userId: 'me',
+    bearerToken: 't',
+    sinceISODate: 'x',
+    fetchImpl: fakeFetch,
+    selfReplyPages: 1,
   });
   assert.equal(posts[0].thread.length, 1);
   assert.ok(posts[0].thread[0].text.includes('github.com/pixel-point/aval'));
 });
 
 test('a post is never its own follow-up, and follow-ups are capped oldest-first', async () => {
-  const replies = (ids) => ids.map((id) => ({
-    id, conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'reply ' + id,
-  }));
+  const replies = (ids) =>
+    ids.map((id) => ({
+      id,
+      conversation_id: 'c1',
+      in_reply_to_user_id: 'me',
+      text: `reply ${id}`,
+    }));
   const fakeFetch = async (url) =>
     url.includes('exclude=replies')
-      ? { ok: true, json: async () => ({ data: [{ id: '100', text: 'announcement', conversation_id: 'c1' }], includes: {} }) }
-        // X returns newest first and counts the parent in the same conversation.
-      : { ok: true, json: async () => ({ data: replies(['107','106','105','104','103','102','101','100']), meta: {} }) };
+      ? {
+          ok: true,
+          json: async () => ({
+            data: [{ id: '100', text: 'announcement', conversation_id: 'c1' }],
+            includes: {},
+          }),
+        }
+      : // X returns newest first and counts the parent in the same conversation.
+        {
+          ok: true,
+          json: async () => ({
+            data: replies(['107', '106', '105', '104', '103', '102', '101', '100']),
+            meta: {},
+          }),
+        };
 
   const posts = await fetchRecentPosts({
-    userId: 'me', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 1,
+    userId: 'me',
+    bearerToken: 't',
+    sinceISODate: 'x',
+    fetchImpl: fakeFetch,
+    selfReplyPages: 1,
   });
   const ids = posts[0].thread.map((r) => r.url.split('/').pop());
-  assert.deepEqual(ids, ['101', '102', '103', '104', '105'], 'oldest five, excluding the post itself');
+  assert.deepEqual(
+    ids,
+    ['101', '102', '103', '104', '105'],
+    'oldest five, excluding the post itself'
+  );
   assert.ok(!ids.includes('100'));
 });
 
@@ -461,20 +559,32 @@ test('self-replies come from full-archive search when it is available', async ()
     if (url.includes('/tweets/search/all')) {
       searched = true;
       // from:X to:X is exactly "replies X made to X", filtered server-side.
-      assert.ok(url.includes('from%3Aalex_barashkov+to%3Aalex_barashkov')
-        || decodeURIComponent(url).includes('from:alex_barashkov to:alex_barashkov'));
-      return { ok: true, json: async () => ({
-        data: [{ id: '2', conversation_id: 'c1', text: 'https://github.com/pixel-point/aval' }],
-      }) };
+      assert.ok(
+        url.includes('from%3Aalex_barashkov+to%3Aalex_barashkov') ||
+          decodeURIComponent(url).includes('from:alex_barashkov to:alex_barashkov')
+      );
+      return {
+        ok: true,
+        json: async () => ({
+          data: [{ id: '2', conversation_id: 'c1', text: 'https://github.com/pixel-point/aval' }],
+        }),
+      };
     }
     if (url.includes('exclude=retweets')) pagedTimeline = true;
-    return { ok: true, json: async () => ({
-      data: [{ id: '1', text: 'Introducing Aval', created_at: 'x', conversation_id: 'c1' }],
-      includes: {},
-    }) };
+    return {
+      ok: true,
+      json: async () => ({
+        data: [{ id: '1', text: 'Introducing Aval', created_at: 'x', conversation_id: 'c1' }],
+        includes: {},
+      }),
+    };
   };
   const posts = await fetchRecentPosts({
-    userId: 'me', username: 'alex_barashkov', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch,
+    userId: 'me',
+    username: 'alex_barashkov',
+    bearerToken: 't',
+    sinceISODate: 'x',
+    fetchImpl: fakeFetch,
   });
   assert.ok(searched);
   assert.equal(pagedTimeline, false, 'search makes the 300-read timeline scan unnecessary');
@@ -488,18 +598,36 @@ test('losing full-archive access falls back to paging rather than losing follow-
     if (url.includes('/tweets/search/all')) return { ok: false, status: 403 };
     if (url.includes('exclude=retweets')) {
       pagedTimeline = true;
-      return { ok: true, json: async () => ({
-        data: [{ id: '2', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'https://pixelpoint.io/aval/' }],
-        meta: {},
-      }) };
+      return {
+        ok: true,
+        json: async () => ({
+          data: [
+            {
+              id: '2',
+              conversation_id: 'c1',
+              in_reply_to_user_id: 'me',
+              text: 'https://pixelpoint.io/aval/',
+            },
+          ],
+          meta: {},
+        }),
+      };
     }
-    return { ok: true, json: async () => ({
-      data: [{ id: '1', text: 'Introducing Aval', created_at: 'x', conversation_id: 'c1' }],
-      includes: {},
-    }) };
+    return {
+      ok: true,
+      json: async () => ({
+        data: [{ id: '1', text: 'Introducing Aval', created_at: 'x', conversation_id: 'c1' }],
+        includes: {},
+      }),
+    };
   };
   const posts = await fetchRecentPosts({
-    userId: 'me', username: 'alex_barashkov', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 1,
+    userId: 'me',
+    username: 'alex_barashkov',
+    bearerToken: 't',
+    sinceISODate: 'x',
+    fetchImpl: fakeFetch,
+    selfReplyPages: 1,
   });
   assert.ok(pagedTimeline, 'must fall back, not give up');
   assert.equal(posts[0].thread.length, 1);
@@ -509,20 +637,37 @@ test('the paging fallback still discards replies to other people', async () => {
   const fakeFetch = async (url) => {
     if (url.includes('/tweets/search/all')) return { ok: false, status: 403 };
     if (url.includes('exclude=retweets')) {
-      return { ok: true, json: async () => ({
-        data: [
-          { id: '2', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'mine' },
-          { id: '3', conversation_id: 'c1', in_reply_to_user_id: 'someone-else', text: 'thanks!' },
-        ],
-        meta: {},
-      }) };
+      return {
+        ok: true,
+        json: async () => ({
+          data: [
+            { id: '2', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'mine' },
+            {
+              id: '3',
+              conversation_id: 'c1',
+              in_reply_to_user_id: 'someone-else',
+              text: 'thanks!',
+            },
+          ],
+          meta: {},
+        }),
+      };
     }
-    return { ok: true, json: async () => ({
-      data: [{ id: '1', text: 'post', created_at: 'x', conversation_id: 'c1' }], includes: {},
-    }) };
+    return {
+      ok: true,
+      json: async () => ({
+        data: [{ id: '1', text: 'post', created_at: 'x', conversation_id: 'c1' }],
+        includes: {},
+      }),
+    };
   };
   const posts = await fetchRecentPosts({
-    userId: 'me', username: 'a', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 1,
+    userId: 'me',
+    username: 'a',
+    bearerToken: 't',
+    sinceISODate: 'x',
+    fetchImpl: fakeFetch,
+    selfReplyPages: 1,
   });
   assert.equal(posts[0].thread.length, 1);
   assert.ok(posts[0].thread[0].text.includes('mine'));
@@ -615,7 +760,11 @@ function indexByConversation(items, userId) {
     // does not — replies to other people must not become follow-ups.
     if (userId && item.in_reply_to_user_id !== userId) continue;
     const list = byConversation.get(item.conversation_id) || [];
-    list.push({ id: item.id, text: expandLinks(item), url: `https://x.com/i/web/status/${item.id}` });
+    list.push({
+      id: item.id,
+      text: expandLinks(item),
+      url: `https://x.com/i/web/status/${item.id}`,
+    });
     byConversation.set(item.conversation_id, list);
   }
   return byConversation;
@@ -625,7 +774,10 @@ async function searchSelfReplies({ username, bearerToken, sinceISODate, fetchImp
   const url = new URL('https://api.twitter.com/2/tweets/search/all');
   url.searchParams.set('query', `from:${username} to:${username}`);
   url.searchParams.set('start_time', sinceISODate);
-  url.searchParams.set('tweet.fields', 'text,entities,note_tweet,conversation_id,in_reply_to_user_id');
+  url.searchParams.set(
+    'tweet.fields',
+    'text,entities,note_tweet,conversation_id,in_reply_to_user_id'
+  );
   url.searchParams.set('max_results', '100');
 
   const res = await fetchImpl(url.toString(), {
@@ -766,7 +918,15 @@ async function fetchRecentPosts({
   });
 }
 
-module.exports = { getUserId, fetchRecentPosts, fetchSelfReplies, expandLinks, fullText, SELF_REPLY_PAGES, MAX_FOLLOW_UPS };
+module.exports = {
+  getUserId,
+  fetchRecentPosts,
+  fetchSelfReplies,
+  expandLinks,
+  fullText,
+  SELF_REPLY_PAGES,
+  MAX_FOLLOW_UPS,
+};
 ```
 
 **Step 4: Run tests to verify they pass**
@@ -785,7 +945,7 @@ git commit -m "feat: add X API fetch module for blog pipeline"
 
 ### Task 4: `filter-posts` module
 
-This is deliberately a *cheap noise filter*, not a substance judgment — a dry
+This is deliberately a _cheap noise filter_, not a substance judgment — a dry
 run against real June 2026 posts showed that a strict length cutoff (the
 original design used 200 chars) drops genuinely good short posts (e.g. a
 ~115-character "behind the scenes" client note). Substance is judged by the
@@ -794,6 +954,7 @@ one-liners like "People are having fun with Toolcraft." before spending an
 LLM call on them.
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/filter-posts.js`
 - Test: `scripts/blog-pipeline/lib/filter-posts.test.js`
 
@@ -801,17 +962,24 @@ LLM call on them.
 
 ```js
 // scripts/blog-pipeline/lib/filter-posts.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { filterCandidates } = require('./filter-posts');
 
 test('drops one-liners with no real content', () => {
   const posts = [
     { id: '1', text: 'People are having fun with Toolcraft.' },
-    { id: '2', text: 'Behind the scenes of the launch video production for Railway. From initial request to final release in less than two weeks.' },
+    {
+      id: '2',
+      text: 'Behind the scenes of the launch video production for Railway. From initial request to final release in less than two weeks.',
+    },
   ];
   const result = filterCandidates(posts);
-  assert.deepEqual(result.map((p) => p.id), ['2']);
+  assert.deepEqual(
+    result.map((p) => p.id),
+    ['2']
+  );
 });
 
 test('respects a custom minLength option', () => {
@@ -856,6 +1024,7 @@ git commit -m "feat: add cheap one-liner filter for blog pipeline"
 ### Task 5: `read-existing-posts` module
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/read-existing-posts.js`
 - Test: `scripts/blog-pipeline/lib/read-existing-posts.test.js`
 
@@ -863,11 +1032,12 @@ git commit -m "feat: add cheap one-liner filter for blog pipeline"
 
 ```js
 // scripts/blog-pipeline/lib/read-existing-posts.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const test = require('node:test');
+
 const { readExistingPosts } = require('./read-existing-posts');
 
 test('reads title/summary from every post folder', () => {
@@ -897,7 +1067,9 @@ Expected: FAIL with "Cannot find module './read-existing-posts'"
 // scripts/blog-pipeline/lib/read-existing-posts.js
 const fs = require('node:fs');
 const path = require('node:path');
+
 const matter = require('gray-matter');
+
 // Reused rather than reimplemented so the pipeline's links stay correct if
 // BLOG_BASE_PATH or the date-prefix convention ever changes.
 const getBlogPostPath = require('../../../src/utils/get-blog-post-path');
@@ -938,6 +1110,7 @@ git commit -m "feat: add existing-posts reader for dedup checks"
 ### Task 6: `read-author-handle` module
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/read-author-handle.js`
 - Test: `scripts/blog-pipeline/lib/read-author-handle.test.js`
 
@@ -945,11 +1118,12 @@ git commit -m "feat: add existing-posts reader for dedup checks"
 
 ```js
 // scripts/blog-pipeline/lib/read-author-handle.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const test = require('node:test');
+
 const { readAuthorHandle } = require('./read-author-handle');
 
 function makeRepoWithAuthors(authors) {
@@ -1033,6 +1207,7 @@ rather than requested in prose, so callers can `JSON.parse` the result without
 defensive checks.
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/anthropic-json.js`
 - Test: `scripts/blog-pipeline/lib/anthropic-json.test.js`
 
@@ -1040,8 +1215,9 @@ defensive checks.
 
 ```js
 // scripts/blog-pipeline/lib/anthropic-json.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { requestJson, extractText } = require('./anthropic-json');
 
 const SCHEMA = { type: 'object', properties: { ok: { type: 'boolean' } }, required: ['ok'] };
@@ -1220,6 +1396,7 @@ single big story doesn't get diluted by being bundled with unrelated small
 updates.
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/classify-posts.js`
 - Test: `scripts/blog-pipeline/lib/classify-posts.test.js`
 
@@ -1227,17 +1404,20 @@ updates.
 
 ```js
 // scripts/blog-pipeline/lib/classify-posts.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { classifyAndGroupPosts, buildClassifyPrompt } = require('./classify-posts');
 
 function fakeClientReturning(payload) {
   return {
     messages: {
-      stream: (params) => ({ finalMessage: async () => ({
-        stop_reason: 'end_turn',
-        content: [{ type: 'text', text: JSON.stringify(payload) }],
-      }) }),
+      stream: () => ({
+        finalMessage: async () => ({
+          stop_reason: 'end_turn',
+          content: [{ type: 'text', text: JSON.stringify(payload) }],
+        }),
+      }),
     },
   };
 }
@@ -1271,7 +1451,11 @@ test('classifyAndGroupPosts returns groups of full post objects', async () => {
     { id: '3', text: 'small update one' },
     { id: '4', text: 'small update two' },
   ];
-  const result = await classifyAndGroupPosts({ candidates, existingPosts: [], anthropicClient: fakeClient });
+  const result = await classifyAndGroupPosts({
+    candidates,
+    existingPosts: [],
+    anthropicClient: fakeClient,
+  });
   assert.deepEqual(
     result.groups.map((group) => group.posts.map((p) => p.id)),
     [['2'], ['3', '4']]
@@ -1283,7 +1467,10 @@ test('classifyAndGroupPosts drops groups the model flagged as already covered', 
   const fakeClient = fakeClientReturning({
     groups: [
       group(['2']),
-      group(['3'], { already_covered: true, existing_post_title: 'Build personal design tools with AI using Toolcraft' }),
+      group(['3'], {
+        already_covered: true,
+        existing_post_title: 'Build personal design tools with AI using Toolcraft',
+      }),
     ],
   });
   const result = await classifyAndGroupPosts({
@@ -1387,14 +1574,22 @@ test('classifyAndGroupPosts returns no groups without calling the model when the
       },
     },
   };
-  const result = await classifyAndGroupPosts({ candidates: [], existingPosts: [], anthropicClient: fakeClient });
+  const result = await classifyAndGroupPosts({
+    candidates: [],
+    existingPosts: [],
+    anthropicClient: fakeClient,
+  });
   assert.deepEqual(result, { groups: [], skipped: [] });
   assert.equal(called, false);
 });
 
 test('classifyAndGroupPosts resolves related existing posts so the draft can link them', async () => {
   const existingPosts = [
-    { title: 'Build personal design tools with AI using Toolcraft', summary: 'x', path: '/blog/how-to-craft/' },
+    {
+      title: 'Build personal design tools with AI using Toolcraft',
+      summary: 'x',
+      path: '/blog/how-to-craft/',
+    },
   ];
   const fakeClient = fakeClientReturning({
     groups: [
@@ -1457,7 +1652,12 @@ const CLASSIFY_SCHEMA = {
           // the near-duplicate a real run produced.
           related_existing_post_titles: { type: 'array', items: { type: 'string' } },
         },
-        required: ['post_ids', 'already_covered', 'existing_post_title', 'related_existing_post_titles'],
+        required: [
+          'post_ids',
+          'already_covered',
+          'existing_post_title',
+          'related_existing_post_titles',
+        ],
         additionalProperties: false,
       },
     },
@@ -1470,7 +1670,7 @@ function buildClassifyPrompt(candidates, existingPosts) {
   return [
     'You are screening X posts for a company blog "Updates" category.',
     'The bar is not just "is this on-topic" — keep a post only if it would stand alone as worth reading for someone with zero context on the author\'s X feed: a real design-process note, product announcement, or release, not a status update that only makes sense to an existing follower.',
-    'Personal side projects (open-source tools, solo builds; examples of personal side project work) count and should be kept if they clear that bar — they still reflect the team\'s expertise even when not officially branded company work.',
+    "Personal side projects (open-source tools, solo builds; examples of personal side project work) count and should be kept if they clear that bar — they still reflect the team's expertise even when not officially branded company work.",
     'Exclude opinion or thought-leadership essays not tied to a specific project or release, for now.',
     "Drop posts that are just commentary on someone else's work, one-line reactions, or posts already covered by an existing blog post.",
     '',
@@ -1548,6 +1748,7 @@ git commit -m "feat: add LLM classify+dedup+group step for blog pipeline"
 ### Task 9: `draft-post` module
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/draft-post.js`
 - Test: `scripts/blog-pipeline/lib/draft-post.test.js`
 
@@ -1555,8 +1756,9 @@ git commit -m "feat: add LLM classify+dedup+group step for blog pipeline"
 
 ```js
 // scripts/blog-pipeline/lib/draft-post.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { draftPost, buildDraftPrompt } = require('./draft-post');
 
 test('buildDraftPrompt tells the model to preserve I/we framing and write editorially', () => {
@@ -1566,7 +1768,7 @@ test('buildDraftPrompt tells the model to preserve I/we framing and write editor
   assert.ok(prompt.includes("Don't just reformat"));
 });
 
-test('buildDraftPrompt tells the model it is writing under the author\'s own byline', () => {
+test("buildDraftPrompt tells the model it is writing under the author's own byline", () => {
   // A dry run against real posts produced drafts that referred to "Alex
   // Barashkov, our CEO" in the third person while being published under his
   // byline, so the narrator has to be stated explicitly.
@@ -1579,10 +1781,12 @@ test('draftPost parses the model JSON response into a draft object', async () =>
   const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
   const fakeClient = {
     messages: {
-      stream: (params) => ({ finalMessage: async () => ({
-        stop_reason: 'end_turn',
-        content: [{ type: 'text', text: JSON.stringify(fakeDraft) }],
-      }) }),
+      stream: () => ({
+        finalMessage: async () => ({
+          stop_reason: 'end_turn',
+          content: [{ type: 'text', text: JSON.stringify(fakeDraft) }],
+        }),
+      }),
     },
   };
   const result = await draftPost({
@@ -1596,13 +1800,15 @@ test('draftPost ignores thinking blocks when reading the JSON', async () => {
   const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
   const fakeClient = {
     messages: {
-      stream: (params) => ({ finalMessage: async () => ({
-        stop_reason: 'end_turn',
-        content: [
-          { type: 'thinking', thinking: 'Let me consider the framing...' },
-          { type: 'text', text: JSON.stringify(fakeDraft) },
-        ],
-      }) }),
+      stream: () => ({
+        finalMessage: async () => ({
+          stop_reason: 'end_turn',
+          content: [
+            { type: 'thinking', thinking: 'Let me consider the framing...' },
+            { type: 'text', text: JSON.stringify(fakeDraft) },
+          ],
+        }),
+      }),
     },
   };
   const result = await draftPost({
@@ -1696,6 +1902,27 @@ test('images carry the post that published them', () => {
   assert.ok(prompt.includes('sourcePost'));
   assert.ok(prompt.includes('belong together in the article'));
 });
+
+test('repo commands are offered as candidates the model may reject', () => {
+  // A README's shell blocks include demo invocations and contributing steps.
+  // Asserting one of them is the install command would publish a wrong one.
+  const prompt = buildDraftPrompt(
+    [{ text: 'Introducing Aval', url: 'https://x.com/1' }],
+    [],
+    [],
+    [],
+    [{ repo: 'pixel-point/aval', snippets: ['npx @pixel-point/aval-compiler compile', 'npm ci'] }]
+  );
+  assert.ok(prompt.includes('npx @pixel-point/aval-compiler compile'));
+  assert.ok(prompt.includes('If one of them is genuinely how a reader installs'));
+  assert.ok(prompt.includes('leave them all out'));
+  assert.ok(prompt.includes('Do not adapt or guess at a command'));
+});
+
+test('no repo section when the posts link no repository', () => {
+  const prompt = buildDraftPrompt([{ text: 'x', url: 'https://x.com/1' }]);
+  assert.ok(!prompt.includes('Commands found in linked repositories'));
+});
 ```
 
 **Step 2: Run tests to verify they fail**
@@ -1720,6 +1947,20 @@ const DRAFT_SCHEMA = {
   required: ['title', 'summary', 'slug', 'body'],
   additionalProperties: false,
 };
+
+// Candidates, not conclusions: the model decides whether any of these is
+// genuinely the install command for what the article is about. A README's
+// shell blocks routinely include demo invocations and contributing steps.
+function buildRepoUsageInstructions(repoUsage) {
+  if (repoUsage.length === 0) return [];
+  return [
+    '',
+    'The source posts link the repositories below, and these are shell commands taken from their READMEs. If one of them is genuinely how a reader installs or runs the thing this article is about, include it verbatim in a fenced code block where it helps. If none of them is — they may be demo invocations, build steps, or contributing instructions — leave them all out and just link the repository. Do not adapt or guess at a command.',
+    '',
+    'Commands found in linked repositories (JSON):',
+    JSON.stringify(repoUsage),
+  ];
+}
 
 function buildRelatedPostsInstructions(relatedExistingPosts) {
   if (relatedExistingPosts.length === 0) return [];
@@ -1791,7 +2032,13 @@ function buildImageInstructions(photos) {
   ];
 }
 
-function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts = []) {
+function buildDraftPrompt(
+  posts,
+  photos = [],
+  videos = [],
+  relatedExistingPosts = [],
+  repoUsage = []
+) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
     'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
@@ -1819,6 +2066,7 @@ function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts 
       }))
     ),
     ...buildRelatedPostsInstructions(relatedExistingPosts),
+    ...buildRepoUsageInstructions(repoUsage),
     ...buildImageInstructions(photos),
     ...buildVideoInstructions(videos),
     '',
@@ -1831,11 +2079,12 @@ async function draftPost({
   photos = [],
   videos = [],
   relatedExistingPosts = [],
+  repoUsage = [],
   anthropicClient,
 }) {
   const draft = await requestJson({
     anthropicClient,
-    prompt: buildDraftPrompt(qualifyingPosts, photos, videos, relatedExistingPosts),
+    prompt: buildDraftPrompt(qualifyingPosts, photos, videos, relatedExistingPosts, repoUsage),
     schema: DRAFT_SCHEMA,
   });
 
@@ -1862,6 +2111,7 @@ git commit -m "feat: add LLM drafting step for blog pipeline"
 ### Task 10: `publish-post` and `post-media` modules
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/post-media.js`
 - Test: `scripts/blog-pipeline/lib/post-media.test.js`
 - Create: `scripts/blog-pipeline/lib/publish-post.js`
@@ -1872,7 +2122,7 @@ git commit -m "feat: add LLM drafting step for blog pipeline"
 Photos from the source posts are committed next to `index.md` and referenced
 as `![alt](filename)`, matching what every existing post on the site already
 does — `gatsby-remark-images` turns those into responsive WebP with the alt
-text as the visible caption. Filenames are assigned *before* drafting so the
+text as the visible caption. Filenames are assigned _before_ drafting so the
 model can be handed the exact names; letting it invent them would mean
 reconciling made-up references against downloaded files afterwards.
 
@@ -1883,12 +2133,24 @@ deferred items).
 
 ```js
 // scripts/blog-pipeline/lib/post-media.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { collectPhotos, downloadPhotos, stripUnknownImages } = require('./post-media');
+const test = require('node:test');
+
+const {
+  collectPhotos,
+  downloadPhotos,
+  stripUnknownImages,
+  collectVideos,
+  bestMp4,
+  stripUnusableVideos,
+  proxiedVideoSrc,
+  imageTarget,
+  dedupeVideosByPoster,
+  extensionFor,
+} = require('./post-media');
 
 function tmpDir() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'pp-media-'));
@@ -1916,13 +2178,18 @@ test('collectPhotos ignores video and posts with no media', () => {
 });
 
 test('collectPhotos falls back to .jpg for a url with no usable extension', () => {
-  const photos = collectPhotos([{ media: [{ type: 'photo', url: 'https://pbs.twimg.com/media/abc' }] }]);
+  const photos = collectPhotos([
+    { media: [{ type: 'photo', url: 'https://pbs.twimg.com/media/abc' }] },
+  ]);
   assert.equal(photos[0].filename, 'image-1.jpg');
 });
 
 test('downloadPhotos writes each image and reports what landed', async () => {
   const destDir = tmpDir();
-  const fakeFetch = async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('png-bytes').buffer });
+  const fakeFetch = async () => ({
+    ok: true,
+    arrayBuffer: async () => new TextEncoder().encode('png-bytes').buffer,
+  });
   const saved = await downloadPhotos({
     photos: [{ filename: 'image-1.jpg', url: 'https://example.com/a.jpg' }],
     destDir,
@@ -1981,8 +2248,6 @@ test('stripUnknownImages removes every image when nothing was saved', () => {
   assert.ok(result.includes('Text.'));
 });
 
-const { collectVideos, bestMp4, stripUnusableVideos } = require('./post-media');
-
 const VARIANTS = [
   { content_type: 'application/x-mpegURL', url: 'https://video.twimg.com/x.m3u8' },
   { content_type: 'video/mp4', bit_rate: 632000, url: 'https://video.twimg.com/low.mp4' },
@@ -2034,7 +2299,13 @@ test('collectVideos builds a poster filename and a proxied src', () => {
   const videos = collectVideos([
     {
       media: [
-        { type: 'video', url: 'https://pbs.twimg.com/poster.jpg', variants: VARIANTS, width: 1920, height: 1080 },
+        {
+          type: 'video',
+          url: 'https://pbs.twimg.com/poster.jpg',
+          variants: VARIANTS,
+          width: 1920,
+          height: 1080,
+        },
       ],
     },
   ]);
@@ -2055,7 +2326,9 @@ test('collectVideos flags animated_gif so it loops without controls', () => {
 
 test('collectVideos skips media with no playable mp4', () => {
   assert.deepEqual(
-    collectVideos([{ media: [{ type: 'video', url: 'https://pbs.twimg.com/p.jpg', variants: [] }] }]),
+    collectVideos([
+      { media: [{ type: 'video', url: 'https://pbs.twimg.com/p.jpg', variants: [] }] },
+    ]),
     []
   );
 });
@@ -2093,8 +2366,6 @@ test('poster filenames match the regex gatsby-node uses to collect them', () => 
   });
 });
 
-const { proxiedVideoSrc } = require('./post-media');
-
 test('proxiedVideoSrc routes twimg through the site so no Referer reaches X', () => {
   // X 403s any request with a Referer from another domain, and referrerPolicy
   // is ignored on <video> — so the mp4 has to be fetched server-side.
@@ -2131,8 +2402,6 @@ test('collectVideos emits a proxied src, never a bare twimg url', () => {
   assert.ok(!videos[0].src.includes('video.twimg.com'));
 });
 
-const { imageTarget } = require('./post-media');
-
 test('imageTarget normalises the forms the model actually produces', () => {
   assert.equal(imageTarget('image-1.jpg'), 'image-1.jpg');
   // The same prompt shows ./ for video posters, so the model uses it here too.
@@ -2147,8 +2416,6 @@ test('stripUnknownImages keeps a ./-prefixed reference to a real file', () => {
   const result = stripUnknownImages(body, ['image-1.jpg']);
   assert.ok(result.includes('![a chart](./image-1.jpg)'));
 });
-
-const { dedupeVideosByPoster, extensionFor } = require('./post-media');
 
 const vid = (n, posterUrl) => ({
   posterFilename: `video-cover-${n}.jpg`,
@@ -2195,16 +2462,25 @@ test('genuinely different clips are both kept', async () => {
 test('poster filenames stay contiguous after a duplicate is dropped', async () => {
   const kept = await dedupeVideosByPoster({
     videos: [vid(1, 'https://p/a.jpg'), vid(2, 'https://p/b.jpg'), vid(3, 'https://p/c.jpg')],
-    fetchImpl: fetchReturning({ 'https://p/a.jpg': 'X', 'https://p/b.jpg': 'X', 'https://p/c.jpg': 'Y' }),
+    fetchImpl: fetchReturning({
+      'https://p/a.jpg': 'X',
+      'https://p/b.jpg': 'X',
+      'https://p/c.jpg': 'Y',
+    }),
   });
-  assert.deepEqual(kept.map((v) => v.posterFilename), ['video-cover-1.jpg', 'video-cover-2.jpg']);
+  assert.deepEqual(
+    kept.map((v) => v.posterFilename),
+    ['video-cover-1.jpg', 'video-cover-2.jpg']
+  );
 });
 
 test('an unreachable poster keeps the video rather than dropping it', async () => {
   // A transient network error must not silently cost a clip.
   const kept = await dedupeVideosByPoster({
     videos: [vid(1, 'https://p/a.jpg'), vid(2, 'https://p/b.jpg')],
-    fetchImpl: async () => { throw new Error('ECONNRESET'); },
+    fetchImpl: async () => {
+      throw new Error('ECONNRESET');
+    },
   });
   assert.equal(kept.length, 2);
 });
@@ -2443,13 +2719,15 @@ Expected: PASS (8 tests)
 
 ```js
 // scripts/blog-pipeline/lib/publish-post.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const test = require('node:test');
+
 const matter = require('gray-matter');
-const { publishPost } = require('./publish-post');
+
+const { publishPost, claimFolderName } = require('./publish-post');
 
 test('writes index.md with frontmatter and copies the cover image', async () => {
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-publish-'));
@@ -2457,7 +2735,12 @@ test('writes index.md with frontmatter and copies the cover image', async () => 
   fs.writeFileSync(coverImageSourcePath, 'fake-png-bytes');
 
   const { postDir, folderName } = await publishPost({
-    draft: { title: "Alex's Update", summary: 'Summary text', slug: 'alex-update', body: 'Body text' },
+    draft: {
+      title: "Alex's Update",
+      summary: 'Summary text',
+      slug: 'alex-update',
+      body: 'Body text',
+    },
     publishDate: '2026-07-21',
     repoRoot,
     coverImageSourcePath,
@@ -2526,7 +2809,10 @@ test('downloads photos into the post folder and drops references that failed', a
     fetchImpl: fakeFetch,
   });
 
-  assert.deepEqual(photos.map((p) => p.filename), ['image-1.jpg']);
+  assert.deepEqual(
+    photos.map((p) => p.filename),
+    ['image-1.jpg']
+  );
   assert.ok(fs.existsSync(path.join(postDir, 'image-1.jpg')));
   const written = fs.readFileSync(path.join(postDir, 'index.md'), 'utf8');
   assert.ok(written.includes('![kept](image-1.jpg)'));
@@ -2534,15 +2820,18 @@ test('downloads photos into the post folder and drops references that failed', a
   assert.ok(written.includes('End.'));
 });
 
-const { claimFolderName } = require('./publish-post');
-
 test('two drafts with the same slug get separate folders instead of overwriting', async () => {
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-collide-'));
   const cover = path.join(repoRoot, 'c.png');
   fs.writeFileSync(cover, 'x');
   const draft = { title: 'A', summary: 'S', slug: 'toolcraft-update', body: 'first' };
 
-  const one = await publishPost({ draft, publishDate: '2026-08-11', repoRoot, coverImageSourcePath: cover });
+  const one = await publishPost({
+    draft,
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: cover,
+  });
   const two = await publishPost({
     draft: { ...draft, body: 'second' },
     publishDate: '2026-08-11',
@@ -2562,7 +2851,10 @@ test('a slug with no usable characters still produces a valid folder', () => {
   const postsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-slug-'));
   // Would otherwise yield a folder named "2026-08-11-", which breaks the
   // site's date-prefix slug parsing.
-  assert.equal(claimFolderName({ postsDir, publishDate: '2026-08-11', slug: '!!!' }), '2026-08-11-updates');
+  assert.equal(
+    claimFolderName({ postsDir, publishDate: '2026-08-11', slug: '!!!' }),
+    '2026-08-11-updates'
+  );
 });
 
 test('a title containing a newline or a colon still parses', async () => {
@@ -2593,16 +2885,27 @@ test('a video poster becomes the cover, without duplicating the bytes', async ()
   fs.writeFileSync(placeholder, 'PLACEHOLDER');
 
   const { postDir, cover } = await publishPost({
-    draft: { title: 'T', summary: 'S', slug: 'with-video', body: '<Video poster="./video-cover-1.jpg"></Video>' },
+    draft: {
+      title: 'T',
+      summary: 'S',
+      slug: 'with-video',
+      body: '<Video poster="./video-cover-1.jpg"></Video>',
+    },
     publishDate: '2026-08-11',
     repoRoot,
     coverImageSourcePath: placeholder,
     videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/a.jpg' }],
-    fetchImpl: async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('FRAME').buffer }),
+    fetchImpl: async () => ({
+      ok: true,
+      arrayBuffer: async () => new TextEncoder().encode('FRAME').buffer,
+    }),
   });
 
   assert.equal(cover, 'video-cover-1.jpg');
-  assert.equal(matter(fs.readFileSync(path.join(postDir, 'index.md'), 'utf8')).data.cover, 'video-cover-1.jpg');
+  assert.equal(
+    matter(fs.readFileSync(path.join(postDir, 'index.md'), 'utf8')).data.cover,
+    'video-cover-1.jpg'
+  );
   // Referenced in place rather than copied to cover.png.
   assert.equal(fs.existsSync(path.join(postDir, 'cover.png')), false);
 });
@@ -2655,7 +2958,10 @@ test('a photo is preferred over a video poster for the cover', async () => {
     coverImageSourcePath: placeholder,
     photos: [{ filename: 'image-1.jpg', url: 'https://p/photo.jpg' }],
     videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/poster.jpg' }],
-    fetchImpl: async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('X').buffer }),
+    fetchImpl: async () => ({
+      ok: true,
+      arrayBuffer: async () => new TextEncoder().encode('X').buffer,
+    }),
   });
   assert.equal(cover, 'image-1.jpg');
 });
@@ -2692,7 +2998,9 @@ Expected: FAIL with "Cannot find module './publish-post'"
 // scripts/blog-pipeline/lib/publish-post.js
 const fs = require('node:fs');
 const path = require('node:path');
+
 const matter = require('gray-matter');
+
 const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
 
 // Every post in a run shares publishDate, so the folder name comes down to the
@@ -2801,6 +3109,7 @@ git commit -m "feat: add MDX post writer for blog pipeline"
 ### Task 11: `notify-slack` module
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/notify-slack.js`
 - Test: `scripts/blog-pipeline/lib/notify-slack.test.js`
 
@@ -2808,9 +3117,10 @@ git commit -m "feat: add MDX post writer for blog pipeline"
 
 ```js
 // scripts/blog-pipeline/lib/notify-slack.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
-const { notifySlack } = require('./notify-slack');
+const test = require('node:test');
+
+const { notifySlack, buildDraftsMessage } = require('./notify-slack');
 
 test('POSTs the text as JSON to the webhook URL', async () => {
   let capturedUrl;
@@ -2820,7 +3130,11 @@ test('POSTs the text as JSON to the webhook URL', async () => {
     capturedBody = JSON.parse(options.body);
     return { ok: true };
   };
-  await notifySlack({ webhookUrl: 'https://hooks.slack.com/x', text: 'hello', fetchImpl: fakeFetch });
+  await notifySlack({
+    webhookUrl: 'https://hooks.slack.com/x',
+    text: 'hello',
+    fetchImpl: fakeFetch,
+  });
   assert.equal(capturedUrl, 'https://hooks.slack.com/x');
   assert.deepEqual(capturedBody, { text: 'hello' });
 });
@@ -2828,18 +3142,19 @@ test('POSTs the text as JSON to the webhook URL', async () => {
 test('throws when the webhook responds with an error', async () => {
   const fakeFetch = async () => ({ ok: false, status: 500 });
   await assert.rejects(
-    () => notifySlack({ webhookUrl: 'https://hooks.slack.com/x', text: 'hi', fetchImpl: fakeFetch }),
+    () =>
+      notifySlack({ webhookUrl: 'https://hooks.slack.com/x', text: 'hi', fetchImpl: fakeFetch }),
     /Slack webhook failed: 500/
   );
 });
-
-const { buildDraftsMessage } = require('./notify-slack');
 
 const DRAFTS = [{ title: 'Toolcraft update: a leaner AI harness' }, { title: 'Introducing Aval' }];
 
 test('buildDraftsMessage leads with the PR link and lists every title', () => {
   const text = buildDraftsMessage({ drafts: DRAFTS, prUrl: 'https://github.com/o/r/pull/9' });
-  assert.ok(text.startsWith('2 new monthly blog drafts ready for review: https://github.com/o/r/pull/9'));
+  assert.ok(
+    text.startsWith('2 new monthly blog drafts ready for review: https://github.com/o/r/pull/9')
+  );
   assert.ok(text.includes('• Toolcraft update: a leaner AI harness'));
   assert.ok(text.includes('• Introducing Aval'));
   assert.ok(text.includes('Vercel comments the preview link'));
@@ -2889,12 +3204,16 @@ test('notifySlack retries a transient failure — the run has no other signal', 
 test('notifySlack does not retry a permanent failure', async () => {
   let calls = 0;
   await assert.rejects(
-    () => notifySlack({
-      webhookUrl: 'https://hooks.slack.com/x',
-      text: 'hi',
-      fetchImpl: async () => { calls += 1; return { ok: false, status: 404 }; },
-      sleepImpl: async () => {},
-    }),
+    () =>
+      notifySlack({
+        webhookUrl: 'https://hooks.slack.com/x',
+        text: 'hi',
+        fetchImpl: async () => {
+          calls += 1;
+          return { ok: false, status: 404 };
+        },
+        sleepImpl: async () => {},
+      }),
     /Slack webhook failed: 404/
   );
   assert.equal(calls, 1, 'a bad webhook url fails the same way every time');
@@ -2903,13 +3222,17 @@ test('notifySlack does not retry a permanent failure', async () => {
 test('notifySlack gives up after the last attempt', async () => {
   let calls = 0;
   await assert.rejects(
-    () => notifySlack({
-      webhookUrl: 'https://hooks.slack.com/x',
-      text: 'hi',
-      fetchImpl: async () => { calls += 1; return { ok: false, status: 500 }; },
-      sleepImpl: async () => {},
-      attempts: 2,
-    }),
+    () =>
+      notifySlack({
+        webhookUrl: 'https://hooks.slack.com/x',
+        text: 'hi',
+        fetchImpl: async () => {
+          calls += 1;
+          return { ok: false, status: 500 };
+        },
+        sleepImpl: async () => {},
+        attempts: 2,
+      }),
     /Slack webhook failed: 500/
   );
   assert.equal(calls, 2);
@@ -3004,6 +3327,7 @@ injectable and the retry policy is unit tested. The shell-out itself is still
 verified end-to-end in Task 14.
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/git-pr.js`
 - Test: `scripts/blog-pipeline/lib/git-pr.test.js`
 
@@ -3011,8 +3335,9 @@ verified end-to-end in Task 14.
 
 ```js
 // scripts/blog-pipeline/lib/git-pr.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { openDraftPr, createPrWithRetry } = require('./git-pr');
 
 const REF_RACE = Object.assign(new Error('exit 1'), {
@@ -3052,7 +3377,11 @@ test('createPrWithRetry does not retry an unrelated failure', async () => {
       }),
     /exit 1/
   );
-  assert.equal(calls, 1, 'a bad token fails the same way every time — retrying only delays the alert');
+  assert.equal(
+    calls,
+    1,
+    'a bad token fails the same way every time — retrying only delays the alert'
+  );
 });
 
 test('createPrWithRetry gives up after the last attempt', async () => {
@@ -3091,7 +3420,14 @@ test('openDraftPr commits each post folder and targets main explicitly', async (
     sleepImpl: async () => {},
   });
   assert.equal(prUrl, 'https://github.com/o/r/pull/9');
-  assert.deepEqual(commands, ['git checkout', 'git add', 'git add', 'git commit', 'git push', 'gh pr']);
+  assert.deepEqual(commands, [
+    'git checkout',
+    'git add',
+    'git add',
+    'git commit',
+    'git push',
+    'gh pr',
+  ]);
 });
 
 test('openDraftPr passes an explicit base so it does not depend on repo defaults', async () => {
@@ -3177,7 +3513,18 @@ async function openDraftPr({
   const prUrl = await createPrWithRetry({
     // --base is explicit so the PR target does not depend on the repo's
     // configured default branch changing underneath the pipeline.
-    args: ['pr', 'create', '--title', prTitle, '--body', prBody, '--base', 'main', '--head', branchName],
+    args: [
+      'pr',
+      'create',
+      '--title',
+      prTitle,
+      '--body',
+      prBody,
+      '--base',
+      'main',
+      '--head',
+      branchName,
+    ],
     cwd: repoRoot,
     runImpl,
     sleepImpl,
@@ -3201,6 +3548,7 @@ git commit -m "feat: add git/PR module for blog pipeline"
 ### Task 13: Orchestrator + GitHub Actions workflow
 
 **Files:**
+
 - Create: `scripts/blog-pipeline/lib/pr-body.js`
 - Test: `scripts/blog-pipeline/lib/pr-body.test.js`
 - Create: `scripts/blog-pipeline/run.js`
@@ -3216,8 +3564,9 @@ through, just pointing the other way.
 
 ```js
 // scripts/blog-pipeline/lib/pr-body.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { buildPrBody } = require('./pr-body');
 
 const DRAFTS = [{ title: 'Introducing Aval' }, { title: "Toolcraft's New Release" }];
@@ -3322,20 +3671,23 @@ Expected: PASS (5 tests)
 // scripts/blog-pipeline/run.js  (the shebang must be the first line of the file)
 const fs = require('node:fs');
 const path = require('node:path');
+
 const Anthropic = require('@anthropic-ai/sdk');
-const { getUserId, fetchRecentPosts } = require('./lib/fetch-posts');
-const { filterCandidates } = require('./lib/filter-posts');
+
+const { usageSummary } = require('./lib/anthropic-json');
 const { classifyAndGroupPosts } = require('./lib/classify-posts');
 const { draftPost } = require('./lib/draft-post');
+const { getUserId, fetchRecentPosts } = require('./lib/fetch-posts');
+const { filterCandidates } = require('./lib/filter-posts');
+const { openDraftPr } = require('./lib/git-pr');
+const { notifySlack, buildDraftsMessage } = require('./lib/notify-slack');
+const { collectPhotos, collectVideos, dedupeVideosByPoster } = require('./lib/post-media');
+const { buildPrBody } = require('./lib/pr-body');
+const { publishPost } = require('./lib/publish-post');
+const { readAuthorHandle } = require('./lib/read-author-handle');
 const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readPendingPosts } = require('./lib/read-pending-posts');
-const { readAuthorHandle } = require('./lib/read-author-handle');
-const { publishPost } = require('./lib/publish-post');
-const { collectPhotos, collectVideos, dedupeVideosByPoster } = require('./lib/post-media');
-const { openDraftPr } = require('./lib/git-pr');
-const { buildPrBody } = require('./lib/pr-body');
-const { notifySlack, buildDraftsMessage } = require('./lib/notify-slack');
-const { usageSummary } = require('./lib/anthropic-json');
+const { readRepoUsage } = require('./lib/read-repo-usage');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 // Every run saves what it drafted so a later one can be replayed for free.
@@ -3363,6 +3715,7 @@ const defaultDeps = {
   filterCandidates,
   readExistingPosts,
   readPendingPosts,
+  readRepoUsage,
   readAuthorHandle,
   classifyAndGroupPosts,
   draftPost,
@@ -3383,6 +3736,7 @@ async function main(overrides = {}) {
     filterCandidates,
     readExistingPosts,
     readPendingPosts,
+    readRepoUsage,
     readAuthorHandle,
     classifyAndGroupPosts,
     draftPost,
@@ -3415,11 +3769,11 @@ async function main(overrides = {}) {
     replay
       ? []
       : !opensPr
-      ? ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY']
-      // GH_TOKEN is what `gh pr create` authenticates with. Without it the run
-      // fails only after posts are written, committed and a branch is pushed,
-      // leaving an orphan branch and no PR.
-      : ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL', 'GH_TOKEN']
+        ? ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY']
+        : // GH_TOKEN is what `gh pr create` authenticates with. Without it the run
+          // fails only after posts are written, committed and a branch is pushed,
+          // leaving an orphan branch and no PR.
+          ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL', 'GH_TOKEN']
   );
 
   const { X_API_BEARER_TOKEN, ANTHROPIC_API_KEY, SLACK_WEBHOOK_URL } = process.env;
@@ -3476,7 +3830,10 @@ async function main(overrides = {}) {
   if (groups.length === 0) {
     console.log('No qualifying posts this month — skipping.');
     if (opensPr) {
-      await notifySlack({ webhookUrl: SLACK_WEBHOOK_URL, text: 'No qualifying posts this month — skipping.' });
+      await notifySlack({
+        webhookUrl: SLACK_WEBHOOK_URL,
+        text: 'No qualifying posts this month — skipping.',
+      });
     }
     return;
   }
@@ -3487,12 +3844,16 @@ async function main(overrides = {}) {
   for (const { posts: group, relatedExistingPosts } of groups) {
     const photos = collectPhotos(group);
     const videos = await dedupeVideosByPoster({ videos: collectVideos(group) });
+    // Only the repos this group actually links, so an article is never offered
+    // commands from an unrelated project.
+    const repoUsage = await readRepoUsage({ posts: group });
     drafted.push({
       draft: await draftPost({
         qualifyingPosts: group,
         photos,
         videos,
         relatedExistingPosts,
+        repoUsage,
         anthropicClient,
       }),
       photos,

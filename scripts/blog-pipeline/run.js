@@ -17,6 +17,7 @@ const { publishPost } = require('./lib/publish-post');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readPendingPosts } = require('./lib/read-pending-posts');
+const { readRepoUsage } = require('./lib/read-repo-usage');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 // Every run saves what it drafted so a later one can be replayed for free.
@@ -44,6 +45,7 @@ const defaultDeps = {
   filterCandidates,
   readExistingPosts,
   readPendingPosts,
+  readRepoUsage,
   readAuthorHandle,
   classifyAndGroupPosts,
   draftPost,
@@ -64,6 +66,7 @@ async function main(overrides = {}) {
     filterCandidates,
     readExistingPosts,
     readPendingPosts,
+    readRepoUsage,
     readAuthorHandle,
     classifyAndGroupPosts,
     draftPost,
@@ -171,12 +174,16 @@ async function main(overrides = {}) {
   for (const { posts: group, relatedExistingPosts } of groups) {
     const photos = collectPhotos(group);
     const videos = await dedupeVideosByPoster({ videos: collectVideos(group) });
+    // Only the repos this group actually links, so an article is never offered
+    // commands from an unrelated project.
+    const repoUsage = await readRepoUsage({ posts: group });
     drafted.push({
       draft: await draftPost({
         qualifyingPosts: group,
         photos,
         videos,
         relatedExistingPosts,
+        repoUsage,
         anthropicClient,
       }),
       photos,

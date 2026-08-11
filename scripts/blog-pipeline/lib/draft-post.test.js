@@ -145,3 +145,24 @@ test('images carry the post that published them', () => {
   assert.ok(prompt.includes('sourcePost'));
   assert.ok(prompt.includes('belong together in the article'));
 });
+
+test('repo commands are offered as candidates the model may reject', () => {
+  // A README's shell blocks include demo invocations and contributing steps.
+  // Asserting one of them is the install command would publish a wrong one.
+  const prompt = buildDraftPrompt(
+    [{ text: 'Introducing Aval', url: 'https://x.com/1' }],
+    [],
+    [],
+    [],
+    [{ repo: 'pixel-point/aval', snippets: ['npx @pixel-point/aval-compiler compile', 'npm ci'] }]
+  );
+  assert.ok(prompt.includes('npx @pixel-point/aval-compiler compile'));
+  assert.ok(prompt.includes('If one of them is genuinely how a reader installs'));
+  assert.ok(prompt.includes('leave them all out'));
+  assert.ok(prompt.includes('Do not adapt or guess at a command'));
+});
+
+test('no repo section when the posts link no repository', () => {
+  const prompt = buildDraftPrompt([{ text: 'x', url: 'https://x.com/1' }]);
+  assert.ok(!prompt.includes('Commands found in linked repositories'));
+});

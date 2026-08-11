@@ -13,6 +13,20 @@ const DRAFT_SCHEMA = {
   additionalProperties: false,
 };
 
+// Candidates, not conclusions: the model decides whether any of these is
+// genuinely the install command for what the article is about. A README's
+// shell blocks routinely include demo invocations and contributing steps.
+function buildRepoUsageInstructions(repoUsage) {
+  if (repoUsage.length === 0) return [];
+  return [
+    '',
+    'The source posts link the repositories below, and these are shell commands taken from their READMEs. If one of them is genuinely how a reader installs or runs the thing this article is about, include it verbatim in a fenced code block where it helps. If none of them is — they may be demo invocations, build steps, or contributing instructions — leave them all out and just link the repository. Do not adapt or guess at a command.',
+    '',
+    'Commands found in linked repositories (JSON):',
+    JSON.stringify(repoUsage),
+  ];
+}
+
 function buildRelatedPostsInstructions(relatedExistingPosts) {
   if (relatedExistingPosts.length === 0) return [];
   return [
@@ -83,7 +97,13 @@ function buildImageInstructions(photos) {
   ];
 }
 
-function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts = []) {
+function buildDraftPrompt(
+  posts,
+  photos = [],
+  videos = [],
+  relatedExistingPosts = [],
+  repoUsage = []
+) {
   return [
     'Write a company blog post for Pixel Point\'s "Updates" category, based on the following X posts from Alex Barashkov (CEO). This group of posts is one article topic — if there is more than one post, weave them into one cohesive piece rather than listing them separately.',
     'The article is published under Alex\'s own byline, so he is the narrator. Write as him, not about him: never refer to "Alex", "Alex Barashkov", or "our CEO" in the third person, and never introduce a quote as something he said elsewhere — his posts are your own material, so state it directly.',
@@ -111,6 +131,7 @@ function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts 
       }))
     ),
     ...buildRelatedPostsInstructions(relatedExistingPosts),
+    ...buildRepoUsageInstructions(repoUsage),
     ...buildImageInstructions(photos),
     ...buildVideoInstructions(videos),
     '',
@@ -123,11 +144,12 @@ async function draftPost({
   photos = [],
   videos = [],
   relatedExistingPosts = [],
+  repoUsage = [],
   anthropicClient,
 }) {
   const draft = await requestJson({
     anthropicClient,
-    prompt: buildDraftPrompt(qualifyingPosts, photos, videos, relatedExistingPosts),
+    prompt: buildDraftPrompt(qualifyingPosts, photos, videos, relatedExistingPosts, repoUsage),
     schema: DRAFT_SCHEMA,
   });
 
