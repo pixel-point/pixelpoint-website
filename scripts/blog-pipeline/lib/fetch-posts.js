@@ -114,7 +114,10 @@ async function fetchRecentPosts({
   // `note_tweet` carries the untruncated body of posts longer than ~280 chars.
   url.searchParams.set(
     'tweet.fields',
-    'created_at,text,entities,referenced_tweets,note_tweet,conversation_id'
+    // `attachments` is returned on included (quoted) tweets even when not
+    // requested, but that is undocumented behaviour — asking for it costs
+    // nothing and is what makes quoted-post media reliable.
+    'created_at,text,entities,referenced_tweets,note_tweet,conversation_id,attachments'
   );
   url.searchParams.set('max_results', '100');
   // Media arrives in a separate `includes.media` list keyed by media_key, not

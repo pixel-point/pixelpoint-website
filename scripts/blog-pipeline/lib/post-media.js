@@ -128,9 +128,19 @@ async function downloadPhotos({ photos, destDir, fetchImpl = fetch }) {
 // The model is told which filenames exist, but nothing stops it inventing one.
 // An unresolvable image reference renders as a broken image in Gatsby, so drop
 // any that don't match a file we actually saved.
+//
+// Matching has to be looser than a string compare. The same prompt hands the
+// model `./video-cover-1.jpg` for video posters, so it will sometimes write
+// `![alt](./image-1.jpg)` for images by analogy — and an exact compare then
+// strips every image in the post silently. Gatsby resolves both forms, and a
+// markdown title is legal too, so normalise before comparing.
+function imageTarget(raw) {
+  return raw.trim().split(/\s+/)[0].replace(/^\.\//, '');
+}
+
 function stripUnknownImages(body, savedFilenames) {
   return body.replace(/!\[[^\]]*\]\(([^)]+)\)\n?/g, (match, target) =>
-    savedFilenames.includes(target) ? match : ''
+    savedFilenames.includes(imageTarget(target)) ? match : ''
   );
 }
 
@@ -149,6 +159,7 @@ module.exports = {
   collectVideos,
   downloadPhotos,
   stripUnknownImages,
+  imageTarget,
   stripUnusableVideos,
   bestMp4,
   proxiedVideoSrc,

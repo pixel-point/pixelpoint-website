@@ -5,7 +5,12 @@
 // `schema` at the API level, so callers can JSON.parse the result without
 // defensive checks — unlike the old json_object mode, which only asked politely.
 const MODEL = 'claude-opus-5';
-const MAX_TOKENS = 16000;
+// max_tokens caps thinking *and* response text together, and thinking is on by
+// default on this model. A blog-post body at default effort can approach the
+// old 16k ceiling on a busy month, which failed the entire run. Streaming is
+// what makes a ceiling this high safe: a non-streaming request at 64k risks an
+// HTTP timeout.
+const MAX_TOKENS = 64000;
 
 // claude.com/pricing, per million tokens. Thinking bills as output, and with
 // adaptive thinking on it dominates the bill — which is why a run costs about
@@ -36,13 +41,15 @@ function extractText(message) {
 }
 
 async function requestJson({ anthropicClient, prompt, schema }) {
-  const message = await anthropicClient.messages.create({
-    model: MODEL,
-    max_tokens: MAX_TOKENS,
-    thinking: { type: 'adaptive' },
-    output_config: { format: { type: 'json_schema', schema } },
-    messages: [{ role: 'user', content: prompt }],
-  });
+  const message = await anthropicClient.messages
+    .stream({
+      model: MODEL,
+      max_tokens: MAX_TOKENS,
+      thinking: { type: 'adaptive' },
+      output_config: { format: { type: 'json_schema', schema } },
+      messages: [{ role: 'user', content: prompt }],
+    })
+    .finalMessage();
 
   if (message.usage) {
     usage.calls += 1;

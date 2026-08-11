@@ -5,7 +5,7 @@ const { requestJson, extractText } = require('./anthropic-json');
 const SCHEMA = { type: 'object', properties: { ok: { type: 'boolean' } }, required: ['ok'] };
 
 function clientReturning(message) {
-  return { messages: { create: async () => message } };
+  return { messages: { stream: () => ({ finalMessage: async () => message }) } };
 }
 
 test('extractText concatenates text blocks and skips thinking blocks', () => {

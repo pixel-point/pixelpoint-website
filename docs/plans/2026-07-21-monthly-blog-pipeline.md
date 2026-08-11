@@ -580,7 +580,10 @@ async function fetchRecentPosts({
   // `note_tweet` carries the untruncated body of posts longer than ~280 chars.
   url.searchParams.set(
     'tweet.fields',
-    'created_at,text,entities,referenced_tweets,note_tweet,conversation_id'
+    // `attachments` is returned on included (quoted) tweets even when not
+    // requested, but that is undocumented behaviour — asking for it costs
+    // nothing and is what makes quoted-post media reliable.
+    'created_at,text,entities,referenced_tweets,note_tweet,conversation_id,attachments'
   );
   url.searchParams.set('max_results', '100');
   // Media arrives in a separate `includes.media` list keyed by media_key, not
@@ -924,7 +927,7 @@ const { requestJson, extractText } = require('./anthropic-json');
 const SCHEMA = { type: 'object', properties: { ok: { type: 'boolean' } }, required: ['ok'] };
 
 function clientReturning(message) {
-  return { messages: { create: async () => message } };
+  return { messages: { stream: () => ({ finalMessage: async () => message }) } };
 }
 
 test('extractText concatenates text blocks and skips thinking blocks', () => {
@@ -1004,7 +1007,12 @@ Expected: FAIL with "Cannot find module './anthropic-json'"
 // `schema` at the API level, so callers can JSON.parse the result without
 // defensive checks — unlike the old json_object mode, which only asked politely.
 const MODEL = 'claude-opus-5';
-const MAX_TOKENS = 16000;
+// max_tokens caps thinking *and* response text together, and thinking is on by
+// default on this model. A blog-post body at default effort can approach the
+// old 16k ceiling on a busy month, which failed the entire run. Streaming is
+// what makes a ceiling this high safe: a non-streaming request at 64k risks an
+// HTTP timeout.
+const MAX_TOKENS = 64000;
 
 // claude.com/pricing, per million tokens. Thinking bills as output, and with
 // adaptive thinking on it dominates the bill — which is why a run costs about
@@ -1035,13 +1043,15 @@ function extractText(message) {
 }
 
 async function requestJson({ anthropicClient, prompt, schema }) {
-  const message = await anthropicClient.messages.create({
-    model: MODEL,
-    max_tokens: MAX_TOKENS,
-    thinking: { type: 'adaptive' },
-    output_config: { format: { type: 'json_schema', schema } },
-    messages: [{ role: 'user', content: prompt }],
-  });
+  const message = await anthropicClient.messages
+    .stream({
+      model: MODEL,
+      max_tokens: MAX_TOKENS,
+      thinking: { type: 'adaptive' },
+      output_config: { format: { type: 'json_schema', schema } },
+      messages: [{ role: 'user', content: prompt }],
+    })
+    .finalMessage();
 
   if (message.usage) {
     usage.calls += 1;
@@ -1104,10 +1114,10 @@ const { classifyAndGroupPosts, buildClassifyPrompt } = require('./classify-posts
 function fakeClientReturning(payload) {
   return {
     messages: {
-      create: async () => ({
+      stream: (params) => ({ finalMessage: async () => ({
         stop_reason: 'end_turn',
         content: [{ type: 'text', text: JSON.stringify(payload) }],
-      }),
+      }) }),
     },
   };
 }
@@ -1209,9 +1219,14 @@ test('classifyAndGroupPosts sends the request with a json_schema output format',
   let sentParams;
   const fakeClient = {
     messages: {
-      create: async (params) => {
+      stream: (params) => {
         sentParams = params;
-        return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"groups":[]}' }] };
+        return {
+          finalMessage: async () => ({
+            stop_reason: 'end_turn',
+            content: [{ type: 'text', text: '{"groups":[]}' }],
+          }),
+        };
       },
     },
   };
@@ -1246,8 +1261,9 @@ test('classifyAndGroupPosts returns no groups without calling the model when the
   let called = false;
   const fakeClient = {
     messages: {
-      create: async () => {
+      stream: () => {
         called = true;
+        return { finalMessage: async () => ({ stop_reason: 'end_turn', content: [] }) };
       },
     },
   };
@@ -1443,10 +1459,10 @@ test('draftPost parses the model JSON response into a draft object', async () =>
   const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
   const fakeClient = {
     messages: {
-      create: async () => ({
+      stream: (params) => ({ finalMessage: async () => ({
         stop_reason: 'end_turn',
         content: [{ type: 'text', text: JSON.stringify(fakeDraft) }],
-      }),
+      }) }),
     },
   };
   const result = await draftPost({
@@ -1460,13 +1476,13 @@ test('draftPost ignores thinking blocks when reading the JSON', async () => {
   const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
   const fakeClient = {
     messages: {
-      create: async () => ({
+      stream: (params) => ({ finalMessage: async () => ({
         stop_reason: 'end_turn',
         content: [
           { type: 'thinking', thinking: 'Let me consider the framing...' },
           { type: 'text', text: JSON.stringify(fakeDraft) },
         ],
-      }),
+      }) }),
     },
   };
   const result = await draftPost({
@@ -1912,6 +1928,23 @@ test('collectVideos emits a proxied src, never a bare twimg url', () => {
   assert.equal(videos[0].src, '/x-video/amplify_video/1/vid/avc1/1920x1080/v.mp4');
   assert.ok(!videos[0].src.includes('video.twimg.com'));
 });
+
+const { imageTarget } = require('./post-media');
+
+test('imageTarget normalises the forms the model actually produces', () => {
+  assert.equal(imageTarget('image-1.jpg'), 'image-1.jpg');
+  // The same prompt shows ./ for video posters, so the model uses it here too.
+  assert.equal(imageTarget('./image-1.jpg'), 'image-1.jpg');
+  assert.equal(imageTarget('./image-1.jpg "A caption"'), 'image-1.jpg');
+});
+
+test('stripUnknownImages keeps a ./-prefixed reference to a real file', () => {
+  // An exact compare stripped every image in the post, silently and with no
+  // line in the PR body to say so.
+  const body = 'Intro.\n\n![a chart](./image-1.jpg)\n\nEnd.';
+  const result = stripUnknownImages(body, ['image-1.jpg']);
+  assert.ok(result.includes('![a chart](./image-1.jpg)'));
+});
 ```
 
 ```js
@@ -2046,9 +2079,19 @@ async function downloadPhotos({ photos, destDir, fetchImpl = fetch }) {
 // The model is told which filenames exist, but nothing stops it inventing one.
 // An unresolvable image reference renders as a broken image in Gatsby, so drop
 // any that don't match a file we actually saved.
+//
+// Matching has to be looser than a string compare. The same prompt hands the
+// model `./video-cover-1.jpg` for video posters, so it will sometimes write
+// `![alt](./image-1.jpg)` for images by analogy — and an exact compare then
+// strips every image in the post silently. Gatsby resolves both forms, and a
+// markdown title is legal too, so normalise before comparing.
+function imageTarget(raw) {
+  return raw.trim().split(/\s+/)[0].replace(/^\.\//, '');
+}
+
 function stripUnknownImages(body, savedFilenames) {
   return body.replace(/!\[[^\]]*\]\(([^)]+)\)\n?/g, (match, target) =>
-    savedFilenames.includes(target) ? match : ''
+    savedFilenames.includes(imageTarget(target)) ? match : ''
   );
 }
 
@@ -2067,6 +2110,7 @@ module.exports = {
   collectVideos,
   downloadPhotos,
   stripUnknownImages,
+  imageTarget,
   stripUnusableVideos,
   bestMp4,
   proxiedVideoSrc,
@@ -2168,6 +2212,37 @@ test('downloads photos into the post folder and drops references that failed', a
   assert.ok(!written.includes('image-2.jpg'));
   assert.ok(written.includes('End.'));
 });
+
+const { claimFolderName } = require('./publish-post');
+
+test('two drafts with the same slug get separate folders instead of overwriting', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-collide-'));
+  const cover = path.join(repoRoot, 'c.png');
+  fs.writeFileSync(cover, 'x');
+  const draft = { title: 'A', summary: 'S', slug: 'toolcraft-update', body: 'first' };
+
+  const one = await publishPost({ draft, publishDate: '2026-08-11', repoRoot, coverImageSourcePath: cover });
+  const two = await publishPost({
+    draft: { ...draft, body: 'second' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: cover,
+  });
+
+  assert.notEqual(one.folderName, two.folderName);
+  assert.equal(two.folderName, '2026-08-11-toolcraft-update-2');
+  // The first post must survive: losing it silently while the PR still lists
+  // its title is the failure this guards against.
+  assert.ok(fs.readFileSync(path.join(one.postDir, 'index.md'), 'utf8').includes('first'));
+  assert.ok(fs.readFileSync(path.join(two.postDir, 'index.md'), 'utf8').includes('second'));
+});
+
+test('a slug with no usable characters still produces a valid folder', () => {
+  const postsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-slug-'));
+  // Would otherwise yield a folder named "2026-08-11-", which breaks the
+  // site's date-prefix slug parsing.
+  assert.equal(claimFolderName({ postsDir, publishDate: '2026-08-11', slug: '!!!' }), '2026-08-11-updates');
+});
 ```
 
 **Step 2: Run test to verify it fails**
@@ -2183,6 +2258,23 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
 
+// Every post in a run shares publishDate, so the folder name comes down to the
+// model-chosen slug. Two drafts landing on the same slug — a standalone post
+// and a roundup about the same product, say — would otherwise overwrite each
+// other, while the PR body and the Slack message still listed both titles: the
+// reviewer would be told about a post that no longer exists.
+function claimFolderName({ postsDir, publishDate, slug }) {
+  const sanitized =
+    slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'updates';
+
+  const base = `${publishDate}-${sanitized}`;
+  let name = base;
+  for (let n = 2; fs.existsSync(path.join(postsDir, name)); n += 1) {
+    name = `${base}-${n}`;
+  }
+  return name;
+}
+
 // Async because it owns the post's images as well as its text: the body can
 // only be finalised once we know which downloads actually succeeded, so
 // fetching has to happen before index.md is written, not after.
@@ -2197,9 +2289,9 @@ async function publishPost({
   author = 'Alex Barashkov',
   category = 'Updates',
 }) {
-  const slug = draft.slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  const folderName = `${publishDate}-${slug}`;
-  const postDir = path.join(repoRoot, 'content', 'posts', folderName);
+  const postsDir = path.join(repoRoot, 'content', 'posts');
+  const folderName = claimFolderName({ postsDir, publishDate, slug: draft.slug });
+  const postDir = path.join(postsDir, folderName);
   fs.mkdirSync(postDir, { recursive: true });
 
   const escapedTitle = draft.title.replace(/'/g, "''");
@@ -2240,7 +2332,7 @@ async function publishPost({
   return { postDir, folderName, photos: saved, videos: savedPosters };
 }
 
-module.exports = { publishPost };
+module.exports = { publishPost, claimFolderName };
 ```
 
 **Step 4: Run test to verify it passes**
@@ -2749,7 +2841,10 @@ async function main() {
   assertRequiredEnv(
     dryRun
       ? ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY']
-      : ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL']
+      // GH_TOKEN is what `gh pr create` authenticates with. Without it the run
+      // fails only after posts are written, committed and a branch is pushed,
+      // leaving an orphan branch and no PR.
+      : ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL', 'GH_TOKEN']
   );
 
   const { X_API_BEARER_TOKEN, ANTHROPIC_API_KEY, SLACK_WEBHOOK_URL } = process.env;

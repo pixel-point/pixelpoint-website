@@ -34,7 +34,10 @@ async function main() {
   assertRequiredEnv(
     dryRun
       ? ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY']
-      : ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL']
+      // GH_TOKEN is what `gh pr create` authenticates with. Without it the run
+      // fails only after posts are written, committed and a branch is pushed,
+      // leaving an orphan branch and no PR.
+      : ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL', 'GH_TOKEN']
   );
 
   const { X_API_BEARER_TOKEN, ANTHROPIC_API_KEY, SLACK_WEBHOOK_URL } = process.env;

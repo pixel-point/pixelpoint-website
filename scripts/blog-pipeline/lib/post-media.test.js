@@ -245,3 +245,20 @@ test('collectVideos emits a proxied src, never a bare twimg url', () => {
   assert.equal(videos[0].src, '/x-video/amplify_video/1/vid/avc1/1920x1080/v.mp4');
   assert.ok(!videos[0].src.includes('video.twimg.com'));
 });
+
+const { imageTarget } = require('./post-media');
+
+test('imageTarget normalises the forms the model actually produces', () => {
+  assert.equal(imageTarget('image-1.jpg'), 'image-1.jpg');
+  // The same prompt shows ./ for video posters, so the model uses it here too.
+  assert.equal(imageTarget('./image-1.jpg'), 'image-1.jpg');
+  assert.equal(imageTarget('./image-1.jpg "A caption"'), 'image-1.jpg');
+});
+
+test('stripUnknownImages keeps a ./-prefixed reference to a real file', () => {
+  // An exact compare stripped every image in the post, silently and with no
+  // line in the PR body to say so.
+  const body = 'Intro.\n\n![a chart](./image-1.jpg)\n\nEnd.';
+  const result = stripUnknownImages(body, ['image-1.jpg']);
+  assert.ok(result.includes('![a chart](./image-1.jpg)'));
+});

@@ -85,3 +85,34 @@ test('downloads photos into the post folder and drops references that failed', a
   assert.ok(!written.includes('image-2.jpg'));
   assert.ok(written.includes('End.'));
 });
+
+const { claimFolderName } = require('./publish-post');
+
+test('two drafts with the same slug get separate folders instead of overwriting', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-collide-'));
+  const cover = path.join(repoRoot, 'c.png');
+  fs.writeFileSync(cover, 'x');
+  const draft = { title: 'A', summary: 'S', slug: 'toolcraft-update', body: 'first' };
+
+  const one = await publishPost({ draft, publishDate: '2026-08-11', repoRoot, coverImageSourcePath: cover });
+  const two = await publishPost({
+    draft: { ...draft, body: 'second' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: cover,
+  });
+
+  assert.notEqual(one.folderName, two.folderName);
+  assert.equal(two.folderName, '2026-08-11-toolcraft-update-2');
+  // The first post must survive: losing it silently while the PR still lists
+  // its title is the failure this guards against.
+  assert.ok(fs.readFileSync(path.join(one.postDir, 'index.md'), 'utf8').includes('first'));
+  assert.ok(fs.readFileSync(path.join(two.postDir, 'index.md'), 'utf8').includes('second'));
+});
+
+test('a slug with no usable characters still produces a valid folder', () => {
+  const postsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-slug-'));
+  // Would otherwise yield a folder named "2026-08-11-", which breaks the
+  // site's date-prefix slug parsing.
+  assert.equal(claimFolderName({ postsDir, publishDate: '2026-08-11', slug: '!!!' }), '2026-08-11-updates');
+});

@@ -5,10 +5,10 @@ const { classifyAndGroupPosts, buildClassifyPrompt } = require('./classify-posts
 function fakeClientReturning(payload) {
   return {
     messages: {
-      create: async () => ({
+      stream: (params) => ({ finalMessage: async () => ({
         stop_reason: 'end_turn',
         content: [{ type: 'text', text: JSON.stringify(payload) }],
-      }),
+      }) }),
     },
   };
 }
@@ -110,9 +110,14 @@ test('classifyAndGroupPosts sends the request with a json_schema output format',
   let sentParams;
   const fakeClient = {
     messages: {
-      create: async (params) => {
+      stream: (params) => {
         sentParams = params;
-        return { stop_reason: 'end_turn', content: [{ type: 'text', text: '{"groups":[]}' }] };
+        return {
+          finalMessage: async () => ({
+            stop_reason: 'end_turn',
+            content: [{ type: 'text', text: '{"groups":[]}' }],
+          }),
+        };
       },
     },
   };
@@ -147,8 +152,9 @@ test('classifyAndGroupPosts returns no groups without calling the model when the
   let called = false;
   const fakeClient = {
     messages: {
-      create: async () => {
+      stream: () => {
         called = true;
+        return { finalMessage: async () => ({ stop_reason: 'end_turn', content: [] }) };
       },
     },
   };

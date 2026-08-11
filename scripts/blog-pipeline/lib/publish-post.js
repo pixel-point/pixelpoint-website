@@ -3,6 +3,23 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
 
+// Every post in a run shares publishDate, so the folder name comes down to the
+// model-chosen slug. Two drafts landing on the same slug — a standalone post
+// and a roundup about the same product, say — would otherwise overwrite each
+// other, while the PR body and the Slack message still listed both titles: the
+// reviewer would be told about a post that no longer exists.
+function claimFolderName({ postsDir, publishDate, slug }) {
+  const sanitized =
+    slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'updates';
+
+  const base = `${publishDate}-${sanitized}`;
+  let name = base;
+  for (let n = 2; fs.existsSync(path.join(postsDir, name)); n += 1) {
+    name = `${base}-${n}`;
+  }
+  return name;
+}
+
 // Async because it owns the post's images as well as its text: the body can
 // only be finalised once we know which downloads actually succeeded, so
 // fetching has to happen before index.md is written, not after.
@@ -17,9 +34,9 @@ async function publishPost({
   author = 'Alex Barashkov',
   category = 'Updates',
 }) {
-  const slug = draft.slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  const folderName = `${publishDate}-${slug}`;
-  const postDir = path.join(repoRoot, 'content', 'posts', folderName);
+  const postsDir = path.join(repoRoot, 'content', 'posts');
+  const folderName = claimFolderName({ postsDir, publishDate, slug: draft.slug });
+  const postDir = path.join(postsDir, folderName);
   fs.mkdirSync(postDir, { recursive: true });
 
   const escapedTitle = draft.title.replace(/'/g, "''");
@@ -60,4 +77,4 @@ async function publishPost({
   return { postDir, folderName, photos: saved, videos: savedPosters };
 }
 
-module.exports = { publishPost };
+module.exports = { publishPost, claimFolderName };
