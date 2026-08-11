@@ -3126,6 +3126,7 @@ Expected: PASS (5 tests)
 ```js
 #!/usr/bin/env node
 // scripts/blog-pipeline/run.js  (the shebang must be the first line of the file)
+const fs = require('node:fs');
 const path = require('node:path');
 const Anthropic = require('@anthropic-ai/sdk');
 const { getUserId, fetchRecentPosts } = require('./lib/fetch-posts');
@@ -3143,6 +3144,10 @@ const { notifySlack, buildDraftsMessage } = require('./lib/notify-slack');
 const { usageSummary } = require('./lib/anthropic-json');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
+// Every run saves what it drafted so a later one can be replayed for free.
+// Iterating on publishing or rendering should not cost an API call, and it
+// should certainly not open a pull request.
+const DRAFT_CACHE_PATH = path.join(REPO_ROOT, '.blog-pipeline-drafts.json');
 const COVER_IMAGE_PATH = path.join(REPO_ROOT, 'static', 'blog-updates-cover.png');
 const AUTHOR_NAME = 'Alex Barashkov';
 const LOOKBACK_DAYS = 35;
@@ -3181,6 +3186,7 @@ async function main(overrides = {}) {
     fetchRecentPosts,
     filterCandidates,
     readExistingPosts,
+    readPendingPosts,
     readAuthorHandle,
     classifyAndGroupPosts,
     draftPost,
@@ -3193,11 +3199,25 @@ async function main(overrides = {}) {
   } = { ...defaultDeps, ...overrides };
 
   const dryRun = process.argv.includes('--dry-run');
+  // Writes the post folders but stops there — no branch, no commit, no PR, no
+  // Slack. This is the mode for previewing real output with `gatsby develop`.
+  const localOnly = process.argv.includes('--local');
+  // Reuses the last run's drafts instead of calling the X and Anthropic APIs.
+  const replay = process.argv.includes('--replay');
+  // Drafts awaiting review legitimately suppress a re-run of the same month,
+  // which is the point — but it also means you cannot test while a draft PR is
+  // open. This opts out for local iteration only.
+  const ignorePending = process.argv.includes('--ignore-pending');
+  const writesNothing = dryRun;
+  const opensPr = !dryRun && !localOnly;
 
   // A dry run stops after drafting — it never opens a PR or posts to Slack —
   // so requiring a webhook it will not use just blocks local testing.
   assertRequiredEnv(
-    dryRun
+    // A replay talks to neither API, so it needs no credentials at all.
+    replay
+      ? []
+      : !opensPr
       ? ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY']
       // GH_TOKEN is what `gh pr create` authenticates with. Without it the run
       // fails only after posts are written, committed and a branch is pushed,
@@ -3206,6 +3226,21 @@ async function main(overrides = {}) {
   );
 
   const { X_API_BEARER_TOKEN, ANTHROPIC_API_KEY, SLACK_WEBHOOK_URL } = process.env;
+
+  if (replay) {
+    if (!fs.existsSync(DRAFT_CACHE_PATH)) {
+      throw new Error(`No cached drafts at ${DRAFT_CACHE_PATH} — run once without --replay first.`);
+    }
+    const cached = JSON.parse(fs.readFileSync(DRAFT_CACHE_PATH, 'utf8'));
+    console.log(`Replaying ${cached.drafted.length} cached draft(s) from ${cached.generatedAt}.`);
+    return publishAndMaybeOpenPr({
+      drafted: cached.drafted,
+      skipped: cached.skipped,
+      opensPr,
+      deps: { publishPost, openDraftPr, notifySlack },
+      webhookUrl: SLACK_WEBHOOK_URL,
+    });
+  }
 
   const anthropicClient = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
   const username = readAuthorHandle(REPO_ROOT, AUTHOR_NAME);
@@ -3224,7 +3259,7 @@ async function main(overrides = {}) {
   const candidates = filterCandidates(posts);
   // Posts awaiting review count as covered: without them a run whose previous
   // PR is still open re-drafts the same topics against an empty comparison.
-  const pendingPosts = readPendingPosts({ repoRoot: REPO_ROOT });
+  const pendingPosts = ignorePending ? [] : readPendingPosts({ repoRoot: REPO_ROOT });
   const existingPosts = [...readExistingPosts(REPO_ROOT), ...pendingPosts];
   if (pendingPosts.length > 0) {
     console.log(`Including ${pendingPosts.length} post(s) from open draft PRs in the dedup check.`);
@@ -3243,7 +3278,7 @@ async function main(overrides = {}) {
 
   if (groups.length === 0) {
     console.log('No qualifying posts this month — skipping.');
-    if (!dryRun) {
+    if (opensPr) {
       await notifySlack({ webhookUrl: SLACK_WEBHOOK_URL, text: 'No qualifying posts this month — skipping.' });
     }
     return;
@@ -3271,13 +3306,35 @@ async function main(overrides = {}) {
 
   console.log(`Model usage: ${usageSummary()}`);
 
-  if (dryRun) {
+  if (writesNothing) {
     console.log(`--- DRY RUN: ${drafts.length} drafted post(s) (nothing written or published) ---`);
     console.log(JSON.stringify(drafts, null, 2));
     return;
   }
 
+  // Cached before publishing so a --replay can redo everything downstream —
+  // publishing, media, frontmatter, the PR body — without paying for drafting
+  // again or opening a pull request to look at the result.
+  fs.writeFileSync(
+    DRAFT_CACHE_PATH,
+    JSON.stringify({ generatedAt: new Date().toISOString(), drafted, skipped }, null, 2)
+  );
+
+  return publishAndMaybeOpenPr({
+    drafted,
+    skipped,
+    opensPr,
+    deps: { publishPost, openDraftPr, notifySlack },
+    webhookUrl: SLACK_WEBHOOK_URL,
+  });
+}
+
+// Shared by a normal run and a --replay: everything after drafting.
+async function publishAndMaybeOpenPr({ drafted, skipped, opensPr, deps, webhookUrl }) {
+  const { publishPost, openDraftPr, notifySlack } = deps;
+  const drafts = drafted.map((item) => item.draft);
   const publishDate = new Date().toISOString().slice(0, 10);
+
   const postDirs = [];
   for (const { draft, photos, videos } of drafted) {
     const published = await publishPost({
@@ -3294,6 +3351,14 @@ async function main(overrides = {}) {
     postDirs.push(published.postDir);
   }
 
+  if (!opensPr) {
+    console.log('');
+    console.log(`${postDirs.length} post(s) written locally. No branch, PR, or Slack message.`);
+    console.log('Preview with:  npx gatsby develop');
+    console.log('Discard with:  git clean -fd content/posts');
+    return;
+  }
+
   const runId = process.env.GITHUB_RUN_ID || Date.now().toString();
   const branchName = `blog-draft/${publishDate.slice(0, 7)}-${runId}`;
   const prTitle =
@@ -3308,10 +3373,7 @@ async function main(overrides = {}) {
     prBody: buildPrBody({ drafts, skipped }),
   });
 
-  await notifySlack({
-    webhookUrl: SLACK_WEBHOOK_URL,
-    text: buildDraftsMessage({ drafts, prUrl, skipped }),
-  });
+  await notifySlack({ webhookUrl, text: buildDraftsMessage({ drafts, prUrl, skipped }) });
 }
 
 async function reportFailure(err) {

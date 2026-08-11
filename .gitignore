@@ -77,3 +77,6 @@ yarn-error.log
 .vercel
 
 .worktrees/
+
+# Cached drafts so `--replay` can re-publish without calling the APIs
+.blog-pipeline-drafts.json

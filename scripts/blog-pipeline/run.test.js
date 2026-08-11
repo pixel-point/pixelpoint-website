@@ -110,3 +110,58 @@ test('every drafted post is published and its folder handed to the PR', async ()
   assert.equal(published.length, 2);
   assert.deepEqual(postDirs, ['/tmp/1', '/tmp/2']);
 });
+
+test('--local writes the posts but opens no PR and sends no Slack message', async () => {
+  const calls = [];
+  process.argv.push('--local');
+  try {
+    await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
+      main(deps({
+        publishPost: async () => { calls.push('publish'); return { postDir: '/tmp/p', folderName: 'f', photos: [], videos: [] }; },
+        openDraftPr: async () => { calls.push('pr'); return { prUrl: 'u' }; },
+        notifySlack: async () => { calls.push('slack'); },
+      }))
+    );
+  } finally {
+    process.argv = process.argv.filter((a) => a !== '--local');
+  }
+  // The whole point: real post folders on disk, nothing pushed anywhere.
+  assert.deepEqual(calls, ['publish']);
+});
+
+test('--local needs no GH_TOKEN or Slack webhook', async () => {
+  process.argv.push('--local');
+  try {
+    await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () => main(deps()));
+  } finally {
+    process.argv = process.argv.filter((a) => a !== '--local');
+  }
+  // Reaching here without throwing is the assertion.
+  assert.ok(true);
+});
+
+test('--ignore-pending skips the open-PR dedup so a test run is possible', async () => {
+  let consulted = false;
+  process.argv.push('--dry-run', '--ignore-pending');
+  try {
+    await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
+      main(deps({ readPendingPosts: () => { consulted = true; return []; } }))
+    );
+  } finally {
+    process.argv = process.argv.filter((a) => a !== '--dry-run' && a !== '--ignore-pending');
+  }
+  assert.equal(consulted, false);
+});
+
+test('open draft PRs are consulted by default', async () => {
+  let consulted = false;
+  process.argv.push('--dry-run');
+  try {
+    await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
+      main(deps({ readPendingPosts: () => { consulted = true; return []; } }))
+    );
+  } finally {
+    process.argv = process.argv.filter((a) => a !== '--dry-run');
+  }
+  assert.ok(consulted, 'a real run must not re-draft what is already awaiting review');
+});
