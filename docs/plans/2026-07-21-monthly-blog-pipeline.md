@@ -2740,20 +2740,11 @@ function stripUnknownImages(body, savedFilenames) {
 // One lost clip beats a broken build, so drop any fragment that is not a
 // complete tag.
 function stripTruncatedVideos(body) {
-  const complete = /<Video\b[^>]*><\/Video>/g;
-  const kept = [];
-
-  for (const match of body.matchAll(complete)) {
-    kept.push({ start: match.index, end: match.index + match[0].length });
-  }
-
-  // Anything starting with `<Video` that is not one of those spans is a
-  // fragment: an unclosed tag, or one missing its </Video>.
-  return body.replace(/<Video\b[\s\S]*?(?:<\/Video>|$)/g, (match, offset) => {
-    const isComplete = kept.some(
-      (span) => span.start === offset && span.end === offset + match.length
-    );
-    if (isComplete) return match;
+  // Bounded to the tag's own line. Consuming to the end of the document
+  // instead would let one unclosed tag swallow the rest of the article —
+  // a worse outcome than the broken build this exists to prevent.
+  return body.replace(/<Video\b[^\n]*/g, (match) => {
+    if (/^<Video\b[^>]*><\/Video>$/.test(match)) return match;
     console.warn(`Dropping a malformed <Video> fragment: ${match.slice(0, 60)}...`);
     return '';
   });
