@@ -18,8 +18,12 @@
   ],
   "rewrites": [
     {
-      "source": "/x-video/:path*",
-      "destination": "https://video.twimg.com/:path*"
+      "source": "/x-video/ext_tw_video/:path*",
+      "destination": "https://video.twimg.com/ext_tw_video/:path*"
+    },
+    {
+      "source": "/x-video/amplify_video/:path*",
+      "destination": "https://video.twimg.com/amplify_video/:path*"
     },
     {
       "source": "/aval",

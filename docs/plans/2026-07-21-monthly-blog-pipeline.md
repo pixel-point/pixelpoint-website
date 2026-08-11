@@ -2268,11 +2268,15 @@ test('writes index.md with frontmatter and copies the cover image', async () => 
 
   assert.equal(folderName, '2026-07-21-alex-update');
   const written = fs.readFileSync(path.join(postDir, 'index.md'), 'utf8');
-  assert.ok(written.includes("title: 'Alex''s Update'") || written.includes("title: 'Alex\\'s Update'"));
-  assert.ok(written.includes("summary: 'Summary text'"));
-  assert.ok(written.includes('author: Alex Barashkov'));
-  assert.ok(written.includes('category: Updates'));
-  assert.ok(written.includes('Body text'));
+  // Round-tripped rather than string-matched: asserting on a particular
+  // escaping style cannot fail when the escaping itself is wrong.
+  const { data, content } = matter(written);
+  assert.equal(data.title, "Alex's Update");
+  assert.equal(data.summary, 'Summary text');
+  assert.equal(data.author, 'Alex Barashkov');
+  assert.equal(data.category, 'Updates');
+  assert.equal(data.cover, 'cover.png');
+  assert.ok(content.includes('Body text'));
   assert.ok(fs.existsSync(path.join(postDir, 'cover.png')));
 });
 
@@ -2363,6 +2367,28 @@ test('a slug with no usable characters still produces a valid folder', () => {
   // site's date-prefix slug parsing.
   assert.equal(claimFolderName({ postsDir, publishDate: '2026-08-11', slug: '!!!' }), '2026-08-11-updates');
 });
+
+test('a title containing a newline or a colon still parses', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-yaml-'));
+  const cover = path.join(repoRoot, 'c.png');
+  fs.writeFileSync(cover, 'x');
+  // Hand-built frontmatter produced an unparseable file for these, which
+  // fails the Gatsby build rather than one post.
+  const { postDir } = await publishPost({
+    draft: {
+      title: 'Toolcraft: an update\nwith a newline',
+      summary: 'He said "it works" — 100% of the time',
+      slug: 'edge',
+      body: 'Body',
+    },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: cover,
+  });
+  const { data } = matter(fs.readFileSync(path.join(postDir, 'index.md'), 'utf8'));
+  assert.equal(data.title, 'Toolcraft: an update\nwith a newline');
+  assert.equal(data.summary, 'He said "it works" — 100% of the time');
+});
 ```
 
 **Step 2: Run test to verify it fails**
@@ -2376,6 +2402,7 @@ Expected: FAIL with "Cannot find module './publish-post'"
 // scripts/blog-pipeline/lib/publish-post.js
 const fs = require('node:fs');
 const path = require('node:path');
+const matter = require('gray-matter');
 const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
 
 // Every post in a run shares publishDate, so the folder name comes down to the
@@ -2414,19 +2441,6 @@ async function publishPost({
   const postDir = path.join(postsDir, folderName);
   fs.mkdirSync(postDir, { recursive: true });
 
-  const escapedTitle = draft.title.replace(/'/g, "''");
-  const escapedSummary = draft.summary.replace(/'/g, "''");
-  const frontmatter = [
-    '---',
-    `title: '${escapedTitle}'`,
-    `summary: '${escapedSummary}'`,
-    `author: ${author}`,
-    'cover: cover.png',
-    `category: ${category}`,
-    '---',
-    '',
-  ].join('\n');
-
   const saved = await downloadPhotos({ photos, destDir: postDir, fetchImpl });
   // Video posters are ordinary images as far as the site is concerned — they
   // live in the post folder and gatsby-node picks them up by filename.
@@ -2446,7 +2460,17 @@ async function publishPost({
     savedPosters.map((poster) => poster.filename)
   );
 
-  fs.writeFileSync(path.join(postDir, 'index.md'), `${frontmatter}\n${body}\n`, 'utf8');
+  // Serialised by gray-matter rather than hand-escaped: a model-written title
+  // containing a newline, a colon or a quote would otherwise produce a file
+  // that fails to parse, and the whole site build with it.
+  const file = matter.stringify(`\n${body}\n`, {
+    title: draft.title,
+    summary: draft.summary,
+    author,
+    cover: 'cover.png',
+    category,
+  });
+  fs.writeFileSync(path.join(postDir, 'index.md'), file, 'utf8');
   fs.copyFileSync(coverImageSourcePath, path.join(postDir, 'cover.png'));
 
   return { postDir, folderName, photos: saved, videos: savedPosters };
@@ -2540,6 +2564,51 @@ test('the message never contains undefined', () => {
   const text = buildDraftsMessage({ drafts: DRAFTS, prUrl: 'https://x/1' });
   assert.ok(!text.includes('undefined'), text);
 });
+
+test('notifySlack retries a transient failure — the run has no other signal', async () => {
+  let calls = 0;
+  const slept = [];
+  await notifySlack({
+    webhookUrl: 'https://hooks.slack.com/x',
+    text: 'hi',
+    fetchImpl: async () => {
+      calls += 1;
+      return calls < 3 ? { ok: false, status: 503 } : { ok: true };
+    },
+    sleepImpl: async (ms) => slept.push(ms),
+  });
+  assert.equal(calls, 3);
+  assert.deepEqual(slept, [1000, 2000]);
+});
+
+test('notifySlack does not retry a permanent failure', async () => {
+  let calls = 0;
+  await assert.rejects(
+    () => notifySlack({
+      webhookUrl: 'https://hooks.slack.com/x',
+      text: 'hi',
+      fetchImpl: async () => { calls += 1; return { ok: false, status: 404 }; },
+      sleepImpl: async () => {},
+    }),
+    /Slack webhook failed: 404/
+  );
+  assert.equal(calls, 1, 'a bad webhook url fails the same way every time');
+});
+
+test('notifySlack gives up after the last attempt', async () => {
+  let calls = 0;
+  await assert.rejects(
+    () => notifySlack({
+      webhookUrl: 'https://hooks.slack.com/x',
+      text: 'hi',
+      fetchImpl: async () => { calls += 1; return { ok: false, status: 500 }; },
+      sleepImpl: async () => {},
+      attempts: 2,
+    }),
+    /Slack webhook failed: 500/
+  );
+  assert.equal(calls, 2);
+});
 ```
 
 **Step 2: Run tests to verify they fail**
@@ -2571,15 +2640,35 @@ function buildDraftsMessage({ drafts, prUrl, skipped = [] }) {
   return lines.join('\n');
 }
 
-async function notifySlack({ webhookUrl, text, fetchImpl = fetch }) {
-  const res = await fetchImpl(webhookUrl, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text }),
-  });
-  if (!res.ok) {
-    throw new Error(`Slack webhook failed: ${res.status}`);
+// This is the only signal a monthly run gives. If the webhook blips on the
+// failure path the run goes completely silent, so a transient error is worth
+// retrying before giving up.
+const NOTIFY_ATTEMPTS = 3;
+const NOTIFY_BACKOFF_MS = 1000;
+
+async function notifySlack({
+  webhookUrl,
+  text,
+  fetchImpl = fetch,
+  sleepImpl = (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+  attempts = NOTIFY_ATTEMPTS,
+}) {
+  let lastStatus;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    // A malformed payload fails identically every time; only server-side and
+    // rate-limit responses are worth another go.
+    const res = await fetchImpl(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    if (res.ok) return;
+    lastStatus = res.status;
+    const retryable = res.status === 429 || res.status >= 500;
+    if (!retryable || attempt === attempts) break;
+    await sleepImpl(NOTIFY_BACKOFF_MS * attempt);
   }
+  throw new Error(`Slack webhook failed: ${lastStatus}`);
 }
 
 module.exports = { notifySlack, buildDraftsMessage };
@@ -2933,6 +3022,7 @@ const { filterCandidates } = require('./lib/filter-posts');
 const { classifyAndGroupPosts } = require('./lib/classify-posts');
 const { draftPost } = require('./lib/draft-post');
 const { readExistingPosts } = require('./lib/read-existing-posts');
+const { readPendingPosts } = require('./lib/read-pending-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
 const { collectPhotos, collectVideos } = require('./lib/post-media');
@@ -2962,6 +3052,7 @@ const defaultDeps = {
   fetchRecentPosts,
   filterCandidates,
   readExistingPosts,
+  readPendingPosts,
   readAuthorHandle,
   classifyAndGroupPosts,
   draftPost,
@@ -3018,7 +3109,13 @@ async function main(overrides = {}) {
   });
 
   const candidates = filterCandidates(posts);
-  const existingPosts = readExistingPosts(REPO_ROOT);
+  // Posts awaiting review count as covered: without them a run whose previous
+  // PR is still open re-drafts the same topics against an empty comparison.
+  const pendingPosts = readPendingPosts({ repoRoot: REPO_ROOT });
+  const existingPosts = [...readExistingPosts(REPO_ROOT), ...pendingPosts];
+  if (pendingPosts.length > 0) {
+    console.log(`Including ${pendingPosts.length} post(s) from open draft PRs in the dedup check.`);
+  }
   const { groups, skipped } = await classifyAndGroupPosts({
     candidates,
     existingPosts,

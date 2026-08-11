@@ -45,8 +45,14 @@ const VideoWithCover = (props) => {
   useEffect(() => {
     if (!isPlaying || !videoRef.current) return;
 
-    videoRef.current
-      .play()
+    // Older browsers return undefined from play() rather than a promise.
+    const started = videoRef.current.play();
+    if (!started || typeof started.then !== 'function') {
+      setShowCover(false);
+      return;
+    }
+
+    started
       .then(() => setShowCover(false))
       .catch(() => {
         // Autoplay policies can still refuse; restore the cover so the reader

@@ -21,11 +21,15 @@ test('writes index.md with frontmatter and copies the cover image', async () => 
 
   assert.equal(folderName, '2026-07-21-alex-update');
   const written = fs.readFileSync(path.join(postDir, 'index.md'), 'utf8');
-  assert.ok(written.includes("title: 'Alex''s Update'") || written.includes("title: 'Alex\\'s Update'"));
-  assert.ok(written.includes("summary: 'Summary text'"));
-  assert.ok(written.includes('author: Alex Barashkov'));
-  assert.ok(written.includes('category: Updates'));
-  assert.ok(written.includes('Body text'));
+  // Round-tripped rather than string-matched: asserting on a particular
+  // escaping style cannot fail when the escaping itself is wrong.
+  const { data, content } = matter(written);
+  assert.equal(data.title, "Alex's Update");
+  assert.equal(data.summary, 'Summary text');
+  assert.equal(data.author, 'Alex Barashkov');
+  assert.equal(data.category, 'Updates');
+  assert.equal(data.cover, 'cover.png');
+  assert.ok(content.includes('Body text'));
   assert.ok(fs.existsSync(path.join(postDir, 'cover.png')));
 });
 
@@ -115,4 +119,26 @@ test('a slug with no usable characters still produces a valid folder', () => {
   // Would otherwise yield a folder named "2026-08-11-", which breaks the
   // site's date-prefix slug parsing.
   assert.equal(claimFolderName({ postsDir, publishDate: '2026-08-11', slug: '!!!' }), '2026-08-11-updates');
+});
+
+test('a title containing a newline or a colon still parses', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-yaml-'));
+  const cover = path.join(repoRoot, 'c.png');
+  fs.writeFileSync(cover, 'x');
+  // Hand-built frontmatter produced an unparseable file for these, which
+  // fails the Gatsby build rather than one post.
+  const { postDir } = await publishPost({
+    draft: {
+      title: 'Toolcraft: an update\nwith a newline',
+      summary: 'He said "it works" — 100% of the time',
+      slug: 'edge',
+      body: 'Body',
+    },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: cover,
+  });
+  const { data } = matter(fs.readFileSync(path.join(postDir, 'index.md'), 'utf8'));
+  assert.equal(data.title, 'Toolcraft: an update\nwith a newline');
+  assert.equal(data.summary, 'He said "it works" — 100% of the time');
 });

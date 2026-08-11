@@ -60,3 +60,48 @@ test('the message never contains undefined', () => {
   const text = buildDraftsMessage({ drafts: DRAFTS, prUrl: 'https://x/1' });
   assert.ok(!text.includes('undefined'), text);
 });
+
+test('notifySlack retries a transient failure — the run has no other signal', async () => {
+  let calls = 0;
+  const slept = [];
+  await notifySlack({
+    webhookUrl: 'https://hooks.slack.com/x',
+    text: 'hi',
+    fetchImpl: async () => {
+      calls += 1;
+      return calls < 3 ? { ok: false, status: 503 } : { ok: true };
+    },
+    sleepImpl: async (ms) => slept.push(ms),
+  });
+  assert.equal(calls, 3);
+  assert.deepEqual(slept, [1000, 2000]);
+});
+
+test('notifySlack does not retry a permanent failure', async () => {
+  let calls = 0;
+  await assert.rejects(
+    () => notifySlack({
+      webhookUrl: 'https://hooks.slack.com/x',
+      text: 'hi',
+      fetchImpl: async () => { calls += 1; return { ok: false, status: 404 }; },
+      sleepImpl: async () => {},
+    }),
+    /Slack webhook failed: 404/
+  );
+  assert.equal(calls, 1, 'a bad webhook url fails the same way every time');
+});
+
+test('notifySlack gives up after the last attempt', async () => {
+  let calls = 0;
+  await assert.rejects(
+    () => notifySlack({
+      webhookUrl: 'https://hooks.slack.com/x',
+      text: 'hi',
+      fetchImpl: async () => { calls += 1; return { ok: false, status: 500 }; },
+      sleepImpl: async () => {},
+      attempts: 2,
+    }),
+    /Slack webhook failed: 500/
+  );
+  assert.equal(calls, 2);
+});

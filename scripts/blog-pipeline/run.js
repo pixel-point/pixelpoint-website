@@ -6,6 +6,7 @@ const { filterCandidates } = require('./lib/filter-posts');
 const { classifyAndGroupPosts } = require('./lib/classify-posts');
 const { draftPost } = require('./lib/draft-post');
 const { readExistingPosts } = require('./lib/read-existing-posts');
+const { readPendingPosts } = require('./lib/read-pending-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
 const { collectPhotos, collectVideos } = require('./lib/post-media');
@@ -35,6 +36,7 @@ const defaultDeps = {
   fetchRecentPosts,
   filterCandidates,
   readExistingPosts,
+  readPendingPosts,
   readAuthorHandle,
   classifyAndGroupPosts,
   draftPost,
@@ -91,7 +93,13 @@ async function main(overrides = {}) {
   });
 
   const candidates = filterCandidates(posts);
-  const existingPosts = readExistingPosts(REPO_ROOT);
+  // Posts awaiting review count as covered: without them a run whose previous
+  // PR is still open re-drafts the same topics against an empty comparison.
+  const pendingPosts = readPendingPosts({ repoRoot: REPO_ROOT });
+  const existingPosts = [...readExistingPosts(REPO_ROOT), ...pendingPosts];
+  if (pendingPosts.length > 0) {
+    console.log(`Including ${pendingPosts.length} post(s) from open draft PRs in the dedup check.`);
+  }
   const { groups, skipped } = await classifyAndGroupPosts({
     candidates,
     existingPosts,

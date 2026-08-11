@@ -1,6 +1,7 @@
 // scripts/blog-pipeline/lib/publish-post.js
 const fs = require('node:fs');
 const path = require('node:path');
+const matter = require('gray-matter');
 const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
 
 // Every post in a run shares publishDate, so the folder name comes down to the
@@ -39,19 +40,6 @@ async function publishPost({
   const postDir = path.join(postsDir, folderName);
   fs.mkdirSync(postDir, { recursive: true });
 
-  const escapedTitle = draft.title.replace(/'/g, "''");
-  const escapedSummary = draft.summary.replace(/'/g, "''");
-  const frontmatter = [
-    '---',
-    `title: '${escapedTitle}'`,
-    `summary: '${escapedSummary}'`,
-    `author: ${author}`,
-    'cover: cover.png',
-    `category: ${category}`,
-    '---',
-    '',
-  ].join('\n');
-
   const saved = await downloadPhotos({ photos, destDir: postDir, fetchImpl });
   // Video posters are ordinary images as far as the site is concerned — they
   // live in the post folder and gatsby-node picks them up by filename.
@@ -71,7 +59,17 @@ async function publishPost({
     savedPosters.map((poster) => poster.filename)
   );
 
-  fs.writeFileSync(path.join(postDir, 'index.md'), `${frontmatter}\n${body}\n`, 'utf8');
+  // Serialised by gray-matter rather than hand-escaped: a model-written title
+  // containing a newline, a colon or a quote would otherwise produce a file
+  // that fails to parse, and the whole site build with it.
+  const file = matter.stringify(`\n${body}\n`, {
+    title: draft.title,
+    summary: draft.summary,
+    author,
+    cover: 'cover.png',
+    category,
+  });
+  fs.writeFileSync(path.join(postDir, 'index.md'), file, 'utf8');
   fs.copyFileSync(coverImageSourcePath, path.join(postDir, 'cover.png'));
 
   return { postDir, folderName, photos: saved, videos: savedPosters };
