@@ -192,18 +192,25 @@ async function main(overrides = {}) {
     // Only the repos this group actually links, so an article is never offered
     // commands from an unrelated project.
     const repoUsage = await readRepoUsage({ posts: group });
-    drafted.push({
-      draft: await draftPost({
-        qualifyingPosts: group,
+    try {
+      drafted.push({
+        draft: await draftPost({
+          qualifyingPosts: group,
+          photos,
+          videos,
+          relatedExistingPosts,
+          repoUsage,
+          anthropicClient,
+        }),
         photos,
         videos,
-        relatedExistingPosts,
-        repoUsage,
-        anthropicClient,
-      }),
-      photos,
-      videos,
-    });
+      });
+    } catch (err) {
+      // One unusable draft costs its own post, not the month's other six.
+      // Anything else — a refusal, an exhausted balance — still stops the run.
+      if (!err.truncated) throw err;
+      console.warn(`Skipping a group: ${err.message}`);
+    }
   }
   const drafts = drafted.map((item) => item.draft);
 

@@ -43,7 +43,7 @@ function deps(over = {}) {
       groups: [{ posts: [post], relatedExistingPosts: [] }],
       skipped: [],
     }),
-    draftPost: async () => ({ title: 'T', summary: 'S', slug: 'slug', body: 'B' }),
+    draftPost: async () => ({ title: 'T', summary: 'S', slug: 'slug', body: 'B.' }),
     publishPost: async () => ({ postDir: '/tmp/p', folderName: 'f', photos: [], videos: [] }),
     openDraftPr: async () => ({ prUrl: 'https://github.com/o/r/pull/7' }),
     notifySlack: async () => {},
@@ -274,7 +274,7 @@ test('--only drafts just that many groups', async () => {
           classifyAndGroupPosts: async () => ({ groups: [group, group, group], skipped: [] }),
           draftPost: async () => {
             drafted += 1;
-            return { title: 'T', summary: 'S', slug: `s${drafted}`, body: 'B' };
+            return { title: 'T', summary: 'S', slug: `s${drafted}`, body: 'B.' };
           },
         })
       )
@@ -319,5 +319,66 @@ test('--only rejects a value that is not a positive whole number', async () => {
     );
   } finally {
     process.argv = process.argv.filter((a) => !['--only', 'all'].includes(a));
+  }
+});
+
+test('one truncated draft is skipped, the rest of the month still ships', async () => {
+  const group = {
+    posts: [{ id: '1', text: 't', url: 'u', media: [], thread: [] }],
+    relatedExistingPosts: [],
+  };
+  let n = 0;
+  const published = [];
+  process.argv.push('--local');
+  try {
+    await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
+      main(
+        deps({
+          classifyAndGroupPosts: async () => ({ groups: [group, group, group], skipped: [] }),
+          draftPost: async () => {
+            n += 1;
+            if (n === 2) {
+              const err = new Error('came back truncated');
+              err.truncated = true;
+              throw err;
+            }
+            return { title: `T${n}`, summary: 'S', slug: `s${n}`, body: 'B.' };
+          },
+          publishPost: async ({ draft }) => {
+            published.push(draft.title);
+            return { postDir: '/tmp/x', folderName: 'f', photos: [], videos: [] };
+          },
+        })
+      )
+    );
+  } finally {
+    process.argv = process.argv.filter((a) => a !== '--local');
+  }
+  assert.deepEqual(published, ['T1', 'T3']);
+});
+
+test('a refusal still stops the run — only truncation is survivable', async () => {
+  const group = {
+    posts: [{ id: '1', text: 't', url: 'u', media: [], thread: [] }],
+    relatedExistingPosts: [],
+  };
+  process.argv.push('--local');
+  try {
+    await assert.rejects(
+      () =>
+        withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
+          main(
+            deps({
+              classifyAndGroupPosts: async () => ({ groups: [group], skipped: [] }),
+              draftPost: async () => {
+                throw new Error('Claude declined this request (category: cyber)');
+              },
+            })
+          )
+        ),
+      /declined this request/
+    );
+  } finally {
+    process.argv = process.argv.filter((a) => a !== '--local');
   }
 });

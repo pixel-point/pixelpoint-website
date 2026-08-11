@@ -209,3 +209,12 @@ test('buildClassifyPrompt asks for related posts separately from the covered ver
   assert.ok(prompt.includes('related_existing_post_titles'));
   assert.ok(prompt.includes('rather than reintroducing the product'));
 });
+
+test('buildClassifyPrompt rejects posts that only quote someone else', () => {
+  // "Meet the new Novu and its new homepage. Glad to have been part of the
+  // journey" quoting their launch produced a vague article about their
+  // product rather than our work.
+  const prompt = buildClassifyPrompt([{ id: '1', text: 'x' }], []);
+  assert.ok(prompt.includes('substance is carried by a post it quotes'));
+  assert.ok(prompt.includes('their story, not ours'));
+});

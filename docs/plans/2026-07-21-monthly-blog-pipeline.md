@@ -1615,6 +1615,15 @@ test('buildClassifyPrompt asks for related posts separately from the covered ver
   assert.ok(prompt.includes('related_existing_post_titles'));
   assert.ok(prompt.includes('rather than reintroducing the product'));
 });
+
+test('buildClassifyPrompt rejects posts that only quote someone else', () => {
+  // "Meet the new Novu and its new homepage. Glad to have been part of the
+  // journey" quoting their launch produced a vague article about their
+  // product rather than our work.
+  const prompt = buildClassifyPrompt([{ id: '1', text: 'x' }], []);
+  assert.ok(prompt.includes('substance is carried by a post it quotes'));
+  assert.ok(prompt.includes('their story, not ours'));
+});
 ```
 
 **Step 2: Run tests to verify they fail**
@@ -1673,6 +1682,7 @@ function buildClassifyPrompt(candidates, existingPosts) {
     "Personal side projects (open-source tools, solo builds; examples of personal side project work) count and should be kept if they clear that bar — they still reflect the team's expertise even when not officially branded company work.",
     'Exclude opinion or thought-leadership essays not tied to a specific project or release, for now.',
     "Drop posts that are just commentary on someone else's work, one-line reactions, or posts already covered by an existing blog post.",
+    "Drop a post whose substance is carried by a post it quotes. Announcing someone else's launch and adding a line of congratulation or association is their story, not ours — there is nothing to write about our part in it beyond that one line, and an article built from it pads out to nothing. Keep it only if the author's own words give a real account of what we did.",
     '',
     'Existing blog posts (do not re-cover these topics):',
     existingPosts.map((p) => `- ${p.title}: ${p.summary}`).join('\n'),
@@ -1754,12 +1764,12 @@ git commit -m "feat: add LLM classify+dedup+group step for blog pipeline"
 
 **Step 1: Write the failing tests**
 
-```js
+````js
 // scripts/blog-pipeline/lib/draft-post.test.js
 const assert = require('node:assert/strict');
 const test = require('node:test');
 
-const { draftPost, buildDraftPrompt } = require('./draft-post');
+const { draftPost, buildDraftPrompt, looksTruncated } = require('./draft-post');
 
 test('buildDraftPrompt tells the model to preserve I/we framing and write editorially', () => {
   const prompt = buildDraftPrompt([{ text: 'I built a tool', url: 'https://x.com/1' }]);
@@ -1778,7 +1788,7 @@ test("buildDraftPrompt tells the model it is writing under the author's own byli
 });
 
 test('draftPost parses the model JSON response into a draft object', async () => {
-  const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
+  const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body.' };
   const fakeClient = {
     messages: {
       stream: () => ({
@@ -1797,7 +1807,7 @@ test('draftPost parses the model JSON response into a draft object', async () =>
 });
 
 test('draftPost ignores thinking blocks when reading the JSON', async () => {
-  const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
+  const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body.' };
   const fakeClient = {
     messages: {
       stream: () => ({
@@ -1940,7 +1950,50 @@ test('code blocks are for executables, and only for our own work', () => {
   assert.ok(prompt.includes('never put a sentence in one'));
   assert.ok(prompt.includes("someone else's product are not ours to promote"));
 });
-```
+
+test('looksTruncated catches a body that stops mid-thought', () => {
+  // The real case: an article ended "...to build a web-native grass
+  // simulation." followed by half a <Video> tag, and published like that.
+  assert.ok(looksTruncated('Intro.\n\n<Video src="/x/a.mp4'));
+  assert.ok(looksTruncated('It cost me $15 and a few million AI tokens to build a'));
+  assert.ok(looksTruncated('A heading\n\nSome prose that just stops'));
+});
+
+test('looksTruncated accepts the ways a finished article really ends', () => {
+  assert.ok(!looksTruncated('A complete sentence.'));
+  assert.ok(!looksTruncated('Ends on a question?'));
+  assert.ok(!looksTruncated('Ends with a video.\n\n<Video src="/x/a.mp4"></Video>'));
+  assert.ok(!looksTruncated('Try it:\n\n```\nnpm i thing\n```'));
+  assert.ok(!looksTruncated('Read [the docs](https://example.com).'));
+});
+
+test('a truncated draft is rejected rather than published', async () => {
+  const fakeClient = {
+    messages: {
+      stream: () => ({
+        finalMessage: async () => ({
+          stop_reason: 'end_turn',
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify({
+                title: 'T',
+                summary: 'S',
+                slug: 's',
+                body: 'It stops here mid',
+              }),
+            },
+          ],
+        }),
+      }),
+    },
+  };
+  await assert.rejects(
+    () => draftPost({ qualifyingPosts: [{ text: 'x', url: 'u' }], anthropicClient: fakeClient }),
+    (err) => err.truncated === true && /came back truncated/.test(err.message)
+  );
+});
+````
 
 **Step 2: Run tests to verify they fail**
 
@@ -1949,7 +2002,7 @@ Expected: FAIL with "Cannot find module './draft-post'"
 
 **Step 3: Write the implementation**
 
-```js
+````js
 // scripts/blog-pipeline/lib/draft-post.js
 const { requestJson } = require('./anthropic-json');
 
@@ -2098,6 +2151,25 @@ function buildDraftPrompt(
   ].join('\n');
 }
 
+// A drafted body can come back cut off mid-sentence or mid-tag. Stripping the
+// broken tag keeps the site building, but publishes an article that stops
+// dead — one ended at "It cost me $15 on the Epic Games Store and a few
+// million AI tokens to build a web-native grass simulation." with nothing
+// after it. A missing post is recoverable; a published half-written one is
+// not, so the caller drops it instead.
+function looksTruncated(body) {
+  const trimmed = body.trimEnd();
+  const lastLine = trimmed.split('\n').filter(Boolean).pop() || '';
+
+  // An opening <Video that never closed is the unambiguous case.
+  if (/<Video\b/.test(lastLine) && !/<\/Video>$/.test(lastLine)) return true;
+
+  // Otherwise: prose should end on terminal punctuation, a closing tag, a
+  // code fence, or a link/emphasis marker. Ending on a bare word or a comma
+  // means the model stopped mid-thought.
+  return !/([.!?:;"'`)\]]|<\/Video>|```)$/.test(trimmed);
+}
+
 async function draftPost({
   qualifyingPosts,
   photos = [],
@@ -2112,11 +2184,20 @@ async function draftPost({
     schema: DRAFT_SCHEMA,
   });
 
+  if (looksTruncated(draft.body)) {
+    const error = new Error(
+      `Draft "${draft.title}" came back truncated — it ends "${draft.body.trimEnd().slice(-60)}". Not publishing a half-written post.`
+    );
+    // Distinct from a refusal or a credit failure, which must stop the run.
+    error.truncated = true;
+    throw error;
+  }
+
   return { title: draft.title, summary: draft.summary, slug: draft.slug, body: draft.body };
 }
 
-module.exports = { draftPost, buildDraftPrompt, DRAFT_SCHEMA };
-```
+module.exports = { draftPost, buildDraftPrompt, looksTruncated, DRAFT_SCHEMA };
+````
 
 **Step 4: Run tests to verify they pass**
 
@@ -3934,18 +4015,25 @@ async function main(overrides = {}) {
     // Only the repos this group actually links, so an article is never offered
     // commands from an unrelated project.
     const repoUsage = await readRepoUsage({ posts: group });
-    drafted.push({
-      draft: await draftPost({
-        qualifyingPosts: group,
+    try {
+      drafted.push({
+        draft: await draftPost({
+          qualifyingPosts: group,
+          photos,
+          videos,
+          relatedExistingPosts,
+          repoUsage,
+          anthropicClient,
+        }),
         photos,
         videos,
-        relatedExistingPosts,
-        repoUsage,
-        anthropicClient,
-      }),
-      photos,
-      videos,
-    });
+      });
+    } catch (err) {
+      // One unusable draft costs its own post, not the month's other six.
+      // Anything else — a refusal, an exhausted balance — still stops the run.
+      if (!err.truncated) throw err;
+      console.warn(`Skipping a group: ${err.message}`);
+    }
   }
   const drafts = drafted.map((item) => item.draft);
 

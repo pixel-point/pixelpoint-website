@@ -2,7 +2,7 @@
 const assert = require('node:assert/strict');
 const test = require('node:test');
 
-const { draftPost, buildDraftPrompt } = require('./draft-post');
+const { draftPost, buildDraftPrompt, looksTruncated } = require('./draft-post');
 
 test('buildDraftPrompt tells the model to preserve I/we framing and write editorially', () => {
   const prompt = buildDraftPrompt([{ text: 'I built a tool', url: 'https://x.com/1' }]);
@@ -21,7 +21,7 @@ test("buildDraftPrompt tells the model it is writing under the author's own byli
 });
 
 test('draftPost parses the model JSON response into a draft object', async () => {
-  const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
+  const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body.' };
   const fakeClient = {
     messages: {
       stream: () => ({
@@ -40,7 +40,7 @@ test('draftPost parses the model JSON response into a draft object', async () =>
 });
 
 test('draftPost ignores thinking blocks when reading the JSON', async () => {
-  const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
+  const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body.' };
   const fakeClient = {
     messages: {
       stream: () => ({
@@ -182,4 +182,47 @@ test('code blocks are for executables, and only for our own work', () => {
   const prompt = buildDraftPrompt([{ text: 'x', url: 'https://x.com/1' }]);
   assert.ok(prompt.includes('never put a sentence in one'));
   assert.ok(prompt.includes("someone else's product are not ours to promote"));
+});
+
+test('looksTruncated catches a body that stops mid-thought', () => {
+  // The real case: an article ended "...to build a web-native grass
+  // simulation." followed by half a <Video> tag, and published like that.
+  assert.ok(looksTruncated('Intro.\n\n<Video src="/x/a.mp4'));
+  assert.ok(looksTruncated('It cost me $15 and a few million AI tokens to build a'));
+  assert.ok(looksTruncated('A heading\n\nSome prose that just stops'));
+});
+
+test('looksTruncated accepts the ways a finished article really ends', () => {
+  assert.ok(!looksTruncated('A complete sentence.'));
+  assert.ok(!looksTruncated('Ends on a question?'));
+  assert.ok(!looksTruncated('Ends with a video.\n\n<Video src="/x/a.mp4"></Video>'));
+  assert.ok(!looksTruncated('Try it:\n\n```\nnpm i thing\n```'));
+  assert.ok(!looksTruncated('Read [the docs](https://example.com).'));
+});
+
+test('a truncated draft is rejected rather than published', async () => {
+  const fakeClient = {
+    messages: {
+      stream: () => ({
+        finalMessage: async () => ({
+          stop_reason: 'end_turn',
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify({
+                title: 'T',
+                summary: 'S',
+                slug: 's',
+                body: 'It stops here mid',
+              }),
+            },
+          ],
+        }),
+      }),
+    },
+  };
+  await assert.rejects(
+    () => draftPost({ qualifyingPosts: [{ text: 'x', url: 'u' }], anthropicClient: fakeClient }),
+    (err) => err.truncated === true && /came back truncated/.test(err.message)
+  );
 });

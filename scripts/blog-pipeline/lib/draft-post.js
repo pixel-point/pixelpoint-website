@@ -146,6 +146,25 @@ function buildDraftPrompt(
   ].join('\n');
 }
 
+// A drafted body can come back cut off mid-sentence or mid-tag. Stripping the
+// broken tag keeps the site building, but publishes an article that stops
+// dead — one ended at "It cost me $15 on the Epic Games Store and a few
+// million AI tokens to build a web-native grass simulation." with nothing
+// after it. A missing post is recoverable; a published half-written one is
+// not, so the caller drops it instead.
+function looksTruncated(body) {
+  const trimmed = body.trimEnd();
+  const lastLine = trimmed.split('\n').filter(Boolean).pop() || '';
+
+  // An opening <Video that never closed is the unambiguous case.
+  if (/<Video\b/.test(lastLine) && !/<\/Video>$/.test(lastLine)) return true;
+
+  // Otherwise: prose should end on terminal punctuation, a closing tag, a
+  // code fence, or a link/emphasis marker. Ending on a bare word or a comma
+  // means the model stopped mid-thought.
+  return !/([.!?:;"'`)\]]|<\/Video>|```)$/.test(trimmed);
+}
+
 async function draftPost({
   qualifyingPosts,
   photos = [],
@@ -160,7 +179,16 @@ async function draftPost({
     schema: DRAFT_SCHEMA,
   });
 
+  if (looksTruncated(draft.body)) {
+    const error = new Error(
+      `Draft "${draft.title}" came back truncated — it ends "${draft.body.trimEnd().slice(-60)}". Not publishing a half-written post.`
+    );
+    // Distinct from a refusal or a credit failure, which must stop the run.
+    error.truncated = true;
+    throw error;
+  }
+
   return { title: draft.title, summary: draft.summary, slug: draft.slug, body: draft.body };
 }
 
-module.exports = { draftPost, buildDraftPrompt, DRAFT_SCHEMA };
+module.exports = { draftPost, buildDraftPrompt, looksTruncated, DRAFT_SCHEMA };

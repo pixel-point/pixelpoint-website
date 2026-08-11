@@ -24,7 +24,12 @@ const CLASSIFY_SCHEMA = {
           // the near-duplicate a real run produced.
           related_existing_post_titles: { type: 'array', items: { type: 'string' } },
         },
-        required: ['post_ids', 'already_covered', 'existing_post_title', 'related_existing_post_titles'],
+        required: [
+          'post_ids',
+          'already_covered',
+          'existing_post_title',
+          'related_existing_post_titles',
+        ],
         additionalProperties: false,
       },
     },
@@ -37,9 +42,10 @@ function buildClassifyPrompt(candidates, existingPosts) {
   return [
     'You are screening X posts for a company blog "Updates" category.',
     'The bar is not just "is this on-topic" — keep a post only if it would stand alone as worth reading for someone with zero context on the author\'s X feed: a real design-process note, product announcement, or release, not a status update that only makes sense to an existing follower.',
-    'Personal side projects (open-source tools, solo builds; examples of personal side project work) count and should be kept if they clear that bar — they still reflect the team\'s expertise even when not officially branded company work.',
+    "Personal side projects (open-source tools, solo builds; examples of personal side project work) count and should be kept if they clear that bar — they still reflect the team's expertise even when not officially branded company work.",
     'Exclude opinion or thought-leadership essays not tied to a specific project or release, for now.',
     "Drop posts that are just commentary on someone else's work, one-line reactions, or posts already covered by an existing blog post.",
+    "Drop a post whose substance is carried by a post it quotes. Announcing someone else's launch and adding a line of congratulation or association is their story, not ours — there is nothing to write about our part in it beyond that one line, and an article built from it pads out to nothing. Keep it only if the author's own words give a real account of what we did.",
     '',
     'Existing blog posts (do not re-cover these topics):',
     existingPosts.map((p) => `- ${p.title}: ${p.summary}`).join('\n'),
