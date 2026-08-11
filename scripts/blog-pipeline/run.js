@@ -81,7 +81,14 @@ async function main(overrides = {}) {
   const userId = await getUserId({ username, bearerToken: X_API_BEARER_TOKEN });
 
   const sinceISODate = new Date(Date.now() - LOOKBACK_DAYS * 24 * 60 * 60 * 1000).toISOString();
-  const posts = await fetchRecentPosts({ userId, bearerToken: X_API_BEARER_TOKEN, sinceISODate });
+  const posts = await fetchRecentPosts({
+    userId,
+    // Lets the fetch use full-archive search to find self-replies, which is
+    // ~7 reads instead of ~300 paging the timeline.
+    username,
+    bearerToken: X_API_BEARER_TOKEN,
+    sinceISODate,
+  });
 
   const candidates = filterCandidates(posts);
   const existingPosts = readExistingPosts(REPO_ROOT);

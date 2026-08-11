@@ -313,3 +313,77 @@ test('a post is never its own follow-up, and follow-ups are capped oldest-first'
   assert.deepEqual(ids, ['101', '102', '103', '104', '105'], 'oldest five, excluding the post itself');
   assert.ok(!ids.includes('100'));
 });
+
+test('self-replies come from full-archive search when it is available', async () => {
+  let searched = false;
+  let pagedTimeline = false;
+  const fakeFetch = async (url) => {
+    if (url.includes('/tweets/search/all')) {
+      searched = true;
+      // from:X to:X is exactly "replies X made to X", filtered server-side.
+      assert.ok(url.includes('from%3Aalex_barashkov+to%3Aalex_barashkov')
+        || decodeURIComponent(url).includes('from:alex_barashkov to:alex_barashkov'));
+      return { ok: true, json: async () => ({
+        data: [{ id: '2', conversation_id: 'c1', text: 'https://github.com/pixel-point/aval' }],
+      }) };
+    }
+    if (url.includes('exclude=retweets')) pagedTimeline = true;
+    return { ok: true, json: async () => ({
+      data: [{ id: '1', text: 'Introducing Aval', created_at: 'x', conversation_id: 'c1' }],
+      includes: {},
+    }) };
+  };
+  const posts = await fetchRecentPosts({
+    userId: 'me', username: 'alex_barashkov', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch,
+  });
+  assert.ok(searched);
+  assert.equal(pagedTimeline, false, 'search makes the 300-read timeline scan unnecessary');
+  assert.equal(posts[0].thread.length, 1);
+});
+
+test('losing full-archive access falls back to paging rather than losing follow-ups', async () => {
+  let pagedTimeline = false;
+  const fakeFetch = async (url) => {
+    // 403 is what a downgraded access tier returns.
+    if (url.includes('/tweets/search/all')) return { ok: false, status: 403 };
+    if (url.includes('exclude=retweets')) {
+      pagedTimeline = true;
+      return { ok: true, json: async () => ({
+        data: [{ id: '2', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'https://pixelpoint.io/aval/' }],
+        meta: {},
+      }) };
+    }
+    return { ok: true, json: async () => ({
+      data: [{ id: '1', text: 'Introducing Aval', created_at: 'x', conversation_id: 'c1' }],
+      includes: {},
+    }) };
+  };
+  const posts = await fetchRecentPosts({
+    userId: 'me', username: 'alex_barashkov', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 1,
+  });
+  assert.ok(pagedTimeline, 'must fall back, not give up');
+  assert.equal(posts[0].thread.length, 1);
+});
+
+test('the paging fallback still discards replies to other people', async () => {
+  const fakeFetch = async (url) => {
+    if (url.includes('/tweets/search/all')) return { ok: false, status: 403 };
+    if (url.includes('exclude=retweets')) {
+      return { ok: true, json: async () => ({
+        data: [
+          { id: '2', conversation_id: 'c1', in_reply_to_user_id: 'me', text: 'mine' },
+          { id: '3', conversation_id: 'c1', in_reply_to_user_id: 'someone-else', text: 'thanks!' },
+        ],
+        meta: {},
+      }) };
+    }
+    return { ok: true, json: async () => ({
+      data: [{ id: '1', text: 'post', created_at: 'x', conversation_id: 'c1' }], includes: {},
+    }) };
+  };
+  const posts = await fetchRecentPosts({
+    userId: 'me', username: 'a', bearerToken: 't', sinceISODate: 'x', fetchImpl: fakeFetch, selfReplyPages: 1,
+  });
+  assert.equal(posts[0].thread.length, 1);
+  assert.ok(posts[0].thread[0].text.includes('mine'));
+});

@@ -50,21 +50,56 @@ function mapMedia(keys, mediaByKey) {
     }));
 }
 
-// Announcements are routinely followed by a self-reply carrying the links —
-// the Aval launch put its landing page and its repo in two replies, neither of
-// which the pipeline could see. They can only be found by fetching with
-// replies included, where roughly 4 in 5 items are replies to other people, so
-// this pages through and keeps only replies to himself. Each page is 100 post
-// reads, hence the cap: raising it finds older threads and costs proportionally
-// more.
+// Announcements routinely put the links in a self-reply rather than the post
+// itself — the Aval launch posted its landing page and its repo that way — and
+// the timeline endpoint cannot filter to them: `exclude` only accepts
+// `replies` and `retweets`. Paging the reply-inclusive timeline works but
+// reads ~300 posts to find a handful, because roughly four in five items are
+// replies to other people.
+//
+// Full-archive search filters server-side with `from:X to:X`, which is exactly
+// "replies X made to X": 7 results instead of 300, and it covers the whole
+// lookback window by construction rather than however far 3 pages happen to
+// reach. It sits on a higher access tier though, so a loss of access falls
+// back to paging rather than failing the run.
 const SELF_REPLY_PAGES = 3;
 
 // The links land in the first few replies; anything after that is conversation
 // with other people rather than part of the announcement.
 const MAX_FOLLOW_UPS = 5;
 
-async function fetchSelfReplies({ userId, bearerToken, sinceISODate, fetchImpl, maxPages }) {
+function indexByConversation(items, userId) {
   const byConversation = new Map();
+  for (const item of items) {
+    // The search query already constrains this, but the timeline fallback
+    // does not — replies to other people must not become follow-ups.
+    if (userId && item.in_reply_to_user_id !== userId) continue;
+    const list = byConversation.get(item.conversation_id) || [];
+    list.push({ id: item.id, text: expandLinks(item), url: `https://x.com/i/web/status/${item.id}` });
+    byConversation.set(item.conversation_id, list);
+  }
+  return byConversation;
+}
+
+async function searchSelfReplies({ username, bearerToken, sinceISODate, fetchImpl }) {
+  const url = new URL('https://api.twitter.com/2/tweets/search/all');
+  url.searchParams.set('query', `from:${username} to:${username}`);
+  url.searchParams.set('start_time', sinceISODate);
+  url.searchParams.set('tweet.fields', 'text,entities,note_tweet,conversation_id,in_reply_to_user_id');
+  url.searchParams.set('max_results', '100');
+
+  const res = await fetchImpl(url.toString(), {
+    headers: { Authorization: `Bearer ${bearerToken}` },
+  });
+  // 403 here means the key lost full-archive access; the caller falls back.
+  if (!res.ok) return null;
+
+  const body = await res.json();
+  return indexByConversation(body.data || [], null);
+}
+
+async function pageSelfReplies({ userId, bearerToken, sinceISODate, fetchImpl, maxPages }) {
+  const collected = [];
   let token;
 
   for (let page = 0; page < maxPages; page += 1) {
@@ -83,25 +118,35 @@ async function fetchSelfReplies({ userId, bearerToken, sinceISODate, fetchImpl, 
     });
     // A failure here costs context, not the run — the originals are already in
     // hand and are what the article is actually built from.
-    if (!res.ok) return byConversation;
+    if (!res.ok) break;
 
     const body = await res.json();
-    for (const item of body.data || []) {
-      if (item.in_reply_to_user_id !== userId) continue;
-      const list = byConversation.get(item.conversation_id) || [];
-      list.push({ id: item.id, text: expandLinks(item), url: `https://x.com/i/web/status/${item.id}` });
-      byConversation.set(item.conversation_id, list);
-    }
-
+    collected.push(...(body.data || []));
     token = body.meta && body.meta.next_token;
     if (!token) break;
   }
 
-  return byConversation;
+  return indexByConversation(collected, userId);
+}
+
+async function fetchSelfReplies({
+  userId,
+  username,
+  bearerToken,
+  sinceISODate,
+  fetchImpl,
+  maxPages,
+}) {
+  if (username) {
+    const found = await searchSelfReplies({ username, bearerToken, sinceISODate, fetchImpl });
+    if (found) return found;
+  }
+  return pageSelfReplies({ userId, bearerToken, sinceISODate, fetchImpl, maxPages });
 }
 
 async function fetchRecentPosts({
   userId,
+  username,
   bearerToken,
   sinceISODate,
   fetchImpl = fetch,
@@ -139,6 +184,7 @@ async function fetchRecentPosts({
   const { data = [], includes = {} } = await res.json();
   const threadsByConversation = await fetchSelfReplies({
     userId,
+    username,
     bearerToken,
     sinceISODate,
     fetchImpl,
