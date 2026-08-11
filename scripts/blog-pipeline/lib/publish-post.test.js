@@ -197,3 +197,41 @@ test('a poster that failed to download does not become a missing cover', async (
   assert.equal(cover, 'cover.png');
   assert.ok(fs.existsSync(path.join(postDir, 'cover.png')));
 });
+
+test('a photo is preferred over a video poster for the cover', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-pref-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  // The author chose to post the photo; the poster is whatever frame X pulled.
+  const { cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'both', body: '![a](image-1.jpg)' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+    photos: [{ filename: 'image-1.jpg', url: 'https://p/photo.jpg' }],
+    videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/poster.jpg' }],
+    fetchImpl: async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('X').buffer }),
+  });
+  assert.equal(cover, 'image-1.jpg');
+});
+
+test('a failed photo download falls through to the video poster', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-fall-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  const { cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'fallthrough', body: 'Body' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+    photos: [{ filename: 'image-1.jpg', url: 'https://p/gone.jpg' }],
+    videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/poster.jpg' }],
+    fetchImpl: async (url) =>
+      url.includes('gone')
+        ? { ok: false, status: 404 }
+        : { ok: true, arrayBuffer: async () => new TextEncoder().encode('X').buffer },
+  });
+  assert.equal(cover, 'video-cover-1.jpg');
+});

@@ -2641,6 +2641,44 @@ test('a poster that failed to download does not become a missing cover', async (
   assert.equal(cover, 'cover.png');
   assert.ok(fs.existsSync(path.join(postDir, 'cover.png')));
 });
+
+test('a photo is preferred over a video poster for the cover', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-pref-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  // The author chose to post the photo; the poster is whatever frame X pulled.
+  const { cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'both', body: '![a](image-1.jpg)' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+    photos: [{ filename: 'image-1.jpg', url: 'https://p/photo.jpg' }],
+    videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/poster.jpg' }],
+    fetchImpl: async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('X').buffer }),
+  });
+  assert.equal(cover, 'image-1.jpg');
+});
+
+test('a failed photo download falls through to the video poster', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-fall-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  const { cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'fallthrough', body: 'Body' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+    photos: [{ filename: 'image-1.jpg', url: 'https://p/gone.jpg' }],
+    videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/poster.jpg' }],
+    fetchImpl: async (url) =>
+      url.includes('gone')
+        ? { ok: false, status: 404 }
+        : { ok: true, arrayBuffer: async () => new TextEncoder().encode('X').buffer },
+  });
+  assert.equal(cover, 'video-cover-1.jpg');
+});
 ```
 
 **Step 2: Run test to verify it fails**
@@ -2715,12 +2753,14 @@ async function publishPost({
     savedPosters.map((poster) => poster.filename)
   );
 
-  // A frame from the post's own video says far more than the shared
-  // placeholder, and it is already in the folder — referencing it directly
-  // avoids a second copy of the same bytes. Only a poster that survived the
-  // download is eligible; a reference to a missing cover fails the build.
-  const posterCover = savedPosters[0] && savedPosters[0].filename;
-  let coverName = posterCover;
+  // Something from the post itself beats the shared placeholder, and it is
+  // already in the folder — referencing it directly avoids a second copy of
+  // the same bytes. A photo comes first: the author chose to post that still,
+  // whereas a video poster is whatever frame X extracted. Only a file that
+  // actually downloaded is eligible; a cover pointing at a missing file fails
+  // the entire Gatsby build rather than one post.
+  const ownImage = saved[0] || savedPosters[0];
+  let coverName = ownImage && ownImage.filename;
   if (!coverName) {
     coverName = `cover${path.extname(coverImageSourcePath) || '.png'}`;
     fs.copyFileSync(coverImageSourcePath, path.join(postDir, coverName));

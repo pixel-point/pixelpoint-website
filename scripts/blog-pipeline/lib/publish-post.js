@@ -62,12 +62,14 @@ async function publishPost({
     savedPosters.map((poster) => poster.filename)
   );
 
-  // A frame from the post's own video says far more than the shared
-  // placeholder, and it is already in the folder — referencing it directly
-  // avoids a second copy of the same bytes. Only a poster that survived the
-  // download is eligible; a reference to a missing cover fails the build.
-  const posterCover = savedPosters[0] && savedPosters[0].filename;
-  let coverName = posterCover;
+  // Something from the post itself beats the shared placeholder, and it is
+  // already in the folder — referencing it directly avoids a second copy of
+  // the same bytes. A photo comes first: the author chose to post that still,
+  // whereas a video poster is whatever frame X extracted. Only a file that
+  // actually downloaded is eligible; a cover pointing at a missing file fails
+  // the entire Gatsby build rather than one post.
+  const ownImage = saved[0] || savedPosters[0];
+  let coverName = ownImage && ownImage.filename;
   if (!coverName) {
     coverName = `cover${path.extname(coverImageSourcePath) || '.png'}`;
     fs.copyFileSync(coverImageSourcePath, path.join(postDir, coverName));
