@@ -114,10 +114,17 @@ function buildDraftPrompt(
     // case on roughly a third of titles.
     'Write the title and every heading in sentence case, like the rest of this blog: capitalise the first word, and after that only proper nouns, product names, and acronyms. Write "Toolcraft: five creative tools we built to prove AI demos can be more than toys", not "Toolcraft: Five Creative Tools We Built to Prove AI Demos Can Be More Than Toys". Note that AI, Blender, and Novu stay capitalised because of what they are, not because of where they sit in the sentence.',
     '',
-    'Keep any exact command, package name, or code snippet from the source posts verbatim, in a fenced code block — an install line a reader can copy is the most useful thing an announcement post can carry, and paraphrasing it makes it wrong.',
+    'When the article announces something we built, keep its exact command or package name verbatim in ' +
+      'a fenced code block — an install line a reader can copy is the most useful thing an announcement ' +
+      'can carry, and paraphrasing it makes it wrong. A code block is for something executable: never ' +
+      "put a sentence in one. Commands for someone else's product are not ours to promote, so leave " +
+      'those out however prominent they were in the source.',
     'A post\'s "followUps" are the author\'s own replies to it, and are usually where the landing page or repository link was posted. Treat them as part of the same announcement and use those links in the article.',
     'When a source post links to something — a launched page, a repo, a demo — link to it from the article at the point you mention it, using the real URL from the post. Do not describe a thing as launched or shipped without linking it if the link is available.',
-    "Where a source post quotes another post, that quoted text is background so you know what is being pointed at. Write about our work, not about the other person's post, and do not quote them.",
+    'Where a source post quotes another post, that quoted text is background so you know what was ' +
+      "announced — nothing more. It is someone else's launch copy: do not quote it, and do not carry " +
+      'over its calls to action, setup instructions, or commands. The article is about our part in the ' +
+      'work, so a reader should finish it understanding what we did, not how to sign up for their product.',
     '',
     'Source posts (JSON):',
     JSON.stringify(

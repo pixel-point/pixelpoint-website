@@ -166,3 +166,20 @@ test('no repo section when the posts link no repository', () => {
   const prompt = buildDraftPrompt([{ text: 'x', url: 'https://x.com/1' }]);
   assert.ok(!prompt.includes('Commands found in linked repositories'));
 });
+
+test('a quoted post is background, not a source of calls to action', () => {
+  // A post about redesigning a client's homepage grew a "Try it in your
+  // terminal" section reproducing that client's own launch instructions.
+  const prompt = buildDraftPrompt([{ text: 'Meet the new Novu', url: 'https://x.com/1' }]);
+  assert.ok(prompt.includes("someone else's launch copy"));
+  assert.ok(
+    prompt.includes('do not carry over its calls to action, setup instructions, or commands')
+  );
+  assert.ok(prompt.includes('not how to sign up for their product'));
+});
+
+test('code blocks are for executables, and only for our own work', () => {
+  const prompt = buildDraftPrompt([{ text: 'x', url: 'https://x.com/1' }]);
+  assert.ok(prompt.includes('never put a sentence in one'));
+  assert.ok(prompt.includes("someone else's product are not ours to promote"));
+});
