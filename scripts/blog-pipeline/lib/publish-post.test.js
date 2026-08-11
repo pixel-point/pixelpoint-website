@@ -1,11 +1,13 @@
 // scripts/blog-pipeline/lib/publish-post.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const test = require('node:test');
+
 const matter = require('gray-matter');
-const { publishPost } = require('./publish-post');
+
+const { publishPost, claimFolderName } = require('./publish-post');
 
 test('writes index.md with frontmatter and copies the cover image', async () => {
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-publish-'));
@@ -13,7 +15,12 @@ test('writes index.md with frontmatter and copies the cover image', async () => 
   fs.writeFileSync(coverImageSourcePath, 'fake-png-bytes');
 
   const { postDir, folderName } = await publishPost({
-    draft: { title: "Alex's Update", summary: 'Summary text', slug: 'alex-update', body: 'Body text' },
+    draft: {
+      title: "Alex's Update",
+      summary: 'Summary text',
+      slug: 'alex-update',
+      body: 'Body text',
+    },
     publishDate: '2026-07-21',
     repoRoot,
     coverImageSourcePath,
@@ -82,7 +89,10 @@ test('downloads photos into the post folder and drops references that failed', a
     fetchImpl: fakeFetch,
   });
 
-  assert.deepEqual(photos.map((p) => p.filename), ['image-1.jpg']);
+  assert.deepEqual(
+    photos.map((p) => p.filename),
+    ['image-1.jpg']
+  );
   assert.ok(fs.existsSync(path.join(postDir, 'image-1.jpg')));
   const written = fs.readFileSync(path.join(postDir, 'index.md'), 'utf8');
   assert.ok(written.includes('![kept](image-1.jpg)'));
@@ -90,15 +100,18 @@ test('downloads photos into the post folder and drops references that failed', a
   assert.ok(written.includes('End.'));
 });
 
-const { claimFolderName } = require('./publish-post');
-
 test('two drafts with the same slug get separate folders instead of overwriting', async () => {
   const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-collide-'));
   const cover = path.join(repoRoot, 'c.png');
   fs.writeFileSync(cover, 'x');
   const draft = { title: 'A', summary: 'S', slug: 'toolcraft-update', body: 'first' };
 
-  const one = await publishPost({ draft, publishDate: '2026-08-11', repoRoot, coverImageSourcePath: cover });
+  const one = await publishPost({
+    draft,
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: cover,
+  });
   const two = await publishPost({
     draft: { ...draft, body: 'second' },
     publishDate: '2026-08-11',
@@ -118,7 +131,10 @@ test('a slug with no usable characters still produces a valid folder', () => {
   const postsDir = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-slug-'));
   // Would otherwise yield a folder named "2026-08-11-", which breaks the
   // site's date-prefix slug parsing.
-  assert.equal(claimFolderName({ postsDir, publishDate: '2026-08-11', slug: '!!!' }), '2026-08-11-updates');
+  assert.equal(
+    claimFolderName({ postsDir, publishDate: '2026-08-11', slug: '!!!' }),
+    '2026-08-11-updates'
+  );
 });
 
 test('a title containing a newline or a colon still parses', async () => {
@@ -149,16 +165,27 @@ test('a video poster becomes the cover, without duplicating the bytes', async ()
   fs.writeFileSync(placeholder, 'PLACEHOLDER');
 
   const { postDir, cover } = await publishPost({
-    draft: { title: 'T', summary: 'S', slug: 'with-video', body: '<Video poster="./video-cover-1.jpg"></Video>' },
+    draft: {
+      title: 'T',
+      summary: 'S',
+      slug: 'with-video',
+      body: '<Video poster="./video-cover-1.jpg"></Video>',
+    },
     publishDate: '2026-08-11',
     repoRoot,
     coverImageSourcePath: placeholder,
     videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/a.jpg' }],
-    fetchImpl: async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('FRAME').buffer }),
+    fetchImpl: async () => ({
+      ok: true,
+      arrayBuffer: async () => new TextEncoder().encode('FRAME').buffer,
+    }),
   });
 
   assert.equal(cover, 'video-cover-1.jpg');
-  assert.equal(matter(fs.readFileSync(path.join(postDir, 'index.md'), 'utf8')).data.cover, 'video-cover-1.jpg');
+  assert.equal(
+    matter(fs.readFileSync(path.join(postDir, 'index.md'), 'utf8')).data.cover,
+    'video-cover-1.jpg'
+  );
   // Referenced in place rather than copied to cover.png.
   assert.equal(fs.existsSync(path.join(postDir, 'cover.png')), false);
 });
@@ -211,7 +238,10 @@ test('a photo is preferred over a video poster for the cover', async () => {
     coverImageSourcePath: placeholder,
     photos: [{ filename: 'image-1.jpg', url: 'https://p/photo.jpg' }],
     videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/poster.jpg' }],
-    fetchImpl: async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('X').buffer }),
+    fetchImpl: async () => ({
+      ok: true,
+      arrayBuffer: async () => new TextEncoder().encode('X').buffer,
+    }),
   });
   assert.equal(cover, 'image-1.jpg');
 });

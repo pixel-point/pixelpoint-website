@@ -1,4 +1,5 @@
 const { execFileSync } = require('node:child_process');
+
 const matter = require('gray-matter');
 
 // readExistingPosts only sees posts on the checked-out branch — that is,
@@ -39,7 +40,14 @@ function readPendingPosts({ repoRoot, runImpl = defaultRun, baseRef = 'origin/ma
       // by readExistingPosts and would just bloat the classify prompt.
       const paths = runImpl(
         'git',
-        ['diff', '--name-only', '--diff-filter=A', `${baseRef}...FETCH_HEAD`, '--', 'content/posts/'],
+        [
+          'diff',
+          '--name-only',
+          '--diff-filter=A',
+          `${baseRef}...FETCH_HEAD`,
+          '--',
+          'content/posts/',
+        ],
         options
       )
         .split('\n')

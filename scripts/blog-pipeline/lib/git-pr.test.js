@@ -1,5 +1,6 @@
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { openDraftPr, createPrWithRetry } = require('./git-pr');
 
 const REF_RACE = Object.assign(new Error('exit 1'), {
@@ -39,7 +40,11 @@ test('createPrWithRetry does not retry an unrelated failure', async () => {
       }),
     /exit 1/
   );
-  assert.equal(calls, 1, 'a bad token fails the same way every time — retrying only delays the alert');
+  assert.equal(
+    calls,
+    1,
+    'a bad token fails the same way every time — retrying only delays the alert'
+  );
 });
 
 test('createPrWithRetry gives up after the last attempt', async () => {
@@ -78,7 +83,14 @@ test('openDraftPr commits each post folder and targets main explicitly', async (
     sleepImpl: async () => {},
   });
   assert.equal(prUrl, 'https://github.com/o/r/pull/9');
-  assert.deepEqual(commands, ['git checkout', 'git add', 'git add', 'git commit', 'git push', 'gh pr']);
+  assert.deepEqual(commands, [
+    'git checkout',
+    'git add',
+    'git add',
+    'git commit',
+    'git push',
+    'gh pr',
+  ]);
 });
 
 test('openDraftPr passes an explicit base so it does not depend on repo defaults', async () => {

@@ -1,5 +1,6 @@
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { readPendingPosts } = require('./read-pending-posts');
 
 function fakeGh({ branches = [], files = {}, failOn = null }) {
@@ -56,10 +57,11 @@ test('one unreadable branch does not lose the others', () => {
   const posts = readPendingPosts({
     repoRoot: '/repo',
     runImpl: (cmd, args) => {
-      if (cmd === 'gh') return JSON.stringify([
-        { headRefName: 'blog-draft/broken' },
-        { headRefName: 'blog-draft/fine' },
-      ]);
+      if (cmd === 'gh')
+        return JSON.stringify([
+          { headRefName: 'blog-draft/broken' },
+          { headRefName: 'blog-draft/fine' },
+        ]);
       if (args[0] === 'fetch') {
         call += 1;
         if (call === 1) throw new Error('ref not found');
@@ -81,7 +83,10 @@ test('only the posts the branch adds are read, not every post on it', () => {
     repoRoot: '/repo',
     runImpl: (cmd, args) => {
       if (cmd === 'gh') return JSON.stringify([{ headRefName: 'blog-draft/1' }]);
-      if (args[0] === 'diff') { diffArgs = args; return ''; }
+      if (args[0] === 'diff') {
+        diffArgs = args;
+        return '';
+      }
       return '';
     },
   });

@@ -1,7 +1,9 @@
 // scripts/blog-pipeline/lib/publish-post.js
 const fs = require('node:fs');
 const path = require('node:path');
+
 const matter = require('gray-matter');
+
 const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
 
 // Every post in a run shares publishDate, so the folder name comes down to the

@@ -1,20 +1,22 @@
 #!/usr/bin/env node
 const fs = require('node:fs');
 const path = require('node:path');
+
 const Anthropic = require('@anthropic-ai/sdk');
-const { getUserId, fetchRecentPosts } = require('./lib/fetch-posts');
-const { filterCandidates } = require('./lib/filter-posts');
+
+const { usageSummary } = require('./lib/anthropic-json');
 const { classifyAndGroupPosts } = require('./lib/classify-posts');
 const { draftPost } = require('./lib/draft-post');
+const { getUserId, fetchRecentPosts } = require('./lib/fetch-posts');
+const { filterCandidates } = require('./lib/filter-posts');
+const { openDraftPr } = require('./lib/git-pr');
+const { notifySlack, buildDraftsMessage } = require('./lib/notify-slack');
+const { collectPhotos, collectVideos, dedupeVideosByPoster } = require('./lib/post-media');
+const { buildPrBody } = require('./lib/pr-body');
+const { publishPost } = require('./lib/publish-post');
+const { readAuthorHandle } = require('./lib/read-author-handle');
 const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readPendingPosts } = require('./lib/read-pending-posts');
-const { readAuthorHandle } = require('./lib/read-author-handle');
-const { publishPost } = require('./lib/publish-post');
-const { collectPhotos, collectVideos, dedupeVideosByPoster } = require('./lib/post-media');
-const { openDraftPr } = require('./lib/git-pr');
-const { buildPrBody } = require('./lib/pr-body');
-const { notifySlack, buildDraftsMessage } = require('./lib/notify-slack');
-const { usageSummary } = require('./lib/anthropic-json');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..');
 // Every run saves what it drafted so a later one can be replayed for free.
@@ -94,11 +96,11 @@ async function main(overrides = {}) {
     replay
       ? []
       : !opensPr
-      ? ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY']
-      // GH_TOKEN is what `gh pr create` authenticates with. Without it the run
-      // fails only after posts are written, committed and a branch is pushed,
-      // leaving an orphan branch and no PR.
-      : ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL', 'GH_TOKEN']
+        ? ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY']
+        : // GH_TOKEN is what `gh pr create` authenticates with. Without it the run
+          // fails only after posts are written, committed and a branch is pushed,
+          // leaving an orphan branch and no PR.
+          ['X_API_BEARER_TOKEN', 'ANTHROPIC_API_KEY', 'SLACK_WEBHOOK_URL', 'GH_TOKEN']
   );
 
   const { X_API_BEARER_TOKEN, ANTHROPIC_API_KEY, SLACK_WEBHOOK_URL } = process.env;
@@ -155,7 +157,10 @@ async function main(overrides = {}) {
   if (groups.length === 0) {
     console.log('No qualifying posts this month — skipping.');
     if (opensPr) {
-      await notifySlack({ webhookUrl: SLACK_WEBHOOK_URL, text: 'No qualifying posts this month — skipping.' });
+      await notifySlack({
+        webhookUrl: SLACK_WEBHOOK_URL,
+        text: 'No qualifying posts this month — skipping.',
+      });
     }
     return;
   }

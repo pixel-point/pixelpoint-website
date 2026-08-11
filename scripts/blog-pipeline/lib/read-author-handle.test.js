@@ -1,9 +1,10 @@
 // scripts/blog-pipeline/lib/read-author-handle.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const test = require('node:test');
+
 const { readAuthorHandle } = require('./read-author-handle');
 
 function makeRepoWithAuthors(authors) {

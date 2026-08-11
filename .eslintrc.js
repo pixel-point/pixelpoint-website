@@ -1,7 +1,10 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es6: true,
+    // Node 22 — without this, ES2020+ globals (BigInt) read as undefined.
+    es2022: true,
   },
   extends: ['airbnb', 'airbnb/hooks', 'airbnb/whitespace', 'prettier'],
   globals: {

@@ -1,12 +1,14 @@
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const test = require('node:test');
+
 const { main } = require('./run');
 
 // Never let a test write the cache the developer is actually using.
-const cachePath = () => path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cache-')), 'drafts.json');
+const cachePath = () =>
+  path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cache-')), 'drafts.json');
 
 const ENV = {
   X_API_BEARER_TOKEN: 'x',
@@ -24,7 +26,13 @@ function withEnv(env, fn) {
 }
 
 function deps(over = {}) {
-  const post = { id: '1', text: 'a qualifying post', url: 'https://x.com/1', media: [], thread: [] };
+  const post = {
+    id: '1',
+    text: 'a qualifying post',
+    url: 'https://x.com/1',
+    media: [],
+    thread: [],
+  };
   return {
     getUserId: async () => 'uid',
     fetchRecentPosts: async () => [post],
@@ -52,11 +60,21 @@ test('a dry run drafts but never publishes, opens a PR, or posts to Slack', asyn
   process.argv.push('--dry-run');
   try {
     await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
-      main(deps({
-        publishPost: async () => { calls.push('publish'); return { postDir: '', folderName: '', photos: [], videos: [] }; },
-        openDraftPr: async () => { calls.push('pr'); return { prUrl: '' }; },
-        notifySlack: async () => { calls.push('slack'); },
-      }))
+      main(
+        deps({
+          publishPost: async () => {
+            calls.push('publish');
+            return { postDir: '', folderName: '', photos: [], videos: [] };
+          },
+          openDraftPr: async () => {
+            calls.push('pr');
+            return { prUrl: '' };
+          },
+          notifySlack: async () => {
+            calls.push('slack');
+          },
+        })
+      )
     );
   } finally {
     process.argv = process.argv.filter((a) => a !== '--dry-run');
@@ -67,7 +85,13 @@ test('a dry run drafts but never publishes, opens a PR, or posts to Slack', asyn
 test('the PR url reaches Slack — a missing await made this read "undefined"', async () => {
   let text;
   await withEnv(ENV, () =>
-    main(deps({ notifySlack: async ({ text: t }) => { text = t; } }))
+    main(
+      deps({
+        notifySlack: async ({ text: t }) => {
+          text = t;
+        },
+      })
+    )
   );
   assert.ok(text.includes('https://github.com/o/r/pull/7'), text);
   assert.ok(!text.includes('undefined'), text);
@@ -77,12 +101,20 @@ test('nothing is published when no group qualifies, and Slack is still told', as
   const calls = [];
   let text;
   await withEnv(ENV, () =>
-    main(deps({
-      classifyAndGroupPosts: async () => ({ groups: [], skipped: [] }),
-      publishPost: async () => { calls.push('publish'); },
-      openDraftPr: async () => { calls.push('pr'); },
-      notifySlack: async ({ text: t }) => { text = t; },
-    }))
+    main(
+      deps({
+        classifyAndGroupPosts: async () => ({ groups: [], skipped: [] }),
+        publishPost: async () => {
+          calls.push('publish');
+        },
+        openDraftPr: async () => {
+          calls.push('pr');
+        },
+        notifySlack: async ({ text: t }) => {
+          text = t;
+        },
+      })
+    )
   );
   assert.deepEqual(calls, [], 'an empty month must not open a PR');
   assert.match(text, /No qualifying posts/);
@@ -91,10 +123,18 @@ test('nothing is published when no group qualifies, and Slack is still told', as
 test('a real run refuses to start without GH_TOKEN, before writing anything', async () => {
   const calls = [];
   await assert.rejects(
-    () => withEnv(
-      { X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a', SLACK_WEBHOOK_URL: 's', GH_TOKEN: '' },
-      () => main(deps({ publishPost: async () => { calls.push('publish'); } }))
-    ),
+    () =>
+      withEnv(
+        { X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a', SLACK_WEBHOOK_URL: 's', GH_TOKEN: '' },
+        () =>
+          main(
+            deps({
+              publishPost: async () => {
+                calls.push('publish');
+              },
+            })
+          )
+      ),
     /GH_TOKEN/
   );
   // Failing later would leave an orphan branch with no PR.
@@ -104,16 +144,24 @@ test('a real run refuses to start without GH_TOKEN, before writing anything', as
 test('every drafted post is published and its folder handed to the PR', async () => {
   const published = [];
   let postDirs;
-  const two = { posts: [{ id: '1', text: 't', url: 'u', media: [], thread: [] }], relatedExistingPosts: [] };
+  const two = {
+    posts: [{ id: '1', text: 't', url: 'u', media: [], thread: [] }],
+    relatedExistingPosts: [],
+  };
   await withEnv(ENV, () =>
-    main(deps({
-      classifyAndGroupPosts: async () => ({ groups: [two, two], skipped: [] }),
-      publishPost: async ({ draft }) => {
-        published.push(draft.title);
-        return { postDir: '/tmp/' + published.length, folderName: 'f', photos: [], videos: [] };
-      },
-      openDraftPr: async ({ postDirs: dirs }) => { postDirs = dirs; return { prUrl: 'u' }; },
-    }))
+    main(
+      deps({
+        classifyAndGroupPosts: async () => ({ groups: [two, two], skipped: [] }),
+        publishPost: async ({ draft }) => {
+          published.push(draft.title);
+          return { postDir: `/tmp/${published.length}`, folderName: 'f', photos: [], videos: [] };
+        },
+        openDraftPr: async ({ postDirs: dirs }) => {
+          postDirs = dirs;
+          return { prUrl: 'u' };
+        },
+      })
+    )
   );
   assert.equal(published.length, 2);
   assert.deepEqual(postDirs, ['/tmp/1', '/tmp/2']);
@@ -124,11 +172,21 @@ test('--local writes the posts but opens no PR and sends no Slack message', asyn
   process.argv.push('--local');
   try {
     await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
-      main(deps({
-        publishPost: async () => { calls.push('publish'); return { postDir: '/tmp/p', folderName: 'f', photos: [], videos: [] }; },
-        openDraftPr: async () => { calls.push('pr'); return { prUrl: 'u' }; },
-        notifySlack: async () => { calls.push('slack'); },
-      }))
+      main(
+        deps({
+          publishPost: async () => {
+            calls.push('publish');
+            return { postDir: '/tmp/p', folderName: 'f', photos: [], videos: [] };
+          },
+          openDraftPr: async () => {
+            calls.push('pr');
+            return { prUrl: 'u' };
+          },
+          notifySlack: async () => {
+            calls.push('slack');
+          },
+        })
+      )
     );
   } finally {
     process.argv = process.argv.filter((a) => a !== '--local');
@@ -153,7 +211,14 @@ test('--ignore-pending skips the open-PR dedup so a test run is possible', async
   process.argv.push('--dry-run', '--ignore-pending');
   try {
     await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
-      main(deps({ readPendingPosts: () => { consulted = true; return []; } }))
+      main(
+        deps({
+          readPendingPosts: () => {
+            consulted = true;
+            return [];
+          },
+        })
+      )
     );
   } finally {
     process.argv = process.argv.filter((a) => a !== '--dry-run' && a !== '--ignore-pending');
@@ -166,7 +231,14 @@ test('open draft PRs are consulted by default', async () => {
   process.argv.push('--dry-run');
   try {
     await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
-      main(deps({ readPendingPosts: () => { consulted = true; return []; } }))
+      main(
+        deps({
+          readPendingPosts: () => {
+            consulted = true;
+            return [];
+          },
+        })
+      )
     );
   } finally {
     process.argv = process.argv.filter((a) => a !== '--dry-run');

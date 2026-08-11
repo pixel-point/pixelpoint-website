@@ -1,5 +1,6 @@
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { requestJson, extractText } = require('./anthropic-json');
 
 const SCHEMA = { type: 'object', properties: { ok: { type: 'boolean' } }, required: ['ok'] };

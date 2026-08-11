@@ -1,9 +1,10 @@
 // scripts/blog-pipeline/lib/read-existing-posts.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const test = require('node:test');
+
 const { readExistingPosts } = require('./read-existing-posts');
 
 test('reads title/summary from every post folder', () => {

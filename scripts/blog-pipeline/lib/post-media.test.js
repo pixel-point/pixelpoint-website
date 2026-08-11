@@ -1,9 +1,21 @@
-const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { collectPhotos, downloadPhotos, stripUnknownImages } = require('./post-media');
+const test = require('node:test');
+
+const {
+  collectPhotos,
+  downloadPhotos,
+  stripUnknownImages,
+  collectVideos,
+  bestMp4,
+  stripUnusableVideos,
+  proxiedVideoSrc,
+  imageTarget,
+  dedupeVideosByPoster,
+  extensionFor,
+} = require('./post-media');
 
 function tmpDir() {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'pp-media-'));
@@ -31,13 +43,18 @@ test('collectPhotos ignores video and posts with no media', () => {
 });
 
 test('collectPhotos falls back to .jpg for a url with no usable extension', () => {
-  const photos = collectPhotos([{ media: [{ type: 'photo', url: 'https://pbs.twimg.com/media/abc' }] }]);
+  const photos = collectPhotos([
+    { media: [{ type: 'photo', url: 'https://pbs.twimg.com/media/abc' }] },
+  ]);
   assert.equal(photos[0].filename, 'image-1.jpg');
 });
 
 test('downloadPhotos writes each image and reports what landed', async () => {
   const destDir = tmpDir();
-  const fakeFetch = async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('png-bytes').buffer });
+  const fakeFetch = async () => ({
+    ok: true,
+    arrayBuffer: async () => new TextEncoder().encode('png-bytes').buffer,
+  });
   const saved = await downloadPhotos({
     photos: [{ filename: 'image-1.jpg', url: 'https://example.com/a.jpg' }],
     destDir,
@@ -96,8 +113,6 @@ test('stripUnknownImages removes every image when nothing was saved', () => {
   assert.ok(result.includes('Text.'));
 });
 
-const { collectVideos, bestMp4, stripUnusableVideos } = require('./post-media');
-
 const VARIANTS = [
   { content_type: 'application/x-mpegURL', url: 'https://video.twimg.com/x.m3u8' },
   { content_type: 'video/mp4', bit_rate: 632000, url: 'https://video.twimg.com/low.mp4' },
@@ -149,7 +164,13 @@ test('collectVideos builds a poster filename and a proxied src', () => {
   const videos = collectVideos([
     {
       media: [
-        { type: 'video', url: 'https://pbs.twimg.com/poster.jpg', variants: VARIANTS, width: 1920, height: 1080 },
+        {
+          type: 'video',
+          url: 'https://pbs.twimg.com/poster.jpg',
+          variants: VARIANTS,
+          width: 1920,
+          height: 1080,
+        },
       ],
     },
   ]);
@@ -170,7 +191,9 @@ test('collectVideos flags animated_gif so it loops without controls', () => {
 
 test('collectVideos skips media with no playable mp4', () => {
   assert.deepEqual(
-    collectVideos([{ media: [{ type: 'video', url: 'https://pbs.twimg.com/p.jpg', variants: [] }] }]),
+    collectVideos([
+      { media: [{ type: 'video', url: 'https://pbs.twimg.com/p.jpg', variants: [] }] },
+    ]),
     []
   );
 });
@@ -208,8 +231,6 @@ test('poster filenames match the regex gatsby-node uses to collect them', () => 
   });
 });
 
-const { proxiedVideoSrc } = require('./post-media');
-
 test('proxiedVideoSrc routes twimg through the site so no Referer reaches X', () => {
   // X 403s any request with a Referer from another domain, and referrerPolicy
   // is ignored on <video> — so the mp4 has to be fetched server-side.
@@ -246,8 +267,6 @@ test('collectVideos emits a proxied src, never a bare twimg url', () => {
   assert.ok(!videos[0].src.includes('video.twimg.com'));
 });
 
-const { imageTarget } = require('./post-media');
-
 test('imageTarget normalises the forms the model actually produces', () => {
   assert.equal(imageTarget('image-1.jpg'), 'image-1.jpg');
   // The same prompt shows ./ for video posters, so the model uses it here too.
@@ -262,8 +281,6 @@ test('stripUnknownImages keeps a ./-prefixed reference to a real file', () => {
   const result = stripUnknownImages(body, ['image-1.jpg']);
   assert.ok(result.includes('![a chart](./image-1.jpg)'));
 });
-
-const { dedupeVideosByPoster, extensionFor } = require('./post-media');
 
 const vid = (n, posterUrl) => ({
   posterFilename: `video-cover-${n}.jpg`,
@@ -310,16 +327,25 @@ test('genuinely different clips are both kept', async () => {
 test('poster filenames stay contiguous after a duplicate is dropped', async () => {
   const kept = await dedupeVideosByPoster({
     videos: [vid(1, 'https://p/a.jpg'), vid(2, 'https://p/b.jpg'), vid(3, 'https://p/c.jpg')],
-    fetchImpl: fetchReturning({ 'https://p/a.jpg': 'X', 'https://p/b.jpg': 'X', 'https://p/c.jpg': 'Y' }),
+    fetchImpl: fetchReturning({
+      'https://p/a.jpg': 'X',
+      'https://p/b.jpg': 'X',
+      'https://p/c.jpg': 'Y',
+    }),
   });
-  assert.deepEqual(kept.map((v) => v.posterFilename), ['video-cover-1.jpg', 'video-cover-2.jpg']);
+  assert.deepEqual(
+    kept.map((v) => v.posterFilename),
+    ['video-cover-1.jpg', 'video-cover-2.jpg']
+  );
 });
 
 test('an unreachable poster keeps the video rather than dropping it', async () => {
   // A transient network error must not silently cost a clip.
   const kept = await dedupeVideosByPoster({
     videos: [vid(1, 'https://p/a.jpg'), vid(2, 'https://p/b.jpg')],
-    fetchImpl: async () => { throw new Error('ECONNRESET'); },
+    fetchImpl: async () => {
+      throw new Error('ECONNRESET');
+    },
   });
   assert.equal(kept.length, 2);
 });

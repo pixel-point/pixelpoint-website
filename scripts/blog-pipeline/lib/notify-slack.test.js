@@ -1,7 +1,8 @@
 // scripts/blog-pipeline/lib/notify-slack.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
-const { notifySlack } = require('./notify-slack');
+const test = require('node:test');
+
+const { notifySlack, buildDraftsMessage } = require('./notify-slack');
 
 test('POSTs the text as JSON to the webhook URL', async () => {
   let capturedUrl;
@@ -11,7 +12,11 @@ test('POSTs the text as JSON to the webhook URL', async () => {
     capturedBody = JSON.parse(options.body);
     return { ok: true };
   };
-  await notifySlack({ webhookUrl: 'https://hooks.slack.com/x', text: 'hello', fetchImpl: fakeFetch });
+  await notifySlack({
+    webhookUrl: 'https://hooks.slack.com/x',
+    text: 'hello',
+    fetchImpl: fakeFetch,
+  });
   assert.equal(capturedUrl, 'https://hooks.slack.com/x');
   assert.deepEqual(capturedBody, { text: 'hello' });
 });
@@ -19,18 +24,19 @@ test('POSTs the text as JSON to the webhook URL', async () => {
 test('throws when the webhook responds with an error', async () => {
   const fakeFetch = async () => ({ ok: false, status: 500 });
   await assert.rejects(
-    () => notifySlack({ webhookUrl: 'https://hooks.slack.com/x', text: 'hi', fetchImpl: fakeFetch }),
+    () =>
+      notifySlack({ webhookUrl: 'https://hooks.slack.com/x', text: 'hi', fetchImpl: fakeFetch }),
     /Slack webhook failed: 500/
   );
 });
-
-const { buildDraftsMessage } = require('./notify-slack');
 
 const DRAFTS = [{ title: 'Toolcraft update: a leaner AI harness' }, { title: 'Introducing Aval' }];
 
 test('buildDraftsMessage leads with the PR link and lists every title', () => {
   const text = buildDraftsMessage({ drafts: DRAFTS, prUrl: 'https://github.com/o/r/pull/9' });
-  assert.ok(text.startsWith('2 new monthly blog drafts ready for review: https://github.com/o/r/pull/9'));
+  assert.ok(
+    text.startsWith('2 new monthly blog drafts ready for review: https://github.com/o/r/pull/9')
+  );
   assert.ok(text.includes('• Toolcraft update: a leaner AI harness'));
   assert.ok(text.includes('• Introducing Aval'));
   assert.ok(text.includes('Vercel comments the preview link'));
@@ -80,12 +86,16 @@ test('notifySlack retries a transient failure — the run has no other signal', 
 test('notifySlack does not retry a permanent failure', async () => {
   let calls = 0;
   await assert.rejects(
-    () => notifySlack({
-      webhookUrl: 'https://hooks.slack.com/x',
-      text: 'hi',
-      fetchImpl: async () => { calls += 1; return { ok: false, status: 404 }; },
-      sleepImpl: async () => {},
-    }),
+    () =>
+      notifySlack({
+        webhookUrl: 'https://hooks.slack.com/x',
+        text: 'hi',
+        fetchImpl: async () => {
+          calls += 1;
+          return { ok: false, status: 404 };
+        },
+        sleepImpl: async () => {},
+      }),
     /Slack webhook failed: 404/
   );
   assert.equal(calls, 1, 'a bad webhook url fails the same way every time');
@@ -94,13 +104,17 @@ test('notifySlack does not retry a permanent failure', async () => {
 test('notifySlack gives up after the last attempt', async () => {
   let calls = 0;
   await assert.rejects(
-    () => notifySlack({
-      webhookUrl: 'https://hooks.slack.com/x',
-      text: 'hi',
-      fetchImpl: async () => { calls += 1; return { ok: false, status: 500 }; },
-      sleepImpl: async () => {},
-      attempts: 2,
-    }),
+    () =>
+      notifySlack({
+        webhookUrl: 'https://hooks.slack.com/x',
+        text: 'hi',
+        fetchImpl: async () => {
+          calls += 1;
+          return { ok: false, status: 500 };
+        },
+        sleepImpl: async () => {},
+        attempts: 2,
+      }),
     /Slack webhook failed: 500/
   );
   assert.equal(calls, 2);

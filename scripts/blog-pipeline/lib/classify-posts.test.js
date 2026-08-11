@@ -1,14 +1,17 @@
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { classifyAndGroupPosts, buildClassifyPrompt } = require('./classify-posts');
 
 function fakeClientReturning(payload) {
   return {
     messages: {
-      stream: (params) => ({ finalMessage: async () => ({
-        stop_reason: 'end_turn',
-        content: [{ type: 'text', text: JSON.stringify(payload) }],
-      }) }),
+      stream: () => ({
+        finalMessage: async () => ({
+          stop_reason: 'end_turn',
+          content: [{ type: 'text', text: JSON.stringify(payload) }],
+        }),
+      }),
     },
   };
 }
@@ -42,7 +45,11 @@ test('classifyAndGroupPosts returns groups of full post objects', async () => {
     { id: '3', text: 'small update one' },
     { id: '4', text: 'small update two' },
   ];
-  const result = await classifyAndGroupPosts({ candidates, existingPosts: [], anthropicClient: fakeClient });
+  const result = await classifyAndGroupPosts({
+    candidates,
+    existingPosts: [],
+    anthropicClient: fakeClient,
+  });
   assert.deepEqual(
     result.groups.map((group) => group.posts.map((p) => p.id)),
     [['2'], ['3', '4']]
@@ -54,7 +61,10 @@ test('classifyAndGroupPosts drops groups the model flagged as already covered', 
   const fakeClient = fakeClientReturning({
     groups: [
       group(['2']),
-      group(['3'], { already_covered: true, existing_post_title: 'Build personal design tools with AI using Toolcraft' }),
+      group(['3'], {
+        already_covered: true,
+        existing_post_title: 'Build personal design tools with AI using Toolcraft',
+      }),
     ],
   });
   const result = await classifyAndGroupPosts({
@@ -158,14 +168,22 @@ test('classifyAndGroupPosts returns no groups without calling the model when the
       },
     },
   };
-  const result = await classifyAndGroupPosts({ candidates: [], existingPosts: [], anthropicClient: fakeClient });
+  const result = await classifyAndGroupPosts({
+    candidates: [],
+    existingPosts: [],
+    anthropicClient: fakeClient,
+  });
   assert.deepEqual(result, { groups: [], skipped: [] });
   assert.equal(called, false);
 });
 
 test('classifyAndGroupPosts resolves related existing posts so the draft can link them', async () => {
   const existingPosts = [
-    { title: 'Build personal design tools with AI using Toolcraft', summary: 'x', path: '/blog/how-to-craft/' },
+    {
+      title: 'Build personal design tools with AI using Toolcraft',
+      summary: 'x',
+      path: '/blog/how-to-craft/',
+    },
   ];
   const fakeClient = fakeClientReturning({
     groups: [

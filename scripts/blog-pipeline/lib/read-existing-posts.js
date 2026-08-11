@@ -1,7 +1,9 @@
 // scripts/blog-pipeline/lib/read-existing-posts.js
 const fs = require('node:fs');
 const path = require('node:path');
+
 const matter = require('gray-matter');
+
 // Reused rather than reimplemented so the pipeline's links stay correct if
 // BLOG_BASE_PATH or the date-prefix convention ever changes.
 const getBlogPostPath = require('../../../src/utils/get-blog-post-path');

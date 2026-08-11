@@ -1,5 +1,6 @@
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { buildPrBody } = require('./pr-body');
 
 const DRAFTS = [{ title: 'Introducing Aval' }, { title: "Toolcraft's New Release" }];

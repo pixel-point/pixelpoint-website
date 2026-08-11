@@ -1,6 +1,7 @@
 // scripts/blog-pipeline/lib/draft-post.test.js
-const test = require('node:test');
 const assert = require('node:assert/strict');
+const test = require('node:test');
+
 const { draftPost, buildDraftPrompt } = require('./draft-post');
 
 test('buildDraftPrompt tells the model to preserve I/we framing and write editorially', () => {
@@ -10,7 +11,7 @@ test('buildDraftPrompt tells the model to preserve I/we framing and write editor
   assert.ok(prompt.includes("Don't just reformat"));
 });
 
-test('buildDraftPrompt tells the model it is writing under the author\'s own byline', () => {
+test("buildDraftPrompt tells the model it is writing under the author's own byline", () => {
   // A dry run against real posts produced drafts that referred to "Alex
   // Barashkov, our CEO" in the third person while being published under his
   // byline, so the narrator has to be stated explicitly.
@@ -23,10 +24,12 @@ test('draftPost parses the model JSON response into a draft object', async () =>
   const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
   const fakeClient = {
     messages: {
-      stream: (params) => ({ finalMessage: async () => ({
-        stop_reason: 'end_turn',
-        content: [{ type: 'text', text: JSON.stringify(fakeDraft) }],
-      }) }),
+      stream: () => ({
+        finalMessage: async () => ({
+          stop_reason: 'end_turn',
+          content: [{ type: 'text', text: JSON.stringify(fakeDraft) }],
+        }),
+      }),
     },
   };
   const result = await draftPost({
@@ -40,13 +43,15 @@ test('draftPost ignores thinking blocks when reading the JSON', async () => {
   const fakeDraft = { title: 'T', summary: 'S', slug: 'slug', body: 'Body' };
   const fakeClient = {
     messages: {
-      stream: (params) => ({ finalMessage: async () => ({
-        stop_reason: 'end_turn',
-        content: [
-          { type: 'thinking', thinking: 'Let me consider the framing...' },
-          { type: 'text', text: JSON.stringify(fakeDraft) },
-        ],
-      }) }),
+      stream: () => ({
+        finalMessage: async () => ({
+          stop_reason: 'end_turn',
+          content: [
+            { type: 'thinking', thinking: 'Let me consider the framing...' },
+            { type: 'text', text: JSON.stringify(fakeDraft) },
+          ],
+        }),
+      }),
     },
   };
   const result = await draftPost({
