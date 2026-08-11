@@ -1,3 +1,4 @@
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -5,7 +6,13 @@ const SUPPORTED_TYPES = ['photo'];
 const VIDEO_TYPES = ['video', 'animated_gif'];
 
 function extensionFor(url) {
-  const ext = path.extname(new URL(url).pathname).toLowerCase();
+  let ext;
+  try {
+    ext = path.extname(new URL(url).pathname).toLowerCase();
+  } catch {
+    // A malformed url should cost the extension guess, not the whole run.
+    return '.jpg';
+  }
   return ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext) ? ext : '.jpg';
 }
 
@@ -104,6 +111,42 @@ function collectVideos(posts) {
   return videos;
 }
 
+// The same clip posted in two tweets arrives as two media items with different
+// ids, different urls, and byte-identical posters — which is how one video came
+// out twice in a single article. Nothing in the metadata reveals it, so compare
+// the poster bytes. Runs before drafting so the model never sees the duplicate
+// and never writes prose around it.
+async function dedupeVideosByPoster({ videos, fetchImpl = fetch }) {
+  const seen = new Set();
+  const kept = [];
+
+  for (const video of videos) {
+    let digest;
+    try {
+      const res = await fetchImpl(video.posterUrl);
+      if (res.ok) {
+        digest = crypto
+          .createHash('sha256')
+          .update(Buffer.from(await res.arrayBuffer()))
+          .digest('hex');
+      }
+    } catch {
+      // Unreachable poster: keep the video and let the publish step decide.
+      // Dropping it here would lose a clip over a transient network error.
+    }
+
+    if (digest && seen.has(digest)) continue;
+    if (digest) seen.add(digest);
+    kept.push(video);
+  }
+
+  // Renumber so the filenames stay contiguous after a drop.
+  return kept.map((video, index) => ({
+    ...video,
+    posterFilename: `video-cover-${index + 1}${extensionFor(video.posterUrl)}`,
+  }));
+}
+
 // Drops a photo rather than failing the run: a dead image URL should cost one
 // image, not the whole month's PR. Returns the ones that actually landed.
 async function downloadPhotos({ photos, destDir, fetchImpl = fetch }) {
@@ -157,11 +200,13 @@ function stripUnusableVideos(body, savedPosterFilenames) {
 module.exports = {
   collectPhotos,
   collectVideos,
+  dedupeVideosByPoster,
   downloadPhotos,
   stripUnknownImages,
   imageTarget,
   stripUnusableVideos,
   bestMp4,
+  extensionFor,
   proxiedVideoSrc,
   SUPPORTED_TYPES,
   VIDEO_TYPES,

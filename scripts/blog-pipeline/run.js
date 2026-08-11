@@ -9,7 +9,7 @@ const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readPendingPosts } = require('./lib/read-pending-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
-const { collectPhotos, collectVideos } = require('./lib/post-media');
+const { collectPhotos, collectVideos, dedupeVideosByPoster } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack, buildDraftsMessage } = require('./lib/notify-slack');
@@ -45,6 +45,7 @@ const defaultDeps = {
   notifySlack,
   collectPhotos,
   collectVideos,
+  dedupeVideosByPoster,
 };
 
 async function main(overrides = {}) {
@@ -61,6 +62,7 @@ async function main(overrides = {}) {
     notifySlack,
     collectPhotos,
     collectVideos,
+    dedupeVideosByPoster,
   } = { ...defaultDeps, ...overrides };
 
   const dryRun = process.argv.includes('--dry-run');
@@ -125,7 +127,7 @@ async function main(overrides = {}) {
   const drafted = [];
   for (const { posts: group, relatedExistingPosts } of groups) {
     const photos = collectPhotos(group);
-    const videos = collectVideos(group);
+    const videos = await dedupeVideosByPoster({ videos: collectVideos(group) });
     drafted.push({
       draft: await draftPost({
         qualifyingPosts: group,

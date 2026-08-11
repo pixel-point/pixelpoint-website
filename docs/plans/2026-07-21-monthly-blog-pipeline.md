@@ -2065,10 +2065,77 @@ test('stripUnknownImages keeps a ./-prefixed reference to a real file', () => {
   const result = stripUnknownImages(body, ['image-1.jpg']);
   assert.ok(result.includes('![a chart](./image-1.jpg)'));
 });
+
+const { dedupeVideosByPoster, extensionFor } = require('./post-media');
+
+const vid = (n, posterUrl) => ({
+  posterFilename: `video-cover-${n}.jpg`,
+  posterUrl,
+  src: `/x-video/amplify_video/${n}/v.mp4`,
+  width: '1920',
+  height: '1080',
+  isGif: false,
+});
+
+function fetchReturning(bytesByUrl) {
+  return async (url) => ({
+    ok: true,
+    arrayBuffer: async () => new TextEncoder().encode(bytesByUrl[url]).buffer,
+  });
+}
+
+test('the same clip posted twice is kept once, compared by poster bytes', async () => {
+  // Different media ids and different poster urls, byte-identical images —
+  // exactly how one video rendered twice in the Databricks post.
+  const videos = [vid(1, 'https://pbs.twimg.com/a.jpg'), vid(2, 'https://pbs.twimg.com/b.jpg')];
+  const kept = await dedupeVideosByPoster({
+    videos,
+    fetchImpl: fetchReturning({
+      'https://pbs.twimg.com/a.jpg': 'SAME-FRAME',
+      'https://pbs.twimg.com/b.jpg': 'SAME-FRAME',
+    }),
+  });
+  assert.equal(kept.length, 1);
+  assert.equal(kept[0].src, '/x-video/amplify_video/1/v.mp4', 'the first occurrence wins');
+});
+
+test('genuinely different clips are both kept', async () => {
+  const kept = await dedupeVideosByPoster({
+    videos: [vid(1, 'https://pbs.twimg.com/a.jpg'), vid(2, 'https://pbs.twimg.com/b.jpg')],
+    fetchImpl: fetchReturning({
+      'https://pbs.twimg.com/a.jpg': 'FRAME-A',
+      'https://pbs.twimg.com/b.jpg': 'FRAME-B',
+    }),
+  });
+  assert.equal(kept.length, 2);
+});
+
+test('poster filenames stay contiguous after a duplicate is dropped', async () => {
+  const kept = await dedupeVideosByPoster({
+    videos: [vid(1, 'https://p/a.jpg'), vid(2, 'https://p/b.jpg'), vid(3, 'https://p/c.jpg')],
+    fetchImpl: fetchReturning({ 'https://p/a.jpg': 'X', 'https://p/b.jpg': 'X', 'https://p/c.jpg': 'Y' }),
+  });
+  assert.deepEqual(kept.map((v) => v.posterFilename), ['video-cover-1.jpg', 'video-cover-2.jpg']);
+});
+
+test('an unreachable poster keeps the video rather than dropping it', async () => {
+  // A transient network error must not silently cost a clip.
+  const kept = await dedupeVideosByPoster({
+    videos: [vid(1, 'https://p/a.jpg'), vid(2, 'https://p/b.jpg')],
+    fetchImpl: async () => { throw new Error('ECONNRESET'); },
+  });
+  assert.equal(kept.length, 2);
+});
+
+test('extensionFor survives a malformed url instead of throwing', () => {
+  // It runs inside the dedup renumbering; throwing there would kill the run.
+  assert.equal(extensionFor('not-a-url'), '.jpg');
+});
 ```
 
 ```js
 // scripts/blog-pipeline/lib/post-media.js
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -2076,7 +2143,13 @@ const SUPPORTED_TYPES = ['photo'];
 const VIDEO_TYPES = ['video', 'animated_gif'];
 
 function extensionFor(url) {
-  const ext = path.extname(new URL(url).pathname).toLowerCase();
+  let ext;
+  try {
+    ext = path.extname(new URL(url).pathname).toLowerCase();
+  } catch {
+    // A malformed url should cost the extension guess, not the whole run.
+    return '.jpg';
+  }
   return ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext) ? ext : '.jpg';
 }
 
@@ -2175,6 +2248,42 @@ function collectVideos(posts) {
   return videos;
 }
 
+// The same clip posted in two tweets arrives as two media items with different
+// ids, different urls, and byte-identical posters — which is how one video came
+// out twice in a single article. Nothing in the metadata reveals it, so compare
+// the poster bytes. Runs before drafting so the model never sees the duplicate
+// and never writes prose around it.
+async function dedupeVideosByPoster({ videos, fetchImpl = fetch }) {
+  const seen = new Set();
+  const kept = [];
+
+  for (const video of videos) {
+    let digest;
+    try {
+      const res = await fetchImpl(video.posterUrl);
+      if (res.ok) {
+        digest = crypto
+          .createHash('sha256')
+          .update(Buffer.from(await res.arrayBuffer()))
+          .digest('hex');
+      }
+    } catch {
+      // Unreachable poster: keep the video and let the publish step decide.
+      // Dropping it here would lose a clip over a transient network error.
+    }
+
+    if (digest && seen.has(digest)) continue;
+    if (digest) seen.add(digest);
+    kept.push(video);
+  }
+
+  // Renumber so the filenames stay contiguous after a drop.
+  return kept.map((video, index) => ({
+    ...video,
+    posterFilename: `video-cover-${index + 1}${extensionFor(video.posterUrl)}`,
+  }));
+}
+
 // Drops a photo rather than failing the run: a dead image URL should cost one
 // image, not the whole month's PR. Returns the ones that actually landed.
 async function downloadPhotos({ photos, destDir, fetchImpl = fetch }) {
@@ -2228,11 +2337,13 @@ function stripUnusableVideos(body, savedPosterFilenames) {
 module.exports = {
   collectPhotos,
   collectVideos,
+  dedupeVideosByPoster,
   downloadPhotos,
   stripUnknownImages,
   imageTarget,
   stripUnusableVideos,
   bestMp4,
+  extensionFor,
   proxiedVideoSrc,
   SUPPORTED_TYPES,
   VIDEO_TYPES,
@@ -3025,7 +3136,7 @@ const { readExistingPosts } = require('./lib/read-existing-posts');
 const { readPendingPosts } = require('./lib/read-pending-posts');
 const { readAuthorHandle } = require('./lib/read-author-handle');
 const { publishPost } = require('./lib/publish-post');
-const { collectPhotos, collectVideos } = require('./lib/post-media');
+const { collectPhotos, collectVideos, dedupeVideosByPoster } = require('./lib/post-media');
 const { openDraftPr } = require('./lib/git-pr');
 const { buildPrBody } = require('./lib/pr-body');
 const { notifySlack, buildDraftsMessage } = require('./lib/notify-slack');
@@ -3061,6 +3172,7 @@ const defaultDeps = {
   notifySlack,
   collectPhotos,
   collectVideos,
+  dedupeVideosByPoster,
 };
 
 async function main(overrides = {}) {
@@ -3077,6 +3189,7 @@ async function main(overrides = {}) {
     notifySlack,
     collectPhotos,
     collectVideos,
+    dedupeVideosByPoster,
   } = { ...defaultDeps, ...overrides };
 
   const dryRun = process.argv.includes('--dry-run');
@@ -3141,7 +3254,7 @@ async function main(overrides = {}) {
   const drafted = [];
   for (const { posts: group, relatedExistingPosts } of groups) {
     const photos = collectPhotos(group);
-    const videos = collectVideos(group);
+    const videos = await dedupeVideosByPoster({ videos: collectVideos(group) });
     drafted.push({
       draft: await draftPost({
         qualifyingPosts: group,

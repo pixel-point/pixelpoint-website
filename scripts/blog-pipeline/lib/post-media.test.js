@@ -262,3 +262,69 @@ test('stripUnknownImages keeps a ./-prefixed reference to a real file', () => {
   const result = stripUnknownImages(body, ['image-1.jpg']);
   assert.ok(result.includes('![a chart](./image-1.jpg)'));
 });
+
+const { dedupeVideosByPoster, extensionFor } = require('./post-media');
+
+const vid = (n, posterUrl) => ({
+  posterFilename: `video-cover-${n}.jpg`,
+  posterUrl,
+  src: `/x-video/amplify_video/${n}/v.mp4`,
+  width: '1920',
+  height: '1080',
+  isGif: false,
+});
+
+function fetchReturning(bytesByUrl) {
+  return async (url) => ({
+    ok: true,
+    arrayBuffer: async () => new TextEncoder().encode(bytesByUrl[url]).buffer,
+  });
+}
+
+test('the same clip posted twice is kept once, compared by poster bytes', async () => {
+  // Different media ids and different poster urls, byte-identical images —
+  // exactly how one video rendered twice in the Databricks post.
+  const videos = [vid(1, 'https://pbs.twimg.com/a.jpg'), vid(2, 'https://pbs.twimg.com/b.jpg')];
+  const kept = await dedupeVideosByPoster({
+    videos,
+    fetchImpl: fetchReturning({
+      'https://pbs.twimg.com/a.jpg': 'SAME-FRAME',
+      'https://pbs.twimg.com/b.jpg': 'SAME-FRAME',
+    }),
+  });
+  assert.equal(kept.length, 1);
+  assert.equal(kept[0].src, '/x-video/amplify_video/1/v.mp4', 'the first occurrence wins');
+});
+
+test('genuinely different clips are both kept', async () => {
+  const kept = await dedupeVideosByPoster({
+    videos: [vid(1, 'https://pbs.twimg.com/a.jpg'), vid(2, 'https://pbs.twimg.com/b.jpg')],
+    fetchImpl: fetchReturning({
+      'https://pbs.twimg.com/a.jpg': 'FRAME-A',
+      'https://pbs.twimg.com/b.jpg': 'FRAME-B',
+    }),
+  });
+  assert.equal(kept.length, 2);
+});
+
+test('poster filenames stay contiguous after a duplicate is dropped', async () => {
+  const kept = await dedupeVideosByPoster({
+    videos: [vid(1, 'https://p/a.jpg'), vid(2, 'https://p/b.jpg'), vid(3, 'https://p/c.jpg')],
+    fetchImpl: fetchReturning({ 'https://p/a.jpg': 'X', 'https://p/b.jpg': 'X', 'https://p/c.jpg': 'Y' }),
+  });
+  assert.deepEqual(kept.map((v) => v.posterFilename), ['video-cover-1.jpg', 'video-cover-2.jpg']);
+});
+
+test('an unreachable poster keeps the video rather than dropping it', async () => {
+  // A transient network error must not silently cost a clip.
+  const kept = await dedupeVideosByPoster({
+    videos: [vid(1, 'https://p/a.jpg'), vid(2, 'https://p/b.jpg')],
+    fetchImpl: async () => { throw new Error('ECONNRESET'); },
+  });
+  assert.equal(kept.length, 2);
+});
+
+test('extensionFor survives a malformed url instead of throwing', () => {
+  // It runs inside the dedup renumbering; throwing there would kill the run.
+  assert.equal(extensionFor('not-a-url'), '.jpg');
+});
