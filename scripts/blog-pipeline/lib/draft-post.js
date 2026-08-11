@@ -58,12 +58,14 @@ function buildVideoInstructions(videos) {
       : []),
     '',
     'Videos available (use these lines exactly):',
-    ...sets.flatMap((set, index) => [
-      sets.length > 1 || set.length > 1
-        ? `Set ${index + 1} — ${set.length} video(s) published together:`
-        : '',
-      ...set.map(videoTag),
-    ]).filter(Boolean),
+    ...sets
+      .flatMap((set, index) => [
+        sets.length > 1 || set.length > 1
+          ? `Set ${index + 1} — ${set.length} video(s) published together:`
+          : '',
+        ...set.map(videoTag),
+      ])
+      .filter(Boolean),
   ];
 }
 
@@ -95,7 +97,7 @@ function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts 
     'Keep any exact command, package name, or code snippet from the source posts verbatim, in a fenced code block — an install line a reader can copy is the most useful thing an announcement post can carry, and paraphrasing it makes it wrong.',
     'A post\'s "followUps" are the author\'s own replies to it, and are usually where the landing page or repository link was posted. Treat them as part of the same announcement and use those links in the article.',
     'When a source post links to something — a launched page, a repo, a demo — link to it from the article at the point you mention it, using the real URL from the post. Do not describe a thing as launched or shipped without linking it if the link is available.',
-    'Where a source post quotes another post, that quoted text is background so you know what is being pointed at. Write about our work, not about the other person\'s post, and do not quote them.',
+    "Where a source post quotes another post, that quoted text is background so you know what is being pointed at. Write about our work, not about the other person's post, and do not quote them.",
     '',
     'Source posts (JSON):',
     JSON.stringify(
