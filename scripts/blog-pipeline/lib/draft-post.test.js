@@ -92,7 +92,7 @@ test('buildDraftPrompt asks for sentence case, matching the rest of the blog', (
 
 test('buildDraftPrompt asks for commands to survive verbatim', () => {
   const prompt = buildDraftPrompt([{ text: 'npx skills add x', url: 'https://x.com/1' }]);
-  assert.ok(prompt.includes('verbatim, in a fenced code block'));
+  assert.ok(prompt.includes('keep its exact command or package name verbatim'));
 });
 
 const VID = (n, sourceUrl) => ({
