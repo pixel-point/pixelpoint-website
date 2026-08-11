@@ -2174,6 +2174,7 @@ const {
   imageTarget,
   dedupeVideosByPoster,
   extensionFor,
+  stripTruncatedVideos,
 } = require('./post-media');
 
 function tmpDir() {
@@ -2513,6 +2514,28 @@ test('extensionFor survives a malformed url instead of throwing', () => {
   // It runs inside the dedup renumbering; throwing there would kill the run.
   assert.equal(extensionFor('not-a-url'), '.jpg');
 });
+
+test('a Video tag cut off mid-attribute is dropped, not published', async () => {
+  // Observed: a draft body ended at `...grOQe8Ny3gnLUT24.mp4` with no closing
+  // quote or tag. MDX then read the whole file as JSX and the build failed
+  // with a parse error pointing at line 1.
+  const body = 'Intro.\n\n<Video src="/x/a.mp4"></Video>\n\nMore.\n\n<Video src="/x/b.mp4';
+  const result = stripTruncatedVideos(body);
+  assert.ok(result.includes('<Video src="/x/a.mp4"></Video>'), 'the complete tag survives');
+  assert.ok(!result.includes('/x/b.mp4'), 'the fragment is gone');
+  assert.ok(result.includes('More.'), 'surrounding prose is untouched');
+});
+
+test('a Video missing only its closing tag is also dropped', () => {
+  const result = stripTruncatedVideos('A\n\n<Video src="/x/a.mp4" poster="./v.jpg">\n\nB');
+  assert.ok(!result.includes('<Video'));
+  assert.ok(result.includes('A') && result.includes('B'));
+});
+
+test('well-formed videos are left completely alone', () => {
+  const body = 'A\n\n<Video src="/x/a.mp4"></Video>\n\n<Video src="/x/b.mp4"></Video>\n\nB';
+  assert.equal(stripTruncatedVideos(body), body);
+});
 ```
 
 ```js
@@ -2710,6 +2733,32 @@ function stripUnknownImages(body, savedFilenames) {
   );
 }
 
+// A draft can arrive with its last <Video> cut off mid-attribute — observed
+// once, where the body ended at `...grOQe8Ny3gnLUT24.mp4` with no closing
+// quote, bracket or tag. MDX then reads the file as JSX and the build fails
+// with a parse error pointing at line 1, which is a miserable thing to debug.
+// One lost clip beats a broken build, so drop any fragment that is not a
+// complete tag.
+function stripTruncatedVideos(body) {
+  const complete = /<Video\b[^>]*><\/Video>/g;
+  const kept = [];
+
+  for (const match of body.matchAll(complete)) {
+    kept.push({ start: match.index, end: match.index + match[0].length });
+  }
+
+  // Anything starting with `<Video` that is not one of those spans is a
+  // fragment: an unclosed tag, or one missing its </Video>.
+  return body.replace(/<Video\b[\s\S]*?(?:<\/Video>|$)/g, (match, offset) => {
+    const isComplete = kept.some(
+      (span) => span.start === offset && span.end === offset + match.length
+    );
+    if (isComplete) return match;
+    console.warn(`Dropping a malformed <Video> fragment: ${match.slice(0, 60)}...`);
+    return '';
+  });
+}
+
 // A <Video> whose poster never downloaded throws during the Gatsby build
 // (video.jsx:20) rather than degrading, so it takes the whole site down — drop
 // the block entirely instead of shipping one.
@@ -2728,6 +2777,7 @@ module.exports = {
   stripUnknownImages,
   imageTarget,
   stripUnusableVideos,
+  stripTruncatedVideos,
   bestMp4,
   extensionFor,
   proxiedVideoSrc,
@@ -3025,7 +3075,12 @@ const path = require('node:path');
 
 const matter = require('gray-matter');
 
-const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
+const {
+  downloadPhotos,
+  stripUnknownImages,
+  stripUnusableVideos,
+  stripTruncatedVideos,
+} = require('./post-media');
 
 // Every post in a run shares publishDate, so the folder name comes down to the
 // model-chosen slug. Two drafts landing on the same slug — a standalone post
@@ -3077,12 +3132,14 @@ async function publishPost({
 
   // Drop references to images that never landed — a download that 404s should
   // cost one image, not ship a broken image tag into a published post.
-  const body = stripUnusableVideos(
-    stripUnknownImages(
-      draft.body,
-      saved.map((photo) => photo.filename)
-    ),
-    savedPosters.map((poster) => poster.filename)
+  const body = stripTruncatedVideos(
+    stripUnusableVideos(
+      stripUnknownImages(
+        draft.body,
+        saved.map((photo) => photo.filename)
+      ),
+      savedPosters.map((poster) => poster.filename)
+    )
   );
 
   // Something from the post itself beats the shared placeholder, and it is

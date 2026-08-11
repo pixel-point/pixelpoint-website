@@ -15,6 +15,7 @@ const {
   imageTarget,
   dedupeVideosByPoster,
   extensionFor,
+  stripTruncatedVideos,
 } = require('./post-media');
 
 function tmpDir() {
@@ -353,4 +354,26 @@ test('an unreachable poster keeps the video rather than dropping it', async () =
 test('extensionFor survives a malformed url instead of throwing', () => {
   // It runs inside the dedup renumbering; throwing there would kill the run.
   assert.equal(extensionFor('not-a-url'), '.jpg');
+});
+
+test('a Video tag cut off mid-attribute is dropped, not published', async () => {
+  // Observed: a draft body ended at `...grOQe8Ny3gnLUT24.mp4` with no closing
+  // quote or tag. MDX then read the whole file as JSX and the build failed
+  // with a parse error pointing at line 1.
+  const body = 'Intro.\n\n<Video src="/x/a.mp4"></Video>\n\nMore.\n\n<Video src="/x/b.mp4';
+  const result = stripTruncatedVideos(body);
+  assert.ok(result.includes('<Video src="/x/a.mp4"></Video>'), 'the complete tag survives');
+  assert.ok(!result.includes('/x/b.mp4'), 'the fragment is gone');
+  assert.ok(result.includes('More.'), 'surrounding prose is untouched');
+});
+
+test('a Video missing only its closing tag is also dropped', () => {
+  const result = stripTruncatedVideos('A\n\n<Video src="/x/a.mp4" poster="./v.jpg">\n\nB');
+  assert.ok(!result.includes('<Video'));
+  assert.ok(result.includes('A') && result.includes('B'));
+});
+
+test('well-formed videos are left completely alone', () => {
+  const body = 'A\n\n<Video src="/x/a.mp4"></Video>\n\n<Video src="/x/b.mp4"></Video>\n\nB';
+  assert.equal(stripTruncatedVideos(body), body);
 });

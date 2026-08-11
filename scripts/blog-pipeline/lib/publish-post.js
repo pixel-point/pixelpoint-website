@@ -4,7 +4,12 @@ const path = require('node:path');
 
 const matter = require('gray-matter');
 
-const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./post-media');
+const {
+  downloadPhotos,
+  stripUnknownImages,
+  stripUnusableVideos,
+  stripTruncatedVideos,
+} = require('./post-media');
 
 // Every post in a run shares publishDate, so the folder name comes down to the
 // model-chosen slug. Two drafts landing on the same slug — a standalone post
@@ -56,12 +61,14 @@ async function publishPost({
 
   // Drop references to images that never landed — a download that 404s should
   // cost one image, not ship a broken image tag into a published post.
-  const body = stripUnusableVideos(
-    stripUnknownImages(
-      draft.body,
-      saved.map((photo) => photo.filename)
-    ),
-    savedPosters.map((poster) => poster.filename)
+  const body = stripTruncatedVideos(
+    stripUnusableVideos(
+      stripUnknownImages(
+        draft.body,
+        saved.map((photo) => photo.filename)
+      ),
+      savedPosters.map((poster) => poster.filename)
+    )
   );
 
   // Something from the post itself beats the shared placeholder, and it is

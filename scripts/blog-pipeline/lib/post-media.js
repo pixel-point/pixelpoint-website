@@ -191,6 +191,32 @@ function stripUnknownImages(body, savedFilenames) {
   );
 }
 
+// A draft can arrive with its last <Video> cut off mid-attribute — observed
+// once, where the body ended at `...grOQe8Ny3gnLUT24.mp4` with no closing
+// quote, bracket or tag. MDX then reads the file as JSX and the build fails
+// with a parse error pointing at line 1, which is a miserable thing to debug.
+// One lost clip beats a broken build, so drop any fragment that is not a
+// complete tag.
+function stripTruncatedVideos(body) {
+  const complete = /<Video\b[^>]*><\/Video>/g;
+  const kept = [];
+
+  for (const match of body.matchAll(complete)) {
+    kept.push({ start: match.index, end: match.index + match[0].length });
+  }
+
+  // Anything starting with `<Video` that is not one of those spans is a
+  // fragment: an unclosed tag, or one missing its </Video>.
+  return body.replace(/<Video\b[\s\S]*?(?:<\/Video>|$)/g, (match, offset) => {
+    const isComplete = kept.some(
+      (span) => span.start === offset && span.end === offset + match.length
+    );
+    if (isComplete) return match;
+    console.warn(`Dropping a malformed <Video> fragment: ${match.slice(0, 60)}...`);
+    return '';
+  });
+}
+
 // A <Video> whose poster never downloaded throws during the Gatsby build
 // (video.jsx:20) rather than degrading, so it takes the whole site down — drop
 // the block entirely instead of shipping one.
@@ -209,6 +235,7 @@ module.exports = {
   stripUnknownImages,
   imageTarget,
   stripUnusableVideos,
+  stripTruncatedVideos,
   bestMp4,
   extensionFor,
   proxiedVideoSrc,
