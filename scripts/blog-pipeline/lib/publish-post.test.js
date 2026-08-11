@@ -142,3 +142,58 @@ test('a title containing a newline or a colon still parses', async () => {
   assert.equal(data.title, 'Toolcraft: an update\nwith a newline');
   assert.equal(data.summary, 'He said "it works" — 100% of the time');
 });
+
+test('a video poster becomes the cover, without duplicating the bytes', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  const { postDir, cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'with-video', body: '<Video poster="./video-cover-1.jpg"></Video>' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+    videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/a.jpg' }],
+    fetchImpl: async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('FRAME').buffer }),
+  });
+
+  assert.equal(cover, 'video-cover-1.jpg');
+  assert.equal(matter(fs.readFileSync(path.join(postDir, 'index.md'), 'utf8')).data.cover, 'video-cover-1.jpg');
+  // Referenced in place rather than copied to cover.png.
+  assert.equal(fs.existsSync(path.join(postDir, 'cover.png')), false);
+});
+
+test('the placeholder is used when the post has no video', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-none-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  const { postDir, cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'no-video', body: 'Body' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+  });
+
+  assert.equal(cover, 'cover.png');
+  assert.equal(fs.readFileSync(path.join(postDir, 'cover.png'), 'utf8'), 'PLACEHOLDER');
+});
+
+test('a poster that failed to download does not become a missing cover', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-404-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  // A cover pointing at a file that isn't there fails the whole Gatsby build.
+  const { postDir, cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'lost-poster', body: 'Body' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+    videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/gone.jpg' }],
+    fetchImpl: async () => ({ ok: false, status: 404 }),
+  });
+
+  assert.equal(cover, 'cover.png');
+  assert.ok(fs.existsSync(path.join(postDir, 'cover.png')));
+});

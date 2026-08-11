@@ -1766,12 +1766,14 @@ function buildVideoInstructions(videos) {
       : []),
     '',
     'Videos available (use these lines exactly):',
-    ...sets.flatMap((set, index) => [
-      sets.length > 1 || set.length > 1
-        ? `Set ${index + 1} — ${set.length} video(s) published together:`
-        : '',
-      ...set.map(videoTag),
-    ]).filter(Boolean),
+    ...sets
+      .flatMap((set, index) => [
+        sets.length > 1 || set.length > 1
+          ? `Set ${index + 1} — ${set.length} video(s) published together:`
+          : '',
+        ...set.map(videoTag),
+      ])
+      .filter(Boolean),
   ];
 }
 
@@ -1803,7 +1805,7 @@ function buildDraftPrompt(posts, photos = [], videos = [], relatedExistingPosts 
     'Keep any exact command, package name, or code snippet from the source posts verbatim, in a fenced code block — an install line a reader can copy is the most useful thing an announcement post can carry, and paraphrasing it makes it wrong.',
     'A post\'s "followUps" are the author\'s own replies to it, and are usually where the landing page or repository link was posted. Treat them as part of the same announcement and use those links in the article.',
     'When a source post links to something — a launched page, a repo, a demo — link to it from the article at the point you mention it, using the real URL from the post. Do not describe a thing as launched or shipped without linking it if the link is available.',
-    'Where a source post quotes another post, that quoted text is background so you know what is being pointed at. Write about our work, not about the other person\'s post, and do not quote them.',
+    "Where a source post quotes another post, that quoted text is background so you know what is being pointed at. Write about our work, not about the other person's post, and do not quote them.",
     '',
     'Source posts (JSON):',
     JSON.stringify(
@@ -2584,6 +2586,61 @@ test('a title containing a newline or a colon still parses', async () => {
   assert.equal(data.title, 'Toolcraft: an update\nwith a newline');
   assert.equal(data.summary, 'He said "it works" — 100% of the time');
 });
+
+test('a video poster becomes the cover, without duplicating the bytes', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  const { postDir, cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'with-video', body: '<Video poster="./video-cover-1.jpg"></Video>' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+    videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/a.jpg' }],
+    fetchImpl: async () => ({ ok: true, arrayBuffer: async () => new TextEncoder().encode('FRAME').buffer }),
+  });
+
+  assert.equal(cover, 'video-cover-1.jpg');
+  assert.equal(matter(fs.readFileSync(path.join(postDir, 'index.md'), 'utf8')).data.cover, 'video-cover-1.jpg');
+  // Referenced in place rather than copied to cover.png.
+  assert.equal(fs.existsSync(path.join(postDir, 'cover.png')), false);
+});
+
+test('the placeholder is used when the post has no video', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-none-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  const { postDir, cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'no-video', body: 'Body' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+  });
+
+  assert.equal(cover, 'cover.png');
+  assert.equal(fs.readFileSync(path.join(postDir, 'cover.png'), 'utf8'), 'PLACEHOLDER');
+});
+
+test('a poster that failed to download does not become a missing cover', async () => {
+  const repoRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'pp-cover-404-'));
+  const placeholder = path.join(repoRoot, 'placeholder.png');
+  fs.writeFileSync(placeholder, 'PLACEHOLDER');
+
+  // A cover pointing at a file that isn't there fails the whole Gatsby build.
+  const { postDir, cover } = await publishPost({
+    draft: { title: 'T', summary: 'S', slug: 'lost-poster', body: 'Body' },
+    publishDate: '2026-08-11',
+    repoRoot,
+    coverImageSourcePath: placeholder,
+    videos: [{ posterFilename: 'video-cover-1.jpg', posterUrl: 'https://p/gone.jpg' }],
+    fetchImpl: async () => ({ ok: false, status: 404 }),
+  });
+
+  assert.equal(cover, 'cover.png');
+  assert.ok(fs.existsSync(path.join(postDir, 'cover.png')));
+});
 ```
 
 **Step 2: Run test to verify it fails**
@@ -2607,7 +2664,10 @@ const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./p
 // reviewer would be told about a post that no longer exists.
 function claimFolderName({ postsDir, publishDate, slug }) {
   const sanitized =
-    slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'updates';
+    slug
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'updates';
 
   const base = `${publishDate}-${sanitized}`;
   let name = base;
@@ -2655,6 +2715,17 @@ async function publishPost({
     savedPosters.map((poster) => poster.filename)
   );
 
+  // A frame from the post's own video says far more than the shared
+  // placeholder, and it is already in the folder — referencing it directly
+  // avoids a second copy of the same bytes. Only a poster that survived the
+  // download is eligible; a reference to a missing cover fails the build.
+  const posterCover = savedPosters[0] && savedPosters[0].filename;
+  let coverName = posterCover;
+  if (!coverName) {
+    coverName = `cover${path.extname(coverImageSourcePath) || '.png'}`;
+    fs.copyFileSync(coverImageSourcePath, path.join(postDir, coverName));
+  }
+
   // Serialised by gray-matter rather than hand-escaped: a model-written title
   // containing a newline, a colon or a quote would otherwise produce a file
   // that fails to parse, and the whole site build with it.
@@ -2662,13 +2733,12 @@ async function publishPost({
     title: draft.title,
     summary: draft.summary,
     author,
-    cover: 'cover.png',
+    cover: coverName,
     category,
   });
   fs.writeFileSync(path.join(postDir, 'index.md'), file, 'utf8');
-  fs.copyFileSync(coverImageSourcePath, path.join(postDir, 'cover.png'));
 
-  return { postDir, folderName, photos: saved, videos: savedPosters };
+  return { postDir, folderName, photos: saved, videos: savedPosters, cover: coverName };
 }
 
 module.exports = { publishPost, claimFolderName };

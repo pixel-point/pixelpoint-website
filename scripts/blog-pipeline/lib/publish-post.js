@@ -11,7 +11,10 @@ const { downloadPhotos, stripUnknownImages, stripUnusableVideos } = require('./p
 // reviewer would be told about a post that no longer exists.
 function claimFolderName({ postsDir, publishDate, slug }) {
   const sanitized =
-    slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'updates';
+    slug
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'updates';
 
   const base = `${publishDate}-${sanitized}`;
   let name = base;
@@ -59,6 +62,17 @@ async function publishPost({
     savedPosters.map((poster) => poster.filename)
   );
 
+  // A frame from the post's own video says far more than the shared
+  // placeholder, and it is already in the folder — referencing it directly
+  // avoids a second copy of the same bytes. Only a poster that survived the
+  // download is eligible; a reference to a missing cover fails the build.
+  const posterCover = savedPosters[0] && savedPosters[0].filename;
+  let coverName = posterCover;
+  if (!coverName) {
+    coverName = `cover${path.extname(coverImageSourcePath) || '.png'}`;
+    fs.copyFileSync(coverImageSourcePath, path.join(postDir, coverName));
+  }
+
   // Serialised by gray-matter rather than hand-escaped: a model-written title
   // containing a newline, a colon or a quote would otherwise produce a file
   // that fails to parse, and the whole site build with it.
@@ -66,13 +80,12 @@ async function publishPost({
     title: draft.title,
     summary: draft.summary,
     author,
-    cover: 'cover.png',
+    cover: coverName,
     category,
   });
   fs.writeFileSync(path.join(postDir, 'index.md'), file, 'utf8');
-  fs.copyFileSync(coverImageSourcePath, path.join(postDir, 'cover.png'));
 
-  return { postDir, folderName, photos: saved, videos: savedPosters };
+  return { postDir, folderName, photos: saved, videos: savedPosters, cover: coverName };
 }
 
 module.exports = { publishPost, claimFolderName };
