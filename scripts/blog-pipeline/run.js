@@ -26,7 +26,41 @@ function assertRequiredEnv(names) {
   }
 }
 
-async function main() {
+// Collaborators are injected so the wiring itself can be tested. This file is
+// where a missing `await` on openDraftPr shipped — the Slack message read
+// "ready for review: undefined" — which is exactly the class of defect an
+// orchestration test catches and a unit test on any single module cannot.
+const defaultDeps = {
+  getUserId,
+  fetchRecentPosts,
+  filterCandidates,
+  readExistingPosts,
+  readAuthorHandle,
+  classifyAndGroupPosts,
+  draftPost,
+  publishPost,
+  openDraftPr,
+  notifySlack,
+  collectPhotos,
+  collectVideos,
+};
+
+async function main(overrides = {}) {
+  const {
+    getUserId,
+    fetchRecentPosts,
+    filterCandidates,
+    readExistingPosts,
+    readAuthorHandle,
+    classifyAndGroupPosts,
+    draftPost,
+    publishPost,
+    openDraftPr,
+    notifySlack,
+    collectPhotos,
+    collectVideos,
+  } = { ...defaultDeps, ...overrides };
+
   const dryRun = process.argv.includes('--dry-run');
 
   // A dry run stops after drafting — it never opens a PR or posts to Slack —
@@ -136,7 +170,7 @@ async function main() {
   });
 }
 
-main().catch(async (err) => {
+async function reportFailure(err) {
   console.error(err);
   // No webhook configured (a dry run, typically) — the console error above is
   // the whole report, so don't bury it under a second failure from posting to
@@ -152,4 +186,10 @@ main().catch(async (err) => {
     }
   }
   process.exitCode = 1;
-});
+}
+
+if (require.main === module) {
+  main().catch(reportFailure);
+}
+
+module.exports = { main };
