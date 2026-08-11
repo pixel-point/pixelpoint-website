@@ -259,3 +259,65 @@ test('a run never writes the cache outside the path it was given', async () => {
   assert.ok(fs.existsSync(target));
   assert.equal(JSON.parse(fs.readFileSync(target, 'utf8')).drafted.length, 1);
 });
+
+test('--only drafts just that many groups', async () => {
+  let drafted = 0;
+  const group = {
+    posts: [{ id: '1', text: 't', url: 'u', media: [], thread: [] }],
+    relatedExistingPosts: [],
+  };
+  process.argv.push('--local', '--only', '1');
+  try {
+    await withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () =>
+      main(
+        deps({
+          classifyAndGroupPosts: async () => ({ groups: [group, group, group], skipped: [] }),
+          draftPost: async () => {
+            drafted += 1;
+            return { title: 'T', summary: 'S', slug: `s${drafted}`, body: 'B' };
+          },
+        })
+      )
+    );
+  } finally {
+    process.argv = process.argv.filter((a) => !['--local', '--only', '1'].includes(a));
+  }
+  // Drafting is the expensive step; verifying a prompt needs one group, not three.
+  assert.equal(drafted, 1);
+});
+
+test('--only never opens a PR, even without --local', async () => {
+  const calls = [];
+  process.argv.push('--only', '1');
+  try {
+    await withEnv(ENV, () =>
+      main(
+        deps({
+          openDraftPr: async () => {
+            calls.push('pr');
+            return { prUrl: 'u' };
+          },
+          notifySlack: async () => {
+            calls.push('slack');
+          },
+        })
+      )
+    );
+  } finally {
+    process.argv = process.argv.filter((a) => !['--only', '1'].includes(a));
+  }
+  // A partial run would publish an incomplete month.
+  assert.deepEqual(calls, []);
+});
+
+test('--only rejects a value that is not a positive whole number', async () => {
+  process.argv.push('--only', 'all');
+  try {
+    await assert.rejects(
+      () => withEnv({ X_API_BEARER_TOKEN: 'x', ANTHROPIC_API_KEY: 'a' }, () => main(deps())),
+      /--only needs a positive whole number/
+    );
+  } finally {
+    process.argv = process.argv.filter((a) => !['--only', 'all'].includes(a));
+  }
+});

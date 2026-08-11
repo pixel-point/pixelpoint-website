@@ -89,8 +89,16 @@ async function main(overrides = {}) {
   // which is the point — but it also means you cannot test while a draft PR is
   // open. This opts out for local iteration only.
   const ignorePending = process.argv.includes('--ignore-pending');
+  // Drafting is the expensive step and scales with group count, so verifying a
+  // prompt change by drafting all eight groups pays seven times over for an
+  // answer one group would give. --only 1 drafts the first group and stops.
+  const onlyFlag = process.argv.indexOf('--only');
+  const onlyCount = onlyFlag === -1 ? null : Number(process.argv[onlyFlag + 1]);
+  if (onlyFlag !== -1 && (!Number.isInteger(onlyCount) || onlyCount < 1)) {
+    throw new Error('--only needs a positive whole number, e.g. --only 1');
+  }
   const writesNothing = dryRun;
-  const opensPr = !dryRun && !localOnly;
+  const opensPr = !dryRun && !localOnly && onlyFlag === -1;
 
   // A dry run stops after drafting — it never opens a PR or posts to Slack —
   // so requiring a webhook it will not use just blocks local testing.
@@ -168,10 +176,17 @@ async function main(overrides = {}) {
     return;
   }
 
+  const groupsToDraft = onlyCount ? groups.slice(0, onlyCount) : groups;
+  if (onlyCount && groups.length > groupsToDraft.length) {
+    console.log(
+      `Drafting ${groupsToDraft.length} of ${groups.length} group(s) — --only is for verifying a change, not producing a month.`
+    );
+  }
+
   // Filenames are assigned before drafting so the model can be given the exact
   // names to reference, rather than inventing them and needing reconciliation.
   const drafted = [];
-  for (const { posts: group, relatedExistingPosts } of groups) {
+  for (const { posts: group, relatedExistingPosts } of groupsToDraft) {
     const photos = collectPhotos(group);
     const videos = await dedupeVideosByPoster({ videos: collectVideos(group) });
     // Only the repos this group actually links, so an article is never offered
