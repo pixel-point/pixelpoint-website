@@ -1,8 +1,54 @@
 // scripts/blog-pipeline/lib/draft-post.test.js
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const test = require('node:test');
 
-const { draftPost, buildDraftPrompt, looksTruncated } = require('./draft-post');
+const matter = require('gray-matter');
+
+const { draftPost, buildDraftPrompt, looksTruncated, VOICE } = require('./draft-post');
+
+// The voice rules claim things about how Alex actually writes. If the claims
+// drift from the posts they were read off, the prompt is teaching the model a
+// style nobody uses, and nothing else in the suite would notice.
+function alexProse() {
+  const postsDir = path.join(__dirname, '..', '..', '..', 'content', 'posts');
+  return (
+    fs
+      .readdirSync(postsDir)
+      .map((dir) => path.join(postsDir, dir, 'index.md'))
+      .filter((file) => fs.existsSync(file))
+      .map((file) => matter(fs.readFileSync(file, 'utf8')))
+      // Updates is the pipeline's own category, so those posts are the model
+      // imitating the voice. Measuring them would let the drafts define the
+      // baseline they are supposed to be checked against.
+      .filter(({ data }) => data.author === 'Alex Barashkov' && data.category !== 'Updates')
+      .map(({ content }) => content.replace(/```[\s\S]*?```/g, ' '))
+      .join('\n')
+  );
+}
+
+function per1000(text, pattern) {
+  return ((text.match(pattern) || []).length / text.split(/\s+/).length) * 1000;
+}
+
+test('the voice rules still describe how Alex actually writes', () => {
+  const prose = alexProse();
+
+  // Rule 3: the em-dash claim, which is the one the drafts most visibly broke.
+  assert.ok(per1000(prose, /—/g) < 2, 'expected Alex to use em dashes sparingly');
+  // Rule 4 and 5: "you" dominates, and "we" outweighs "I".
+  assert.ok(per1000(prose, /\byou\b/gi) > per1000(prose, /\bwe\b/gi));
+  assert.ok(per1000(prose, /\bwe\b/gi) > per1000(prose, /\bI\b/g));
+});
+
+test('buildDraftPrompt carries the voice rules', () => {
+  const prompt = buildDraftPrompt([{ text: 'I built a tool', url: 'https://x.com/1' }]);
+
+  assert.ok(prompt.includes(VOICE));
+  assert.match(prompt, /never with the announcement/);
+  assert.match(prompt, /Almost never use an em dash/);
+});
 
 test('buildDraftPrompt tells the model to preserve I/we framing and write editorially', () => {
   const prompt = buildDraftPrompt([{ text: 'I built a tool', url: 'https://x.com/1' }]);

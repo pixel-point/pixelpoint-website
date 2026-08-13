@@ -13,6 +13,28 @@ const DRAFT_SCHEMA = {
   additionalProperties: false,
 };
 
+// "Write in Alex's voice" told the model nothing it could act on, and the
+// drafts came back in house-LLM register. The rules below were read off his 33
+// published posts rather than guessed at, and the counted ones are the giveaway:
+// he writes 0.5 em-dashes per 1000 words, the drafts wrote 9.5. He also says
+// "we" twice as often as "I"; the drafts inverted that.
+const VOICE = [
+  '',
+  "Write in Alex's voice. It is a specific, plain style, and these rules are taken from his published posts:",
+  '',
+  '1. Open with the problem or the lived context, never with the announcement. He earns the product name: in the Toolcraft post the first ten sentences are about being frustrated with existing design software, and the name does not appear until after that. Other openings: "Recently I\'ve been working on an automation task for one of our internal services, trying to make retina quality full-page screenshots of a website." A draft that opens "Today we\'re excited to announce..." is wrong before the first period.',
+  '2. Short declarative sentences, median about 17 words. Break for emphasis with fragments: "Not for a generalized audience. Not for every possible use case." / "Until today." / "This is important."',
+  '3. Almost never use an em dash. He writes about one every two thousand words; use a full stop, a comma, or a colon instead. This is the single clearest marker of his writing against generated prose, so keep the whole article near zero. These instructions use em dashes freely; do not read that as a licence to.',
+  '4. Address the reader as "you", constantly and directly. It is his most common pronoun by far: "You can write a more detailed prompt. You can ask AI to use a UI library."',
+  '5. "We" for what the company did, "I" for his own opinion or experience, and "we" is the more common of the two. "We started building personal design tools because we kept hitting the limits of existing software" / "But I would rather wait that time and do something else in parallel."',
+  '6. Reach for real named examples over hypotheticals. He names the client and the job: the Polar Signals graphic, blog covers for Unkey and Neon, the animation tool built for the Databricks developer portal. Give exact figures where the source posts have them, like "30-60 minutes" or "$15 on the Epic Games Store".',
+  '7. Headings are plain questions or labels, not slogans: "Why would you build your own design tools?", "What is Toolcraft?", "How to use Toolcraft", "How does it work?", "Summary".',
+  '8. Say what a thing does, not how good it is. He writes "a nicely working app" and "very simple", never "revolutionary", "game-changing", "seamless", or "powerful". Name the tradeoff instead of hiding it: "These make AI work longer on the first prompt, but the result is much more predictable."',
+  '9. Set up, then pay off, in short beats: "The problem is that..." / "The reason is simple:" / "The point is not to copy it one-to-one. The point is to..."',
+  '10. Use contractions. "don\'t", "you\'re", "it\'s", "we\'ve".',
+  '11. Close with a "Summary" heading that retraces what the piece covered and hands the reader something to do next: "We built Toolcraft because we needed it in our own work. Now we\'re excited to see what you build with it." Do not sign off asking anyone to follow, subscribe, or leave a comment.',
+].join('\n');
+
 // Candidates, not conclusions: the model decides whether any of these is
 // genuinely the install command for what the article is about. A README's
 // shell blocks routinely include demo invocations and contributing steps.
@@ -113,6 +135,7 @@ function buildDraftPrompt(
     // screenshots with Puppeteer and Sharp"), but drafts drifted into title
     // case on roughly a third of titles.
     'Write the title and every heading in sentence case, like the rest of this blog: capitalise the first word, and after that only proper nouns, product names, and acronyms. Write "Toolcraft: five creative tools we built to prove AI demos can be more than toys", not "Toolcraft: Five Creative Tools We Built to Prove AI Demos Can Be More Than Toys". Note that AI, Blender, and Novu stay capitalised because of what they are, not because of where they sit in the sentence.',
+    VOICE,
     '',
     'When the article announces something we built, keep its exact command or package name verbatim in ' +
       'a fenced code block — an install line a reader can copy is the most useful thing an announcement ' +
@@ -191,4 +214,4 @@ async function draftPost({
   return { title: draft.title, summary: draft.summary, slug: draft.slug, body: draft.body };
 }
 
-module.exports = { draftPost, buildDraftPrompt, looksTruncated, DRAFT_SCHEMA };
+module.exports = { draftPost, buildDraftPrompt, looksTruncated, VOICE, DRAFT_SCHEMA };
