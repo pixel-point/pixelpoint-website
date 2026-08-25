@@ -6,11 +6,11 @@ logo:
 title: Phrasso
 description: Vet every buyer before they enter your network
 websiteUrl: https://phrasso.com/
-# quote:
-#   text: Best $90k I've ever spent. The design, the brand and the story telling are more than I could ever imagine.
-#   authorName: James Perkins
-#   authorPosition: CEO
-#   authorPhoto: author-photo.jpg
+quote:
+  text: After several poor experiences with outside contractors, I approached PixelPoint with hesitation. They quickly changed my perspective. Their communication is the best in the industry, and their ability to listen, understand the vision, and deliver exceptional creative work is unmatched.
+  authorName: Ian Noble
+  authorPosition: Co-founder and CEO
+  authorPhoto: author-photo.jpg
 overview: Phrasso vets and onboards every inbound buyer for consumer brands, catching diversion risk before product ever ships. We built the brand and website from the ground up — and when off-the-shelf tooling couldn't produce the visual system the design called for, we wrote custom apps to generate it.
 services:
   - Brand Identity
