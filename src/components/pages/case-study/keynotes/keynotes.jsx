@@ -76,6 +76,7 @@ const icons = {
   railway: [IntegrationsIcon, WebsiteIcon, SpeakerIcon],
   interhuman: [FingerprintIcon, WebsiteIcon, SpeakerIcon],
   bfl: [FingerprintIcon, WebsiteIcon, SpeakerIcon],
+  phrasso: [FingerprintSquareIcon, IntegrationsIcon, SpeakerIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
