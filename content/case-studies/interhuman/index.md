@@ -20,7 +20,7 @@ keynotes:
   - Visualized social signals detected from voice, face, and body language in a video
   - Supported the Interhuman lab as it introduced its first model to the world
 cover: cover.jpg
-position: 1
+position: 2
 isFeatured: true
 ---
 
