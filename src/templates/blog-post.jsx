@@ -24,21 +24,21 @@ const BlogPostTemplate = ({
   pageContext: { videoCovers },
   children,
 }) => (
-    <Layout headerTheme="black" headerShowThemeButton>
-      <article className="safe-paddings pt-32 sm:pt-24">
-        <div className="container">
-          <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
-            <div className="xl:max-w-[696px] lg:max-w-[626px] md:max-w-none">
-              <Hero {...frontmatter} slug={slug} />
-              <Content content={children} videoCovers={videoCovers} />
-            </div>
-            <Sidebar author={author} readMorePosts={readMorePosts} socialShareUrl={location.href} />
+  <Layout headerTheme="black" headerShowThemeButton>
+    <article className="safe-paddings pt-32 sm:pt-24">
+      <div className="container">
+        <div className="relative mx-auto max-w-[696px] xl:mx-0 xl:flex xl:max-w-none xl:justify-center xl:space-x-20 lg:space-x-8 md:block md:space-x-0">
+          <div className="xl:max-w-[696px] lg:max-w-[626px] md:max-w-none">
+            <Hero {...frontmatter} slug={slug} />
+            <Content content={children} videoCovers={videoCovers} />
           </div>
+          <Sidebar author={author} readMorePosts={readMorePosts} socialShareUrl={location.href} />
         </div>
-      </article>
-      <CTA withTopMargin />
-    </Layout>
-  );
+      </div>
+    </article>
+    <CTA withTopMargin />
+  </Layout>
+);
 
 export const query = graphql`
   query ($id: String!) {
@@ -114,5 +114,19 @@ export const Head = ({
 }) => {
   const ogImageUrl = getSrc(ogImage);
 
-  return <SEO {...SEO_DATA.blogPost({ title, description: summary, ogImage: ogImageUrl })} />;
+  return (
+    <>
+      <SEO {...SEO_DATA.blogPost({ title, description: summary, ogImage: ogImageUrl })} />
+      {/*
+        Video in Updates posts is served from X via the /x-video rewrite in
+        vercel.json. X returns 403 for any request carrying a Referer from
+        another domain, and Vercel forwards the browser's Referer upstream —
+        verified against a preview deploy, where the same URL returns 206 with
+        no Referer and 403 with one. Suppressing it here is what makes those
+        videos play. Scoped to blog posts rather than site-wide; the cost is
+        that outbound links from articles no longer carry attribution.
+      */}
+      <meta name="referrer" content="no-referrer" />
+    </>
+  );
 };

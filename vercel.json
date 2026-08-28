@@ -18,6 +18,10 @@
   ],
   "rewrites": [
     {
+      "source": "/x-video/:path*",
+      "destination": "https://video.twimg.com/:path*"
+    },
+    {
       "source": "/aval",
       "destination": "https://aval-demo-ten.vercel.app/aval"
     },

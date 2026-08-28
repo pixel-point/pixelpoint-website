@@ -75,3 +75,5 @@ yarn-error.log
 
 .vscode/snipsnap.code-snippets
 .vercel
+
+.worktrees/
