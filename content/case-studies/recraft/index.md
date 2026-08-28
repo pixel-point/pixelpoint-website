@@ -1,8 +1,7 @@
 ---
 logo:
-  # TODO: replace with actual logo
   url: logo.svg
-  width: 182
+  width: 132
   height: 44
 title: Recraft
 description: Meet Recraft V4 Styles
