@@ -77,6 +77,7 @@ const icons = {
   interhuman: [FingerprintIcon, WebsiteIcon, SpeakerIcon],
   bfl: [FingerprintIcon, WebsiteIcon, SpeakerIcon],
   phrasso: [FingerprintSquareIcon, IntegrationsIcon, SpeakerIcon],
+  recraft: [FingerprintSquareIcon, IntegrationsIcon, SpeakerIcon],
 };
 
 const Keynotes = ({ items, iconsName }) => (
