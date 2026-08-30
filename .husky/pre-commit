@@ -2,3 +2,16 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npx --no-install lint-staged --concurrent false
+
+# lint-staged only formats and lints, so a red test used to sail through — it
+# happened twice, and once the failing test was catching a real bug rather
+# than a stale assertion. Scoped to the code the suite actually covers so an
+# unrelated CSS change is not held up by it.
+if git diff --cached --name-only | grep -qE '^(scripts/|src/constants/)'; then
+  echo "Running tests for staged scripts/ and src/constants/ changes..."
+  npm test || {
+    echo ""
+    echo "Tests failed — commit aborted. Use --no-verify only if you mean it."
+    exit 1
+  }
+fi
